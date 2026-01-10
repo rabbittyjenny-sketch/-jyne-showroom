@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="480" height="120" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="JENJIRA JAISIN logo">
+  <style>
+    /* โหลดฟอนต์ Sarabun (ทำงานเมื่อ SVG ถูกฝังใน HTML/page) */
+    @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+
+    .f-thai {
+      font-family: 'Sarabun', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif;
+      font-size: 18px;
+      fill: #a39f9f; /* สีอ่อนสำหรับภาษาไทย */
+      font-weight: 400;
+      dominant-baseline: middle;
+    }
+
+    .f-eng {
+      font-family: 'Sarabun', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif;
+      font-size: 26px;
+      fill: #1a1d2e; /* สีเข้มสำหรับชื่ออังกฤษ */
+      font-weight: 700;
+      letter-spacing: 1px;
+      dominant-baseline: middle;
+    }
+
+    .dot {
+      transition: opacity 200ms ease;
+    }
+  </style>
+
+  <!-- Five colored dots (arranged horizontally) -->
+  <g transform="translate(24,32)">
+    <!-- blue -->
+    <circle class="dot" cx="0" cy="0" r="16" fill="#4A90E2" />
+    <!-- yellow -->
+    <circle class="dot" cx="64" cy="0" r="16" fill="#F4C542" />
+    <!-- scribble ring: approximated by multiple stroked circles for hand-drawn look -->
+    <g transform="translate(128,0)">
+      <circle cx="0" cy="0" r="16" fill="#f8f7f4" stroke="#1a1d2e" stroke-width="1.6" opacity="0.95"/>
+      <circle cx="-1" cy="-1" r="16.6" fill="none" stroke="#1a1d2e" stroke-width="0.9" opacity="0.25"/>
+      <circle cx="1.2" cy="0.8" r="17.2" fill="none" stroke="#1a1d2e" stroke-width="0.7" opacity="0.18"/>
+    </g>
+    <!-- green -->
+    <circle class="dot" cx="192" cy="0" r="16" fill="#5FB46D" />
+    <!-- red -->
+    <circle class="dot" cx="256" cy="0" r="16" fill="#E4554F" />
+  </g>
+
+  <!-- Text block to the right -->
+  <g transform="translate(320,40)">
+    <!-- Thai: smaller and lighter -->
+    <text class="f-thai" x="0" y="0">เจนจิรา   จัยสิน</text>
+    <!-- English: larger and bolder below -->
+    <text class="f-eng" x="0" y="36">JENJIRA  JAISIN</text>
+  </g>
+</svg>
