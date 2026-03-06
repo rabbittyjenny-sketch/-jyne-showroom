@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG UPDATE - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-dark: #1A1A1A;
+            --blog-blue: #4285F4;
+            --blog-yellow: #FBBC05;
+            --blog-green: #34A853;
+            --blog-red: #EA4335;
+        }
+
+        body, html { 
+            margin: 0; padding: 0; width: 100%; min-height: 100vh; 
+            font-family: 'Prompt', sans-serif; background-color: #ffffff; color: var(--text-dark); 
+        }
+        
+        /* 🔝 HEADER - ใช้โลโก้รูปภาพเดิม */
+        .nav-header { 
+            position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; 
+            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; 
+        }
+        .logo-container { text-decoration: none; display: flex; align-items: center; }
+        .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+        
+        .map-btn { 
+            background: var(--text-dark); color: #ffffff; text-decoration: none; 
+            padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; 
+            display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-content { 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; 
+        }
+        .page-title { 
+            font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); 
+            text-align: center; line-height: 0.9; margin: 0 0 15px 0; 
+            text-transform: uppercase; letter-spacing: 1px; 
+        }
+        .page-subtitle { 
+            font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; 
+        }
+
+        /* 🗂️ GRID 5 ใบ ตามภาพ */
+        .blog-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 30px; width: 100%; 
+        }
+        
+        .blog-card {
+            background-color: #ffffff; border: 3px solid; border-radius: 16px; padding: 30px;
+            text-align: left; display: flex; flex-direction: column; cursor: pointer;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+
+        .card-blue { border-color: var(--blog-blue); box-shadow: 6px 6px 0px var(--blog-blue); }
+        .card-yellow { border-color: var(--blog-yellow); box-shadow: 6px 6px 0px var(--blog-yellow); }
+        .card-dark { border-color: var(--text-dark); box-shadow: 6px 6px 0px var(--text-dark); }
+        .card-green { border-color: var(--blog-green); box-shadow: 6px 6px 0px var(--blog-green); }
+        .card-red { border-color: var(--blog-red); box-shadow: 6px 6px 0px var(--blog-red); }
+
+        .blog-card:hover { transform: translate(-4px, -4px); }
+        .card-blue:hover { box-shadow: 10px 10px 0px var(--blog-blue); }
+        .card-yellow:hover { box-shadow: 10px 10px 0px var(--blog-yellow); }
+        .card-dark:hover { box-shadow: 10px 10px 0px var(--text-dark); }
+        .card-green:hover { box-shadow: 10px 10px 0px var(--blog-green); }
+        .card-red:hover { box-shadow: 10px 10px 0px var(--blog-red); }
+
+        .tag { 
+            align-self: flex-start; padding: 6px 16px; border-radius: 20px; font-size: 12px; 
+            font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff; 
+        }
+        .card-blue .tag { background: var(--blog-blue); }
+        .card-yellow .tag { background: var(--blog-yellow); color: var(--text-dark); }
+        .card-dark .tag { background: var(--text-dark); }
+        .card-green .tag { background: var(--blog-green); }
+        .card-red .tag { background: var(--blog-red); }
+
+        .blog-card h2 { 
+            font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0 0 15px 0; 
+            letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; 
+        }
+        .blog-card p { 
+            font-weight: 300; font-size: 0.95rem; line-height: 1.6; margin: 0; 
+            color: #444; flex-grow: 1; 
+        }
+
+        @media (max-width: 768px) { 
+            .blog-grid { grid-template-columns: 1fr; } 
+            .nav-header { padding: 15px 20px; } 
+        }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <a href="index.html" class="logo-container">
+            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
+        </a>
+        <a href="index.html" class="map-btn">MAP 🌍</a>
+    </header>
+    
+    <main class="main-content">
+        <h1 class="page-title">BLOG<br>UPDATE</h1>
+        <p class="page-subtitle">Thoughts, experiments, and frameworks.</p>
+        
+        <div class="blog-grid">
+            <div class="blog-card card-blue">
+                <div class="tag">Business</div>
+                <h2>SOLO FOUNDER PATH</h2>
+                <p>ถอดรหัสกลยุทธ์การสร้างธุรกิจด้วยตัวคนเดียวโดยใช้เทคโนโลยีและ AI เป็นแรงขับเคลื่อนหลักในการสเกลงาน</p>
+            </div>
+            <div class="blog-card card-yellow">
+                <div class="tag">Mindset</div>
+                <h2>SMART LAZY STYLE</h2>
+                <p>ทำไมการขี้เกียจอย่างชาญฉลาด ถึงเป็นกุญแจสำคัญในการสร้างระบบ Automation และลดภาระงานซ้ำซ้อน</p>
+            </div>
+            <div class="blog-card card-dark">
+                <div class="tag">Tech</div>
+                <h2>AI WORKFLOWS</h2>
+                <p>อัปเดตเครื่องมือ AI ล่าสุดและการเชื่อมต่อ API เพื่อสร้างบอททำงานอัตโนมัติตลอด 24 ชั่วโมง</p>
+            </div>
+            <div class="blog-card card-green">
+                <div class="tag">System</div>
+                <h2>OPERATIONAL INTEL</h2>
+                <p>การวางโครงสร้างระบบหลังบ้าน (Backend Operations) ที่รองรับการขยายตัวโดยที่ระบบไม่พัง</p>
+            </div>
+            <div class="blog-card card-red">
+                <div class="tag">Marketing</div>
+                <h2>HIGH CONVERSION</h2>
+                <p>จิตวิทยาการออกแบบ UX/UI ที่กระตุ้นให้ผู้ใช้งานตัดสินใจตามเส้นทางที่เราวางแผนไว้</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
