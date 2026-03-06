@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT ISLAND - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent-orange: #E65C00; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+        
+        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+        .logo-img:hover { transform: scale(1.05); }
+        .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .map-btn:hover { transform: scale(1.05); }
+
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1000px; margin: 0 auto; }
+        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
+        
+        /* 🎴 CARD (สีดำ 2 คอลัมน์) */
+        .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .col-title { font-family: 'Anton', sans-serif; font-size: 2.2rem; color: var(--accent-orange); margin: 0 0 20px 0; padding-bottom: 15px; border-bottom: 2px solid var(--accent-orange); text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-desc { font-size: 1rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px 0; }
+        .col-desc strong { font-weight: 700; color: #ffffff; }
+
+        @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <a href="index.html">
+            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
+        </a>
+        <a href="index.html" class="map-btn">MAP 🌍</a>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">ABOUT<br>ISLAND</h1>
+        <p class="page-subtitle">Don't try to make it perfect. Make it work.</p>
+        <div class="content-card">
+            <div class="col">
+                <h2 class="col-title">PROFILE</h2>
+                <p class="col-desc"><strong>Jyne (เจนจิรา จัยสิน)</strong><br>Systems Architect, AI Builder และ Live Stream Host</p>
+            </div>
+            <div class="col">
+                <h2 class="col-title">PHILOSOPHY</h2>
+                <p class="col-desc">แนวคิดหลักคือ 'อย่าพยายามทำให้สมบูรณ์แบบ แต่ทำให้มันใช้งานได้จริง'</p>
+                <p class="col-desc">1. Smart Lazy Style<br>2. Operational Intelligence<br>3. Quietly Confident</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
