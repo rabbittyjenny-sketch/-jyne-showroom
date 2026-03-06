@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT PORT - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --bg-color: #181818; }
+        body, html {
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff;
+        }
+        .nav-header {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 30px;
+            z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
+        }
+        .logo-container { pointer-events: auto; text-decoration: none; }
+        .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+        .map-btn {
+            background-color: #ffffff; color: #1a1a1a; padding: 8px 20px; border-radius: 30px;
+            font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); pointer-events: auto; transition: 0.2s;
+        }
+        .map-btn:hover { transform: scale(1.05); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 120px 20px 50px 20px; display: flex; flex-direction: column; align-items: center; }
+        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 8rem); text-align: center; margin: 0; line-height: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.2rem; font-weight: 400; margin: 20px 0 50px 0; text-align: center; }
+
+        /* การ์ดสีแดง 2 คอลัมน์ ตามภาพ CONTACT PORT */
+        .content-card {
+            background-color: #E8453C; border-radius: 20px; padding: 50px; width: 100%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; color: #1a1a1a;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .col-title {
+            font-family: 'Anton', sans-serif; font-size: 2.2rem; margin: 0 0 20px 0;
+            text-transform: uppercase; letter-spacing: 1px;
+            border-bottom: 2px solid #1A1A1A; padding-bottom: 10px; color: #1A1A1A;
+        }
+        .col p, .item-list li { font-size: 1rem; line-height: 1.8; margin: 0; font-weight: 500; }
+        .item-list { padding-left: 20px; margin: 0; }
+        .item-list li { margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .content-card { grid-template-columns: 1fr; gap: 30px; padding: 30px; }
+            .nav-header { padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-header">
+        <a href="index.html" class="logo-container"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img"></a>
+        <a href="index.html" class="map-btn">MAP 🌍</a>
+    </div>
+    <main class="container">
+        <h1 class="page-title">CONTACT<br>PORT</h1>
+        <p class="page-subtitle">Clear Next Steps. No Pressure.</p>
+        <div class="content-card">
+            <div class="col">
+                <h2 class="col-title">GET IN TOUCH</h2>
+                <p>กำลังโหลดข้อมูลจาก Google Sheet...</p>
+            </div>
+            <div class="col">
+                <h2 class="col-title">OUR PROMISE</h2>
+                <ul class="item-list">
+                    <li>กำลังโหลดข้อมูลจาก Google Sheet...</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
