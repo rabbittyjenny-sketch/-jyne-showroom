@@ -7,49 +7,236 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent-orange: #E65C00; }
+        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent: #E65C00; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; }
-        
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
         .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
-
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1000px; margin: 0 auto; }
-        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
-        
-        /* 🎴 CARD (สีดำ 2 คอลัมน์) */
-        .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-        .col-title { font-family: 'Anton', sans-serif; font-size: 2.2rem; color: var(--accent-orange); margin: 0 0 20px 0; padding-bottom: 15px; border-bottom: 2px solid var(--accent-orange); text-transform: uppercase; letter-spacing: 0.5px; }
-        .col-desc { font-size: 1rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px 0; }
-        .col-desc strong { font-weight: 700; color: #ffffff; }
-
-        @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 20px; text-align: center; opacity: 0.8; }
+        /* CARD */
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .content-card.single { grid-template-columns: 1fr; }
+        .col-title { font-family: 'Anton', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 20px; padding-bottom: 15px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-desc { font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #333; }
+        .col-desc strong { font-weight: 700; color: var(--text-dark); }
+        /* timeline */
+        .tl-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .tl-item:last-child { border-bottom: none; }
+        .tl-year { font-size: 0.68rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .tl-role { font-weight: 700; font-size: 0.95rem; color: var(--text-dark); margin-bottom: 1px; }
+        .tl-place { font-size: 0.76rem; color: #888; font-weight: 600; margin-bottom: 4px; }
+        .tl-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; }
+        /* skill tags */
+        .skg { margin-bottom: 14px; }
+        .skt { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.5px; margin-bottom: 7px; color: #666; text-transform: uppercase; }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { padding: 3px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.75rem; color: #444; }
+        /* ext links */
+        .ext-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+        .ext-card { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+        .ext-card:hover { background: #ebebeb; }
+        .ext-card-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+        .ext-card-sub { font-size: 0.72rem; color: #888; font-weight: 300; }
+        /* video */
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; }
+        .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+        /* proof */
+        .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; }
+        /* highlight list */
+        .hl { list-style: none; padding: 0; margin: 0; }
+        .hl li { font-size: 0.88rem; line-height: 1.7; padding: 8px 0 8px 16px; border-bottom: 1px solid #eee; position: relative; color: #333; font-weight: 300; }
+        .hl li:last-child { border-bottom: none; }
+        .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+        .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .cs-pill { background: var(--accent); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        /* resume */
+        .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } .ext-cards, .video-grid, .proof-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <header class="nav-header">
-        <a href="index.html">
-            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
-        </a>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
     </header>
     <main class="main-content">
         <h1 class="page-title">ABOUT<br>ISLAND</h1>
         <p class="page-subtitle">Don't try to make it perfect. Make it work.</p>
+
+        <!-- PROFILE + PHILOSOPHY -->
         <div class="content-card">
-            <div class="col">
+            <div>
                 <h2 class="col-title">PROFILE</h2>
-                <p class="col-desc"><strong>Jyne (เจนจิรา จัยสิน)</strong><br>Systems Architect, AI Builder และ Live Stream Host</p>
+                <p class="col-desc"><strong>Jyne (เจนจิรา ใจสิน)</strong><br>Systems Architect, AI Builder และ Live Commerce Strategist</p>
+                <p class="col-desc">เส้นทางที่ไม่ได้เดินตามแบบแผน เริ่มจากธุรกิจ Jewelry 8 ปี ผ่าน Michelin Star สองร้าน มาถึงหน้าจอ Live Stream ที่สร้างยอดขาย <strong>6 หลักใน 2 ชั่วโมง</strong></p>
+                <p class="col-desc">ปัจจุบัน Solo-founder ที่ iDEAS365 — ทีมทั้งหมดเป็น AI ทำงานจากกรุงเทพฯ ระดับสากล</p>
             </div>
-            <div class="col">
+            <div>
                 <h2 class="col-title">PHILOSOPHY</h2>
-                <p class="col-desc">แนวคิดหลักคือ 'อย่าพยายามทำให้สมบูรณ์แบบ แต่ทำให้มันใช้งานได้จริง'</p>
-                <p class="col-desc">1. Smart Lazy Style<br>2. Operational Intelligence<br>3. Quietly Confident</p>
+                <p class="col-desc">แนวคิดหลักคือ "อย่าพยายามทำให้สมบูรณ์แบบ แต่ทำให้มันใช้งานได้จริง"</p>
+                <p class="col-desc"><strong>1. Smart Lazy Style</strong><br>คิดหนักในตอนวางแผน เพื่อให้ขั้นตอนการทำงานเบาที่สุด</p>
+                <p class="col-desc"><strong>2. Operational Intelligence</strong><br>ลดสิ่งที่ไม่จำเป็น แต่ไม่ลดผลลัพธ์</p>
+                <p class="col-desc"><strong>3. Quietly Confident</strong><br>ไม่จำเป็นต้องพูดมาก ถ้าผลงานพูดแทนได้</p>
             </div>
         </div>
+
+        <!-- EXPERIENCE + SKILLS -->
+        <div class="content-card">
+            <div>
+                <h2 class="col-title">EXPERIENCE</h2>
+                <div class="tl-item">
+                    <div class="tl-year">2022 — ปัจจุบัน</div>
+                    <div class="tl-role">Freelance Live Stream Host &amp; Brand Presenter</div>
+                    <div class="tl-place">TikTok LIVE · Facebook Live · Shopee Live</div>
+                    <div class="tl-desc">สร้าง Framework ของตัวเองจนทำยอดขาย 6 หลักใน 2 ชั่วโมง ทีมรันเองได้โดยไม่ต้องรอ</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Assistant Restaurant Manager</div>
+                    <div class="tl-place">MUU Bangkok Hotel</div>
+                    <div class="tl-desc">ดูแลการดำเนินงานห้องอาหาร 5 outlet</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Director of Operations</div>
+                    <div class="tl-place">Chef Andy Yang — Michelin Star ⭐</div>
+                    <div class="tl-desc">วางระบบ SOP มาตรฐานที่ไม่มีพื้นที่สำหรับความผิดพลาด</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Executive Secretary</div>
+                    <div class="tl-place">Chef Chumpol Jangprai (R-HAAN) — Michelin Star ⭐</div>
+                    <div class="tl-desc">VIP Operations การประสานงาน การตัดสินใจเชิงกลยุทธ์</div>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">CORE SKILLS</h2>
+                <div class="skg">
+                    <div class="skt">Live Commerce &amp; Content</div>
+                    <div class="tags">
+                        <span class="tag">Live Stream Hosting</span>
+                        <span class="tag">Sales Scripting</span>
+                        <span class="tag">Audience Engagement</span>
+                        <span class="tag">Social Media Algorithm</span>
+                        <span class="tag">Brand Presenting</span>
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Systems &amp; Operations</div>
+                    <div class="tags">
+                        <span class="tag">Operational Framework Design</span>
+                        <span class="tag">SOP Development</span>
+                        <span class="tag">Team Training</span>
+                        <span class="tag">KPI Setting</span>
+                        <span class="tag">Transfer Ownership</span>
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">AI &amp; Technology</div>
+                    <div class="tags">
+                        <span class="tag">AI Agent Design</span>
+                        <span class="tag">Prompt Engineering</span>
+                        <span class="tag">AI Voice Generation</span>
+                        <span class="tag">ChatGPT</span>
+                        <span class="tag">Canva</span>
+                        <span class="tag">CapCut</span>
+                        <span class="tag">Make.com</span>
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Business Strategy</div>
+                    <div class="tags">
+                        <span class="tag">Brand Positioning</span>
+                        <span class="tag">Launch Framework</span>
+                        <span class="tag">Financial Modeling</span>
+                        <span class="tag">Team Structure</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPERIENCE & SKILLS LINKS + BACKGROUND -->
+        <div class="content-card">
+            <div>
+                <h2 class="col-title">EXPERIENCE &amp; SKILLS</h2>
+                <p class="col-desc" style="color:#888; margin-bottom:16px">ประสบการณ์และทักษะอื่นๆ</p>
+                <div class="ext-cards">
+                    <a class="ext-card" href="https://adminccl.wixsite.com/a-little-bit-idea-2/copy-of-bio" target="_blank">
+                        <div><div class="ext-card-title">Work Experience</div><div class="ext-card-sub">รายละเอียดประสบการณ์การทำงานทั้งหมด</div></div><span>→</span>
+                    </a>
+                    <a class="ext-card" href="https://adminccl.wixsite.com/a-little-bit-idea-2/project" target="_blank">
+                        <div><div class="ext-card-title">Other Skills</div><div class="ext-card-sub">ทักษะความสามารถอื่นๆ และโปรเจกต์เพิ่มเติม</div></div><span>→</span>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">BACKGROUND</h2>
+                <ul class="hl">
+                    <li>Built live commerce generating <strong>6-figure sales in 2 hours</strong></li>
+                    <li>Designed launch frameworks used by early-stage brands</li>
+                    <li>Created operational playbooks that teams actually follow</li>
+                    <li>ทำงานกับแบรนด์มากกว่า <strong>20 แบรนด์</strong></li>
+                    <li>Based in Bangkok, working globally</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PORTFOLIO MEDIA -->
+        <div class="content-card single">
+            <h2 class="col-title">PORTFOLIO MEDIA · ภาพและวีดีโอผลงาน</h2>
+            <div class="video-grid">
+                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/K_mPOqjHSmE" title="TikTok2" allowfullscreen loading="lazy"></iframe></div>
+                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/a3_WNFoiT1Y" title="TikTok SME Thailand" allowfullscreen loading="lazy"></iframe></div>
+                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/sWqdAWNVCBQ" title="TikTok SME Thailand 2024" allowfullscreen loading="lazy"></iframe></div>
+                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/dIobDVJCqNE" title="Live BBL" allowfullscreen loading="lazy"></iframe></div>
+            </div>
+        </div>
+
+        <!-- CASE STUDY -->
+        <div class="content-card">
+            <div>
+                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
+                <p class="col-desc"><strong>Challenge:</strong> Launch live selling channel with no prior experience or systems</p>
+                <ul class="hl" style="margin-top:12px">
+                    <li>Product curation strategy — what sells on camera</li>
+                    <li>Script framework development — what to say, when</li>
+                    <li>Technical setup &amp; optimization — lighting, angles, platform</li>
+                    <li>Host training &amp; operations — sustainable 2-hour format</li>
+                </ul>
+                <div class="cs-pills">
+                    <span class="cs-pill">✦ 6-figure in 2 hrs</span>
+                    <span class="cs-pill">✦ Repeatable format</span>
+                    <span class="cs-pill">✦ Team runs independently</span>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
+                <div class="proof-grid">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
+                </div>
+                <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
+            </div>
+        </div>
+
+        <!-- RESUME -->
+        <div class="content-card single">
+            <h2 class="col-title">RESUME</h2>
+            <img
+                src="https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797"
+                alt="Jyne Resume 2025"
+                class="resume-img"
+            >
+        </div>
+
     </main>
 </body>
 </html>

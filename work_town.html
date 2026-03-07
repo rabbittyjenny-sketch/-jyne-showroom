@@ -7,56 +7,244 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #FBBC05; --text-dark: #1A1A1A; }
+        :root { --bg-color: #FBBC05; --text-dark: #1A1A1A; --accent: #FBBC05; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
-        
+
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
         .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
 
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1000px; margin: 0 auto; }
-        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
-        
-        /* 🎴 CARD (สีดำ 2 คอลัมน์) */
-        .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .col-title { font-family: 'Anton', sans-serif; font-size: 2.2rem; color: var(--bg-color); margin: 0 0 20px 0; padding-bottom: 15px; border-bottom: 2px solid var(--bg-color); text-transform: uppercase; letter-spacing: 0.5px; }
-        .col-list { list-style: none; padding: 0; margin: 0; }
-        .col-list li { font-size: 1rem; line-height: 1.7; font-weight: 300; margin-bottom: 15px; position: relative; padding-left: 15px; }
-        .col-list li::before { content: "•"; position: absolute; left: 0; color: #ffffff; font-weight: 600; }
-        .col-list strong { font-weight: 600; color: #ffffff; }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; }
 
-        @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } }
+        /* SECTION CARD */
+        .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .content-card.white { background: #ffffff; color: var(--text-dark); }
+        .section-title { font-family: 'Anton', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+        .section-sub { font-size: 0.88rem; color: #aaa; margin: 0 0 30px; font-weight: 300; }
+        .content-card.white .section-title { color: var(--text-dark); border-bottom-color: var(--text-dark); }
+        .content-card.white .section-sub { color: #888; }
+
+        /* PROJECT GRID */
+        .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .proj-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 22px 24px; text-decoration: none; color: #ffffff; display: flex; justify-content: space-between; align-items: flex-start; transition: background 0.2s, transform 0.2s; }
+        .proj-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
+        .proj-card.coming { opacity: 0.55; cursor: default; }
+        .proj-card.coming:hover { transform: none; }
+        .proj-info {}
+        .proj-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+        .proj-name-th { font-size: 0.78rem; color: #aaa; margin-bottom: 6px; font-weight: 300; }
+        .proj-desc { font-size: 0.78rem; line-height: 1.5; color: #ccc; font-weight: 300; }
+        .proj-arrow { font-size: 1.1rem; flex-shrink: 0; margin-left: 12px; padding-top: 2px; }
+        .proj-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+        .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
+        .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
+        .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
+        .badge-soon { background: rgba(255,255,255,0.1); color: #aaa; }
+
+        /* VIDEO GRID */
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; }
+        .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+        .video-label { font-size: 0.78rem; color: #aaa; margin-top: 6px; font-weight: 300; }
+
+        /* CASE STUDY / PROOF */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .col-title { font-family: 'Anton', sans-serif; font-size: 1.8rem; color: var(--accent); margin: 0 0 16px; text-transform: uppercase; }
+        .hl { list-style: none; padding: 0; margin: 0; }
+        .hl li { font-size: 0.88rem; line-height: 1.7; padding: 8px 0 8px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; color: #ddd; font-weight: 300; }
+        .hl li:last-child { border-bottom: none; }
+        .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+        .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .cs-pill { background: var(--accent); color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; background: #222; }
+        .col-desc { font-size: 0.88rem; color: #ccc; line-height: 1.7; font-weight: 300; margin: 0 0 10px; }
+
+        @media(max-width: 768px) {
+            .project-grid, .video-grid, .two-col, .proof-grid { grid-template-columns: 1fr; }
+            .content-card { padding: 30px; }
+            .nav-header { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
     <header class="nav-header">
-        <a href="index.html">
-            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
-        </a>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
     </header>
     <main class="main-content">
         <h1 class="page-title">WORKS<br>TOWN</h1>
         <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
+
+        <!-- AI TOOLS PROJECTS -->
         <div class="content-card">
-            <div class="col">
-                <h2 class="col-title">ASTROLOGY & TOOLS</h2>
-                <ul class="col-list">
-                    <li><strong>Soul Cards:</strong> ระบบเลือกไพ่ 3 ใบเพื่อไกด์ไลน์คำตอบ</li>
-                    <li><strong>KAIXIN:</strong> ระบบค้นหา Energy Crystal</li>
-                </ul>
-            </div>
-            <div class="col">
-                <h2 class="col-title">COMMERCE & SYSTEMS</h2>
-                <ul class="col-list">
-                    <li><strong>Video Production:</strong> บริการผลิตวิดีโอสินค้า</li>
-                    <li><strong>Strategy Consulting:</strong> แผนธุรกิจที่มีตัวเลขจริง</li>
-                </ul>
+            <div class="section-title">AI TOOLS & ASTROLOGY</div>
+            <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
+            <div class="project-grid">
+                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-name">Soul Cards</div>
+                        <div class="proj-name-th">ไพ่ออราเคิล</div>
+                        <div class="proj-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-name">The Soul Weaver</div>
+                        <div class="proj-name-th">ความลับแห่งดวงดาว</div>
+                        <div class="proj-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-name">KAIXIN</div>
+                        <div class="proj-name-th">ค้นหาหินประจำตัว</div>
+                        <div class="proj-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-name">Soul Slot</div>
+                        <div class="proj-name-th">สุ่มตัวเลขแห่งโชคชะตา</div>
+                        <div class="proj-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
             </div>
         </div>
+
+        <!-- COMMERCE & BUSINESS PROJECTS -->
+        <div class="content-card">
+            <div class="section-title">COMMERCE & BUSINESS SYSTEMS</div>
+            <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
+            <div class="project-grid">
+                <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-name">Caption Factory</div>
+                        <div class="proj-name-th">โรงงานสร้างแคปชั่น</div>
+                        <div class="proj-desc">สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วมของผู้ชม</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-biz">Business · Live</div>
+                        <div class="proj-name">Event ROI Calculator</div>
+                        <div class="proj-name-th">คำนวณผลตอบแทนอีเวนต์</div>
+                        <div class="proj-desc">เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <div class="proj-card">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-live">Live Commerce</div>
+                        <div class="proj-name">Social Commerce Architecture</div>
+                        <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
+                        <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
+                    </div>
+                </div>
+                <div class="proj-card">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-live">Live Commerce</div>
+                        <div class="proj-name">Video Production</div>
+                        <div class="proj-name-th">ผลิตวีดีโอ</div>
+                        <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
+                    </div>
+                </div>
+                <div class="proj-card">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-biz">Business</div>
+                        <div class="proj-name">Strategy Consulting</div>
+                        <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
+                        <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก</div>
+                    </div>
+                </div>
+                <div class="proj-card">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-biz">Business</div>
+                        <div class="proj-name">Systems Design</div>
+                        <div class="proj-name-th">ออกแบบระบบ</div>
+                        <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
+                    </div>
+                </div>
+                <div class="proj-card coming">
+                    <div class="proj-info">
+                        <div class="proj-badge badge-soon">Coming Soon</div>
+                        <div class="proj-name">QR Code Generator</div>
+                        <div class="proj-name-th">สร้าง QR Code</div>
+                        <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์ กำลังจะมา</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PORTFOLIO MEDIA / CLIPS -->
+        <div class="content-card">
+            <div class="section-title">PORTFOLIO MEDIA · คลิปและวีดีโอผลงาน</div>
+            <div class="section-sub">ตัวอย่างการไลฟ์ขาย — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</div>
+            <div class="video-grid">
+                <div>
+                    <div class="video-wrap"><iframe src="https://www.youtube.com/embed/K_mPOqjHSmE" title="TikTok Live 2" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="video-label">TikTok Live — Jenny Jyne</div>
+                </div>
+                <div>
+                    <div class="video-wrap"><iframe src="https://www.youtube.com/embed/a3_WNFoiT1Y" title="TikTok SME Thailand" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="video-label">TikTok SME Thailand</div>
+                </div>
+                <div>
+                    <div class="video-wrap"><iframe src="https://www.youtube.com/embed/sWqdAWNVCBQ" title="TikTok SME Thailand 2024" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="video-label">TikTok SME Thailand 2024</div>
+                </div>
+                <div>
+                    <div class="video-wrap"><iframe src="https://www.youtube.com/embed/dIobDVJCqNE" title="Live BBL" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="video-label">Live BBL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CASE STUDY -->
+        <div class="content-card">
+            <div class="two-col">
+                <div>
+                    <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
+                    <p class="col-desc"><strong style="color:#fff">Challenge:</strong> สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น โดยไม่มีประสบการณ์หรือระบบมาก่อน</p>
+                    <ul class="hl">
+                        <li>Product curation strategy — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
+                        <li>Script framework development — กำหนดว่าจะพูดอะไร เมื่อไหร่</li>
+                        <li>Technical setup &amp; optimization — แสง มุมกล้อง และแพลตฟอร์ม</li>
+                        <li>Host training &amp; operations — รูปแบบไลฟ์ 2 ชั่วโมงที่ทีมทำเองได้</li>
+                    </ul>
+                    <div class="cs-pills">
+                        <span class="cs-pill">✦ 6-figure ใน 2 ชั่วโมง</span>
+                        <span class="cs-pill">✦ รูปแบบที่ทำซ้ำได้</span>
+                        <span class="cs-pill">✦ ทีมรันเองโดยไม่ต้องรอ</span>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
+                    <div class="proof-grid">
+                        <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.style.minHeight='80px'">
+                        <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.style.minHeight='80px'">
+                        <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.style.minHeight='80px'">
+                        <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.style.minHeight='80px'">
+                    </div>
+                    <p class="col-desc" style="margin-top:10px;font-size:0.75rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>

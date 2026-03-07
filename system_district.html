@@ -7,47 +7,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #34A853; --text-dark: #1A1A1A; }
+        :root { --bg-color: #34A853; --text-dark: #1A1A1A; --accent: #34A853; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; }
-        
+
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
         .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
 
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1000px; margin: 0 auto; }
-        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
-        
-        /* 🎴 CARD (สีขาว 2 คอลัมน์) */
-        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .col-title { font-family: 'Anton', sans-serif; font-size: 2.2rem; color: var(--bg-color); margin: 0 0 20px 0; padding-bottom: 15px; border-bottom: 2px solid var(--bg-color); text-transform: uppercase; letter-spacing: 0.5px; }
-        .col-desc { font-size: 1rem; line-height: 1.7; font-weight: 400; margin: 0; }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
 
-        @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } }
+        /* CARD */
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .content-card.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .col-title { font-family: 'Anton', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-desc { font-size: 0.88rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #444; }
+        .col-desc strong { font-weight: 700; color: var(--text-dark); }
+
+        /* service list */
+        .srv-list { list-style: none; padding: 0; margin: 0; }
+        .srv-list li { font-size: 0.88rem; line-height: 1.7; padding: 10px 0 10px 18px; border-bottom: 1px solid #eee; position: relative; color: #333; font-weight: 300; }
+        .srv-list li:last-child { border-bottom: none; }
+        .srv-list li::before { content: "✦"; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 13px; }
+        .srv-list li strong { font-weight: 600; color: var(--text-dark); }
+
+        /* tool tags */
+        .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .tool-tag { padding: 4px 14px; background: rgba(52,168,83,0.1); border: 1px solid rgba(52,168,83,0.3); border-radius: 6px; font-size: 0.75rem; color: #2a7a42; font-weight: 500; }
+
+        /* highlight pill */
+        .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .pill { background: var(--accent); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+
+        @media(max-width: 768px) {
+            .content-card.two-col { grid-template-columns: 1fr; gap: 30px; }
+            .content-card { padding: 30px; }
+            .nav-header { padding: 15px 20px; }
+        }
     </style>
 </head>
 <body>
     <header class="nav-header">
-        <a href="index.html">
-            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
-        </a>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
     </header>
     <main class="main-content">
         <h1 class="page-title">SYSTEM<br>DISTRICT</h1>
         <p class="page-subtitle">Operational frameworks that scale without breaking.</p>
-        <div class="content-card">
-            <div class="col">
-                <h2 class="col-title">AI & LIVE COMMERCE</h2>
-                <p class="col-desc">คำแนะนำเครื่องมือเทคโนโลยี เช่น AI Voice Generator, Caption Factory, Chatbots และ AI Agent เพื่อลดภาระงาน</p>
+
+        <!-- AI TOOLS + LIVE COMMERCE -->
+        <div class="content-card two-col">
+            <div>
+                <h2 class="col-title">AI TOOLS</h2>
+                <p class="col-desc">คำแนะนำเครื่องมือและเทคโนโลยีที่เหมาะกับธุรกิจ พร้อมการนำ AI มาใช้จริงในงานต่างๆ</p>
+                <ul class="srv-list">
+                    <li><strong>AI Voice Generator</strong> — สร้างเสียงบรรยายและพากย์วีดีโอด้วย AI</li>
+                    <li><strong>Caption Factory</strong> — สร้างแคปชั่นโซเชียลอัตโนมัติ พร้อม Engagement Prediction</li>
+                    <li><strong>Chatbots &amp; AI Agent</strong> — วางระบบตอบอัตโนมัติที่เรียนรู้และปรับตัวได้</li>
+                    <li><strong>Animation Avatar Video</strong> — สร้างวีดีโอ Avatar สำหรับคอนเทนต์</li>
+                    <li><strong>Tech Stack Recommendations</strong> — เลือกเครื่องมือที่ใช่ สำหรับปัญหาที่มี</li>
+                </ul>
+                <div class="tool-tags">
+                    <span class="tool-tag">ChatGPT</span>
+                    <span class="tool-tag">Make.com</span>
+                    <span class="tool-tag">Canva AI</span>
+                    <span class="tool-tag">CapCut</span>
+                    <span class="tool-tag">ElevenLabs</span>
+                    <span class="tool-tag">Wix AI</span>
+                </div>
             </div>
-            <div class="col">
-                <h2 class="col-title">BUSINESS & AUTOMATION</h2>
-                <p class="col-desc">บริการวิเคราะห์ปัญหา วางแผนธุรกิจ โมเดลการเงิน และคู่มือ SOPs ที่นำไปใช้ได้จริง</p>
+            <div>
+                <h2 class="col-title">LIVE COMMERCE</h2>
+                <p class="col-desc">บริการวางระบบ Live Commerce แบบครบวงจร ตั้งแต่เริ่มต้นจนถึงสร้างยอดขาย</p>
+                <ul class="srv-list">
+                    <li><strong>กลยุทธ์และการคัดเลือกสินค้า</strong> — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
+                    <li><strong>โครงสร้างสคริปต์และฝึกอบรมพิธีกร</strong> — พูดอะไร เมื่อไหร่ และอย่างไร</li>
+                    <li><strong>ติดตั้งระบบเทคนิคและการจัดการหลังบ้าน</strong> — แสง มุมกล้อง แพลตฟอร์ม</li>
+                    <li><strong>ปรับปรุงประสิทธิภาพเพื่อเพิ่มยอดขาย</strong> — วิเคราะห์และ optimize อย่างต่อเนื่อง</li>
+                </ul>
+                <div class="pills">
+                    <span class="pill">TikTok LIVE</span>
+                    <span class="pill">Facebook Live</span>
+                    <span class="pill">Shopee Live</span>
+                </div>
             </div>
         </div>
+
+        <!-- BUSINESS SYSTEMS + AUTOMATION -->
+        <div class="content-card two-col">
+            <div>
+                <h2 class="col-title">BUSINESS SYSTEMS</h2>
+                <p class="col-desc">วิเคราะห์ปัญหาและเสนอทางแก้ — วางแผนธุรกิจที่คำนึงถึงความเป็นจริงในการปฏิบัติงาน</p>
+                <ul class="srv-list">
+                    <li><strong>กลยุทธ์การตลาดและการวางตำแหน่ง</strong> — กำหนดทิศทางและ positioning ของธุรกิจ</li>
+                    <li><strong>โมเดลการเงินและการคาดการณ์</strong> — ตัวเลขจริง ไม่ใช่แค่ความรู้สึก</li>
+                    <li><strong>โครงสร้างทีมและการวางแผนกำลังคน</strong> — ออกแบบทีมที่ run ได้โดยไม่ต้องพึ่งพาคนเดียว</li>
+                    <li><strong>Launch Framework</strong> — แผนเปิดตัวที่แบรนด์ early-stage ใช้งานได้จริง</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="col-title">AUTOMATION & SOP</h2>
+                <p class="col-desc">ออกแบบระบบงานที่ขยายได้โดยไม่สะดุด (Operational frameworks that scale without breaking)</p>
+                <ul class="srv-list">
+                    <li><strong>แผนผังกระบวนการและออกแบบขั้นตอน</strong> — วิเคราะห์และออกแบบ workflow ที่มีประสิทธิภาพ</li>
+                    <li><strong>คู่มือปฏิบัติงาน (SOP)</strong> — เอกสารที่ชัดเจนและนำไปปฏิบัติได้จริง</li>
+                    <li><strong>KPIs &amp; Metrics</strong> — ตัวชี้วัดที่ช่วยติดตามและประเมินผล</li>
+                    <li><strong>Transfer Ownership</strong> — ฝึกทีมและจัดทำเอกสารให้เจ้าของดูแลต่อเองได้</li>
+                </ul>
+                <div class="pills">
+                    <span class="pill">✦ ระบบที่ขยายได้</span>
+                    <span class="pill">✦ ทีมรันเองได้</span>
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 </html>
