@@ -28,7 +28,7 @@ var ALLOWED_SHEETS = [
   'work_ai',         // AI projects: id | title | titleTh | description | descriptionTh | category | status | link | logo | previewImage | section | tags
   'work_commerce',   // Commerce projects: (same columns as work_ai)
   'work__creative',  // Creative projects: (same columns as work_ai)
-  'school_service1', // School cards: (blog-style)
+  'school_service1', // School cards: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
   'school_service2'  // Service cards: id | title | titleTh | description | descriptionTh | type | price | url_picture
 ];
 

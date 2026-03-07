@@ -122,8 +122,8 @@
     const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
     // ══════════════════════════════════════════════════════════════
     // Sheet tabs ที่ใช้:
-    //   school_service1 → SCHOOL cards (blog-style)
-    //     Columns: id | title | titleTh | description | category | link | date | image_url
+    //   school_service1 → SCHOOL cards (blog-style, same columns as blog tab)
+    //     Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
     //   school_service2 → SERVICE cards with price
     //     Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
     //     type values: free / premium / coming-soon
@@ -135,20 +135,21 @@
     };
     function colourFor(cat) { return COLOUR_MAP[(cat||'').toLowerCase()] || 'blue'; }
 
-    // ─── Render SCHOOL cards (blog-style) ───────────────────────
+    // ─── Render SCHOOL cards (school_service1, blog-style) ──────
+    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
     function renderSchool(items) {
         const grid = document.getElementById('school-grid');
         if (!items.length) { grid.innerHTML = '<p class="status-msg">ยังไม่มีคอร์สในขณะนี้</p>'; return; }
         grid.innerHTML = items.map(p => {
-            const colour = colourFor(p.category);
-            const href   = p.link || '#';
-            const isExt  = href.startsWith('http');
+            const colour  = colourFor(p.category);
+            const excerpt = p.excerpt_thai || p.excerpt_eng || '';
+            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${p.slug}` : '#');
+            const isExt   = href.startsWith('http');
             return `<a class="school-card" data-color="${colour}" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
                 <div class="sc-tag">${p.category || 'Course'}</div>
                 <div class="sc-title">${(p.title || '').toUpperCase()}</div>
-                ${p.titleTh ? `<div class="sc-title-th">${p.titleTh}</div>` : ''}
-                <div class="sc-desc">${p.description || ''}</div>
-                <div class="sc-meta">${p.date || ''}&nbsp;<strong>Read more →</strong></div>
+                <div class="sc-desc">${excerpt}</div>
+                <div class="sc-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}&nbsp;<strong>Read more →</strong></div>
             </a>`;
         }).join('');
     }
