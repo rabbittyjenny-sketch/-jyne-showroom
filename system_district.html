@@ -125,7 +125,8 @@
     //   school_service1 → SCHOOL cards (blog-style)
     //     Columns: id | title | titleTh | description | category | link | date | image_url
     //   school_service2 → SERVICE cards with price
-    //     Columns: id | title | titleTh | description | price | priceTh | duration | category | link | status
+    //     Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
+    //     type values: free / premium / coming-soon
 
     const COLOUR_MAP = {
         'course': 'blue', 'workshop': 'yellow', 'live': 'red',
@@ -152,23 +153,29 @@
         }).join('');
     }
 
-    // ─── Render SERVICE cards (with price) ──────────────────────
+    // ─── Render SERVICE cards (school_service2) ──────────────────
+    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
+    // type: free / premium / coming-soon
+    // price: ฿4,700 / FREE / TBA / etc.
+    // url_picture: รูปประกอบ (ไม่ใช่ link)
     function renderService(items) {
         const grid = document.getElementById('service-grid');
         if (!items.length) { grid.innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ยังไม่มีบริการในขณะนี้</p>'; return; }
         grid.innerHTML = items.map(p => {
-            const isSoon = (p.status || '').toLowerCase().includes('soon') || (p.status || '').toLowerCase().includes('coming');
-            const href   = !isSoon && p.link ? p.link : null;
-            const tag    = href ? 'a' : 'div';
-            const hrefAttr = href ? ` href="${href}" target="_blank" rel="noopener"` : '';
-            return `<${tag} class="srv-card${href ? ' has-link' : ''}${isSoon ? ' srv-coming' : ''}"${hrefAttr}>
-                <span class="srv-badge">${isSoon ? 'Coming Soon' : (p.category || 'Service')}</span>
+            const type   = (p.type || '').toLowerCase();
+            const isSoon = type.includes('soon') || type.includes('coming');
+            const isFree = type === 'free';
+            const badgeLbl = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
+            const desc = p.descriptionTh || p.description || '';
+            const coverHTML = p.url_picture ? `<img src="${p.url_picture}" alt="${p.title}" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px;" loading="lazy">` : '';
+            return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
+                ${coverHTML}
+                <span class="srv-badge" style="${isFree ? 'background:rgba(52,168,83,0.4)' : isSoon ? '' : 'background:rgba(251,188,5,0.3);color:#FBBC05'}">${badgeLbl}</span>
                 <div class="srv-title">${(p.title || '').toUpperCase()}</div>
                 ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
-                <div class="srv-desc">${p.description || ''}</div>
-                ${p.price ? `<div class="srv-price">${p.price}${p.priceTh ? ' ' + p.priceTh : ''}<small>${p.duration || ''}</small></div>` : ''}
-                ${href ? '<div class="srv-arrow">↗</div>' : ''}
-            </${tag}>`;
+                <div class="srv-desc">${desc}</div>
+                ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
+            </div>`;
         }).join('');
     }
 

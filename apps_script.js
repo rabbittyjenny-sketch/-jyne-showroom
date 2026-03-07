@@ -21,14 +21,15 @@
  */
 
 // ── Allowed sheet names (whitelist เพื่อความปลอดภัย) ──────────
+// หมายเหตุ: Sheet1 = learning resources, Sheet2 = subscription log
 var ALLOWED_SHEETS = [
-  'blog',
-  'learning',
-  'work_ai',
-  'work_commerce',
-  'work__creative',
-  'school_service1',
-  'school_service2'
+  'Sheet1',          // learning resources: id | catagory | name | url | update
+  'blog',            // blog posts: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+  'work_ai',         // AI projects: id | title | titleTh | description | descriptionTh | category | status | link | logo | previewImage | section | tags
+  'work_commerce',   // Commerce projects: (same columns as work_ai)
+  'work__creative',  // Creative projects: (same columns as work_ai)
+  'school_service1', // School cards: (blog-style)
+  'school_service2'  // Service cards: id | title | titleTh | description | descriptionTh | type | price | url_picture
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -110,13 +111,14 @@ function doPost(e) {
     var now     = new Date();
     var dateStr = Utilities.formatDate(now, Session.getScriptTimeZone(), 'MM/dd/yyyy HH:mm');
 
+    // Sheet2 column order: date | user_name | business_type | email | name | id | catagory | url download
     sheet.appendRow([
       dateStr,
       data.userName     || '',
       data.businessType || '',
       data.email,
-      data.id           || '',
-      data.name         || '',
+      data.name         || '',   // name ก่อน id (ตาม Sheet2 column E)
+      data.id           || '',   // id อยู่ column F
       data.category     || '',
       data.url          || ''
     ]);

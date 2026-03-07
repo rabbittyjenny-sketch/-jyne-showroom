@@ -160,8 +160,10 @@
     // ══════════════════════════════════════════════════════════════
 
     // URL เดิม (สำรองไว้กรณี Apps Script ยังไม่ได้ deploy)
+    // Sheet tab ชื่อ "Sheet1" (ไม่ได้เปลี่ยนชื่อ)
+    // Columns: id | catagory | name | url | update  (หมายเหตุ: catagory สะกดผิดในชีท แต่โค้ดรองรับทั้งสองแบบ)
     const RESOURCES_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
-        ? APPS_SCRIPT_URL + '?sheet=learning'
+        ? APPS_SCRIPT_URL + '?sheet=Sheet1'
         : 'https://script.google.com/macros/s/AKfycbwbvCK3k7DEJI29u6HSZxRK7vwjFVDvxF8wtKWjGaJJ6XYNpg0blLTRf9YGZZ5ZB03g/exec';
     const SUBSCRIBE_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
         ? APPS_SCRIPT_URL
@@ -192,10 +194,13 @@
             grid.innerHTML = '<p class="res-loading">ไม่มีรายการในขณะนี้</p>';
             return;
         }
-        grid.innerHTML = list.map((r, i) => `
+        grid.innerHTML = list.map((r, i) => {
+            // รองรับทั้ง 'catagory' (typo ในชีท) และ 'category'
+            const cat = r.catagory || r.category || 'Resource';
+            return `
             <div class="res-card">
                 <div class="res-top">
-                    <span class="res-badge ${badgeClass(r.category)}">${r.category || 'Resource'}</span>
+                    <span class="res-badge ${badgeClass(cat)}">${cat}</span>
                     <span class="res-free">FREE</span>
                 </div>
                 <div class="res-name">${r.name || ''}</div>
@@ -203,8 +208,8 @@
                 <button class="res-dl-btn" onclick="openModal(${i})">
                     Download <span>↓</span>
                 </button>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
         window._resources = list;
     }
 
