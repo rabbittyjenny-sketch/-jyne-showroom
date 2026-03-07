@@ -30,16 +30,18 @@
 
         /* PROJECT GRID */
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .proj-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 22px 24px; text-decoration: none; color: #ffffff; display: flex; justify-content: space-between; align-items: flex-start; transition: background 0.2s, transform 0.2s; }
+        .proj-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; overflow: hidden; padding: 0; text-decoration: none; color: #ffffff; display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s; }
         .proj-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
         .proj-card.coming { opacity: 0.55; cursor: default; }
         .proj-card.coming:hover { transform: none; }
-        .proj-info { flex: 1; }
-        .proj-logo { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; margin-bottom: 8px; display: block; }
+        .proj-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; display: block; flex-shrink: 0; }
+        .proj-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+        .proj-info { flex: 1; padding: 18px 20px; }
+        .proj-logo-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .proj-arrow { padding: 0 20px 14px; text-align: right; font-size: 1.1rem; flex-shrink: 0; }
         .proj-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
         .proj-name-th { font-size: 0.78rem; color: #aaa; margin-bottom: 6px; font-weight: 300; }
         .proj-desc { font-size: 0.78rem; line-height: 1.5; color: #ccc; font-weight: 300; }
-        .proj-arrow { font-size: 1.1rem; flex-shrink: 0; margin-left: 12px; padding-top: 2px; }
         .proj-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
         .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
         .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
@@ -96,12 +98,59 @@
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
             <div class="project-grid" id="grid-astrology">
                 <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards" loading="lazy">
                     <div class="proj-info">
-                        <div class="proj-badge badge-ai">AI · Live</div>
+                        <div class="proj-logo-row">
+                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Cards logo" loading="lazy">
+                            <div class="proj-badge badge-ai">AI · Live</div>
+                        </div>
                         <div class="proj-name">Soul Cards</div>
                         <div class="proj-name-th">ไพ่ออราเคิล</div>
                         <div class="proj-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
                     </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="The Soul Weaver" loading="lazy">
+                    <div class="proj-info">
+                        <div class="proj-logo-row">
+                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="The Soul Weaver logo" loading="lazy">
+                            <div class="proj-badge badge-ai">AI · Live</div>
+                        </div>
+                        <div class="proj-name">The Soul Weaver</div>
+                        <div class="proj-name-th">ความลับแห่งดวงดาว</div>
+                        <div class="proj-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN" loading="lazy">
+                    <div class="proj-info">
+                        <div class="proj-logo-row">
+                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="KAIXIN logo" loading="lazy">
+                            <div class="proj-badge badge-ai">AI · Live</div>
+                        </div>
+                        <div class="proj-name">KAIXIN</div>
+                        <div class="proj-name-th">ค้นหาหินประจำตัว</div>
+                        <div class="proj-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/rune2.png?updatedAt=1772818993769" alt="Soul Slot" loading="lazy">
+                    <div class="proj-info">
+                        <div class="proj-logo-row">
+                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/logo2%20(1)%20(1).png?updatedAt=1772818994039" alt="Soul Slot logo" loading="lazy">
+                            <div class="proj-badge badge-ai">AI · Live</div>
+                        </div>
+                        <div class="proj-name">Soul Slot</div>
+                        <div class="proj-name-th">สุ่มตัวเลขแห่งโชคชะตา</div>
+                        <div class="proj-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
+                    </div>
+                    <div class="proj-arrow">↗</div>
+                </a>
+            </div>
+        </div>
                     <div class="proj-arrow">↗</div>
                 </a>
                 <a class="proj-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
@@ -283,11 +332,13 @@
     // ──────────────────────────────────────────────────────────
     // Column ใน Sheet ที่ต้องมี (ชื่อต้องตรง):
     //   id | title | titleTh | description | descriptionTh |
-    //   category | status | link | section
+    //   category | status | link | section | cover | logo
     //
     // category: ai / business / live / system
     // status:   live / coming-soon / sold-out
     // section:  astrology / commerce / system  (ถ้าว่างจะใส่ใน commerce)
+    // cover:    URL รูปหน้าปก (ImageKit หรือ URL อื่น) — ถ้าว่างจะไม่แสดง
+    // logo:     URL โลโก้ขนาดเล็ก (36x36) — ถ้าว่างจะไม่แสดง
     // ══════════════════════════════════════════════════════════
 
     const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
@@ -330,10 +381,15 @@
         const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
         // ใช้ descriptionTh ก่อน ถ้าว่างใช้ description
         const desc = p.descriptionTh || p.description || '';
+        const coverHTML = p.cover ? `<img class="proj-cover" src="${p.cover}" alt="">` : '';
+        const logoHTML  = p.logo  ? `<img class="proj-logo"  src="${p.logo}"  alt="">` : '';
         return `<${tag} class="${cardCls}" ${href}>
+            ${coverHTML}
             <div class="proj-info">
-                ${p.logo ? `<img class="proj-logo" src="${p.logo}" alt="${p.title || ''}" loading="lazy">` : ''}
-                <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
+                <div class="proj-logo-row">
+                    ${logoHTML}
+                    <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
+                </div>
                 <div class="proj-name">${p.title || ''}</div>
                 ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
                 <div class="proj-desc">${desc}</div>
