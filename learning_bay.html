@@ -9,38 +9,83 @@
         * { box-sizing: border-box; }
         :root { --bg-color: #4285F4; --text-dark: #1A1A1A; --accent: #4285F4; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; overflow-x: hidden; }
-
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
         .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
-
         .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
         .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
         .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
-
-        /* CARD */
         .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .content-card.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
         .col-title { font-family: 'Anton', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
         .col-desc { font-size: 0.88rem; line-height: 1.8; font-weight: 300; margin: 0 0 16px; color: #444; }
-
-        /* resource cards */
-        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .res-card { background: #f5f8ff; border: 1px solid #d0e0ff; border-radius: 12px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-        .res-card.free { border-color: #4285F4; }
-        .res-type { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 8px; margin-bottom: 6px; display: inline-block; }
-        .type-template { background: rgba(66,133,244,0.15); color: #4285F4; }
-        .type-guide { background: rgba(52,168,83,0.15); color: #2d8a4e; }
-        .res-name { font-weight: 700; font-size: 0.88rem; color: var(--text-dark); margin-bottom: 3px; }
-        .res-desc { font-size: 0.75rem; color: #666; font-weight: 300; line-height: 1.5; }
-        .res-free-badge { font-size: 0.65rem; font-weight: 700; background: #34A853; color: #fff; padding: 2px 8px; border-radius: 8px; flex-shrink: 0; }
-
-        /* coming soon notice */
         .notice { background: rgba(66,133,244,0.08); border: 1px solid rgba(66,133,244,0.2); border-radius: 12px; padding: 20px 24px; margin-top: 6px; }
         .notice p { font-size: 0.88rem; color: #555; margin: 0; line-height: 1.7; font-weight: 300; }
         .notice strong { color: var(--text-dark); font-weight: 700; }
+
+        /* ── FREE RESOURCES GRID (จาก Google Apps Script) ── */
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .res-card {
+            background: #f5f8ff; border: 1px solid #4285F4; border-radius: 14px;
+            padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;
+        }
+        .res-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .res-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 9px; border-radius: 8px; }
+        .badge-template { background: rgba(66,133,244,0.15); color: #4285F4; }
+        .badge-guidebook { background: rgba(52,168,83,0.15); color: #2d8a4e; }
+        .badge-framework { background: rgba(251,188,5,0.2); color: #b8860b; }
+        .badge-default   { background: rgba(66,133,244,0.1); color: #4285F4; }
+        .res-free { font-size: 0.65rem; font-weight: 700; background: #34A853; color: #fff; padding: 3px 9px; border-radius: 8px; }
+        .res-name { font-weight: 700; font-size: 0.9rem; color: var(--text-dark); }
+        .res-updated { font-size: 0.7rem; color: #999; font-weight: 300; }
+        .res-dl-btn {
+            margin-top: 4px; background: var(--accent); color: #fff; border: none; border-radius: 8px;
+            padding: 9px 18px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; width: fit-content; transition: opacity 0.2s;
+        }
+        .res-dl-btn:hover { opacity: 0.85; }
+        .res-loading { text-align: center; color: #888; font-size: 0.9rem; padding: 20px; grid-column: 1/-1; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+            z-index: 9999; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: #fff; border-radius: 20px; padding: 40px; max-width: 460px; width: 100%;
+            position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.25); color: var(--text-dark);
+        }
+        .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .modal h2 { font-family: 'Anton', sans-serif; font-size: 1.6rem; margin: 0 0 4px; text-transform: uppercase; }
+        .modal .m-sub { font-size: 0.82rem; color: #888; margin: 0 0 16px; }
+        .modal .m-desc { font-size: 0.88rem; color: #444; margin-bottom: 20px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: #555; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.88rem; font-family: inherit; transition: border 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent); outline: none; }
+        .pdpa-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 16px; }
+        .pdpa-row input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; width: 16px; height: 16px; cursor: pointer; }
+        .pdpa-row label { font-size: 0.78rem; color: #555; line-height: 1.5; }
+        .pdpa-row a { color: var(--accent); }
+        .modal-error { color: #e53935; font-size: 0.8rem; margin-bottom: 10px; }
+        .modal-submit {
+            width: 100%; padding: 12px; background: var(--accent); color: #fff; border: none;
+            border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer;
+            font-family: inherit; transition: opacity 0.2s;
+        }
+        .modal-submit:hover:not(:disabled) { opacity: 0.85; }
+        .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .success-box { text-align: center; padding: 10px 0; }
+        .success-box .s-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .success-box h3 { font-family: 'Anton', sans-serif; font-size: 1.4rem; margin: 0 0 8px; }
+        .success-box p { font-size: 0.88rem; color: #555; margin: 0 0 16px; }
+        .success-box a { display: inline-block; padding: 10px 24px; background: var(--accent); color: #fff; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.88rem; }
 
         @media(max-width: 768px) {
             .content-card.two-col { grid-template-columns: 1fr; gap: 30px; }
@@ -59,59 +104,12 @@
         <h1 class="page-title">LEARNING<br>BAY</h1>
         <p class="page-subtitle">Playbooks, Free Resources &amp; Guides</p>
 
-        <!-- FREE RESOURCES -->
+        <!-- FREE RESOURCES (ดึงจาก Google Sheets ผ่าน Apps Script) -->
         <div class="content-card">
             <h2 class="col-title">FREE RESOURCES · ดาวน์โหลดฟรี</h2>
-            <p class="col-desc">เทมเพลตและคู่มือที่ iDEAS365 ใช้งานจริง แชร์ให้ฟรีเพื่อช่วยให้คุณเริ่มต้นได้เร็วขึ้น</p>
-            <div class="res-grid">
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-template">Template</div>
-                        <div class="res-name">70 Content iDEAS365</div>
-                        <div class="res-desc">ไอเดียคอนเทนต์ 70 หัวข้อพร้อมใช้ สำหรับโซเชียลมีเดีย</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-guide">Guidebook</div>
-                        <div class="res-name">Live Streaming Agency System</div>
-                        <div class="res-desc">iDEAS365 ระบบ Agency สำหรับ Live Streaming ฉบับสมบูรณ์</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-template">Template</div>
-                        <div class="res-name">Weekly Social Media Template</div>
-                        <div class="res-desc">แผนคอนเทนต์รายสัปดาห์ที่ใช้ได้จริงสำหรับ iDEAS365</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-guide">Guidebook</div>
-                        <div class="res-name">Chatbot VS Agent</div>
-                        <div class="res-desc">ความแตกต่างและวิธีเลือกใช้ระหว่าง Chatbot กับ AI Agent</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-guide">Sponsor Deck</div>
-                        <div class="res-name">iDEAS365 Project (Hello Sponsor)</div>
-                        <div class="res-desc">เอกสารนำเสนอโปรเจกต์สำหรับสนับสนุน iDEAS365</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
-                <div class="res-card free">
-                    <div>
-                        <div class="res-type type-guide">Sponsor Deck</div>
-                        <div class="res-name">iDEAS365 Project 2 (Hello Sponsor)</div>
-                        <div class="res-desc">เอกสารนำเสนอโปรเจกต์ฉบับที่ 2 สำหรับสนับสนุน</div>
-                    </div>
-                    <div class="res-free-badge">FREE</div>
-                </div>
+            <p class="col-desc">เทมเพลตและคู่มือที่ iDEAS365 ใช้งานจริง กรอกข้อมูลสั้นๆ แล้วดาวน์โหลดได้เลย</p>
+            <div id="res-grid" class="res-grid">
+                <p class="res-loading">กำลังโหลด…</p>
             </div>
         </div>
 
@@ -119,9 +117,9 @@
         <div class="content-card two-col">
             <div>
                 <h2 class="col-title">LIBRARY</h2>
-                <p class="col-desc">ห้องสมุดความรู้กำลังก่อสร้าง — เรากำลังเรียบเรียงคู่มือการทำงาน (SOPs) ภายใน เพื่อนำมาแบ่งปันเป็นคู่มือสาธารณะในเร็วๆ นี้</p>
+                <p class="col-desc">ห้องสมุดความรู้กำลังก่อสร้าง — กำลังเรียบเรียงคู่มือการทำงาน (SOPs) ภายใน เพื่อนำมาแบ่งปันเป็นคู่มือสาธารณะในเร็วๆ นี้</p>
                 <div class="notice">
-                    <p><strong>🏗️ Library Under Construction</strong><br>คอร์สและ Workshop กำลังพัฒนา เร็วๆ นี้จะมี Live Training และ Workshop สำหรับการวางระบบธุรกิจและ Live Commerce</p>
+                    <p><strong>🏗️ Library Under Construction</strong><br>คอร์สและ Workshop กำลังพัฒนา เร็วๆ นี้จะมี Live Training สำหรับการวางระบบธุรกิจและ Live Commerce</p>
                 </div>
             </div>
             <div>
@@ -136,7 +134,194 @@
                 </div>
             </div>
         </div>
-
     </main>
+
+    <!-- ── SUBSCRIBE & DOWNLOAD MODAL ── -->
+    <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()" aria-label="ปิด">×</button>
+            <div id="modal-body"><!-- filled by JS --></div>
+        </div>
+    </div>
+
+    <script>
+    // ── CONFIG ──────────────────────────────────────────────────
+    const RESOURCES_URL  = 'https://script.google.com/macros/s/AKfycbwbvCK3k7DEJI29u6HSZxRK7vwjFVDvxF8wtKWjGaJJ6XYNpg0blLTRf9YGZZ5ZB03g/exec';
+    const SUBSCRIBE_URL  = 'https://script.google.com/macros/s/AKfycbxe72M0uK62wYSEKp7L3mw7agrFJuTKZDncUrzBJsgRb4SpjR-n1Gt-X9i2e6lbzvK8/exec';
+
+    const BUSINESS_TYPES = [
+        'E-commerce / ร้านค้าออนไลน์', 'Education / การศึกษา', 'Healthcare / สุขภาพ',
+        'Technology / เทคโนโลยี', 'Food & Beverage / อาหารและเครื่องดื่ม', 'Fashion / แฟชั่น',
+        'Real Estate / อสังหาริมทรัพย์', 'Finance / การเงิน', 'Marketing / การตลาด',
+        'Consulting / ที่ปรึกษา', 'Manufacturing / การผลิต', 'Other / อื่นๆ'
+    ];
+
+    let currentResource = null;
+
+    // ── BADGE COLOUR ─────────────────────────────────────────────
+    function badgeClass(cat) {
+        const c = (cat || '').toLowerCase();
+        if (c === 'template')  return 'badge-template';
+        if (c === 'guidebook') return 'badge-guidebook';
+        if (c === 'framework') return 'badge-framework';
+        return 'badge-default';
+    }
+
+    // ── RENDER RESOURCE CARDS ────────────────────────────────────
+    function renderResources(list) {
+        const grid = document.getElementById('res-grid');
+        if (!list || !list.length) {
+            grid.innerHTML = '<p class="res-loading">ไม่มีรายการในขณะนี้</p>';
+            return;
+        }
+        grid.innerHTML = list.map((r, i) => `
+            <div class="res-card">
+                <div class="res-top">
+                    <span class="res-badge ${badgeClass(r.category)}">${r.category || 'Resource'}</span>
+                    <span class="res-free">FREE</span>
+                </div>
+                <div class="res-name">${r.name || ''}</div>
+                ${r.update ? `<div class="res-updated">อัปเดต: ${r.update}</div>` : ''}
+                <button class="res-dl-btn" onclick="openModal(${i})">
+                    Download <span>↓</span>
+                </button>
+            </div>
+        `).join('');
+        window._resources = list;
+    }
+
+    // ── FETCH RESOURCES ──────────────────────────────────────────
+    async function loadResources() {
+        const grid = document.getElementById('res-grid');
+        try {
+            const res  = await fetch(RESOURCES_URL);
+            const data = await res.json();
+            if (data.success) {
+                renderResources(data.data);
+            } else {
+                grid.innerHTML = '<p class="res-loading">ไม่สามารถโหลดรายการได้</p>';
+            }
+        } catch (err) {
+            grid.innerHTML = '<p class="res-loading">เกิดข้อผิดพลาดในการโหลด</p>';
+            console.error(err);
+        }
+    }
+
+    // ── MODAL ────────────────────────────────────────────────────
+    function openModal(index) {
+        currentResource = (window._resources || [])[index];
+        if (!currentResource) return;
+        const body = document.getElementById('modal-body');
+        body.innerHTML = `
+            <h2>Subscribe & Download</h2>
+            <p class="m-sub">สมัครรับข้อมูลและดาวน์โหลดฟรี</p>
+            <p class="m-desc">กรอกข้อมูลเพื่อดาวน์โหลด <strong>${currentResource.name}</strong></p>
+            <form id="sub-form" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label>ชื่อของคุณ *</label>
+                    <input type="text" id="f-name" placeholder="ชื่อ-นามสกุล" required>
+                </div>
+                <div class="form-group">
+                    <label>ประเภทธุรกิจ *</label>
+                    <select id="f-biz" required>
+                        <option value="">เลือกประเภทธุรกิจ</option>
+                        ${BUSINESS_TYPES.map(t => `<option value="${t}">${t}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>อีเมล *</label>
+                    <input type="email" id="f-email" placeholder="your@email.com" required>
+                </div>
+                <div class="pdpa-row">
+                    <input type="checkbox" id="f-pdpa" required>
+                    <label for="f-pdpa">ฉันยอมรับ <a href="#" target="_blank">นโยบายความเป็นส่วนตัว</a> และยินยอมให้ iDEAS365 ส่งข่าวสารทางการตลาด *</label>
+                </div>
+                <p id="modal-err" class="modal-error" style="display:none"></p>
+                <button type="submit" class="modal-submit" id="modal-btn">Subscribe & Download</button>
+            </form>
+        `;
+        document.getElementById('modal-overlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').classList.remove('open');
+        document.body.style.overflow = '';
+        currentResource = null;
+    }
+
+    // Close on overlay click
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeModal();
+    });
+
+    // ── SUBMIT ───────────────────────────────────────────────────
+    async function submitForm(e) {
+        e.preventDefault();
+        const errEl  = document.getElementById('modal-err');
+        const btn    = document.getElementById('modal-btn');
+        const name   = document.getElementById('f-name').value.trim();
+        const biz    = document.getElementById('f-biz').value;
+        const email  = document.getElementById('f-email').value.trim();
+        const pdpa   = document.getElementById('f-pdpa').checked;
+
+        errEl.style.display = 'none';
+        if (!name)  { showErr('กรุณากรอกชื่อ'); return; }
+        if (!biz)   { showErr('กรุณาเลือกประเภทธุรกิจ'); return; }
+        if (!pdpa)  { showErr('กรุณายอมรับนโยบายความเป็นส่วนตัว'); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'กำลังดำเนินการ…';
+
+        try {
+            const res  = await fetch(SUBSCRIBE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userName: name, businessType: biz, email,
+                    id: currentResource.id, name: currentResource.name,
+                    category: currentResource.category, url: currentResource.url,
+                }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                showSuccess();
+                // เปิดไฟล์
+                const win = window.open(currentResource.url, '_blank');
+                if (!win || win.closed) {
+                    const a = document.createElement('a');
+                    a.href = currentResource.url; a.target = '_blank'; a.rel = 'noopener';
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                }
+            } else {
+                showErr(data.error || 'ไม่สามารถบันทึกข้อมูลได้');
+                btn.disabled = false; btn.textContent = 'Subscribe & Download';
+            }
+        } catch (err) {
+            showErr('เกิดข้อผิดพลาด กรุณาลองใหม่');
+            btn.disabled = false; btn.textContent = 'Subscribe & Download';
+        }
+    }
+
+    function showErr(msg) {
+        const el = document.getElementById('modal-err');
+        el.textContent = msg; el.style.display = 'block';
+    }
+
+    function showSuccess() {
+        document.getElementById('modal-body').innerHTML = `
+            <div class="success-box">
+                <div class="s-icon">✓</div>
+                <h3>สำเร็จ!</h3>
+                <p>ไฟล์จะเปิดอัตโนมัติ<br>หากไม่เปิด กรุณากดปุ่มด้านล่าง</p>
+                <a href="${currentResource.url}" target="_blank" rel="noopener">เปิดไฟล์ดาวน์โหลด</a>
+            </div>
+        `;
+        setTimeout(closeModal, 4000);
+    }
+
+    // ── INIT ─────────────────────────────────────────────────────
+    loadResources();
+    </script>
 </body>
 </html>

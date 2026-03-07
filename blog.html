@@ -13,128 +13,159 @@
             --blog-green: #34A853;
             --blog-red: #EA4335;
         }
-
-        body, html { 
-            margin: 0; padding: 0; width: 100%; min-height: 100vh; 
-            font-family: 'Prompt', sans-serif; background-color: #ffffff; color: var(--text-dark); 
+        body, html {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            font-family: 'Prompt', sans-serif; background-color: #ffffff; color: var(--text-dark);
         }
-        
-        /* 🔝 HEADER - ใช้โลโก้รูปภาพเดิม */
-        .nav-header { 
-            position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; 
-            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; 
+        .nav-header {
+            position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px;
+            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;
         }
         .logo-container { text-decoration: none; display: flex; align-items: center; }
         .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-        
-        .map-btn { 
-            background: var(--text-dark); color: #ffffff; text-decoration: none; 
-            padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; 
+        .map-btn {
+            background: var(--text-dark); color: #ffffff; text-decoration: none;
+            padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px;
             display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
-        .main-content { 
-            display: flex; flex-direction: column; align-items: center; 
-            padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; 
+        .main-content {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto;
         }
-        .page-title { 
-            font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); 
-            text-align: center; line-height: 0.9; margin: 0 0 15px 0; 
-            text-transform: uppercase; letter-spacing: 1px; 
+        .page-title {
+            font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem);
+            text-align: center; line-height: 0.9; margin: 0 0 15px 0;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        .page-subtitle { 
-            font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; 
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
+        .status-msg { text-align: center; font-size: 1rem; color: #888; padding: 40px; width: 100%; }
+        .blog-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px; width: 100%;
         }
-
-        /* 🗂️ GRID 5 ใบ ตามภาพ */
-        .blog-grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 30px; width: 100%; 
-        }
-        
         .blog-card {
             background-color: #ffffff; border: 3px solid; border-radius: 16px; padding: 30px;
-            text-align: left; display: flex; flex-direction: column; cursor: pointer;
+            text-align: left; display: flex; flex-direction: column;
             transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            text-decoration: none; color: var(--text-dark);
         }
-
-        .card-blue { border-color: var(--blog-blue); box-shadow: 6px 6px 0px var(--blog-blue); }
-        .card-yellow { border-color: var(--blog-yellow); box-shadow: 6px 6px 0px var(--blog-yellow); }
-        .card-dark { border-color: var(--text-dark); box-shadow: 6px 6px 0px var(--text-dark); }
-        .card-green { border-color: var(--blog-green); box-shadow: 6px 6px 0px var(--blog-green); }
-        .card-red { border-color: var(--blog-red); box-shadow: 6px 6px 0px var(--blog-red); }
-
+        .blog-card[data-color="blue"]   { border-color: var(--blog-blue);   box-shadow: 6px 6px 0px var(--blog-blue); }
+        .blog-card[data-color="yellow"] { border-color: var(--blog-yellow); box-shadow: 6px 6px 0px var(--blog-yellow); }
+        .blog-card[data-color="dark"]   { border-color: var(--text-dark);   box-shadow: 6px 6px 0px var(--text-dark); }
+        .blog-card[data-color="green"]  { border-color: var(--blog-green);  box-shadow: 6px 6px 0px var(--blog-green); }
+        .blog-card[data-color="red"]    { border-color: var(--blog-red);    box-shadow: 6px 6px 0px var(--blog-red); }
         .blog-card:hover { transform: translate(-4px, -4px); }
-        .card-blue:hover { box-shadow: 10px 10px 0px var(--blog-blue); }
-        .card-yellow:hover { box-shadow: 10px 10px 0px var(--blog-yellow); }
-        .card-dark:hover { box-shadow: 10px 10px 0px var(--text-dark); }
-        .card-green:hover { box-shadow: 10px 10px 0px var(--blog-green); }
-        .card-red:hover { box-shadow: 10px 10px 0px var(--blog-red); }
-
-        .tag { 
-            align-self: flex-start; padding: 6px 16px; border-radius: 20px; font-size: 12px; 
-            font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff; 
+        .blog-card[data-color="blue"]:hover   { box-shadow: 10px 10px 0px var(--blog-blue); }
+        .blog-card[data-color="yellow"]:hover { box-shadow: 10px 10px 0px var(--blog-yellow); }
+        .blog-card[data-color="dark"]:hover   { box-shadow: 10px 10px 0px var(--text-dark); }
+        .blog-card[data-color="green"]:hover  { box-shadow: 10px 10px 0px var(--blog-green); }
+        .blog-card[data-color="red"]:hover    { box-shadow: 10px 10px 0px var(--blog-red); }
+        .tag {
+            align-self: flex-start; padding: 6px 16px; border-radius: 20px; font-size: 12px;
+            font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff;
         }
-        .card-blue .tag { background: var(--blog-blue); }
-        .card-yellow .tag { background: var(--blog-yellow); color: var(--text-dark); }
-        .card-dark .tag { background: var(--text-dark); }
-        .card-green .tag { background: var(--blog-green); }
-        .card-red .tag { background: var(--blog-red); }
-
-        .blog-card h2 { 
-            font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0 0 15px 0; 
-            letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; 
+        .blog-card[data-color="blue"]   .tag { background: var(--blog-blue); }
+        .blog-card[data-color="yellow"] .tag { background: var(--blog-yellow); color: var(--text-dark); }
+        .blog-card[data-color="dark"]   .tag { background: var(--text-dark); }
+        .blog-card[data-color="green"]  .tag { background: var(--blog-green); }
+        .blog-card[data-color="red"]    .tag { background: var(--blog-red); }
+        .blog-card h2 {
+            font-family: 'Anton', sans-serif; font-size: 1.8rem; margin: 0 0 10px 0;
+            letter-spacing: 1px; line-height: 1.2; text-transform: uppercase;
         }
-        .blog-card p { 
-            font-weight: 300; font-size: 0.95rem; line-height: 1.6; margin: 0; 
-            color: #444; flex-grow: 1; 
-        }
-
-        @media (max-width: 768px) { 
-            .blog-grid { grid-template-columns: 1fr; } 
-            .nav-header { padding: 15px 20px; } 
-        }
+        .blog-card p { font-weight: 300; font-size: 0.92rem; line-height: 1.6; margin: 0 0 12px 0; color: #444; flex-grow: 1; }
+        .blog-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; }
+        @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; } .nav-header { padding: 15px 20px; } }
     </style>
 </head>
 <body>
     <header class="nav-header">
         <a href="index.html" class="logo-container">
-            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img">
+            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
         </a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
     </header>
-    
     <main class="main-content">
         <h1 class="page-title">BLOG<br>UPDATE</h1>
         <p class="page-subtitle">Thoughts, experiments, and frameworks.</p>
-        
-        <div class="blog-grid">
-            <div class="blog-card card-blue">
-                <div class="tag">Business</div>
-                <h2>SOLO FOUNDER PATH</h2>
-                <p>ถอดรหัสกลยุทธ์การสร้างธุรกิจด้วยตัวคนเดียวโดยใช้เทคโนโลยีและ AI เป็นแรงขับเคลื่อนหลักในการสเกลงาน</p>
-            </div>
-            <div class="blog-card card-yellow">
-                <div class="tag">Mindset</div>
-                <h2>SMART LAZY STYLE</h2>
-                <p>ทำไมการขี้เกียจอย่างชาญฉลาด ถึงเป็นกุญแจสำคัญในการสร้างระบบ Automation และลดภาระงานซ้ำซ้อน</p>
-            </div>
-            <div class="blog-card card-dark">
-                <div class="tag">Tech</div>
-                <h2>AI WORKFLOWS</h2>
-                <p>อัปเดตเครื่องมือ AI ล่าสุดและการเชื่อมต่อ API เพื่อสร้างบอททำงานอัตโนมัติตลอด 24 ชั่วโมง</p>
-            </div>
-            <div class="blog-card card-green">
-                <div class="tag">System</div>
-                <h2>OPERATIONAL INTEL</h2>
-                <p>การวางโครงสร้างระบบหลังบ้าน (Backend Operations) ที่รองรับการขยายตัวโดยที่ระบบไม่พัง</p>
-            </div>
-            <div class="blog-card card-red">
-                <div class="tag">Marketing</div>
-                <h2>HIGH CONVERSION</h2>
-                <p>จิตวิทยาการออกแบบ UX/UI ที่กระตุ้นให้ผู้ใช้งานตัดสินใจตามเส้นทางที่เราวางแผนไว้</p>
-            </div>
+        <div id="blog-container" class="blog-grid">
+            <p class="status-msg">กำลังโหลดบทความ…</p>
         </div>
     </main>
+    <script>
+    const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
+    const BLOG_GID = '0';
+    const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${BLOG_GID}`;
+
+    const COLOUR_MAP = {
+        'social media': 'blue', 'systems': 'green', 'live commerce': 'red',
+        'ai automation': 'dark', 'mindset': 'yellow', 'business': 'blue',
+        'tech': 'dark', 'marketing': 'yellow', 'system': 'green',
+    };
+    function colourFor(cat) { return COLOUR_MAP[(cat||'').toLowerCase()] || 'blue'; }
+
+    function parseCSVLine(line) {
+        const result = []; let current = '', inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === '"') { inQuotes = !inQuotes; }
+            else if (ch === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+            else { current += ch; }
+        }
+        result.push(current.trim());
+        return result.map(v => v.replace(/^"|"$/g, ''));
+    }
+
+    function parseCSV(csvText) {
+        const lines = csvText.split('\n').filter(l => l.trim());
+        if (lines.length < 2) return [];
+        const headers = parseCSVLine(lines[0]);
+        return lines.slice(1).map(line => {
+            const vals = parseCSVLine(line);
+            const row = {};
+            headers.forEach((h, i) => row[h.trim()] = (vals[i] || '').trim());
+            return row;
+        }).filter(r => r.title || r.Title);
+    }
+
+    function renderPosts(posts) {
+        const container = document.getElementById('blog-container');
+        if (!posts.length) {
+            container.innerHTML = '<p class="status-msg">ยังไม่มีบทความในขณะนี้</p>';
+            return;
+        }
+        container.innerHTML = posts.map(p => {
+            const id      = p.id       || p.ID       || '';
+            const title   = p.title    || p.Title    || '(ไม่มีชื่อ)';
+            const excerpt = p.excerpt  || p.Excerpt  || '';
+            const date    = p.date     || p.Date     || '';
+            const cat     = p.category || p.Category || '';
+            const rt      = p.readTime || p.ReadTime || '';
+            const colour  = colourFor(cat);
+            const href    = id ? `blog_post.html?id=${encodeURIComponent(id)}` : '#';
+            return `
+            <a href="${href}" class="blog-card" data-color="${colour}">
+                <div class="tag">${cat || 'Blog'}</div>
+                <h2>${title.toUpperCase()}</h2>
+                ${excerpt ? `<p>${excerpt}</p>` : ''}
+                <div class="blog-meta">${date}${rt ? ' · ' + rt : ''}</div>
+            </a>`;
+        }).join('');
+    }
+
+    async function loadBlog() {
+        const container = document.getElementById('blog-container');
+        try {
+            const res = await fetch(CSV_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const csv = await res.text();
+            renderPosts(parseCSV(csv));
+        } catch (err) {
+            container.innerHTML = '<p class="status-msg">ไม่สามารถโหลดบทความได้<br><small>ตรวจสอบว่า Google Sheet ตั้งเป็น "Anyone with the link can view" แล้ว</small></p>';
+            console.error(err);
+        }
+    }
+    loadBlog();
+    </script>
 </body>
 </html>
