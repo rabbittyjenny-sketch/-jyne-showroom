@@ -43,7 +43,11 @@
         .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
         .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
         .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
+        .badge-sys { background: rgba(100,180,255,0.2); color: #7ec8ff; }
         .badge-soon { background: rgba(255,255,255,0.1); color: #aaa; }
+        .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
+        .proj-card.sold-out { opacity: 0.6; cursor: default; pointer-events: none; position: relative; }
+        .proj-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
 
         /* VIDEO GRID */
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -84,7 +88,7 @@
         <div class="content-card">
             <div class="section-title">AI TOOLS & ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
-            <div class="project-grid">
+            <div class="project-grid" id="grid-astrology">
                 <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
                     <div class="proj-info">
                         <div class="proj-badge badge-ai">AI · Live</div>
@@ -128,7 +132,7 @@
         <div class="content-card">
             <div class="section-title">COMMERCE & BUSINESS SYSTEMS</div>
             <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
-            <div class="project-grid">
+            <div class="project-grid" id="grid-commerce">
                 <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
                     <div class="proj-info">
                         <div class="proj-badge badge-ai">AI · Live</div>
@@ -188,6 +192,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- SYSTEM PROJECTS (โหลดจาก Sheet เมื่อมี section=system) -->
+        <div class="content-card" id="section-system" style="display:none">
+            <div class="section-title">SYSTEM DEVELOPMENT</div>
+            <div class="section-sub">ระบบที่พัฒนาและส่งมอบให้ลูกค้า — SOP, AI Agent, Framework</div>
+            <div class="project-grid" id="grid-system"></div>
         </div>
 
         <!-- PORTFOLIO MEDIA / CLIPS -->
@@ -254,5 +265,82 @@
         </div>
 
     </main>
+    <script>
+    // ─────────────────────────────────────────────────────────
+    // WORKS SHEET CONFIG
+    // 1. เปิด Google Sheet: 1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE
+    // 2. สร้าง tab ใหม่ชื่อ "works"
+    // 3. ดู GID จาก URL: ...spreadsheets/d/.../edit#gid=XXXXXXXX
+    // 4. วาง GID ที่นี่ ↓
+    const WORKS_GID = '';
+    // ─────────────────────────────────────────────────────────
+
+    const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
+
+    const BADGE_MAP = {
+        ai:   { cls: 'badge-ai',   label: 'AI · Live' },
+        live: { cls: 'badge-live', label: 'Live Commerce' },
+        biz:  { cls: 'badge-biz',  label: 'Business' },
+        sys:  { cls: 'badge-sys',  label: 'System Dev' },
+        soon: { cls: 'badge-soon', label: 'Coming Soon' },
+        sold: { cls: 'badge-sold', label: 'Sold Out' },
+    };
+
+    function parseCSV(text) {
+        const lines = text.trim().split('\n');
+        const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+        return lines.slice(1).map(line => {
+            const values = []; let cur = ''; let inQ = false;
+            for (let i = 0; i < line.length; i++) {
+                if (line[i] === '"') { inQ = !inQ; continue; }
+                if (line[i] === ',' && !inQ) { values.push(cur.trim()); cur = ''; continue; }
+                cur += line[i];
+            }
+            values.push(cur.trim());
+            const obj = {}; headers.forEach((h, i) => obj[h] = values[i] || '');
+            return obj;
+        }).filter(r => r.id);
+    }
+
+    function buildCard(p) {
+        const isSold = p.status === 'sold_out';
+        const isSoon = p.status === 'coming_soon';
+        const hasUrl = p.url && !isSold && !isSoon;
+        const badge = BADGE_MAP[p.badge] || BADGE_MAP.biz;
+        const tag = hasUrl ? 'a' : 'div';
+        const href = hasUrl ? `href="${p.url}" target="_blank"` : '';
+        const cardCls = isSold ? 'proj-card sold-out' : isSoon ? 'proj-card coming' : 'proj-card';
+        return `<${tag} class="${cardCls}" ${href}>
+            <div class="proj-info">
+                <span class="proj-badge ${badge.cls}">${badge.label}</span>
+                <div class="proj-name">${p.name}</div>
+                ${p.name_th ? `<div class="proj-name-th">${p.name_th}</div>` : ''}
+                <div class="proj-desc">${p.desc}</div>
+            </div>
+            ${hasUrl ? '<div class="proj-arrow">↗</div>' : ''}
+        </${tag}>`;
+    }
+
+    async function loadWorks() {
+        if (!WORKS_GID) return; // ยังไม่ได้ตั้งค่า GID — หน้าแสดง static content เดิม
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${WORKS_GID}`;
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const projects = parseCSV(await res.text());
+            ['astrology', 'commerce', 'system'].forEach(sec => {
+                const grid = document.getElementById(`grid-${sec}`);
+                if (!grid) return;
+                const items = projects.filter(p => p.section === sec).sort((a, b) => +a.order - +b.order);
+                if (items.length) {
+                    grid.innerHTML = items.map(buildCard).join('');
+                    if (sec === 'system') document.getElementById('section-system').style.display = 'block';
+                }
+            });
+        } catch (e) { /* ใช้ static fallback */ }
+    }
+
+    loadWorks();
+    </script>
 </body>
 </html>
