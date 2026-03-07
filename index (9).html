@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>iDEAS365 — The Interactive Archipelago</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   ROOT & RESET
+   ===================================================== */
+:root {
+  --ocean-bg: #6FB3D2;
+  --island-shadow: drop-shadow(0 12px 18px rgba(0,0,0,0.32));
+  --bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.32, 1.55);
+  --ease-page: all 0.45s cubic-bezier(0.4,0,0.2,1);
+  /* brand colors */
+  --c-profile:  #9B3908;
+  --c-works:    #FBBC05;
+  --c-systems:  #34A853;
+  --c-library:  #4285F4;
+  --c-blog:     #1a1a2e;
+  --c-contact:  #181818;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body, html {
+  width: 100%; height: 100%;
+  font-family: 'Prompt', sans-serif;
+  background-color: var(--ocean-bg);
+  background-image: url('https://ik.imagekit.io/ideas365logo/Untitled%20design.png?updatedAt=1772752240736');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+/* =====================================================
+   LOGO
+   ===================================================== */
+#logo {
+  position: fixed;
+  top: 20px; left: 22px;
+  z-index: 500;
+  pointer-events: none;
+}
+#logo img {
+  height: 40px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+}
+
+/* =====================================================
+   MAP VIEW  —  เกาะ layout ยึดต้นฉบับ
+   ===================================================== */
+#view-map {
+  position: fixed; inset: 0;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1;
+  transition: opacity 0.35s ease;
+}
+#view-map.hidden { opacity: 0; pointer-events: none; }
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+/* Islands — ตำแหน่งล็อคตามต้นฉบับ */
+.island {
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transform-origin: center bottom;
+  filter: var(--island-shadow);
+  transition: var(--bounce);
+}
+.island img {
+  width: 100%; height: auto;
+  display: block;
+  /* PNG จาก ImageKit มี transparency อยู่แล้ว */
+}
+.island:hover {
+  transform: scale(1.13) translateY(-18px) !important;
+  filter: brightness(1.08) drop-shadow(0 24px 28px rgba(255,255,255,0.38));
+  z-index: 100;
+}
+.island:active {
+  transform: scale(1.04) translateY(-8px) !important;
+}
+
+/* Float animations — soft & calm */
+@keyframes floatIsland {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-7px); }
+  100% { transform: translateY(0px); }
+}
+/* Badge ลอยช้ากว่า + offset phase ต่างกันนิดหน่อย */
+@keyframes floatBadge {
+  0%   { transform: translateX(-50%) translateY(0px); }
+  50%  { transform: translateX(-50%) translateY(-4px); }
+  100% { transform: translateX(-50%) translateY(0px); }
+}
+
+/* Badge label */
+.island-badge {
+  position: absolute;
+  top: -36px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.95);
+  color: #111;
+  padding: 6px 22px;
+  border-radius: 25px;
+  font-family: 'Anton', sans-serif;
+  font-size: 13px; letter-spacing: 1.5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: var(--bounce);
+  pointer-events: none;
+}
+.island:hover .island-badge {
+  transform: translateX(-50%) translateY(-5px);
+}
+/* badge animation — applied per-island below with delay offset */
+.island-badge {
+  animation: floatBadge 5s ease-in-out infinite;
+}
+
+/* --- Island Positions (ต้นฉบับ locked) --- */
+#island-profile {
+  top: 25%; left: 8%; width: 22%;
+  animation: floatIsland 6s ease-in-out infinite;
+}
+#island-profile .island-badge {
+  animation-duration: 6s; animation-delay: 0.6s;
+}
+#island-work {
+  top: 8%; left: 40%; width: 22%;
+  animation: floatIsland 7s ease-in-out infinite;
+  animation-delay: -1s;
+}
+#island-work .island-badge {
+  animation-duration: 7s; animation-delay: -0.4s;
+}
+#island-system {
+  top: 22%; right: 8%; width: 22%;
+  animation: floatIsland 6.5s ease-in-out infinite;
+  animation-delay: -2.5s;
+}
+#island-system .island-badge {
+  animation-duration: 6.5s; animation-delay: -1.8s;
+}
+#island-library {
+  top: 52%; left: 12%; width: 20%;
+  animation: floatIsland 7.5s ease-in-out infinite;
+  animation-delay: -0.8s;
+}
+#island-library .island-badge {
+  animation-duration: 7.5s; animation-delay: -0.2s;
+}
+#island-blog {
+  bottom: 5%; left: 42%; width: 24%;
+  animation: floatIsland 8s ease-in-out infinite;
+  animation-delay: -3s;
+}
+#island-blog .island-badge {
+  animation-duration: 8s; animation-delay: -2.3s;
+}
+#island-contact {
+  bottom: 0; right: 5%; width: 30%;
+  filter: drop-shadow(0 -8px 12px rgba(0,0,0,0.18));
+  animation: floatIsland 6.8s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+#island-contact .island-badge {
+  animation-duration: 6.8s; animation-delay: -0.9s;
+}
+
+/* MAP button (in page mode) */
+#btn-map {
+  position: fixed; top: 18px; right: 18px; z-index: 600;
+  background: #fff; border: none; border-radius: 30px;
+  padding: 9px 22px;
+  font-family: 'Anton', sans-serif; font-size: 13px; letter-spacing: 1.5px;
+  cursor: pointer;
+  display: none; align-items: center; gap: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+  transition: transform 0.2s;
+  color: #111;
+}
+#btn-map.shown { display: flex; }
+#btn-map:hover { transform: scale(1.05); }
+.globe {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: linear-gradient(135deg, #4285F4 40%, #34A853 100%);
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   PAGE OVERLAYS
+   ===================================================== */
+.page {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; opacity: 0;
+  overflow-y: auto;
+  transition: opacity 0.42s ease;
+}
+.page.active  { display: block; }
+.page.visible { opacity: 1; }
+
+.page-inner {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 110px 24px 70px;
+}
+
+/* Typography */
+.page-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(58px, 10vw, 105px);
+  line-height: 0.88;
+  text-align: center; text-transform: uppercase;
+  color: #fff; margin-bottom: 14px;
+  letter-spacing: -1px;
+}
+.page-subtitle {
+  font-size: 14px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 46px; text-align: center;
+  font-weight: 400;
+}
+
+/* Card base */
+.card {
+  border-radius: 20px;
+  padding: 44px 48px;
+  max-width: 940px; width: 100%;
+  box-shadow: 0 20px 55px rgba(0,0,0,0.18);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+}
+.card.single { grid-template-columns: 1fr; }
+
+.card-col h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 20px; letter-spacing: 2px;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.divider {
+  height: 2px; border-radius: 1px;
+  margin-bottom: 20px;
+}
+.card-col p  { font-size: 14px; line-height: 1.85; }
+.card-col ul { list-style: none; }
+.card-col ul li {
+  font-size: 14px; line-height: 1.85;
+  padding-left: 14px; position: relative; margin-bottom: 6px;
+}
+.card-col ul li::before { content: "–"; position: absolute; left: 0; opacity: 0.45; }
+
+/* highlight box */
+.highlight {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 13px; line-height: 1.7;
+}
+
+/* =====================================================
+   WORKS — project cards grid
+   ===================================================== */
+.works-container {
+  max-width: 960px; width: 100%;
+}
+.works-section-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 18px; letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px; color: #FBBC05;
+}
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.work-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px 16px;
+  transition: background 0.2s, transform 0.2s;
+  cursor: default;
+  text-decoration: none;
+}
+a.work-card:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-3px);
+}
+.work-card-tag {
+  display: inline-block;
+  padding: 2px 10px; border-radius: 10px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.tag-ai   { background: #FBBC05; color: #111; }
+.tag-live { background: #EA4335; color: #fff; }
+.tag-biz  { background: #34A853; color: #fff; }
+.tag-soon { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); }
+.work-card-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 15px; letter-spacing: 0.5px;
+  color: #fff; margin-bottom: 6px; line-height: 1.2;
+}
+.work-card-th {
+  font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5;
+}
+.work-card-status {
+  margin-top: 10px;
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.work-card-status.live::before { content: "● "; color: #34A853; }
+.work-card-status.soon::before { content: "◌ "; }
+
+/* =====================================================
+   BLOG cards
+   ===================================================== */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 22px;
+  max-width: 940px; width: 100%;
+}
+.blog-card {
+  background: #fff; color: #111;
+  border-radius: 14px; padding: 26px;
+  border: 3px solid;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.blog-card:hover { transform: translate(-4px,-4px); }
+.blog-tag {
+  display: inline-block; padding: 4px 14px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 14px; color: #fff;
+}
+.blog-card h2 {
+  font-family: 'Anton', sans-serif; font-size: 19px;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 10px; line-height: 1.2;
+}
+.blog-card p { font-size: 13px; line-height: 1.65; color: #444; }
+
+/* =====================================================
+   CONTACT form
+   ===================================================== */
+.contact-form { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.contact-form input,
+.contact-form textarea {
+  background: rgba(0,0,0,0.25); border: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: 10px; padding: 13px 16px;
+  color: #fff; font-family: 'Prompt', sans-serif; font-size: 14px;
+  outline: none; transition: border-color 0.2s;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: rgba(255,255,255,0.35); }
+.contact-form input:focus,
+.contact-form textarea:focus { border-color: rgba(255,255,255,0.55); }
+.contact-form textarea { resize: vertical; min-height: 90px; }
+.contact-form button {
+  background: #e74c3c; color: #fff; border: none;
+  border-radius: 30px; padding: 13px 30px;
+  font-family: 'Anton', sans-serif; font-size: 14px; letter-spacing: 2px;
+  cursor: pointer; align-self: flex-start;
+  transition: transform 0.2s, background 0.2s;
+}
+.contact-form button:hover { transform: scale(1.04); background: #c0392b; }
+
+/* =====================================================
+   PAGE THEME COLOURS
+   ===================================================== */
+/* PROFILE */
+#page-profile                          { background: var(--c-profile); }
+#page-profile .card                    { background: #1a1a1a; color: #fff; }
+#page-profile .card-col h3             { color: #E8611A; }
+#page-profile .divider                 { background: #E8611A; }
+#page-profile .highlight               { background: rgba(232,97,26,0.12); border-left: 3px solid #E8611A; color: rgba(255,255,255,0.85); }
+
+/* WORKS */
+#page-works                            { background: var(--c-works); }
+#page-works .page-title,
+#page-works .works-section-title       { color: #111; }
+#page-works .page-subtitle             { color: rgba(0,0,0,0.55); }
+#page-works .work-card                 { background: rgba(0,0,0,0.12); border-color: rgba(0,0,0,0.1); }
+#page-works a.work-card:hover          { background: rgba(0,0,0,0.2); }
+#page-works .work-card-title           { color: #111; }
+#page-works .work-card-th              { color: rgba(0,0,0,0.6); }
+#page-works .work-card-status          { color: rgba(0,0,0,0.35); }
+#page-works .work-card-status.live::before { color: #1a7a3c; }
+#page-works .works-section-title       { color: #1a1a1a; font-size: 16px; }
+#page-works .case-study-box            { background: rgba(0,0,0,0.12); border-radius: 14px; padding: 20px; color: #111; border-left: 4px solid #111; }
+
+/* LIBRARY */
+#page-library                          { background: var(--c-library); }
+#page-library .card                    { background: #fff; color: #1a1a1a; }
+#page-library .card-col h3             { color: #4285F4; }
+#page-library .divider                 { background: #4285F4; }
+#page-library .card-col ul li          { color: #333; }
+#page-library .card-col p              { color: #444; }
+#page-library .coming-soon-box { background: rgba(66,133,244,0.07); border: 1.5px dashed rgba(66,133,244,0.35); border-radius: 12px; padding: 18px; }
+#page-library .coming-soon-box p { font-size: 13px; color: #555; margin-top: 6px; }
+
+/* SYSTEMS */
+#page-systems                          { background: var(--c-systems); }
+#page-systems .card                    { background: #fff; color: #1a1a1a; }
+#page-systems .card-col h3             { color: #34A853; }
+#page-systems .divider                 { background: #34A853; }
+#page-systems .card-col p,
+#page-systems .card-col ul li          { color: #333; }
+
+/* BLOG */
+#page-blog                             { background: var(--c-blog); }
+#page-blog .page-subtitle              { color: rgba(255,255,255,0.5); }
+
+/* CONTACT */
+#page-contact                          { background: var(--c-contact); }
+#page-contact .card                    { background: #E8453C; color: #111; }
+#page-contact .card-col h3             { color: #111; }
+#page-contact .divider                 { background: #111; }
+#page-contact .card-col p,
+#page-contact .card-col ul li          { color: #111; }
+#page-contact .contact-info-box { background: rgba(0,0,0,0.15); border-radius: 10px; padding: 16px; margin-top: 16px; }
+#page-contact .contact-info-box p { font-size: 13px; line-height: 1.8; color: #111; }
+
+/* =====================================================
+   RESPONSIVE — Mobile
+   ===================================================== */
+@media (max-width: 768px) {
+  /* Map positions จาก original */
+  #island-profile { top: 5%;  left: 5%;  width: 42%; }
+  #island-work    { top: 20%; right: 5%; width: 45%; left: auto; }
+  #island-system  { display: none; }
+  #island-library { display: none; }
+  #island-blog    { bottom: 12%; left: 5%; width: 45%; }
+  #island-contact { bottom: 0; right: 0; width: 60%; }
+
+  .card { grid-template-columns: 1fr; padding: 28px 24px; gap: 28px; }
+  .page-inner { padding: 90px 16px 60px; }
+  .works-grid { grid-template-columns: 1fr 1fr; }
+  .blog-grid  { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .works-grid { grid-template-columns: 1fr; }
+  .page-title { font-size: 52px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGO -->
+<div id="logo">
+  <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365">
+</div>
+
+<!-- MAP BUTTON (shows when page is open) -->
+<button id="btn-map" onclick="closePage()">MAP <div class="globe"></div></button>
+
+<!-- =====================================================
+     MAP VIEW
+     ===================================================== -->
+<div id="view-map">
+  <div class="map-wrapper">
+
+    <a class="island" id="island-profile" href="#" data-page="profile">
+      <div class="island-badge">PROFILE</div>
+      <img src="https://ik.imagekit.io/ideas365logo/profile.png?updatedAt=1772760683826" alt="Profile Island" loading="eager">
+    </a>
+
+    <a class="island" id="island-work" href="#" data-page="works">
+      <div class="island-badge">WORKS</div>
+      <img src="https://ik.imagekit.io/ideas365logo/work.png?updatedAt=1772760683965" alt="Works Island" loading="eager">
+    </a>
+
+    <a class="island" id="island-system" href="#" data-page="systems">
+      <div class="island-badge">SYSTEMS</div>
+      <img src="https://ik.imagekit.io/ideas365logo/system.png?updatedAt=1772760683711" alt="Systems Island" loading="eager">
+    </a>
+
+    <a class="island" id="island-library" href="#" data-page="library">
+      <div class="island-badge">LIBRARY</div>
+      <img src="https://ik.imagekit.io/ideas365logo/library.png?updatedAt=1772760683649" alt="Library Island" loading="eager">
+    </a>
+
+    <a class="island" id="island-blog" href="#" data-page="blog">
+      <div class="island-badge">BLOG</div>
+      <img src="https://ik.imagekit.io/ideas365logo/blog.png?updatedAt=1772760683464" alt="Blog Island" loading="eager">
+    </a>
+
+    <a class="island" id="island-contact" href="#" data-page="contact">
+      <div class="island-badge">CONTACT</div>
+      <img src="https://ik.imagekit.io/ideas365logo/contact.png?updatedAt=1772760731830" alt="Contact Island" loading="eager">
+    </a>
+
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: ABOUT ISLAND / PROFILE
+     ===================================================== -->
+<div class="page" id="page-profile">
+  <div class="page-inner">
+    <h1 class="page-title">ABOUT<br>ISLAND</h1>
+    <p class="page-subtitle">Don't try to make it perfect. Make it work.</p>
+    <div class="card">
+      <div class="card-col">
+        <h3>PROFILE</h3>
+        <div class="divider"></div>
+        <p>
+          <strong>Jyne (เจนจิรา จัยสิน)</strong><br>
+          Systems Architect · AI Builder · Live Commerce Strategist<br><br>
+          Freelance Live Stream Host & Brand Presenter บน TikTok LIVE, Facebook, Shopee Live ตั้งแต่ปี 2022<br><br>
+          Director of Operations @ Chef Andy Yang (Michelin ★)<br>
+          Executive Secretary @ Chef Chumpol Jangprai (Michelin ★)
+        </p>
+        <div class="highlight">
+          🏆 สร้างระบบ Live Commerce ทำยอดขาย <strong>6 หลักใน 2 ชั่วโมง</strong>
+        </div>
+      </div>
+      <div class="card-col">
+        <h3>PHILOSOPHY</h3>
+        <div class="divider"></div>
+        <p style="margin-bottom:18px; font-style:italic; opacity:0.8;">"อย่าพยายามทำให้สมบูรณ์แบบ<br>แต่ทำให้มันใช้งานได้จริง"</p>
+        <ul>
+          <li><strong>Smart Lazy Style</strong><br><span style="opacity:0.7;font-size:12px;">คิดหนักแทนคนอื่น เพื่อให้ทุกคนทำงานเบาลง</span></li>
+          <li style="margin-top:12px;"><strong>Operational Intelligence</strong><br><span style="opacity:0.7;font-size:12px;">สร้างระบบที่ตัดความเหนื่อย แต่ไม่ตัดผลลัพธ์</span></li>
+          <li style="margin-top:12px;"><strong>Quietly Confident</strong><br><span style="opacity:0.7;font-size:12px;">ไม่โฆษณาเกินจริง แค่ระบบที่ได้ผลและผลลัพธ์จริง</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: WORKS TOWN
+     ===================================================== -->
+<div class="page" id="page-works">
+  <div class="page-inner">
+    <h1 class="page-title">WORKS<br>TOWN</h1>
+    <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
+    <div class="works-container">
+
+      <!-- AI & Tools -->
+      <div class="works-section-title">✦ ASTROLOGY & AI TOOLS</div>
+      <div class="works-grid">
+        <a class="work-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+          <div class="work-card-tag tag-ai">AI</div>
+          <div class="work-card-title">Soul Cards</div>
+          <div class="work-card-th">ไพ่ Oracle 3 ใบจาก 36 ใบ<br>เพื่อไกด์ไลน์คำตอบ</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <a class="work-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+          <div class="work-card-tag tag-ai">AI</div>
+          <div class="work-card-title">Soul Weaver</div>
+          <div class="work-card-th">ดวงชะตาตะวันตก + เสียงพากย์ AI</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <a class="work-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+          <div class="work-card-tag tag-ai">AI</div>
+          <div class="work-card-title">KAIXIN</div>
+          <div class="work-card-th">ค้นหา Energy Crystal ตามวันเกิด</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <a class="work-card" href="#" target="_blank">
+          <div class="work-card-tag tag-ai">AI</div>
+          <div class="work-card-title">Soul Slot</div>
+          <div class="work-card-th">สล็อตอักษรรูนส์ 24 สัญลักษณ์</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <a class="work-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
+          <div class="work-card-tag tag-ai">AI</div>
+          <div class="work-card-title">Caption Factory</div>
+          <div class="work-card-th">AI สร้างแคปชั่น + ทำนาย Engagement</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <div class="work-card">
+          <div class="work-card-tag tag-soon">SOON</div>
+          <div class="work-card-title">QR Generator</div>
+          <div class="work-card-th">สร้าง QR Code พร้อมแบรนด์</div>
+          <div class="work-card-status soon">Coming Soon</div>
+        </div>
+      </div>
+
+      <!-- Business Tools -->
+      <div class="works-section-title">✦ BUSINESS TOOLS</div>
+      <div class="works-grid">
+        <a class="work-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
+          <div class="work-card-tag tag-biz">BIZ</div>
+          <div class="work-card-title">Event ROI Calc</div>
+          <div class="work-card-th">คำนวณผลตอบแทนอีเวนต์ก่อนลงทุน</div>
+          <div class="work-card-status live">Live</div>
+        </a>
+        <div class="work-card">
+          <div class="work-card-tag tag-biz">BIZ</div>
+          <div class="work-card-title">Strategy Consulting</div>
+          <div class="work-card-th">แผนธุรกิจที่มีตัวเลขจริง</div>
+          <div class="work-card-status live">Live</div>
+        </div>
+        <div class="work-card">
+          <div class="work-card-tag tag-biz">BIZ</div>
+          <div class="work-card-title">Systems Design</div>
+          <div class="work-card-th">ระบบงานที่ขยายได้โดยไม่พัง</div>
+          <div class="work-card-status live">Live</div>
+        </div>
+      </div>
+
+      <!-- Live Commerce -->
+      <div class="works-section-title">✦ LIVE COMMERCE</div>
+      <div class="works-grid">
+        <div class="work-card">
+          <div class="work-card-tag tag-live">LIVE</div>
+          <div class="work-card-title">Social Commerce Arch</div>
+          <div class="work-card-th">วางระบบขายบนโซเชียลแบบครบวงจร</div>
+          <div class="work-card-status live">Live</div>
+        </div>
+        <div class="work-card">
+          <div class="work-card-tag tag-live">LIVE</div>
+          <div class="work-card-title">Video Production</div>
+          <div class="work-card-th">วีดีโอสินค้า · คลิปสอน · โปรโมท</div>
+          <div class="work-card-status live">Live</div>
+        </div>
+      </div>
+
+      <!-- Case Study -->
+      <div class="case-study-box">
+        <p style="font-weight:700; font-size:14px; margin-bottom:8px;">📌 Case Study — Jenny Jyne Live Commerce</p>
+        <p style="font-size:13px; line-height:1.7;">
+          สร้างช่อง Live ตั้งแต่ศูนย์ ไม่มีประสบการณ์มาก่อน<br>
+          → Script Framework · Host Training · Technical Setup<br>
+          → <strong>ยอดขาย 6 หลักใน 2 ชั่วโมง</strong> — ระบบที่ทีมดำเนินการต่อได้เอง
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: LEARNING BAY
+     ===================================================== -->
+<div class="page" id="page-library">
+  <div class="page-inner">
+    <h1 class="page-title">LEARNING<br>BAY</h1>
+    <p class="page-subtitle">Playbooks & Free Resources</p>
+    <div class="card">
+      <div class="card-col">
+        <h3>FREE RESOURCES</h3>
+        <div class="divider"></div>
+        <ul>
+          <li>70 Content iDEAS365 <em style="opacity:0.5">(Template)</em></li>
+          <li>iDEAS365 LIVE STREAMING AGENCY SYSTEM <em style="opacity:0.5">(Guidebook)</em></li>
+          <li>iDEAS365 Weekly Social Media Template <em style="opacity:0.5">(Template)</em></li>
+          <li>Chatbot VS Agent <em style="opacity:0.5">(Guidebook)</em></li>
+          <li>iDEAS365 Project: Hello Sponsor</li>
+          <li>iDEAS365 Project2: Hello Sponsor</li>
+        </ul>
+      </div>
+      <div class="card-col">
+        <h3>COMING SOON</h3>
+        <div class="divider"></div>
+        <div class="coming-soon-box">
+          <p style="font-weight:700; color:#4285F4; font-size:14px;">🏗️ Library Under Construction</p>
+          <p>กำลังเรียบเรียงคู่มือ SOPs ภายใน เพื่อแบ่งปันเป็นคู่มือสาธารณะเร็วๆ นี้</p>
+        </div>
+        <div style="margin-top:14px; padding:14px 18px; background:rgba(52,168,83,0.08); border-radius:12px;">
+          <p style="font-weight:700; color:#34A853; font-size:13px;">✦ Workshop & Live Training</p>
+          <p style="font-size:12px; color:#555; margin-top:4px;">อยู่ระหว่างพัฒนา — ติดตามที่ช่องทางโซเชียล</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: SYSTEM DISTRICT
+     ===================================================== -->
+<div class="page" id="page-systems">
+  <div class="page-inner">
+    <h1 class="page-title">SYSTEM<br>DISTRICT</h1>
+    <p class="page-subtitle">Operational frameworks that scale without breaking.</p>
+    <div class="card">
+      <div class="card-col">
+        <h3>AI & LIVE COMMERCE</h3>
+        <div class="divider"></div>
+        <ul>
+          <li><strong>AI Voice Generator</strong> — เสียงพากย์คอนเทนต์อัตโนมัติ</li>
+          <li><strong>Caption Factory</strong> — สร้างแคปชั่นด้วย AI พร้อมทำนาย Engagement</li>
+          <li><strong>Chatbot & AI Agent</strong> — ลดภาระงานซ้ำซาก 24 ชั่วโมง</li>
+          <li><strong>Live Commerce Setup</strong> — วางระบบครบวงจรตั้งแต่เริ่มต้น</li>
+          <li><strong>Script Framework</strong> — โครงสคริปต์ที่ทำซ้ำได้และสอนทีมได้</li>
+        </ul>
+      </div>
+      <div class="card-col">
+        <h3>BUSINESS & AUTOMATION</h3>
+        <div class="divider"></div>
+        <ul>
+          <li><strong>Problem Analysis</strong> — วิเคราะห์ปัญหาและวางแผนแก้ไข</li>
+          <li><strong>Financial Modeling</strong> — โมเดลการเงินและการคาดการณ์จริง</li>
+          <li><strong>SOP Creation</strong> — คู่มือที่ทีมงานนำไปใช้ได้ทันที</li>
+          <li><strong>KPI Framework</strong> — ตัวชี้วัดที่วัดผลและปรับปรุงได้</li>
+          <li><strong>Team Structure</strong> — โครงสร้างทีมที่รองรับการขยาย Scale</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: BLOG UPDATE
+     ===================================================== -->
+<div class="page" id="page-blog">
+  <div class="page-inner">
+    <h1 class="page-title">BLOG<br>UPDATE</h1>
+    <p class="page-subtitle">Thoughts, experiments, and frameworks.</p>
+    <div class="blog-grid">
+      <div class="blog-card" style="border-color:#4285F4; box-shadow:6px 6px 0 #4285F4;">
+        <div class="blog-tag" style="background:#4285F4;">Business</div>
+        <h2>SOLO FOUNDER PATH</h2>
+        <p>ถอดรหัสกลยุทธ์การสร้างธุรกิจด้วยตัวคนเดียว โดยใช้เทคโนโลยีและ AI เป็นแรงขับเคลื่อนหลักในการ Scale งาน</p>
+      </div>
+      <div class="blog-card" style="border-color:#FBBC05; box-shadow:6px 6px 0 #FBBC05;">
+        <div class="blog-tag" style="background:#FBBC05; color:#111;">Mindset</div>
+        <h2>SMART LAZY STYLE</h2>
+        <p>ทำไมการขี้เกียจอย่างชาญฉลาด ถึงเป็นกุญแจสำคัญในการสร้างระบบ Automation และลดภาระงานซ้ำซ้อน</p>
+      </div>
+      <div class="blog-card" style="border-color:#111; box-shadow:6px 6px 0 #111;">
+        <div class="blog-tag" style="background:#111;">Tech</div>
+        <h2>AI WORKFLOWS</h2>
+        <p>อัปเดตเครื่องมือ AI ล่าสุดและการเชื่อมต่อ API เพื่อสร้างบอทอัตโนมัติที่ทำงานตลอด 24 ชั่วโมง</p>
+      </div>
+      <div class="blog-card" style="border-color:#34A853; box-shadow:6px 6px 0 #34A853;">
+        <div class="blog-tag" style="background:#34A853;">System</div>
+        <h2>OPERATIONAL INTEL</h2>
+        <p>การวางโครงสร้างระบบหลังบ้าน (Backend Operations) ที่รองรับการขยายตัวโดยที่ระบบไม่พัง</p>
+      </div>
+      <div class="blog-card" style="border-color:#EA4335; box-shadow:6px 6px 0 #EA4335;">
+        <div class="blog-tag" style="background:#EA4335;">Marketing</div>
+        <h2>HIGH CONVERSION</h2>
+        <p>จิตวิทยาการออกแบบ UX/UI ที่กระตุ้นให้ผู้ใช้งานตัดสินใจตามเส้นทางที่เราวางแผนไว้</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     PAGE: CONTACT PORT
+     ===================================================== -->
+<div class="page" id="page-contact">
+  <div class="page-inner">
+    <h1 class="page-title">CONTACT<br>PORT</h1>
+    <p class="page-subtitle" style="color:rgba(255,255,255,0.55);">Clear Next Steps. No Pressure.</p>
+    <div class="card">
+      <div class="card-col">
+        <h3>GET IN TOUCH</h3>
+        <div class="divider"></div>
+        <div class="contact-form">
+          <input type="text" placeholder="ชื่อของคุณ / Your name">
+          <input type="text" placeholder="Line ID, Email หรือ IG">
+          <textarea placeholder="เล่าให้ฟังเกี่ยวกับโปรเจกต์ของคุณ..."></textarea>
+          <button type="button">SEND MESSAGE</button>
+        </div>
+        <div class="contact-info-box">
+          <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="305a495e557059545551430306051e5f5e5c595e55">[email&#160;protected]</a><br>
+          📱 TikTok: @ideas365 · TikTok SME Thailand</p>
+        </div>
+      </div>
+      <div class="card-col">
+        <h3>OUR PROMISE</h3>
+        <div class="divider"></div>
+        <ul>
+          <li><strong>Quick Response</strong> — ตอบกลับภายใน 24 ชั่วโมง</li>
+          <li><strong>Clear Next Steps</strong> — บอกขั้นตอนต่อไปชัดเจน ไม่คลุมเครือ</li>
+          <li><strong>Honest Assessment</strong> — ประเมินตรงๆ ว่าช่วยได้หรือไม่</li>
+          <li><strong>No Pressure</strong> — ปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้าง</li>
+        </ul>
+        <div style="margin-top:22px; padding:16px; background:rgba(0,0,0,0.12); border-radius:10px;">
+          <p style="font-size:12px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:8px; opacity:0.7;">ก่อนติดต่อ — เหมาะกับคุณไหม?</p>
+          <p style="font-size:13px; line-height:1.75; opacity:0.85;">
+            ✦ มี product หรือ service อยู่แล้ว<br>
+            ✦ ต้องการ Scale หรือเพิ่ม Conversion<br>
+            ✦ พร้อมลงทุนใน System ระยะยาว
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================
+     JAVASCRIPT — Page navigation
+     ===================================================== */
+<script>
+const mapView  = document.getElementById('view-map');
+const btnMap   = document.getElementById('btn-map');
+const allPages = document.querySelectorAll('.page');
+let currentPage = null;
+
+/* Island click — time + distance based (reliable tap vs drag detection) */
+document.querySelectorAll('.island').forEach(island => {
+  let t0 = 0, x0 = 0, y0 = 0;
+
+  island.addEventListener('pointerdown', e => {
+    t0 = Date.now(); x0 = e.clientX; y0 = e.clientY;
+  });
+
+  island.addEventListener('pointerup', e => {
+    const dt = Date.now() - t0;
+    const dx = Math.abs(e.clientX - x0);
+    const dy = Math.abs(e.clientY - y0);
+    if (dt < 300 && dx < 8 && dy < 8) {
+      openPage('page-' + island.dataset.page);
+    }
+  });
+
+  island.addEventListener('click', e => e.preventDefault());
+});
+
+function openPage(pid) {
+  // hide map
+  mapView.classList.add('hidden');
+  btnMap.classList.add('shown');
+
+  // close any existing
+  allPages.forEach(p => {
+    p.classList.remove('active', 'visible');
+  });
+
+  const target = document.getElementById(pid);
+  if (!target) return;
+
+  target.classList.add('active');
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => target.classList.add('visible'))
+  );
+  currentPage = target;
+  target.scrollTop = 0;
+}
+
+function closePage() {
+  if (currentPage) {
+    currentPage.classList.remove('visible');
+    setTimeout(() => {
+      currentPage.classList.remove('active');
+      currentPage = null;
+    }, 420);
+  }
+  mapView.classList.remove('hidden');
+  btnMap.classList.remove('shown');
+}
+
+/* ESC key t
