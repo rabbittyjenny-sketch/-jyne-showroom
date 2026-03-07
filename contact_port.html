@@ -7,44 +7,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #181818; }
-        body, html {
-            margin: 0; padding: 0; width: 100%; min-height: 100%;
-            font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff;
-        }
-        .nav-header {
-            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 30px;
-            z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none;
-        }
-        .logo-container { pointer-events: auto; text-decoration: none; }
+        :root { --bg-color: #181818; --accent: #E8453C; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100%; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+
+        .nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 30px; z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; }
         .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-        .map-btn {
-            background-color: #ffffff; color: #1a1a1a; padding: 8px 20px; border-radius: 30px;
-            font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); pointer-events: auto; transition: 0.2s;
-        }
+        .map-btn { background-color: #ffffff; color: #1a1a1a; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 120px 20px 50px 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 120px 20px 80px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
         .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 8rem); text-align: center; margin: 0; line-height: 0.9; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.2rem; font-weight: 400; margin: 20px 0 50px 0; text-align: center; }
+        .page-subtitle { font-size: 1.2rem; font-weight: 400; margin: 0; text-align: center; opacity: 0.8; }
 
-        /* การ์ดสีแดง 2 คอลัมน์ ตามภาพ CONTACT PORT */
-        .content-card {
-            background-color: #E8453C; border-radius: 20px; padding: 50px; width: 100%;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px; color: #1a1a1a;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .col-title {
-            font-family: 'Anton', sans-serif; font-size: 2.2rem; margin: 0 0 20px 0;
-            text-transform: uppercase; letter-spacing: 1px;
-            border-bottom: 2px solid #1A1A1A; padding-bottom: 10px; color: #1A1A1A;
-        }
-        .col p, .item-list li { font-size: 1rem; line-height: 1.8; margin: 0; font-weight: 500; }
-        .item-list { padding-left: 20px; margin: 0; }
-        .item-list li { margin-bottom: 10px; }
+        /* RED CARD */
+        .content-card { background-color: var(--accent); border-radius: 20px; padding: 50px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; color: #1a1a1a; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .col-title { font-family: 'Anton', sans-serif; font-size: 2rem; margin: 0 0 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid rgba(0,0,0,0.2); padding-bottom: 12px; color: #1A1A1A; }
+        .col p { font-size: 0.92rem; line-height: 1.8; margin: 0 0 12px; font-weight: 400; }
+        .col p:last-child { margin-bottom: 0; }
+        .col a { color: #1A1A1A; font-weight: 700; }
 
-        @media (max-width: 768px) {
+        /* PROMISE LIST */
+        .promise-list { list-style: none; padding: 0; margin: 0; }
+        .promise-list li { font-size: 0.92rem; line-height: 1.7; padding: 10px 0 10px 22px; border-bottom: 1px solid rgba(0,0,0,0.15); position: relative; color: #1A1A1A; font-weight: 400; }
+        .promise-list li:last-child { border-bottom: none; }
+        .promise-list li::before { content: "✦"; position: absolute; left: 0; top: 13px; font-size: 0.7rem; color: #1A1A1A; }
+        .promise-list li strong { font-weight: 700; }
+
+        /* CONTACT ITEMS */
+        .contact-item { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; text-decoration: none; color: #1A1A1A; transition: background 0.2s; }
+        .contact-item:hover { background: rgba(0,0,0,0.18); }
+        .contact-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .contact-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 1px; }
+        .contact-value { font-size: 0.92rem; font-weight: 600; }
+
+        @media(max-width: 768px) {
             .content-card { grid-template-columns: 1fr; gap: 30px; padding: 30px; }
             .nav-header { padding: 15px 20px; }
         }
@@ -52,24 +48,51 @@
 </head>
 <body>
     <div class="nav-header">
-        <a href="index.html" class="logo-container"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365 Logo" class="logo-img"></a>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
     </div>
     <main class="container">
         <h1 class="page-title">CONTACT<br>PORT</h1>
         <p class="page-subtitle">Clear Next Steps. No Pressure.</p>
+
         <div class="content-card">
             <div class="col">
                 <h2 class="col-title">GET IN TOUCH</h2>
-                <p>กำลังโหลดข้อมูลจาก Google Sheet...</p>
+                <p>พร้อมรับฟังโปรเจกต์ของคุณ ตอบกลับภายใน 24 ชั่วโมง</p>
+                <a class="contact-item" href="mailto:jyne@ideas365.online">
+                    <span class="contact-icon">✉️</span>
+                    <div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">jyne@ideas365.online</div>
+                    </div>
+                </a>
+                <a class="contact-item" href="https://www.tiktok.com/@jennyjyne" target="_blank">
+                    <span class="contact-icon">🎵</span>
+                    <div>
+                        <div class="contact-label">TikTok</div>
+                        <div class="contact-value">@jennyjyne</div>
+                    </div>
+                </a>
+                <a class="contact-item" href="https://www.tiktok.com/@tiktoksmethailand" target="_blank">
+                    <span class="contact-icon">🎵</span>
+                    <div>
+                        <div class="contact-label">TikTok SME Thailand</div>
+                        <div class="contact-value">@tiktoksmethailand</div>
+                    </div>
+                </a>
+                <p style="margin-top:14px;font-size:0.8rem;opacity:0.75">iDEAS365 · Based in Bangkok, working globally</p>
             </div>
             <div class="col">
                 <h2 class="col-title">OUR PROMISE</h2>
-                <ul class="item-list">
-                    <li>กำลังโหลดข้อมูลจาก Google Sheet...</li>
+                <ul class="promise-list">
+                    <li><strong>Quick Response</strong> — ตอบกลับภายใน 24 ชั่วโมง</li>
+                    <li><strong>Clear Next Steps</strong> — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ</li>
+                    <li><strong>Honest Assessment</strong> — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่</li>
+                    <li><strong>No Pressure</strong> — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน</li>
                 </ul>
             </div>
         </div>
+
     </main>
 </body>
 </html>
