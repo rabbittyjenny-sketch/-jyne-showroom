@@ -95,7 +95,7 @@
     <script>
     // ══════════════════════════════════════════════════════════════
     // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
     // ══════════════════════════════════════════════════════════════
     // Sheet tab ที่ใช้: "blog"
     // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
@@ -135,7 +135,7 @@
 
     async function loadBlog() {
         const container = document.getElementById('blog-container');
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+        if (!APPS_SCRIPT_URL) {
             container.innerHTML = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL ในไฟล์ blog.html</p>';
             return;
         }

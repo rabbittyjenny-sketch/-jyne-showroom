@@ -303,7 +303,7 @@
     <script>
     // ══════════════════════════════════════════════════════════════
     // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
     // ══════════════════════════════════════════════════════════════
     // Sheet tabs ที่ใช้:
     //   work_ai       → grid-astrology  (section=astrology หรือว่าง)
@@ -370,7 +370,7 @@
     }
 
     async function loadWorks() {
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+        if (!APPS_SCRIPT_URL) return;
         const [r1, r2, r3] = await Promise.allSettled([
             fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
             fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
