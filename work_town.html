@@ -34,7 +34,8 @@
         .proj-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
         .proj-card.coming { opacity: 0.55; cursor: default; }
         .proj-card.coming:hover { transform: none; }
-        .proj-info {}
+        .proj-info { flex: 1; }
+        .proj-logo { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; margin-bottom: 8px; display: block; }
         .proj-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
         .proj-name-th { font-size: 0.78rem; color: #aaa; margin-bottom: 6px; font-weight: 300; }
         .proj-desc { font-size: 0.78rem; line-height: 1.5; color: #ccc; font-weight: 300; }
@@ -325,6 +326,7 @@
         const desc = p.descriptionTh || p.description || '';
         return `<${tag} class="${cardCls}" ${href}>
             <div class="proj-info">
+                ${p.logo ? `<img class="proj-logo" src="${p.logo}" alt="${p.title || ''}" loading="lazy">` : ''}
                 <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
                 <div class="proj-name">${p.title || ''}</div>
                 ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
