@@ -77,9 +77,34 @@
         .big-btn { display: block; background: var(--accent); color: #fff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; }
         .big-btn:hover { opacity: 0.85; }
         @media(max-width: 768px) { .content-card { grid-template-columns: 1fr; padding: 30px; gap: 30px; } .nav-header { padding: 15px 20px; } .ext-cards, .video-grid, .proof-grid { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(2, 1fr); } .big-btn-row { grid-template-columns: 1fr 1fr; } }
+
+        /* ===== EFFECTS ===== */
+        /* Scroll reveal */
+        .content-card { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease; }
+        .content-card.in-view { opacity: 1; transform: translateY(0); }
+        .content-card.in-view:hover { transform: translateY(-5px); box-shadow: 0 28px 55px rgba(0,0,0,0.26); }
+        /* Page title entrance */
+        .page-title { animation: titleIn 0.9s ease forwards; }
+        .page-subtitle { opacity: 0; animation: titleIn 0.9s ease 0.35s forwards; }
+        @keyframes titleIn { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+        /* Photo hover */
+        .photo-slot { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+        .photo-slot:hover { transform: scale(1.03); box-shadow: 0 14px 32px rgba(0,0,0,0.2); }
+        /* Skill tag hover */
+        .tag { transition: background 0.2s, border-color 0.2s, color 0.2s; cursor: default; }
+        .tag:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+        /* Stat box hover */
+        .stat-box { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+        /* Button lift */
+        .big-btn { transition: opacity 0.2s, transform 0.2s; }
+        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(230,92,0,0.35); }
+        /* Cursor glow */
+        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(230,92,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
     </style>
 </head>
 <body>
+    <div id="cursor-glow"></div>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn">MAP 🌍</a>
@@ -376,5 +401,24 @@
         </div>
 
     </main>
+
+    <script>
+        // Cursor glow follows mouse
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', e => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top  = e.clientY + 'px';
+        });
+
+        // Scroll reveal — cards fade + slide up when entering viewport
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('in-view'), i * 60);
+                }
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.content-card').forEach(c => observer.observe(c));
+    </script>
 </body>
 </html>
