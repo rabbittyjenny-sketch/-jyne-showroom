@@ -17,13 +17,13 @@
         .map-btn:hover { transform: scale(1.05); }
 
         .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
-        .page-title { font-family: 'Anton', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
         .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; }
 
         /* SECTION CARD */
         .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
         .content-card.white { background: #ffffff; color: var(--text-dark); }
-        .section-title { font-family: 'Anton', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+        .section-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
         .section-sub { font-size: 0.88rem; color: #aaa; margin: 0 0 30px; font-weight: 300; }
         .content-card.white .section-title { color: var(--text-dark); border-bottom-color: var(--text-dark); }
         .content-card.white .section-sub { color: #888; }
@@ -52,13 +52,13 @@
 
         /* VIDEO GRID */
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; }
+        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; position: relative; display: block; text-decoration: none; }
         .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
         .video-label { font-size: 0.78rem; color: #aaa; margin-top: 6px; font-weight: 300; }
 
         /* CASE STUDY / PROOF */
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .col-title { font-family: 'Anton', sans-serif; font-size: 1.8rem; color: var(--accent); margin: 0 0 16px; text-transform: uppercase; }
+        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.8rem; color: var(--accent); margin: 0 0 16px; text-transform: uppercase; }
         .hl { list-style: none; padding: 0; margin: 0; }
         .hl li { font-size: 0.88rem; line-height: 1.7; padding: 8px 0 8px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; color: #ddd; font-weight: 300; }
         .hl li:last-child { border-bottom: none; }
@@ -74,6 +74,11 @@
             .content-card { padding: 30px; }
             .nav-header { padding: 15px 20px; }
         }
+        /* YouTube thumbnail cards */
+        .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
+        .video-wrap:hover img { opacity: 0.8; }
+        .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .yt-play svg { width: 60px; height: 42px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
     </style>
 </head>
 <body>
@@ -202,22 +207,23 @@
             <div class="project-grid" id="grid-system"></div>
         </div>
 
+        
         <!-- PORTFOLIO MEDIA / CLIPS -->
         <div class="content-card">
             <div class="section-title">PORTFOLIO MEDIA · คลิปและวีดีโอผลงาน</div>
             <div class="section-sub">ตัวอย่างการไลฟ์ขาย — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</div>
             <div class="video-grid">
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/N9nEHwZt3Sc?si=xBCK0b4OEQP2s97U" title="Live Commerce 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/jH3mrj2UwWk?si=Rv93IIw7z0JFXgUN" title="Live Commerce 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/_9Mcp2mgNrg?si=cmgRPm-6zUZ2ZzZn" title="Live Commerce 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/rhTlI_Rh3jM?si=NVavrHMN-AV4uhql" title="Live Commerce 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/_erzZjnwLAU?si=1rNE1kTcmNg2eyCE" title="Live Commerce 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/Or9s_hJYaYc?si=VqTRwSyl-I-qMpEr" title="Live Commerce 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/IS-MwUWzGMs?si=Ijt0ipFMTkj8bvj5" title="Live Commerce 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/hA291t_W_iE?si=F57MO7PhXIT2SDDM" title="Live Commerce 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/QbuyU8EGMjU?si=NGHlWXib41P0od9v" title="Live Commerce 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/NniW6ScMdkw?si=--9qfzskHbFZ-6B_" title="Live Commerce 10" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/2QrneqkWJyQ?si=AHP9Yj0lypv3TYJk" title="Live Commerce 11" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap" title="Live Commerce 1"><img src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" alt="Live Commerce 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap" title="Live Commerce 2"><img src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" alt="Live Commerce 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap" title="Live Commerce 3"><img src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" alt="Live Commerce 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap" title="Live Commerce 4"><img src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" alt="Live Commerce 4" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap" title="Live Commerce 5"><img src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" alt="Live Commerce 5" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap" title="Live Commerce 6"><img src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" alt="Live Commerce 6" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap" title="Live Commerce 7"><img src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" alt="Live Commerce 7" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap" title="Live Commerce 8"><img src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" alt="Live Commerce 8" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap" title="Live Commerce 9"><img src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" alt="Live Commerce 9" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap" title="Live Commerce 10"><img src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" alt="Live Commerce 10" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap" title="Live Commerce 11"><img src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" alt="Live Commerce 11" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
             </div>
         </div>
 
@@ -226,11 +232,11 @@
             <div class="section-title">AI VOICE GENERATOR · AI สร้างเสียงพากย์</div>
             <div class="section-sub">ตัวอย่างผลงาน AI Voice &amp; Animation Avatar Video</div>
             <div class="video-grid">
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/vIuNytBwue8" title="AI Voice Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/kBFF7zDOb5Y" title="AI Voice Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/m_w56qFvlss" title="AI Voice Demo 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/Sby6V-5khkk" title="AI Voice Tutorial Pt.1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/A7WZ0NMpclo" title="AI Voice Tutorial Pt.2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap" title="AI Voice Demo 1"><img src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" alt="AI Voice Demo 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap" title="AI Voice Demo 2"><img src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" alt="AI Voice Demo 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap" title="AI Voice Demo 3"><img src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" alt="AI Voice Demo 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.1"><img src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" alt="AI Voice Tutorial Pt.1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.2"><img src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" alt="AI Voice Tutorial Pt.2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
             </div>
         </div>
 
