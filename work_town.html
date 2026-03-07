@@ -266,78 +266,97 @@
 
     </main>
     <script>
-    // ─────────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════
     // WORKS SHEET CONFIG
-    // 1. เปิด Google Sheet: 1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE
-    // 2. สร้าง tab ใหม่ชื่อ "works"
-    // 3. ดู GID จาก URL: ...spreadsheets/d/.../edit#gid=XXXXXXXX
-    // 4. วาง GID ที่นี่ ↓
+    // ──────────────────────────────────────────────────────────
+    // 1. เปิด Google Sheet ของคุณ แล้วคลิก tab "Works"
+    // 2. ดู GID จาก URL: ...edit#gid=XXXXXXXX
+    // 3. วาง GID ที่นี่ ↓
     const WORKS_GID = '';
-    // ─────────────────────────────────────────────────────────
+    // ──────────────────────────────────────────────────────────
+    // Column ใน Sheet ที่ต้องมี (ชื่อต้องตรง):
+    //   id | title | titleTh | description | descriptionTh |
+    //   category | status | link | section
+    //
+    // category: ai / business / live / system
+    // status:   live / coming-soon / sold-out
+    // section:  astrology / commerce / system  (ถ้าว่างจะใส่ใน commerce)
+    // ══════════════════════════════════════════════════════════
 
     const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
 
+    // map ค่า category ในชีท → style badge
     const BADGE_MAP = {
-        ai:   { cls: 'badge-ai',   label: 'AI · Live' },
-        live: { cls: 'badge-live', label: 'Live Commerce' },
-        biz:  { cls: 'badge-biz',  label: 'Business' },
-        sys:  { cls: 'badge-sys',  label: 'System Dev' },
-        soon: { cls: 'badge-soon', label: 'Coming Soon' },
-        sold: { cls: 'badge-sold', label: 'Sold Out' },
+        ai:       { cls: 'badge-ai',   label: 'AI Tool' },
+        business: { cls: 'badge-biz',  label: 'Business' },
+        live:     { cls: 'badge-live', label: 'Live Commerce' },
+        system:   { cls: 'badge-sys',  label: 'System Dev' },
     };
 
     function parseCSV(text) {
         const lines = text.trim().split('\n');
         const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
         return lines.slice(1).map(line => {
-            const values = []; let cur = ''; let inQ = false;
-            for (let i = 0; i < line.length; i++) {
-                if (line[i] === '"') { inQ = !inQ; continue; }
-                if (line[i] === ',' && !inQ) { values.push(cur.trim()); cur = ''; continue; }
-                cur += line[i];
+            const vals = []; let cur = ''; let inQ = false;
+            for (const ch of line) {
+                if (ch === '"') { inQ = !inQ; continue; }
+                if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; continue; }
+                cur += ch;
             }
-            values.push(cur.trim());
-            const obj = {}; headers.forEach((h, i) => obj[h] = values[i] || '');
+            vals.push(cur.trim());
+            const obj = {}; headers.forEach((h, i) => obj[h] = vals[i] || '');
             return obj;
         }).filter(r => r.id);
     }
 
     function buildCard(p) {
-        const isSold = p.status === 'sold_out';
-        const isSoon = p.status === 'coming_soon';
-        const hasUrl = p.url && !isSold && !isSoon;
-        const badge = BADGE_MAP[p.badge] || BADGE_MAP.biz;
-        const tag = hasUrl ? 'a' : 'div';
-        const href = hasUrl ? `href="${p.url}" target="_blank"` : '';
-        const cardCls = isSold ? 'proj-card sold-out' : isSoon ? 'proj-card coming' : 'proj-card';
+        const status   = (p.status || '').toLowerCase().trim();
+        const isSold   = status === 'sold-out'   || status === 'sold_out';
+        const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+        const cat      = (p.category || '').toLowerCase().trim();
+        const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+        const hasUrl   = p.link && !isSold && !isSoon;
+        const tag      = hasUrl ? 'a' : 'div';
+        const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+        const cardCls  = isSold ? 'proj-card sold-out' : isSoon ? 'proj-card coming' : 'proj-card';
+        const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+        const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+        // ใช้ descriptionTh ก่อน ถ้าว่างใช้ description
+        const desc = p.descriptionTh || p.description || '';
         return `<${tag} class="${cardCls}" ${href}>
             <div class="proj-info">
-                <span class="proj-badge ${badge.cls}">${badge.label}</span>
-                <div class="proj-name">${p.name}</div>
-                ${p.name_th ? `<div class="proj-name-th">${p.name_th}</div>` : ''}
-                <div class="proj-desc">${p.desc}</div>
+                <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
+                <div class="proj-name">${p.title || ''}</div>
+                ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
+                <div class="proj-desc">${desc}</div>
             </div>
             ${hasUrl ? '<div class="proj-arrow">↗</div>' : ''}
         </${tag}>`;
     }
 
     async function loadWorks() {
-        if (!WORKS_GID) return; // ยังไม่ได้ตั้งค่า GID — หน้าแสดง static content เดิม
+        if (!WORKS_GID) return; // GID ยังไม่ได้ใส่ → แสดง static content เดิม
         try {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${WORKS_GID}`;
-            const res = await fetch(url);
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${WORKS_GID}`;
+            const res = await fetch(csvUrl);
             if (!res.ok) return;
             const projects = parseCSV(await res.text());
-            ['astrology', 'commerce', 'system'].forEach(sec => {
-                const grid = document.getElementById(`grid-${sec}`);
-                if (!grid) return;
-                const items = projects.filter(p => p.section === sec).sort((a, b) => +a.order - +b.order);
-                if (items.length) {
-                    grid.innerHTML = items.map(buildCard).join('');
-                    if (sec === 'system') document.getElementById('section-system').style.display = 'block';
-                }
+
+            // จัดกลุ่มตาม section (ถ้าไม่มี section ให้ใส่ commerce เป็น default)
+            const grouped = { astrology: [], commerce: [], system: [] };
+            projects.forEach(p => {
+                const sec = (p.section || 'commerce').toLowerCase().trim();
+                if (grouped[sec]) grouped[sec].push(p);
+                else grouped.commerce.push(p); // section ที่ไม่รู้จัก → commerce
             });
-        } catch (e) { /* ใช้ static fallback */ }
+
+            Object.entries(grouped).forEach(([sec, items]) => {
+                const grid = document.getElementById(`grid-${sec}`);
+                if (!grid || !items.length) return;
+                grid.innerHTML = items.map(buildCard).join('');
+                if (sec === 'system') document.getElementById('section-system').style.display = 'block';
+            });
+        } catch (e) { /* network error → ใช้ static fallback */ }
     }
 
     loadWorks();
