@@ -162,12 +162,8 @@
     // URL เดิม (สำรองไว้กรณี Apps Script ยังไม่ได้ deploy)
     // Sheet tab ชื่อ "Sheet1" (ไม่ได้เปลี่ยนชื่อ)
     // Columns: id | catagory | name | url | update  (หมายเหตุ: catagory สะกดผิดในชีท แต่โค้ดรองรับทั้งสองแบบ)
-    const RESOURCES_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
-        ? APPS_SCRIPT_URL + '?sheet=Sheet1'
-        : 'https://script.google.com/macros/s/AKfycbwbvCK3k7DEJI29u6HSZxRK7vwjFVDvxF8wtKWjGaJJ6XYNpg0blLTRf9YGZZ5ZB03g/exec';
-    const SUBSCRIBE_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
-        ? APPS_SCRIPT_URL
-        : 'https://script.google.com/macros/s/AKfycbxe72M0uK62wYSEKp7L3mw7agrFJuTKZDncUrzBJsgRb4SpjR-n1Gt-X9i2e6lbzvK8/exec';
+    const RESOURCES_URL  = APPS_SCRIPT_URL + '?sheet=Sheet1';
+    const SUBSCRIBE_URL  = APPS_SCRIPT_URL;
 
     const BUSINESS_TYPES = [
         'E-commerce / ร้านค้าออนไลน์', 'Education / การศึกษา', 'Healthcare / สุขภาพ',

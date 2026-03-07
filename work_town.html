@@ -370,7 +370,7 @@
     }
 
     async function loadWorks() {
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+        if (!APPS_SCRIPT_URL) return;
         const [r1, r2, r3] = await Promise.allSettled([
             fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
             fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
