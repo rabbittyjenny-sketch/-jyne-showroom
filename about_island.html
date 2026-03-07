@@ -107,7 +107,7 @@
     <div id="cursor-glow"></div>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn">MAP 🌍</a>
+        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
     </header>
     <main class="main-content">
         <h1 class="page-title">ABOUT<br>ISLAND</h1>
@@ -127,10 +127,11 @@
             </div>
             <div>
                 <!-- ✏️ เปลี่ยน URL รูปด้านล่างเพื่ออัปเดตรูปโปรไฟล์ (แนะนำ: อัปโหลดที่ ImageKit แล้วนำ URL มาวาง) -->
-                <div class="photo-slot photo-slot-wide">
+                <div class="photo-slot" style="aspect-ratio:unset;background:#f0ede8;">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(63).png?updatedAt=1772849649769"
+                        src="https://ik.imagekit.io/ideas365logo/profile_1.jpg"
                         alt="Jyne Profile Photo"
+                        style="width:100%;height:auto;object-fit:unset;"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
                     <div class="photo-placeholder" style="display:none">
@@ -249,7 +250,7 @@
         </div>
 
         <!-- CORE SKILLS + PHOTOS + BUTTONS -->
-        <div class="content-card">
+        <div class="content-card" style="grid-template-columns: 3fr 2fr;">
             <div>
                 <h2 class="col-title">CORE SKILLS</h2>
                 <ul class="hl" style="margin-bottom:16px">
@@ -264,9 +265,8 @@
                     <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/project" target="_blank">ANOTHER SKILL</a>
                 </div>
             </div>
-            <div class="skills-photo-col">
-                <!-- ✏️ เปลี่ยน URL ทั้ง 2 รูปด้านล่างได้เลย -->
-                <div class="photo-slot photo-slot-tall">
+            <div class="skills-photo-col" style="flex-direction:row;flex-wrap:wrap;gap:10px;align-content:start;">
+                <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032"
                         alt="Skills Photo 1"
@@ -278,7 +278,7 @@
                         <span class="ph-hint">เปลี่ยน URL ในโค้ด</span>
                     </div>
                 </div>
-                <div class="photo-slot photo-slot-tall">
+                <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730"
                         alt="Skills Photo 2"
