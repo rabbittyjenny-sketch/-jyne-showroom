@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABOUT ISLAND - iDEAS365</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
         :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent: #E65C00; }
-        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Prompt', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
@@ -43,7 +43,7 @@
         .ext-card-sub { font-size: 0.72rem; color: #888; font-weight: 300; }
         /* video */
         .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
-        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; }
+        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; position: relative; display: block; text-decoration: none; }
         .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
         /* proof */
         .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
@@ -101,6 +101,11 @@
         .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(230,92,0,0.35); }
         /* Cursor glow */
         #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(230,92,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
+        /* YouTube thumbnail cards — replaces broken iframes */
+        .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
+        .video-wrap:hover img { opacity: 0.82; }
+        .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .yt-play svg { width: 60px; height: 42px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
     </style>
 </head>
 <body>
@@ -126,7 +131,11 @@
                 </div>
             </div>
             <div>
-                <!-- ✏️ เปลี่ยน URL รูปด้านล่างเพื่ออัปเดตรูปโปรไฟล์ (แนะนำ: อัปโหลดที่ ImageKit แล้วนำ URL มาวาง) -->
+                <!-- ============================================================
+                     📸 รูปโปรไฟล์หลัก (PROFILE PHOTO)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                     อัปโหลดรูปที่ https://imagekit.io → คัดลอก URL → วางแทน
+                ============================================================ -->
                 <div class="photo-slot" style="aspect-ratio:unset;background:#f0ede8;">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/profile_1.jpg"
@@ -222,6 +231,10 @@
             </div>
             <!-- คอลัมน์รูปสูง 2:3 -->
             <div class="skills-photo-col">
+                <!-- ============================================================
+                     📸 รูปคอลัมน์ EXPERIENCE/SKILLS — Photo 1 (บนสุด)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032"
@@ -234,6 +247,10 @@
                         <span class="ph-hint">เปลี่ยน URL ในโค้ด</span>
                     </div>
                 </div>
+                <!-- ============================================================
+                     📸 รูปคอลัมน์ EXPERIENCE/SKILLS — Photo 2 (ล่าง)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730"
@@ -266,6 +283,10 @@
                 </div>
             </div>
             <div class="skills-photo-col" style="flex-direction:row;flex-wrap:wrap;gap:10px;align-content:start;">
+                <!-- ============================================================
+                     📸 รูป CORE SKILLS — Photo A (ซ้าย)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032"
@@ -278,6 +299,10 @@
                         <span class="ph-hint">เปลี่ยน URL ในโค้ด</span>
                     </div>
                 </div>
+                <!-- ============================================================
+                     📸 รูป CORE SKILLS — Photo B (ขวา)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
                         src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730"
@@ -298,17 +323,17 @@
             <h2 class="col-title">PORTFOLIO MEDIA · ภาพและวีดีโอผลงาน</h2>
             <p class="col-desc" style="color:#888;margin-bottom:20px">Live Commerce · TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
             <div class="video-grid">
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/N9nEHwZt3Sc?si=xBCK0b4OEQP2s97U" title="Portfolio Video 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/jH3mrj2UwWk?si=Rv93IIw7z0JFXgUN" title="Portfolio Video 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/_9Mcp2mgNrg?si=cmgRPm-6zUZ2ZzZn" title="Portfolio Video 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/rhTlI_Rh3jM?si=NVavrHMN-AV4uhql" title="Portfolio Video 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/_erzZjnwLAU?si=1rNE1kTcmNg2eyCE" title="Portfolio Video 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/Or9s_hJYaYc?si=VqTRwSyl-I-qMpEr" title="Portfolio Video 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/IS-MwUWzGMs?si=Ijt0ipFMTkj8bvj5" title="Portfolio Video 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/hA291t_W_iE?si=F57MO7PhXIT2SDDM" title="Portfolio Video 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/QbuyU8EGMjU?si=NGHlWXib41P0od9v" title="Portfolio Video 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/NniW6ScMdkw?si=--9qfzskHbFZ-6B_" title="Portfolio Video 10" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/2QrneqkWJyQ?si=AHP9Yj0lypv3TYJk" title="Portfolio Video 11" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap" title="Portfolio Video 1"><img src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" alt="Portfolio Video 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap" title="Portfolio Video 2"><img src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" alt="Portfolio Video 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap" title="Portfolio Video 3"><img src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" alt="Portfolio Video 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap" title="Portfolio Video 4"><img src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" alt="Portfolio Video 4" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap" title="Portfolio Video 5"><img src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" alt="Portfolio Video 5" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap" title="Portfolio Video 6"><img src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" alt="Portfolio Video 6" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap" title="Portfolio Video 7"><img src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" alt="Portfolio Video 7" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap" title="Portfolio Video 8"><img src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" alt="Portfolio Video 8" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap" title="Portfolio Video 9"><img src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" alt="Portfolio Video 9" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap" title="Portfolio Video 10"><img src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" alt="Portfolio Video 10" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap" title="Portfolio Video 11"><img src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" alt="Portfolio Video 11" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
             </div>
         </div>
 
@@ -317,11 +342,11 @@
             <h2 class="col-title">AI VOICE GENERATOR · AI สร้างเสียงพากย์</h2>
             <p class="col-desc" style="color:#888;margin-bottom:20px">ตัวอย่างการสร้างเสียงบรรยายและ Animation Avatar ด้วย AI</p>
             <div class="video-grid">
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/vIuNytBwue8" title="AI Voice Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/kBFF7zDOb5Y" title="AI Voice Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/m_w56qFvlss" title="AI Voice Demo 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/Sby6V-5khkk" title="AI Voice Tutorial Part 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
-                <div class="video-wrap"><iframe src="https://www.youtube.com/embed/A7WZ0NMpclo" title="AI Voice Tutorial Part 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap" title="AI Voice Demo 1"><img src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" alt="AI Voice Demo 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap" title="AI Voice Demo 2"><img src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" alt="AI Voice Demo 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap" title="AI Voice Demo 3"><img src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" alt="AI Voice Demo 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap" title="AI Voice Tutorial Part 1"><img src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" alt="AI Voice Tutorial Part 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+                <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap" title="AI Voice Tutorial Part 2"><img src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" alt="AI Voice Tutorial Part 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
             </div>
         </div>
 
