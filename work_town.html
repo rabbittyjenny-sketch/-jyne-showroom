@@ -47,7 +47,8 @@
         .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
         .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
         .badge-sys { background: rgba(100,180,255,0.2); color: #7ec8ff; }
-        .badge-soon { background: rgba(255,255,255,0.1); color: #aaa; }
+        .badge-soon     { background: rgba(255,255,255,0.1); color: #aaa; }
+        .badge-creative { background: rgba(180,130,255,0.25); color: #c9a0ff; }
         .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
         .proj-card.sold-out { opacity: 0.6; cursor: default; pointer-events: none; position: relative; }
         .proj-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
@@ -151,37 +152,6 @@
                 </a>
             </div>
         </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-                <a class="proj-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-ai">AI · Live</div>
-                        <div class="proj-name">The Soul Weaver</div>
-                        <div class="proj-name-th">ความลับแห่งดวงดาว</div>
-                        <div class="proj-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
-                    </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-                <a class="proj-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-ai">AI · Live</div>
-                        <div class="proj-name">KAIXIN</div>
-                        <div class="proj-name-th">ค้นหาหินประจำตัว</div>
-                        <div class="proj-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
-                    </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-ai">AI · Live</div>
-                        <div class="proj-name">Soul Slot</div>
-                        <div class="proj-name-th">สุ่มตัวเลขแห่งโชคชะตา</div>
-                        <div class="proj-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
-                    </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-            </div>
-        </div>
 
         <!-- COMMERCE & BUSINESS PROJECTS -->
         <div class="content-card">
@@ -246,6 +216,15 @@
                         <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์ กำลังจะมา</div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- CREATIVE TOOLS & ELEMENTS PROJECTS -->
+        <div class="content-card">
+            <div class="section-title">CREATIVE TOOLS & ELEMENTS</div>
+            <div class="section-sub">เครื่องมือสร้างสรรค์ คอนเทนต์ และ Design Elements</div>
+            <div class="project-grid" id="grid-creative">
+                <p style="color:#aaa; font-size:0.88rem; padding:10px 0; grid-column:1/-1;">กำลังโหลด…</p>
             </div>
         </div>
 
@@ -322,54 +301,36 @@
 
     </main>
     <script>
-    // ══════════════════════════════════════════════════════════
-    // WORKS SHEET CONFIG
-    // ──────────────────────────────────────────────────────────
-    // 1. เปิด Google Sheet ของคุณ แล้วคลิก tab "Works"
-    // 2. ดู GID จาก URL: ...edit#gid=XXXXXXXX
-    // 3. วาง GID ที่นี่ ↓
-    const WORKS_GID = '1097245302';
-    // ──────────────────────────────────────────────────────────
-    // Column ใน Sheet ที่ต้องมี (ชื่อต้องตรง):
-    //   id | title | titleTh | description | descriptionTh |
-    //   category | status | link | section | cover | logo
+    // ══════════════════════════════════════════════════════════════
+    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    // ══════════════════════════════════════════════════════════════
+    // Sheet tabs ที่ใช้:
+    //   work_ai       → grid-astrology  (section=astrology หรือว่าง)
+    //   work_commerce → grid-commerce
+    //   work__creative → grid-creative
     //
-    // category: ai / business / live / system
-    // status:   live / coming-soon / sold-out
-    // section:  astrology / commerce / system  (ถ้าว่างจะใส่ใน commerce)
-    // cover:    URL รูปหน้าปก (ImageKit หรือ URL อื่น) — ถ้าว่างจะไม่แสดง
-    // logo:     URL โลโก้ขนาดเล็ก (36x36) — ถ้าว่างจะไม่แสดง
-    // ══════════════════════════════════════════════════════════
+    // Columns ในทุก tab (ชื่อต้องตรง):
+    //   id | title | titleTh | description | descriptionTh |
+    //   category | status | link | logo | previewImage
+    //
+    // category:     ai / business / live / creative / system
+    // status:       live / coming-soon / sold-out
+    // previewImage: URL รูปหน้าปก — ถ้าว่างจะไม่แสดง
+    // logo:         URL โลโก้เล็ก (36x36) — ถ้าว่างจะไม่แสดง
+    // ══════════════════════════════════════════════════════════════
 
-    const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
-
-    // map ค่า category ในชีท → style badge
     const BADGE_MAP = {
-        ai:       { cls: 'badge-ai',   label: 'AI Tool' },
-        business: { cls: 'badge-biz',  label: 'Business' },
-        live:     { cls: 'badge-live', label: 'Live Commerce' },
-        system:   { cls: 'badge-sys',  label: 'System Dev' },
+        ai:       { cls: 'badge-ai',       label: 'AI Tool' },
+        business: { cls: 'badge-biz',      label: 'Business' },
+        live:     { cls: 'badge-live',     label: 'Live Commerce' },
+        system:   { cls: 'badge-sys',      label: 'System Dev' },
+        creative: { cls: 'badge-creative', label: 'Creative' },
     };
-
-    function parseCSV(text) {
-        const lines = text.trim().split('\n');
-        const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
-        return lines.slice(1).map(line => {
-            const vals = []; let cur = ''; let inQ = false;
-            for (const ch of line) {
-                if (ch === '"') { inQ = !inQ; continue; }
-                if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = ''; continue; }
-                cur += ch;
-            }
-            vals.push(cur.trim());
-            const obj = {}; headers.forEach((h, i) => obj[h] = vals[i] || '');
-            return obj;
-        }).filter(r => r.id);
-    }
 
     function buildCard(p) {
         const status   = (p.status || '').toLowerCase().trim();
-        const isSold   = status === 'sold-out'   || status === 'sold_out';
+        const isSold   = status === 'sold-out'    || status === 'sold_out';
         const isSoon   = status === 'coming-soon' || status === 'coming_soon';
         const cat      = (p.category || '').toLowerCase().trim();
         const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
@@ -379,10 +340,10 @@
         const cardCls  = isSold ? 'proj-card sold-out' : isSoon ? 'proj-card coming' : 'proj-card';
         const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
         const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
-        // ใช้ descriptionTh ก่อน ถ้าว่างใช้ description
-        const desc = p.descriptionTh || p.description || '';
-        const coverHTML = p.cover ? `<img class="proj-cover" src="${p.cover}" alt="">` : '';
-        const logoHTML  = p.logo  ? `<img class="proj-logo"  src="${p.logo}"  alt="">` : '';
+        const desc     = p.descriptionTh || p.description || '';
+        const coverSrc = p.previewImage  || p.cover || '';
+        const coverHTML = coverSrc ? `<img class="proj-cover" src="${coverSrc}" alt="" loading="lazy">` : '';
+        const logoHTML  = p.logo  ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
         return `<${tag} class="${cardCls}" ${href}>
             ${coverHTML}
             <div class="proj-info">
@@ -398,29 +359,40 @@
         </${tag}>`;
     }
 
+    function loadGrid(gridId, data, showIfEmpty) {
+        const grid = document.getElementById(gridId);
+        if (!grid) return;
+        if (!data || !data.length) {
+            if (!showIfEmpty) grid.innerHTML = '';
+            return;
+        }
+        grid.innerHTML = data.map(buildCard).join('');
+    }
+
     async function loadWorks() {
-        if (!WORKS_GID) return; // GID ยังไม่ได้ใส่ → แสดง static content เดิม
-        try {
-            const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${WORKS_GID}`;
-            const res = await fetch(csvUrl);
-            if (!res.ok) return;
-            const projects = parseCSV(await res.text());
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+        const [r1, r2, r3] = await Promise.allSettled([
+            fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
+            fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
+            fetch(APPS_SCRIPT_URL + '?sheet=work__creative').then(r => r.json()),
+        ]);
 
-            // จัดกลุ่มตาม section (ถ้าไม่มี section ให้ใส่ commerce เป็น default)
-            const grouped = { astrology: [], commerce: [], system: [] };
-            projects.forEach(p => {
-                const sec = (p.section || 'commerce').toLowerCase().trim();
-                if (grouped[sec]) grouped[sec].push(p);
-                else grouped.commerce.push(p); // section ที่ไม่รู้จัก → commerce
-            });
-
-            Object.entries(grouped).forEach(([sec, items]) => {
-                const grid = document.getElementById(`grid-${sec}`);
-                if (!grid || !items.length) return;
-                grid.innerHTML = items.map(buildCard).join('');
-                if (sec === 'system') document.getElementById('section-system').style.display = 'block';
-            });
-        } catch (e) { /* network error → ใช้ static fallback */ }
+        // AI / Astrology section — ถ้ามีข้อมูลให้แทนที่ static cards
+        if (r1.status === 'fulfilled' && r1.value.success && r1.value.data.length) {
+            loadGrid('grid-astrology', r1.value.data, false);
+        }
+        // Commerce section
+        if (r2.status === 'fulfilled' && r2.value.success && r2.value.data.length) {
+            loadGrid('grid-commerce', r2.value.data, false);
+        }
+        // Creative section
+        if (r3.status === 'fulfilled' && r3.value.success) {
+            loadGrid('grid-creative', r3.value.data, false);
+            if (!r3.value.data.length) {
+                document.getElementById('grid-creative').innerHTML =
+                    '<p style="color:#aaa;font-size:0.88rem;grid-column:1/-1;">ยังไม่มีรายการในขณะนี้</p>';
+            }
+        }
     }
 
     loadWorks();

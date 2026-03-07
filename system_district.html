@@ -3,47 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM DISTRICT - iDEAS365</title>
+    <title>SCHOOL · SERVICE - iDEAS365</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #34A853; --text-dark: #1A1A1A; --accent: #34A853; }
+        :root {
+            --bg-color: #34A853;
+            --accent:   #34A853;
+            --text-dark: #1A1A1A;
+            --card-blue:   #4285F4;
+            --card-yellow: #FBBC05;
+            --card-red:    #EA4335;
+            --card-green:  #34A853;
+            --card-dark:   #1A1A1A;
+        }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
 
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
-        .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .map-btn:hover { transform: scale(1.05); }
 
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
-        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1100px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(3.5rem, 9vw, 7rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.1rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
 
-        /* CARD */
+        /* ─── WHITE CONTENT CARD ─── */
         .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .content-card.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
-        .col-desc { font-size: 0.88rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #444; }
-        .col-desc strong { font-weight: 700; color: var(--text-dark); }
+        .section-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+        .section-sub { font-size: 0.88rem; color: #888; margin: 0 0 28px; font-weight: 300; }
+        .status-msg { text-align: center; color: #888; padding: 30px; font-size: 0.9rem; }
 
-        /* service list */
-        .srv-list { list-style: none; padding: 0; margin: 0; }
-        .srv-list li { font-size: 0.88rem; line-height: 1.7; padding: 10px 0 10px 18px; border-bottom: 1px solid #eee; position: relative; color: #333; font-weight: 300; }
-        .srv-list li:last-child { border-bottom: none; }
-        .srv-list li::before { content: "✦"; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; top: 13px; }
-        .srv-list li strong { font-weight: 600; color: var(--text-dark); }
+        /* ─── SCHOOL CARDS (blog-style, colored borders) ─── */
+        .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .school-card {
+            background: #fff; border: 3px solid; border-radius: 16px; padding: 28px;
+            display: flex; flex-direction: column; text-decoration: none; color: var(--text-dark);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .school-card[data-color="blue"]   { border-color: var(--card-blue);   box-shadow: 5px 5px 0 var(--card-blue); }
+        .school-card[data-color="yellow"] { border-color: var(--card-yellow); box-shadow: 5px 5px 0 var(--card-yellow); }
+        .school-card[data-color="red"]    { border-color: var(--card-red);    box-shadow: 5px 5px 0 var(--card-red); }
+        .school-card[data-color="green"]  { border-color: var(--card-green);  box-shadow: 5px 5px 0 var(--card-green); }
+        .school-card[data-color="dark"]   { border-color: var(--card-dark);   box-shadow: 5px 5px 0 var(--card-dark); }
+        .school-card:hover { transform: translate(-3px, -3px); }
+        .school-card[data-color="blue"]:hover   { box-shadow: 8px 8px 0 var(--card-blue); }
+        .school-card[data-color="yellow"]:hover { box-shadow: 8px 8px 0 var(--card-yellow); }
+        .school-card[data-color="red"]:hover    { box-shadow: 8px 8px 0 var(--card-red); }
+        .school-card[data-color="green"]:hover  { box-shadow: 8px 8px 0 var(--card-green); }
+        .school-card[data-color="dark"]:hover   { box-shadow: 8px 8px 0 var(--card-dark); }
+        .sc-tag { align-self: flex-start; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; color: #fff; }
+        .school-card[data-color="blue"]   .sc-tag { background: var(--card-blue); }
+        .school-card[data-color="yellow"] .sc-tag { background: var(--card-yellow); color: var(--text-dark); }
+        .school-card[data-color="red"]    .sc-tag { background: var(--card-red); }
+        .school-card[data-color="green"]  .sc-tag { background: var(--card-green); }
+        .school-card[data-color="dark"]   .sc-tag { background: var(--card-dark); }
+        .sc-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px; line-height: 1.2; }
+        .sc-title-th { font-size: 0.82rem; color: #888; font-weight: 300; margin: 0 0 10px; }
+        .sc-desc { font-size: 0.85rem; line-height: 1.6; color: #444; font-weight: 300; flex-grow: 1; margin: 0 0 12px; }
+        .sc-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; }
 
-        /* tool tags */
-        .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .tool-tag { padding: 4px 14px; background: rgba(52,168,83,0.1); border: 1px solid rgba(52,168,83,0.3); border-radius: 6px; font-size: 0.75rem; color: #2a7a42; font-weight: 500; }
-
-        /* highlight pill */
-        .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-        .pill { background: var(--accent); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
+        /* ─── SERVICE CARDS (with price) ─── */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .srv-card {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px;
+            transition: background 0.2s, transform 0.2s; color: #fff;
+        }
+        .srv-card.has-link { text-decoration: none; cursor: pointer; }
+        .srv-card.has-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .srv-badge { align-self: flex-start; padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; }
+        .srv-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; line-height: 1.2; }
+        .srv-title-th { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+        .srv-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.75); font-weight: 300; flex-grow: 1; }
+        .srv-price { font-size: 0.85rem; font-weight: 700; color: #FBBC05; margin-top: 4px; }
+        .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 4px; }
+        .srv-arrow { text-align: right; font-size: 1rem; opacity: 0.6; }
+        .srv-coming { opacity: 0.45; cursor: default; }
 
         @media(max-width: 768px) {
-            .content-card.two-col { grid-template-columns: 1fr; gap: 30px; }
+            .school-grid, .service-grid { grid-template-columns: 1fr; }
             .content-card { padding: 30px; }
             .nav-header { padding: 15px 20px; }
         }
@@ -54,107 +92,113 @@
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
         <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
     </header>
+
     <main class="main-content">
-        <h1 class="page-title">SYSTEM<br>DISTRICT</h1>
-        <p class="page-subtitle">Operational frameworks that scale without breaking.</p>
+        <h1 class="page-title">SCHOOL<br>SERVICE</h1>
+        <p class="page-subtitle">เรียนรู้และพัฒนากับ iDEAS365</p>
 
-        <!-- AI TOOLS + LIVE COMMERCE -->
-        <div class="content-card two-col">
-            <div>
-                <h2 class="col-title">AI TOOLS</h2>
-                <p class="col-desc">คำแนะนำเครื่องมือและเทคโนโลยีที่เหมาะกับธุรกิจ พร้อมการนำ AI มาใช้จริงในงานต่างๆ</p>
-                <ul class="srv-list">
-                    <li><strong>AI Voice Generator</strong> — สร้างเสียงบรรยายและพากย์วีดีโอด้วย AI</li>
-                    <li><strong>Caption Factory</strong> — สร้างแคปชั่นโซเชียลอัตโนมัติ พร้อม Engagement Prediction</li>
-                    <li><strong>Chatbots &amp; AI Agent</strong> — วางระบบตอบอัตโนมัติที่เรียนรู้และปรับตัวได้</li>
-                    <li><strong>Animation Avatar Video</strong> — สร้างวีดีโอ Avatar สำหรับคอนเทนต์</li>
-                    <li><strong>Tech Stack Recommendations</strong> — เลือกเครื่องมือที่ใช่ สำหรับปัญหาที่มี</li>
-                </ul>
-                <div class="tool-tags">
-                    <span class="tool-tag">ChatGPT</span>
-                    <span class="tool-tag">Make.com</span>
-                    <span class="tool-tag">Canva AI</span>
-                    <span class="tool-tag">CapCut</span>
-                    <span class="tool-tag">ElevenLabs</span>
-                    <span class="tool-tag">Wix AI</span>
-                </div>
-            </div>
-            <div>
-                <h2 class="col-title">LIVE COMMERCE</h2>
-                <p class="col-desc">บริการวางระบบ Live Commerce แบบครบวงจร ตั้งแต่เริ่มต้นจนถึงสร้างยอดขาย</p>
-                <ul class="srv-list">
-                    <li><strong>กลยุทธ์และการคัดเลือกสินค้า</strong> — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
-                    <li><strong>โครงสร้างสคริปต์และฝึกอบรมพิธีกร</strong> — พูดอะไร เมื่อไหร่ และอย่างไร</li>
-                    <li><strong>ติดตั้งระบบเทคนิคและการจัดการหลังบ้าน</strong> — แสง มุมกล้อง แพลตฟอร์ม</li>
-                    <li><strong>ปรับปรุงประสิทธิภาพเพื่อเพิ่มยอดขาย</strong> — วิเคราะห์และ optimize อย่างต่อเนื่อง</li>
-                </ul>
-                <div class="pills">
-                    <span class="pill">TikTok LIVE</span>
-                    <span class="pill">Facebook Live</span>
-                    <span class="pill">Shopee Live</span>
-                </div>
+        <!-- ─── SCHOOL SECTION (blog-card style) ─── -->
+        <div class="content-card">
+            <h2 class="section-heading">SCHOOL</h2>
+            <p class="section-sub">คอร์สและ Workshop สำหรับสร้างระบบธุรกิจและ Live Commerce</p>
+            <div id="school-grid" class="school-grid">
+                <p class="status-msg">กำลังโหลด…</p>
             </div>
         </div>
 
-        <!-- BUSINESS SYSTEMS + AUTOMATION -->
-        <div class="content-card two-col">
-            <div>
-                <h2 class="col-title">BUSINESS SYSTEMS</h2>
-                <p class="col-desc">วิเคราะห์ปัญหาและเสนอทางแก้ — วางแผนธุรกิจที่คำนึงถึงความเป็นจริงในการปฏิบัติงาน</p>
-                <ul class="srv-list">
-                    <li><strong>กลยุทธ์การตลาดและการวางตำแหน่ง</strong> — กำหนดทิศทางและ positioning ของธุรกิจ</li>
-                    <li><strong>โมเดลการเงินและการคาดการณ์</strong> — ตัวเลขจริง ไม่ใช่แค่ความรู้สึก</li>
-                    <li><strong>โครงสร้างทีมและการวางแผนกำลังคน</strong> — ออกแบบทีมที่ run ได้โดยไม่ต้องพึ่งพาคนเดียว</li>
-                    <li><strong>Launch Framework</strong> — แผนเปิดตัวที่แบรนด์ early-stage ใช้งานได้จริง</li>
-                </ul>
-            </div>
-            <div>
-                <h2 class="col-title">AUTOMATION & SOP</h2>
-                <p class="col-desc">"Chaos is not Move Fast" — การขยายธุรกิจบนระบบที่พัง มีแต่จะทำให้พังเร็วขึ้น</p>
-                <ul class="srv-list">
-                    <li><strong>Process Mapping</strong> — เห็นภาพชัดว่างานไหลไปทางไหน (หรือรั่วไหลตรงไหน)</li>
-                    <li><strong>SOPs ที่ใช้งานได้จริง</strong> — คู่มือที่เอาไปทำตามได้จริง ไม่ใช่เอกสารเก็บฝุ่น</li>
-                    <li><strong>Automation</strong> — ใช้ AI และเครื่องมือจัดการงานซ้ำซาก 80%</li>
-                    <li><strong>Feedback Loops &amp; KPIs</strong> — ตัวเลขที่บอกคุณว่าเมื่อไหร่ต้องปรับเปลี่ยน</li>
-                    <li><strong>Transfer Ownership</strong> — ฝึกทีมให้รันเองได้โดยไม่ต้องพึ่งพาคนเดียว</li>
-                </ul>
-                <div class="pills">
-                    <span class="pill">✦ ระบบที่ขยายได้</span>
-                    <span class="pill">✦ ทีมรันเองได้</span>
-                </div>
+        <!-- ─── SERVICE SECTION (with price) ─── -->
+        <div class="content-card" style="background:#34A853; color:#fff;">
+            <h2 class="section-heading" style="color:#fff; border-bottom-color:rgba(255,255,255,0.4);">SERVICE</h2>
+            <p class="section-sub" style="color:rgba(255,255,255,0.7);">บริการที่ปรึกษาและวางระบบสำหรับธุรกิจ</p>
+            <div id="service-grid" class="service-grid">
+                <p class="status-msg" style="color:rgba(255,255,255,0.6);">กำลังโหลด…</p>
             </div>
         </div>
-
-        <!-- SERVICES DETAIL -->
-        <div class="content-card two-col">
-            <div>
-                <h2 class="col-title">LIVE COMMERCE · IN DETAIL</h2>
-                <p class="col-desc" style="font-style:italic;color:#555;margin-bottom:16px">"ไม่ใช่แค่ตั้งกล้องไลฟ์ — Live Commerce คือการค้าปลีกที่ต้องการ Performance, Operations และ Tech ทำงานประสานกัน"</p>
-                <ul class="srv-list">
-                    <li><strong>Product Curation:</strong> เลือกของที่ "ขึ้นกล้อง" และขายง่ายผ่านวิดีโอ</li>
-                    <li><strong>Script &amp; Run of Show:</strong> วางแผนการตรึงคนดูทุกช่วงเวลา รายนาที</li>
-                    <li><strong>Technical Ops:</strong> OBS, แสง, เสียง และการตั้งค่าแพลตฟอร์ม</li>
-                    <li><strong>Post-Live Analytics:</strong> ปรับปรุงยอดขายและการรักษาฐานลูกค้า</li>
-                </ul>
-                <div class="pills" style="margin-top:16px">
-                    <span class="pill">✦ 6-figure ใน 2 ชั่วโมง</span>
-                </div>
-            </div>
-            <div>
-                <h2 class="col-title">SYSTEMS DESIGN · IN DETAIL</h2>
-                <p class="col-desc" style="font-style:italic;color:#555;margin-bottom:16px">"คุณต้องการระบบที่โตไปพร้อมกับคุณ — ไม่ใช่ระบบที่พังเร็วขึ้นเมื่อธุรกิจขยาย"</p>
-                <ul class="srv-list">
-                    <li><strong>Process Mapping:</strong> Visualizing exactly how value flows (or leaks)</li>
-                    <li><strong>Standard Operating Procedures (SOPs):</strong> Actionable guides, not dusty manuals</li>
-                    <li><strong>Automation:</strong> Using AI and tools to handle the repetitive 80%</li>
-                    <li><strong>Feedback Loops:</strong> Metrics that tell you when to pivot</li>
-                </ul>
-                <a href="contact_port.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--accent);color:#fff;padding:10px 22px;border-radius:25px;font-weight:700;font-size:0.85rem;text-decoration:none;">
-                    Audit Your Systems →
-                </a>
-            </div>
-        </div>
-
     </main>
+
+    <script>
+    // ══════════════════════════════════════════════════════════════
+    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    // ══════════════════════════════════════════════════════════════
+    // Sheet tabs ที่ใช้:
+    //   school_service1 → SCHOOL cards (blog-style, same columns as blog tab)
+    //     Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+    //   school_service2 → SERVICE cards with price
+    //     Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
+    //     type values: free / premium / coming-soon
+
+    const COLOUR_MAP = {
+        'course': 'blue', 'workshop': 'yellow', 'live': 'red',
+        'playbook': 'green', 'guide': 'green', 'template': 'dark',
+        'ai': 'dark', 'system': 'blue', 'live commerce': 'red',
+    };
+    function colourFor(cat) { return COLOUR_MAP[(cat||'').toLowerCase()] || 'blue'; }
+
+    // ─── Render SCHOOL cards (school_service1, blog-style) ──────
+    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+    function renderSchool(items) {
+        const grid = document.getElementById('school-grid');
+        if (!items.length) { grid.innerHTML = '<p class="status-msg">ยังไม่มีคอร์สในขณะนี้</p>'; return; }
+        grid.innerHTML = items.map(p => {
+            const colour  = colourFor(p.category);
+            const excerpt = p.excerpt_thai || p.excerpt_eng || '';
+            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${p.slug}` : '#');
+            const isExt   = href.startsWith('http');
+            return `<a class="school-card" data-color="${colour}" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
+                <div class="sc-tag">${p.category || 'Course'}</div>
+                <div class="sc-title">${(p.title || '').toUpperCase()}</div>
+                <div class="sc-desc">${excerpt}</div>
+                <div class="sc-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}&nbsp;<strong>Read more →</strong></div>
+            </a>`;
+        }).join('');
+    }
+
+    // ─── Render SERVICE cards (school_service2) ──────────────────
+    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
+    // type: free / premium / coming-soon
+    // price: ฿4,700 / FREE / TBA / etc.
+    // url_picture: รูปประกอบ (ไม่ใช่ link)
+    function renderService(items) {
+        const grid = document.getElementById('service-grid');
+        if (!items.length) { grid.innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ยังไม่มีบริการในขณะนี้</p>'; return; }
+        grid.innerHTML = items.map(p => {
+            const type   = (p.type || '').toLowerCase();
+            const isSoon = type.includes('soon') || type.includes('coming');
+            const isFree = type === 'free';
+            const badgeLbl = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
+            const desc = p.descriptionTh || p.description || '';
+            const coverHTML = p.url_picture ? `<img src="${p.url_picture}" alt="${p.title}" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px;" loading="lazy">` : '';
+            return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
+                ${coverHTML}
+                <span class="srv-badge" style="${isFree ? 'background:rgba(52,168,83,0.4)' : isSoon ? '' : 'background:rgba(251,188,5,0.3);color:#FBBC05'}">${badgeLbl}</span>
+                <div class="srv-title">${(p.title || '').toUpperCase()}</div>
+                ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
+                <div class="srv-desc">${desc}</div>
+                ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
+            </div>`;
+        }).join('');
+    }
+
+    // ─── Load all data ───────────────────────────────────────────
+    async function loadData() {
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+            document.getElementById('school-grid').innerHTML  = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
+            document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
+            return;
+        }
+        const [r1, r2] = await Promise.allSettled([
+            fetch(APPS_SCRIPT_URL + '?sheet=school_service1').then(r => r.json()),
+            fetch(APPS_SCRIPT_URL + '?sheet=school_service2').then(r => r.json()),
+        ]);
+        if (r1.status === 'fulfilled' && r1.value.success) renderSchool(r1.value.data);
+        else document.getElementById('school-grid').innerHTML = '<p class="status-msg">ไม่สามารถโหลดข้อมูลได้</p>';
+
+        if (r2.status === 'fulfilled' && r2.value.success) renderService(r2.value.data);
+        else document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ไม่สามารถโหลดข้อมูลได้</p>';
+    }
+
+    loadData();
+    </script>
 </body>
 </html>

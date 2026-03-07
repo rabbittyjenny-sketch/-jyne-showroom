@@ -93,40 +93,19 @@
         </div>
     </main>
     <script>
-    const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
-    const BLOG_GID = '0';
-    const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${BLOG_GID}`;
+    // ══════════════════════════════════════════════════════════════
+    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    // ══════════════════════════════════════════════════════════════
+    // Sheet tab ที่ใช้: "blog"
+    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
 
     const COLOUR_MAP = {
-        'social media': 'blue', 'systems': 'green', 'live commerce': 'red',
-        'ai automation': 'dark', 'mindset': 'yellow', 'business': 'blue',
-        'tech': 'dark', 'marketing': 'yellow', 'system': 'green',
+        'social media': 'blue', 'systems': 'green', 'system': 'green',
+        'live commerce': 'red', 'ai automation': 'dark', 'ai': 'dark',
+        'mindset': 'yellow', 'business': 'blue', 'tech': 'dark', 'marketing': 'yellow',
     };
     function colourFor(cat) { return COLOUR_MAP[(cat||'').toLowerCase()] || 'blue'; }
-
-    function parseCSVLine(line) {
-        const result = []; let current = '', inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-            const ch = line[i];
-            if (ch === '"') { inQuotes = !inQuotes; }
-            else if (ch === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
-            else { current += ch; }
-        }
-        result.push(current.trim());
-        return result.map(v => v.replace(/^"|"$/g, ''));
-    }
-
-    function parseCSV(csvText) {
-        const lines = csvText.split('\n').filter(l => l.trim());
-        if (lines.length < 2) return [];
-        const headers = parseCSVLine(lines[0]);
-        return lines.slice(1).map(line => {
-            const vals = parseCSVLine(line);
-            const row = {};
-            headers.forEach((h, i) => row[h.trim()] = (vals[i] || '').trim());
-            return row;
-        }).filter(r => r.title || r.Title);
-    }
 
     function renderPosts(posts) {
         const container = document.getElementById('blog-container');
@@ -135,33 +114,41 @@
             return;
         }
         container.innerHTML = posts.map(p => {
-            const id      = p.id       || p.ID       || '';
-            const title   = p.title    || p.Title    || '(ไม่มีชื่อ)';
-            const excerpt = p.excerpt  || p.Excerpt  || '';
-            const date    = p.date     || p.Date     || '';
-            const cat     = p.category || p.Category || '';
-            const rt      = p.readTime || p.ReadTime || '';
+            const title   = p.title    || '(ไม่มีชื่อ)';
+            const excerpt = p.excerpt_thai || p.excerpt_eng || p.excerpt || '';
+            const date    = p.date     || '';
+            const cat     = p.category || '';
+            const rt      = p.time     || p.readTime || '';
             const colour  = colourFor(cat);
-            const href    = id ? `blog_post.html?id=${encodeURIComponent(id)}` : '#';
+            // ลิ้งค์ไปหน้าบทความ (course_url) ถ้าไม่มีให้ใช้ slug
+            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${encodeURIComponent(p.slug)}` : '#');
+            const isExt   = href.startsWith('http');
             return `
-            <a href="${href}" class="blog-card" data-color="${colour}">
+            <a href="${href}" class="blog-card" data-color="${colour}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
                 <div class="tag">${cat || 'Blog'}</div>
                 <h2>${title.toUpperCase()}</h2>
                 ${excerpt ? `<p>${excerpt}</p>` : ''}
-                <div class="blog-meta">${date}${rt ? ' · ' + rt : ''}</div>
+                <div class="blog-meta">${date}${rt ? ' · ' + rt : ''} &nbsp;<strong>Read Article →</strong></div>
             </a>`;
         }).join('');
     }
 
     async function loadBlog() {
         const container = document.getElementById('blog-container');
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+            container.innerHTML = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL ในไฟล์ blog.html</p>';
+            return;
+        }
         try {
-            const res = await fetch(CSV_URL);
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const csv = await res.text();
-            renderPosts(parseCSV(csv));
+            const res  = await fetch(APPS_SCRIPT_URL + '?sheet=blog');
+            const json = await res.json();
+            if (json.success) {
+                renderPosts(json.data);
+            } else {
+                container.innerHTML = `<p class="status-msg">Error: ${json.error}</p>`;
+            }
         } catch (err) {
-            container.innerHTML = '<p class="status-msg">ไม่สามารถโหลดบทความได้<br><small>ตรวจสอบว่า Google Sheet ตั้งเป็น "Anyone with the link can view" แล้ว</small></p>';
+            container.innerHTML = '<p class="status-msg">ไม่สามารถโหลดบทความได้<br><small>ตรวจสอบว่า Apps Script deploy แล้วและ Sheet ตั้งเป็น public</small></p>';
             console.error(err);
         }
     }

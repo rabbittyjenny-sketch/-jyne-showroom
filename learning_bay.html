@@ -145,9 +145,29 @@
     </div>
 
     <script>
-    // ── CONFIG ──────────────────────────────────────────────────
-    const RESOURCES_URL  = 'https://script.google.com/macros/s/AKfycbwbvCK3k7DEJI29u6HSZxRK7vwjFVDvxF8wtKWjGaJJ6XYNpg0blLTRf9YGZZ5ZB03g/exec';
-    const SUBSCRIBE_URL  = 'https://script.google.com/macros/s/AKfycbxe72M0uK62wYSEKp7L3mw7agrFJuTKZDncUrzBJsgRb4SpjR-n1Gt-X9i2e6lbzvK8/exec';
+    // ══════════════════════════════════════════════════════════════
+    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    // ══════════════════════════════════════════════════════════════
+    // GET  ?sheet=learning  → โหลดรายการ resources
+    // POST (JSON)           → บันทึก subscription ลง learning_subscript
+    //
+    // Sheet tab "learning" columns:
+    //   id | category | name | url | update
+    //
+    // Sheet tab "learning_subscript" (เขียนอัตโนมัติเมื่อ subscribe):
+    //   date | userName | businessType | email | id | name | category | url
+    // ══════════════════════════════════════════════════════════════
+
+    // URL เดิม (สำรองไว้กรณี Apps Script ยังไม่ได้ deploy)
+    // Sheet tab ชื่อ "Sheet1" (ไม่ได้เปลี่ยนชื่อ)
+    // Columns: id | catagory | name | url | update  (หมายเหตุ: catagory สะกดผิดในชีท แต่โค้ดรองรับทั้งสองแบบ)
+    const RESOURCES_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
+        ? APPS_SCRIPT_URL + '?sheet=Sheet1'
+        : 'https://script.google.com/macros/s/AKfycbwbvCK3k7DEJI29u6HSZxRK7vwjFVDvxF8wtKWjGaJJ6XYNpg0blLTRf9YGZZ5ZB03g/exec';
+    const SUBSCRIBE_URL  = APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL_HERE'
+        ? APPS_SCRIPT_URL
+        : 'https://script.google.com/macros/s/AKfycbxe72M0uK62wYSEKp7L3mw7agrFJuTKZDncUrzBJsgRb4SpjR-n1Gt-X9i2e6lbzvK8/exec';
 
     const BUSINESS_TYPES = [
         'E-commerce / ร้านค้าออนไลน์', 'Education / การศึกษา', 'Healthcare / สุขภาพ',
@@ -174,10 +194,13 @@
             grid.innerHTML = '<p class="res-loading">ไม่มีรายการในขณะนี้</p>';
             return;
         }
-        grid.innerHTML = list.map((r, i) => `
+        grid.innerHTML = list.map((r, i) => {
+            // รองรับทั้ง 'catagory' (typo ในชีท) และ 'category'
+            const cat = r.catagory || r.category || 'Resource';
+            return `
             <div class="res-card">
                 <div class="res-top">
-                    <span class="res-badge ${badgeClass(r.category)}">${r.category || 'Resource'}</span>
+                    <span class="res-badge ${badgeClass(cat)}">${cat}</span>
                     <span class="res-free">FREE</span>
                 </div>
                 <div class="res-name">${r.name || ''}</div>
@@ -185,8 +208,8 @@
                 <button class="res-dl-btn" onclick="openModal(${i})">
                     Download <span>↓</span>
                 </button>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
         window._resources = list;
     }
 
@@ -195,9 +218,9 @@
         const grid = document.getElementById('res-grid');
         try {
             const res  = await fetch(RESOURCES_URL);
-            const data = await res.json();
-            if (data.success) {
-                renderResources(data.data);
+            const json = await res.json();
+            if (json.success && json.data) {
+                renderResources(json.data);
             } else {
                 grid.innerHTML = '<p class="res-loading">ไม่สามารถโหลดรายการได้</p>';
             }
