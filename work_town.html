@@ -332,13 +332,13 @@
     // ──────────────────────────────────────────────────────────
     // Column ใน Sheet ที่ต้องมี (ชื่อต้องตรง):
     //   id | title | titleTh | description | descriptionTh |
-    //   category | status | link | section | cover | logo
+    //   category | status | link | logo | previewImage | section | tags
     //
-    // category: ai / business / live / system
-    // status:   live / coming-soon / sold-out
-    // section:  astrology / commerce / system  (ถ้าว่างจะใส่ใน commerce)
-    // cover:    URL รูปหน้าปก (ImageKit หรือ URL อื่น) — ถ้าว่างจะไม่แสดง
-    // logo:     URL โลโก้ขนาดเล็ก (36x36) — ถ้าว่างจะไม่แสดง
+    // category:     ai / business / live / system
+    // status:       live / coming-soon / sold-out
+    // section:      astrology / commerce / system  (ถ้าว่างจะใส่ใน commerce)
+    // previewImage: URL รูปหน้าปก (ImageKit หรือ URL อื่น) — ถ้าว่างจะไม่แสดง
+    // logo:         URL โลโก้ขนาดเล็ก (36x36) — ถ้าว่างจะไม่แสดง
     // ══════════════════════════════════════════════════════════
 
     const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
@@ -381,7 +381,7 @@
         const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
         // ใช้ descriptionTh ก่อน ถ้าว่างใช้ description
         const desc = p.descriptionTh || p.description || '';
-        const coverHTML = p.cover ? `<img class="proj-cover" src="${p.cover}" alt="">` : '';
+        const coverHTML = (p.previewImage || p.cover) ? `<img class="proj-cover" src="${p.previewImage || p.cover}" alt="">` : '';
         const logoHTML  = p.logo  ? `<img class="proj-logo"  src="${p.logo}"  alt="">` : '';
         return `<${tag} class="${cardCls}" ${href}>
             ${coverHTML}
