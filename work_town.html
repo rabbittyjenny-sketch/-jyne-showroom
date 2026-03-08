@@ -139,10 +139,10 @@
         .ai-card.coming  { opacity: 0.45; pointer-events: none; }
         .ai-card.soldout { opacity: 0.45; pointer-events: none; }
 
-        /* Cover — landscape 16:9 to fit actual app screenshots */
+        /* Cover — portrait 3:4 as requested */
         .ai-cover {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 3 / 4;
             position: relative;
             overflow: hidden;
             background: #333;
@@ -156,7 +156,7 @@
         }
         .ai-cover-placeholder {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 3 / 4;
             background: linear-gradient(160deg, #303030 0%, #262626 100%);
             display: flex;
             align-items: center;
@@ -875,17 +875,13 @@ function buildProjCard(p) {
     const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
     const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
     const desc     = p.descriptionTh || p.description || '';
-    const cover    = p.previewImage  || p.cover || '';
     const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
-    const coverHTML = cover
-        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>` : '';
     /* Always render footer consistently */
     const projCtaCls   = hasUrl ? 'proj-cta' : 'proj-cta dim';
     const projCtaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
     const footerHTML   = `<div class="proj-footer"><span class="${projCtaCls}">${projCtaLabel}</span></div>`;
 
     return `<${tag} class="${cls}" ${href}>
-        ${coverHTML}
         <div class="proj-body">
             <div class="proj-logo-row">
                 ${logoHTML}
