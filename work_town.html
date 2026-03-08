@@ -6,493 +6,914 @@
     <title>WORKS TOWN - iDEAS365</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
-        :root { --bg-color: #111111; --text-dark: #1A1A1A; --accent: #ffffff; }
-        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
-        .logo-img:hover { transform: scale(1.05); }
-        .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .map-btn:hover { transform: scale(1.05); }
+        :root {
+            --yellow:   #F5B800;
+            --dark:     #1A1A1A;
+            --card-bg:  #222222;
+            --inner-bg: #2c2c2c;
+            --border:   rgba(255,255,255,0.1);
+            --muted:    rgba(255,255,255,0.5);
+        }
 
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
-        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; }
+        body, html {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans Thai', sans-serif;
+            background: var(--yellow);
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-        /* SECTION CARD */
-        .content-card { background: #1e1e1e; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-        .content-card.white { background: #ffffff; color: var(--text-dark); }
-        .section-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
-        .section-sub { font-size: 0.88rem; color: #aaa; margin: 0 0 30px; font-weight: 300; }
-        .content-card.white .section-title { color: var(--text-dark); border-bottom-color: var(--text-dark); }
-        .content-card.white .section-sub { color: #888; }
+        /* ═══════════════ NAV ═══════════════ */
+        .nav-header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            padding: 16px 36px;
+            z-index: 200;
+        }
+        .logo-img { height: 40px; display: block; }
+        .back-btn img { height: 44px; width: auto; display: block; }
 
-        /* ── SHARED BADGE STYLES ── */
-        .proj-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
-        .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
-        .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
-        .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
-        .badge-sys { background: rgba(100,180,255,0.2); color: #7ec8ff; }
-        .badge-soon     { background: rgba(255,255,255,0.1); color: #aaa; }
-        .badge-creative { background: rgba(180,130,255,0.25); color: #c9a0ff; }
-        .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
+        /* ═══════════════ HERO ═══════════════ */
+        .hero {
+            padding: 130px 24px 56px;
+            text-align: center;
+        }
+        .page-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(5rem, 13vw, 9rem);
+            line-height: 0.87;
+            text-transform: uppercase;
+            color: var(--dark);
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--dark);
+            opacity: 0.65;
+            font-weight: 400;
+        }
 
-        /* ── AI TOOLS — reference-style cards (3 cols, outline CTA) ── */
-        .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        /* ═══════════════ MAIN CONTAINER ═══════════════ */
+        .main-content {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        /* ═══════════════ SECTION CARD ═══════════════ */
+        .section-card {
+            background: var(--dark);
+            border-radius: 22px;
+            padding: 42px 42px 48px;
+            width: 100%;
+        }
+        .section-head {
+            margin-bottom: 28px;
+        }
+        .section-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.75rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding-bottom: 12px;
+            border-bottom: 1.5px solid rgba(255,255,255,0.1);
+            margin-bottom: 6px;
+        }
+        .section-sub {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 300;
+            padding-top: 4px;
+        }
+
+        /* ═══════════════ BADGE ═══════════════ */
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        .badge-ai       { background: rgba(251,188,5,0.18);   color: #FBBC05; }
+        .badge-live     { background: rgba(234,67,53,0.18);   color: #ff6b6b; }
+        .badge-biz      { background: rgba(52,168,83,0.18);   color: #5bdb8a; }
+        .badge-sys      { background: rgba(100,180,255,0.15); color: #7ec8ff; }
+        .badge-soon     { background: rgba(255,255,255,0.08); color: #888; }
+        .badge-creative { background: rgba(180,130,255,0.18); color: #c9a0ff; }
+        .badge-sold     { background: rgba(255,80,80,0.15);   color: #ff7070; }
+
+        /* ═══════════════════════════════════════════════════
+           SECTION 1 — AI CARDS  3-col · portrait · no shadow
+        ═══════════════════════════════════════════════════ */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
         .ai-card {
-            background: #2a2a2a; border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px; overflow: hidden; text-decoration: none; color: #fff;
-            display: flex; flex-direction: column; position: relative;
-            transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s;
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover transition */
         }
-        .ai-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
-        .ai-card.coming { opacity: 0.5; cursor: default; pointer-events: none; }
-        .ai-card.sold-out { opacity: 0.5; cursor: default; pointer-events: none; position: relative; }
-        .ai-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(234,67,53,0.9); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; letter-spacing: 1px; }
-        /* Card header: title left, logo right */
-        .ai-card-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 22px 22px 16px; gap: 12px; }
-        .ai-card-names { flex: 1; min-width: 0; }
-        .ai-card-title { font-weight: 700; font-size: 1.05rem; margin: 0 0 4px; line-height: 1.3; color: #fff; transition: color 0.2s; }
-        .ai-card:hover .ai-card-title { color: #4285F4; }
-        .ai-card-title-th { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 300; }
-        .ai-card-logo { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; flex-shrink: 0; }
-        /* Preview image 16:9 */
-        .ai-card-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.4s; }
-        .ai-card:hover .ai-card-cover { transform: scale(1.04); }
-        /* Body */
-        .ai-card-body { padding: 16px 22px 12px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .ai-card-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.65); font-weight: 300; flex: 1; }
-        /* Outline CTA button */
-        .ai-card-footer { padding: 14px 22px 20px; display: flex; justify-content: center; }
-        .ai-view-btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 9px 24px; border-radius: 30px;
-            font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            color: #fff; border: 1px solid rgba(255,255,255,0.35); background: transparent;
-            text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        .ai-card.coming  { opacity: 0.45; pointer-events: none; }
+        .ai-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Portrait cover 3:4 */
+        .ai-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            position: relative;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
         }
-        .ai-view-btn:hover { background: #fff; color: #1a1a1a; border-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,255,255,0.15); }
+        .ai-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .ai-cover-placeholder {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(160deg, #303030 0%, #262626 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            opacity: 0.18;
+            flex-shrink: 0;
+        }
+        /* Logo chip — overlaid top-left on cover */
+        .ai-logo-chip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.55);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-logo-chip img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        /* Badge chip — overlaid top-right */
+        .ai-badge-chip {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
 
-        /* ── OTHER SECTIONS — standard grid cards ── */
-        .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .proj-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; overflow: hidden; padding: 0; text-decoration: none; color: #ffffff; display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s; }
-        .proj-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
-        .proj-card.coming { opacity: 0.55; cursor: default; }
-        .proj-card.coming:hover { transform: none; }
-        .proj-logo { width: 36px; height: 36px; object-fit: contain; border-radius: 8px; display: block; flex-shrink: 0; }
-        .proj-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-        .proj-info { flex: 1; padding: 18px 20px; }
-        .proj-logo-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-        .proj-arrow { padding: 0 20px 14px; text-align: right; font-size: 1.1rem; flex-shrink: 0; }
-        .proj-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
-        .proj-name-th { font-size: 0.78rem; color: #aaa; margin-bottom: 6px; font-weight: 300; }
-        .proj-desc { font-size: 0.78rem; line-height: 1.5; color: #ccc; font-weight: 300; }
-        .proj-card.sold-out { opacity: 0.6; cursor: default; pointer-events: none; position: relative; }
-        .proj-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
+        /* Card body */
+        .ai-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ai-title-en {
+            font-weight: 700;
+            font-size: 0.97rem;
+            line-height: 1.25;
+            color: #fff;
+        }
+        .ai-title-th {
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .ai-desc {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.58);
+            font-weight: 300;
+            margin-top: 8px;
+            flex: 1;
+        }
 
-        /* VIDEO GRID */
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; position: relative; display: block; text-decoration: none; }
-        .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
-        .video-label { font-size: 0.78rem; color: #aaa; margin-top: 6px; font-weight: 300; }
+        /* CTA button — no hover */
+        .ai-footer {
+            padding: 10px 18px 18px;
+        }
+        .ai-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 9px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.28);
+            font-size: 0.67rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
 
-        /* CASE STUDY / PROOF */
-        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.8rem; color: var(--accent); margin: 0 0 16px; text-transform: uppercase; }
-        .hl { list-style: none; padding: 0; margin: 0; }
-        .hl li { font-size: 0.88rem; line-height: 1.7; padding: 8px 0 8px 16px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; color: #ddd; font-weight: 300; }
+        /* ═══════════════════════════════════════════════════
+           SECTIONS 2 & 3 — PROJECT CARDS  3-col · no shadow
+        ═══════════════════════════════════════════════════ */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .proj-card {
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover */
+        }
+        .proj-card.coming  { opacity: 0.45; pointer-events: none; }
+        .proj-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Optional 16:9 cover */
+        .proj-cover {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
+        }
+        .proj-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .proj-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .proj-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .proj-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            border-radius: 7px;
+        }
+        .proj-name-en {
+            font-weight: 700;
+            font-size: 0.93rem;
+            line-height: 1.28;
+        }
+        .proj-name-th {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .proj-desc {
+            font-size: 0.77rem;
+            line-height: 1.58;
+            color: rgba(255,255,255,0.57);
+            font-weight: 300;
+            margin-top: 6px;
+            flex: 1;
+        }
+        .proj-footer {
+            padding: 10px 18px 18px;
+        }
+        .proj-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        /* ═══════════════ VIDEO GRID ═══════════════ */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .video-wrap {
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            position: relative;
+            text-decoration: none;
+        }
+        .video-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .yt-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .yt-play svg { width: 56px; height: 40px; }
+
+        /* ═══════════════ CASE STUDY ═══════════════ */
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .col-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.65rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .col-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .hl { list-style: none; padding: 0; }
+        .hl li {
+            font-size: 0.84rem;
+            line-height: 1.65;
+            padding: 8px 0 8px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            color: rgba(255,255,255,0.76);
+            font-weight: 300;
+        }
         .hl li:last-child { border-bottom: none; }
-        .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
-        .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .cs-pill { background: var(--accent); color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
-        .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; background: #222; }
-        .col-desc { font-size: 0.88rem; color: #ccc; line-height: 1.7; font-weight: 300; margin: 0 0 10px; }
+        .hl li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--yellow);
+            font-weight: 700;
+        }
+        .cs-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .cs-pill {
+            background: var(--yellow);
+            color: var(--dark);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .proof-grid img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            background: #2a2a2a;
+            min-height: 80px;
+        }
+        .proof-caption {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 10px;
+        }
 
-        /* ── RESPONSIVE ── */
+        /* ═══════════════ LOADING ═══════════════ */
+        .loading-msg {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.84rem;
+            text-align: center;
+            padding: 32px 0;
+            grid-column: 1 / -1;
+        }
+
+        /* ═══════════════ FOOTER ═══════════════ */
+        .site-footer {
+            background: var(--dark);
+            color: #fff;
+            text-align: center;
+            padding: 48px 20px 24px;
+            margin-top: 10px;
+        }
+        .footer-brand {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .dot-r { color: #EA4335; }
+        .dot-g { color: #34A853; }
+        .dot-b { color: #4285F4; }
+        .dot-y { color: #FBBC05; }
+        .footer-tagline {
+            font-size: 0.73rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 26px;
+        }
+        .footer-copy {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.25);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 18px;
+        }
+
+        /* ═══════════════ RESPONSIVE ═══════════════ */
         @media (max-width: 1024px) {
-            .main-content { padding: 100px 24px 60px; }
-            /* keep 2-col grids on tablet */
+            .ai-grid  { grid-template-columns: repeat(2, 1fr); }
+            .proj-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 640px) {
-            .main-content { padding: 90px 16px 48px; }
-            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
-            .content-card { padding: 24px 20px; border-radius: 16px; }
-            .nav-header { padding: 14px 16px; }
-            .logo-img { height: 36px; }
-            /* collapse all grids to 1 column */
-            .project-grid, .video-grid, .two-col, .proof-grid,
-            .ai-grid { grid-template-columns: 1fr !important; }
-            .section-title { font-size: 1.6rem; }
-            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
-            .footer-brand { font-size: 1.3rem; }
+            .nav-header { padding: 12px 18px; }
+            .logo-img   { height: 32px; }
+            .back-btn img { height: 36px; }
+            .hero { padding: 95px 20px 36px; }
+            .page-title { font-size: clamp(3.5rem, 15vw, 5.5rem); }
+            .main-content { padding: 0 14px 56px; gap: 18px; }
+            .section-card { padding: 26px 20px 32px; border-radius: 18px; }
+            .section-title { font-size: 1.35rem; }
+            .ai-grid,
+            .proj-grid,
+            .video-grid,
+            .case-grid,
+            .proof-grid { grid-template-columns: 1fr; }
         }
-        /* YouTube thumbnail cards */
-        .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
-        .video-wrap:hover img { opacity: 0.8; }
-        .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-        .yt-play svg { width: 60px; height: 42px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
-
-        /* ─── FOOTER ─── */
-        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
-        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
-        .footer-brand span.dot-r { color: #EA4335; }
-        .footer-brand span.dot-g { color: #34A853; }
-        .footer-brand span.dot-b { color: #4285F4; }
-        .footer-brand span.dot-y { color: #FBBC05; }
-        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
-        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
     </style>
 </head>
 <body>
-    <header class="nav-header">
-        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
-    </header>
-    <main class="main-content">
-        <h1 class="page-title">WORKS<br>TOWN</h1>
-        <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
 
-        <!-- AI TOOLS PROJECTS -->
-        <div class="content-card">
-            <div class="section-title">AI TOOLS & ASTROLOGY</div>
+<header class="nav-header">
+    <a href="index.html">
+        <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
+    </a>
+    <span></span>
+    <a href="index.html" class="back-btn">
+        <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map">
+    </a>
+</header>
+
+<div class="hero">
+    <h1 class="page-title">WORKS<br>TOWN</h1>
+    <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
+</div>
+
+<main class="main-content">
+
+    <!-- ══════════════════════════════════════
+         SECTION 1 · AI TOOLS & ASTROLOGY
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">AI TOOLS &amp; ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
-            <div class="ai-grid" id="grid-astrology">
-                <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
-                    <div class="ai-card-head">
-                        <div class="ai-card-names">
-                            <div class="ai-card-title">Soul Cards</div>
-                            <div class="ai-card-title-th">ไพ่ออราเคิล</div>
-                        </div>
-                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Cards" loading="lazy">
-                    </div>
-                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards cover" loading="lazy">
-                    <div class="ai-card-body">
-                        <span class="proj-badge badge-ai">AI · Live</span>
-                        <div class="ai-card-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
-                    </div>
-                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
-                </a>
-                <a class="ai-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
-                    <div class="ai-card-head">
-                        <div class="ai-card-names">
-                            <div class="ai-card-title">The Soul Weaver</div>
-                            <div class="ai-card-title-th">ความลับแห่งดวงดาว</div>
-                        </div>
-                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Weaver" loading="lazy">
-                    </div>
-                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="Soul Weaver cover" loading="lazy">
-                    <div class="ai-card-body">
-                        <span class="proj-badge badge-ai">AI · Live</span>
-                        <div class="ai-card-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
-                    </div>
-                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
-                </a>
-                <a class="ai-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
-                    <div class="ai-card-head">
-                        <div class="ai-card-names">
-                            <div class="ai-card-title">KAIXIN</div>
-                            <div class="ai-card-title-th">ค้นหาหินประจำตัว</div>
-                        </div>
-                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="KAIXIN" loading="lazy">
-                    </div>
-                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN cover" loading="lazy">
-                    <div class="ai-card-body">
-                        <span class="proj-badge badge-ai">AI · Live</span>
-                        <div class="ai-card-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
-                    </div>
-                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
-                </a>
-            </div>
         </div>
+        <div class="ai-grid" id="grid-astrology">
+            <!-- Static fallback — replaced by JS if sheet loads -->
+            <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">Soul Cards</div>
+                    <div class="ai-title-th">ไพ่ออราเคิล</div>
+                    <div class="ai-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม พร้อมคำอธิบายเชิงลึกและแนวทางปฏิบัติ</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
 
-        <!-- COMMERCE & BUSINESS PROJECTS -->
-        <div class="content-card">
-            <div class="section-title">COMMERCE & BUSINESS SYSTEMS</div>
+            <a class="ai-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="Soul Weaver" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">The Soul Weaver</div>
+                    <div class="ai-title-th">ความลับแห่งดวงดาว</div>
+                    <div class="ai-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI พร้อมคำแนะนำรายเดือน</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
+
+            <a class="ai-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">KAIXIN</div>
+                    <div class="ai-title-th">ค้นหาหินประจำตัว</div>
+                    <div class="ai-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 2 · COMMERCE & BUSINESS SYSTEMS
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">COMMERCE &amp; BUSINESS SYSTEMS</div>
             <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
-            <div class="project-grid" id="grid-commerce">
-                <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-ai">AI · Live</div>
-                        <div class="proj-name">Caption Factory</div>
-                        <div class="proj-name-th">โรงงานสร้างแคปชั่น</div>
-                        <div class="proj-desc">สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วมของผู้ชม</div>
-                    </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-                <a class="proj-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-biz">Business · Live</div>
-                        <div class="proj-name">Event ROI Calculator</div>
-                        <div class="proj-name-th">คำนวณผลตอบแทนอีเวนต์</div>
-                        <div class="proj-desc">เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์</div>
-                    </div>
-                    <div class="proj-arrow">↗</div>
-                </a>
-                <div class="proj-card">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-live">Live Commerce</div>
-                        <div class="proj-name">Social Commerce Architecture</div>
-                        <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
-                        <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
-                    </div>
+        </div>
+        <div class="proj-grid" id="grid-commerce">
+            <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-ai">AI · Live</span></div>
+                    <div class="proj-name-en">Caption Factory</div>
+                    <div class="proj-name-th">โรงงานสร้างแคปชั่น</div>
+                    <div class="proj-desc">สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วมของผู้ชม และปรับโทนตามแพลตฟอร์ม</div>
                 </div>
-                <div class="proj-card">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-live">Live Commerce</div>
-                        <div class="proj-name">Video Production</div>
-                        <div class="proj-name-th">ผลิตวีดีโอ</div>
-                        <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
-                    </div>
+                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
+            </a>
+            <a class="proj-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business · Live</span></div>
+                    <div class="proj-name-en">Event ROI Calculator</div>
+                    <div class="proj-name-th">คำนวณผลตอบแทนอีเวนต์</div>
+                    <div class="proj-desc">เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์ มีตัวเลขจริงทุกขั้นตอน</div>
                 </div>
-                <div class="proj-card">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-biz">Business</div>
-                        <div class="proj-name">Strategy Consulting</div>
-                        <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
-                        <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก</div>
-                    </div>
+                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
+            </a>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
+                    <div class="proj-name-en">Social Commerce Architecture</div>
+                    <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
+                    <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
                 </div>
-                <div class="proj-card">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-biz">Business</div>
-                        <div class="proj-name">Systems Design</div>
-                        <div class="proj-name-th">ออกแบบระบบ</div>
-                        <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
-                    </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
+                    <div class="proj-name-en">Video Production</div>
+                    <div class="proj-name-th">ผลิตวีดีโอสินค้า</div>
+                    <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
                 </div>
-                <div class="proj-card coming">
-                    <div class="proj-info">
-                        <div class="proj-badge badge-soon">Coming Soon</div>
-                        <div class="proj-name">QR Code Generator</div>
-                        <div class="proj-name-th">สร้าง QR Code</div>
-                        <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์ กำลังจะมา</div>
-                    </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
+                    <div class="proj-name-en">Strategy Consulting</div>
+                    <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
+                    <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก พร้อมแผนปฏิบัติที่วัดผลได้</div>
+                </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
+                    <div class="proj-name-en">Systems Design</div>
+                    <div class="proj-name-th">ออกแบบระบบองค์กร</div>
+                    <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
+                </div>
+            </div>
+            <div class="proj-card coming">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-soon">Coming Soon</span></div>
+                    <div class="proj-name-en">QR Code Generator</div>
+                    <div class="proj-name-th">สร้าง QR Code</div>
+                    <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์และสีสันให้เป็นเอกลักษณ์</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- CREATIVE TOOLS & ELEMENTS PROJECTS -->
-        <div class="content-card">
-            <div class="section-title">CREATIVE TOOLS & ELEMENTS</div>
+    <!-- ══════════════════════════════════════
+         SECTION 3 · CREATIVE TOOLS & ELEMENTS
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">CREATIVE TOOLS &amp; ELEMENTS</div>
             <div class="section-sub">เครื่องมือสร้างสรรค์ คอนเทนต์ และ Design Elements</div>
-            <div class="project-grid" id="grid-creative">
-                <p style="color:#aaa; font-size:0.88rem; padding:10px 0; grid-column:1/-1;">กำลังโหลด…</p>
-            </div>
         </div>
-
-        <!-- SYSTEM PROJECTS (โหลดจาก Sheet เมื่อมี section=system) -->
-        <div class="content-card" id="section-system" style="display:none">
-            <div class="section-title">SYSTEM DEVELOPMENT</div>
-            <div class="section-sub">ระบบที่พัฒนาและส่งมอบให้ลูกค้า — SOP, AI Agent, Framework</div>
-            <div class="project-grid" id="grid-system"></div>
+        <div class="proj-grid" id="grid-creative">
+            <p class="loading-msg">กำลังโหลด…</p>
         </div>
+    </div>
 
-        
-        <!-- PORTFOLIO MEDIA / CLIPS -->
-        <div class="content-card">
+    <!-- ══════════════════════════════════════
+         PORTFOLIO MEDIA
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
             <div class="section-title">PORTFOLIO MEDIA · คลิปและวีดีโอผลงาน</div>
             <div class="section-sub">ตัวอย่างการไลฟ์ขาย — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</div>
-            <div class="video-grid">
-                <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap" title="Live Commerce 1"><img src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" alt="Live Commerce 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap" title="Live Commerce 2"><img src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" alt="Live Commerce 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap" title="Live Commerce 3"><img src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" alt="Live Commerce 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap" title="Live Commerce 4"><img src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" alt="Live Commerce 4" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap" title="Live Commerce 5"><img src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" alt="Live Commerce 5" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap" title="Live Commerce 6"><img src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" alt="Live Commerce 6" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap" title="Live Commerce 7"><img src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" alt="Live Commerce 7" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap" title="Live Commerce 8"><img src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" alt="Live Commerce 8" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap" title="Live Commerce 9"><img src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" alt="Live Commerce 9" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap" title="Live Commerce 10"><img src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" alt="Live Commerce 10" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap" title="Live Commerce 11"><img src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" alt="Live Commerce 11" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-            </div>
         </div>
+        <div class="video-grid">
+            <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap" title="Live Commerce 1">
+                <img src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" alt="Live Commerce 1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap" title="Live Commerce 2">
+                <img src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" alt="Live Commerce 2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap" title="Live Commerce 3">
+                <img src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" alt="Live Commerce 3" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap" title="Live Commerce 4">
+                <img src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" alt="Live Commerce 4" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap" title="Live Commerce 5">
+                <img src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" alt="Live Commerce 5" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap" title="Live Commerce 6">
+                <img src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" alt="Live Commerce 6" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap" title="Live Commerce 7">
+                <img src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" alt="Live Commerce 7" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap" title="Live Commerce 8">
+                <img src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" alt="Live Commerce 8" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap" title="Live Commerce 9">
+                <img src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" alt="Live Commerce 9" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap" title="Live Commerce 10">
+                <img src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" alt="Live Commerce 10" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap" title="Live Commerce 11">
+                <img src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" alt="Live Commerce 11" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+        </div>
+    </div>
 
-        <!-- AI VOICE GENERATOR CLIPS -->
-        <div class="content-card">
+    <!-- ══════════════════════════════════════
+         AI VOICE GENERATOR
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
             <div class="section-title">AI VOICE GENERATOR · AI สร้างเสียงพากย์</div>
             <div class="section-sub">ตัวอย่างผลงาน AI Voice &amp; Animation Avatar Video</div>
-            <div class="video-grid">
-                <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap" title="AI Voice Demo 1"><img src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" alt="AI Voice Demo 1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap" title="AI Voice Demo 2"><img src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" alt="AI Voice Demo 2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap" title="AI Voice Demo 3"><img src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" alt="AI Voice Demo 3" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.1"><img src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" alt="AI Voice Tutorial Pt.1" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
-                <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.2"><img src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" alt="AI Voice Tutorial Pt.2" loading="lazy"><div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div></a>
+        </div>
+        <div class="video-grid">
+            <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap" title="AI Voice Demo 1">
+                <img src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" alt="AI Voice Demo 1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap" title="AI Voice Demo 2">
+                <img src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" alt="AI Voice Demo 2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap" title="AI Voice Demo 3">
+                <img src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" alt="AI Voice Demo 3" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.1">
+                <img src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" alt="AI Voice Tutorial Pt.1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.2">
+                <img src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" alt="AI Voice Tutorial Pt.2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         JENNY JYNE · CASE STUDY
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="case-grid">
+            <div>
+                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
+                <p class="col-desc"><strong style="color:#fff">Challenge:</strong> สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น โดยไม่มีประสบการณ์หรือระบบมาก่อน</p>
+                <ul class="hl">
+                    <li>Product curation strategy — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
+                    <li>Script framework development — กำหนดว่าจะพูดอะไร เมื่อไหร่</li>
+                    <li>Technical setup &amp; optimization — แสง มุมกล้อง และแพลตฟอร์ม</li>
+                    <li>Host training &amp; operations — รูปแบบไลฟ์ 2 ชั่วโมงที่ทีมทำเองได้</li>
+                </ul>
+                <div class="cs-pills">
+                    <span class="cs-pill">✦ 6-figure ใน 2 ชั่วโมง</span>
+                    <span class="cs-pill">✦ รูปแบบที่ทำซ้ำได้</span>
+                    <span class="cs-pill">✦ ทีมรันเองโดยไม่ต้องรอ</span>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
+                <div class="proof-grid">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.style.minHeight='80px'">
+                </div>
+                <p class="proof-caption">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
             </div>
         </div>
+    </div>
 
-        <!-- CASE STUDY -->
-        <div class="content-card">
-            <div class="two-col">
-                <div>
-                    <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
-                    <p class="col-desc"><strong style="color:#fff">Challenge:</strong> สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น โดยไม่มีประสบการณ์หรือระบบมาก่อน</p>
-                    <ul class="hl">
-                        <li>Product curation strategy — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
-                        <li>Script framework development — กำหนดว่าจะพูดอะไร เมื่อไหร่</li>
-                        <li>Technical setup &amp; optimization — แสง มุมกล้อง และแพลตฟอร์ม</li>
-                        <li>Host training &amp; operations — รูปแบบไลฟ์ 2 ชั่วโมงที่ทีมทำเองได้</li>
-                    </ul>
-                    <div class="cs-pills">
-                        <span class="cs-pill">✦ 6-figure ใน 2 ชั่วโมง</span>
-                        <span class="cs-pill">✦ รูปแบบที่ทำซ้ำได้</span>
-                        <span class="cs-pill">✦ ทีมรันเองโดยไม่ต้องรอ</span>
-                    </div>
-                </div>
-                <div>
-                    <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
-                    <div class="proof-grid">
-                        <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.style.minHeight='80px'">
-                        <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.style.minHeight='80px'">
-                        <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.style.minHeight='80px'">
-                        <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.style.minHeight='80px'">
-                    </div>
-                    <p class="col-desc" style="margin-top:10px;font-size:0.75rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
-                </div>
-            </div>
+</main>
+
+<footer class="site-footer">
+    <p class="footer-brand">
+        <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+        &nbsp;:&nbsp;iDEAS365
+    </p>
+    <p class="footer-tagline">Smart Lazy Style</p>
+    <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+</footer>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
+
+const BADGE_MAP = {
+    ai:       { cls: 'badge-ai',       label: 'AI Tool' },
+    business: { cls: 'badge-biz',      label: 'Business' },
+    live:     { cls: 'badge-live',     label: 'Live Commerce' },
+    system:   { cls: 'badge-sys',      label: 'System Dev' },
+    creative: { cls: 'badge-creative', label: 'Creative' },
+};
+
+/* ── Section 1: portrait AI card ── */
+function buildAICard(p) {
+    const status   = (p.status || '').toLowerCase().trim();
+    const isSold   = status === 'sold-out' || status === 'sold_out';
+    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+    const cat      = (p.category || '').toLowerCase().trim();
+    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+    const hasUrl   = p.link && !isSold && !isSoon;
+    const tag      = hasUrl ? 'a' : 'div';
+    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+    const cls      = `ai-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
+    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage || p.cover || '';
+    const logo     = p.logo || '';
+
+    const coverHTML = cover
+        ? `<div class="ai-cover">
+               <img src="${cover}" alt="" loading="lazy">
+               ${logo ? `<div class="ai-logo-chip"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`
+        : `<div class="ai-cover-placeholder">◆
+               ${logo ? `<div class="ai-logo-chip" style="position:absolute;top:10px;left:10px;"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`;
+
+    const footerHTML = hasUrl
+        ? `<div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>`
+        : '';
+
+    return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
+        <div class="ai-body">
+            <div class="ai-title-en">${p.title || ''}</div>
+            ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
+            <div class="ai-desc">${desc}</div>
         </div>
+        ${footerHTML}
+    </${tag}>`;
+}
 
-    </main>
-    <script>
-    // ══════════════════════════════════════════════════════════════
-    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
-    // ══════════════════════════════════════════════════════════════
-    // Sheet tabs ที่ใช้:
-    //   work_ai       → grid-astrology  (section=astrology หรือว่าง)
-    //   work_commerce → grid-commerce
-    //   work__creative → grid-creative
-    //
-    // Columns ในทุก tab (ชื่อต้องตรง):
-    //   id | title | titleTh | description | descriptionTh |
-    //   category | status | link | logo | previewImage
-    //
-    // category:     ai / business / live / creative / system
-    // status:       live / coming-soon / sold-out
-    // previewImage: URL รูปหน้าปก — ถ้าว่างจะไม่แสดง
-    // logo:         URL โลโก้เล็ก (36x36) — ถ้าว่างจะไม่แสดง
-    // ══════════════════════════════════════════════════════════════
+/* ── Sections 2 & 3: project card ── */
+function buildProjCard(p) {
+    const status   = (p.status || '').toLowerCase().trim();
+    const isSold   = status === 'sold-out' || status === 'sold_out';
+    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+    const cat      = (p.category || '').toLowerCase().trim();
+    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+    const hasUrl   = p.link && !isSold && !isSoon;
+    const tag      = hasUrl ? 'a' : 'div';
+    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+    const cls      = `proj-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
+    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage  || p.cover || '';
+    const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
+    const coverHTML = cover
+        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>` : '';
+    const footerHTML = hasUrl
+        ? `<div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>` : '';
 
-    const BADGE_MAP = {
-        ai:       { cls: 'badge-ai',       label: 'AI Tool' },
-        business: { cls: 'badge-biz',      label: 'Business' },
-        live:     { cls: 'badge-live',     label: 'Live Commerce' },
-        system:   { cls: 'badge-sys',      label: 'System Dev' },
-        creative: { cls: 'badge-creative', label: 'Creative' },
-    };
-
-    // ── AI Tools: tall portrait card (grid-astrology) ────────────
-    function buildAICard(p) {
-        const status  = (p.status || '').toLowerCase().trim();
-        const isSold  = status === 'sold-out'    || status === 'sold_out';
-        const isSoon  = status === 'coming-soon' || status === 'coming_soon';
-        const cat     = (p.category || '').toLowerCase().trim();
-        const badge   = BADGE_MAP[cat] || BADGE_MAP.business;
-        const hasUrl  = p.link && !isSold && !isSoon;
-        const tag     = hasUrl ? 'a' : 'div';
-        const href    = hasUrl ? `href="${p.link}" target="_blank"` : '';
-        const cls     = `ai-card${isSold ? ' sold-out' : isSoon ? ' coming' : ''}`;
-        const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
-        const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
-        const desc    = p.descriptionTh || p.description || '';
-        const cover   = p.previewImage || p.cover || '';
-        const logo    = p.logo || '';
-        return `<${tag} class="${cls}" ${href}>
-            <div class="ai-card-head">
-                <div class="ai-card-names">
-                    <div class="ai-card-title">${p.title || ''}</div>
-                    ${p.titleTh ? `<div class="ai-card-title-th">${p.titleTh}</div>` : ''}
-                </div>
-                ${logo ? `<img class="ai-card-logo" src="${logo}" alt="" loading="lazy">` : ''}
+    return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
+        <div class="proj-body">
+            <div class="proj-logo-row">
+                ${logoHTML}
+                <span class="badge ${badgeCls}">${badgeLbl}</span>
             </div>
-            ${cover ? `<img class="ai-card-cover" src="${cover}" alt="" loading="lazy">` : ''}
-            <div class="ai-card-body">
-                <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
-                <div class="ai-card-desc">${desc}</div>
-            </div>
-            ${hasUrl ? '<div class="ai-card-footer"><span class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</span></div>' : ''}
-        </${tag}>`;
+            <div class="proj-name-en">${p.title || ''}</div>
+            ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
+            <div class="proj-desc">${desc}</div>
+        </div>
+        ${footerHTML}
+    </${tag}>`;
+}
+
+async function loadWorks() {
+    if (!APPS_SCRIPT_URL) return;
+    const [r1, r2, r3] = await Promise.allSettled([
+        fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
+        fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
+        fetch(APPS_SCRIPT_URL + '?sheet=work_creative').then(r => r.json()),
+    ]);
+
+    /* Section 1 — AI portrait cards */
+    if (r1.status === 'fulfilled' && r1.value?.success && r1.value.data?.length) {
+        document.getElementById('grid-astrology').innerHTML =
+            r1.value.data.map(buildAICard).join('');
     }
 
-    // ── Other sections: standard card ────────────────────────────
-    function buildCard(p) {
-        const status   = (p.status || '').toLowerCase().trim();
-        const isSold   = status === 'sold-out'    || status === 'sold_out';
-        const isSoon   = status === 'coming-soon' || status === 'coming_soon';
-        const cat      = (p.category || '').toLowerCase().trim();
-        const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
-        const hasUrl   = p.link && !isSold && !isSoon;
-        const tag      = hasUrl ? 'a' : 'div';
-        const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
-        const cardCls  = isSold ? 'proj-card sold-out' : isSoon ? 'proj-card coming' : 'proj-card';
-        const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
-        const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
-        const desc     = p.descriptionTh || p.description || '';
-        const coverSrc = p.previewImage  || p.cover || '';
-        const coverHTML = coverSrc ? `<img class="proj-cover" src="${coverSrc}" alt="" loading="lazy">` : '';
-        const logoHTML  = p.logo  ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
-        return `<${tag} class="${cardCls}" ${href}>
-            ${coverHTML}
-            <div class="proj-info">
-                <div class="proj-logo-row">
-                    ${logoHTML}
-                    <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
-                </div>
-                <div class="proj-name">${p.title || ''}</div>
-                ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
-                <div class="proj-desc">${desc}</div>
-            </div>
-            ${hasUrl ? '<div class="proj-arrow">↗</div>' : ''}
-        </${tag}>`;
+    /* Section 2 — Commerce */
+    if (r2.status === 'fulfilled' && r2.value?.success && r2.value.data?.length) {
+        document.getElementById('grid-commerce').innerHTML =
+            r2.value.data.map(buildProjCard).join('');
     }
 
-    function loadGrid(gridId, data, showIfEmpty) {
-        const grid = document.getElementById(gridId);
-        if (!grid) return;
-        if (!data || !data.length) {
-            if (!showIfEmpty) grid.innerHTML = '';
-            return;
-        }
-        grid.innerHTML = data.map(buildCard).join('');
+    /* Section 3 — Creative */
+    const g3 = document.getElementById('grid-creative');
+    if (r3.status === 'fulfilled' && r3.value?.success) {
+        g3.innerHTML = r3.value.data?.length
+            ? r3.value.data.map(buildProjCard).join('')
+            : '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
+    } else {
+        g3.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
     }
+}
 
-    async function loadWorks() {
-        if (!APPS_SCRIPT_URL) return;
-        const [r1, r2, r3] = await Promise.allSettled([
-            fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
-            fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
-            fetch(APPS_SCRIPT_URL + '?sheet=work__creative').then(r => r.json()),
-        ]);
-
-        // AI / Astrology section — use tall AI card style
-        if (r1.status === 'fulfilled' && r1.value.success && r1.value.data.length) {
-            const grid = document.getElementById('grid-astrology');
-            if (grid) grid.innerHTML = r1.value.data.map(buildAICard).join('');
-        }
-        // Commerce section
-        if (r2.status === 'fulfilled' && r2.value.success && r2.value.data.length) {
-            loadGrid('grid-commerce', r2.value.data, false);
-        }
-        // Creative section
-        if (r3.status === 'fulfilled' && r3.value.success) {
-            loadGrid('grid-creative', r3.value.data, false);
-            if (!r3.value.data.length) {
-                document.getElementById('grid-creative').innerHTML =
-                    '<p style="color:#aaa;font-size:0.88rem;grid-column:1/-1;">ยังไม่มีรายการในขณะนี้</p>';
-            }
-        }
-    }
-
-    loadWorks();
-    </script>
-    <footer class="site-footer">
-        <p class="footer-brand">
-            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
-            &nbsp;:&nbsp;iDEAS365
-        </p>
-        <p class="footer-tagline">Smart Lazy Style</p>
-        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
-    </footer>
+loadWorks();
+</script>
 </body>
 </html>
