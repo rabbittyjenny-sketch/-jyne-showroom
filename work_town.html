@@ -28,7 +28,43 @@
         .content-card.white .section-title { color: var(--text-dark); border-bottom-color: var(--text-dark); }
         .content-card.white .section-sub { color: #888; }
 
-        /* PROJECT GRID */
+        /* ── SHARED BADGE STYLES ── */
+        .proj-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+        .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
+        .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
+        .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
+        .badge-sys { background: rgba(100,180,255,0.2); color: #7ec8ff; }
+        .badge-soon     { background: rgba(255,255,255,0.1); color: #aaa; }
+        .badge-creative { background: rgba(180,130,255,0.25); color: #c9a0ff; }
+        .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
+
+        /* ── AI TOOLS — tall portrait cards ── */
+        .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+        .ai-card {
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px; overflow: hidden; text-decoration: none; color: #fff;
+            display: flex; flex-direction: column; transition: transform 0.2s, background 0.2s;
+        }
+        .ai-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.13); }
+        .ai-card.coming { opacity: 0.5; cursor: default; pointer-events: none; }
+        .ai-card.sold-out { opacity: 0.5; cursor: default; pointer-events: none; position: relative; }
+        .ai-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 10px; right: 12px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
+        .ai-card-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 16px 10px; gap: 8px; }
+        .ai-card-names { flex: 1; min-width: 0; }
+        .ai-card-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 2px; line-height: 1.3; }
+        .ai-card-title-th { font-size: 0.72rem; color: rgba(255,255,255,0.55); font-weight: 300; }
+        .ai-card-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; flex-shrink: 0; }
+        .ai-card-cover { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+        .ai-card-body { padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .ai-card-desc { font-size: 0.76rem; line-height: 1.55; color: rgba(255,255,255,0.72); font-weight: 300; flex: 1; }
+        .ai-card-cta {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ── OTHER SECTIONS — standard grid cards ── */
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .proj-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; overflow: hidden; padding: 0; text-decoration: none; color: #ffffff; display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s; }
         .proj-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
@@ -42,14 +78,6 @@
         .proj-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
         .proj-name-th { font-size: 0.78rem; color: #aaa; margin-bottom: 6px; font-weight: 300; }
         .proj-desc { font-size: 0.78rem; line-height: 1.5; color: #ccc; font-weight: 300; }
-        .proj-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
-        .badge-ai { background: rgba(251,188,5,0.25); color: #FBBC05; }
-        .badge-live { background: rgba(234,67,53,0.25); color: #ff6b6b; }
-        .badge-biz { background: rgba(52,168,83,0.25); color: #5bdb8a; }
-        .badge-sys { background: rgba(100,180,255,0.2); color: #7ec8ff; }
-        .badge-soon     { background: rgba(255,255,255,0.1); color: #aaa; }
-        .badge-creative { background: rgba(180,130,255,0.25); color: #c9a0ff; }
-        .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
         .proj-card.sold-out { opacity: 0.6; cursor: default; pointer-events: none; position: relative; }
         .proj-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
 
@@ -72,16 +100,39 @@
         .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; background: #222; }
         .col-desc { font-size: 0.88rem; color: #ccc; line-height: 1.7; font-weight: 300; margin: 0 0 10px; }
 
-        @media(max-width: 768px) {
-            .project-grid, .video-grid, .two-col, .proof-grid { grid-template-columns: 1fr; }
-            .content-card { padding: 30px; }
-            .nav-header { padding: 15px 20px; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep 2-col grids on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .project-grid, .video-grid, .two-col, .proof-grid,
+            .ai-grid { grid-template-columns: 1fr !important; }
+            .section-title { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
         }
         /* YouTube thumbnail cards */
         .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
         .video-wrap:hover img { opacity: 0.8; }
         .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
         .yt-play svg { width: 60px; height: 42px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-y { color: #FBBC05; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
     </style>
 </head>
 <body>
@@ -97,58 +148,66 @@
         <div class="content-card">
             <div class="section-title">AI TOOLS & ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
-            <div class="project-grid" id="grid-astrology">
-                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
-                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards" loading="lazy">
-                    <div class="proj-info">
-                        <div class="proj-logo-row">
-                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Cards logo" loading="lazy">
-                            <div class="proj-badge badge-ai">AI · Live</div>
+            <div class="ai-grid" id="grid-astrology">
+                <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <div class="ai-card-head">
+                        <div class="ai-card-names">
+                            <div class="ai-card-title">Soul Cards</div>
+                            <div class="ai-card-title-th">ไพ่ออราเคิล</div>
                         </div>
-                        <div class="proj-name">Soul Cards</div>
-                        <div class="proj-name-th">ไพ่ออราเคิล</div>
-                        <div class="proj-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
+                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Cards" loading="lazy">
                     </div>
-                    <div class="proj-arrow">↗</div>
+                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards cover" loading="lazy">
+                    <div class="ai-card-body">
+                        <span class="proj-badge badge-ai">AI · Live</span>
+                        <div class="ai-card-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
+                    </div>
+                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
                 </a>
-                <a class="proj-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
-                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="The Soul Weaver" loading="lazy">
-                    <div class="proj-info">
-                        <div class="proj-logo-row">
-                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="The Soul Weaver logo" loading="lazy">
-                            <div class="proj-badge badge-ai">AI · Live</div>
+                <a class="ai-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+                    <div class="ai-card-head">
+                        <div class="ai-card-names">
+                            <div class="ai-card-title">The Soul Weaver</div>
+                            <div class="ai-card-title-th">ความลับแห่งดวงดาว</div>
                         </div>
-                        <div class="proj-name">The Soul Weaver</div>
-                        <div class="proj-name-th">ความลับแห่งดวงดาว</div>
-                        <div class="proj-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
+                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="Soul Weaver" loading="lazy">
                     </div>
-                    <div class="proj-arrow">↗</div>
+                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="Soul Weaver cover" loading="lazy">
+                    <div class="ai-card-body">
+                        <span class="proj-badge badge-ai">AI · Live</span>
+                        <div class="ai-card-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
+                    </div>
+                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
                 </a>
-                <a class="proj-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
-                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN" loading="lazy">
-                    <div class="proj-info">
-                        <div class="proj-logo-row">
-                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="KAIXIN logo" loading="lazy">
-                            <div class="proj-badge badge-ai">AI · Live</div>
+                <a class="ai-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+                    <div class="ai-card-head">
+                        <div class="ai-card-names">
+                            <div class="ai-card-title">KAIXIN</div>
+                            <div class="ai-card-title-th">ค้นหาหินประจำตัว</div>
                         </div>
-                        <div class="proj-name">KAIXIN</div>
-                        <div class="proj-name-th">ค้นหาหินประจำตัว</div>
-                        <div class="proj-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="KAIXIN" loading="lazy">
                     </div>
-                    <div class="proj-arrow">↗</div>
+                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN cover" loading="lazy">
+                    <div class="ai-card-body">
+                        <span class="proj-badge badge-ai">AI · Live</span>
+                        <div class="ai-card-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                    </div>
+                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
                 </a>
-                <a class="proj-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
-                    <img class="proj-cover" src="https://ik.imagekit.io/ideas365logo/rune2.png?updatedAt=1772818993769" alt="Soul Slot" loading="lazy">
-                    <div class="proj-info">
-                        <div class="proj-logo-row">
-                            <img class="proj-logo" src="https://ik.imagekit.io/ideas365logo/logo2%20(1)%20(1).png?updatedAt=1772818994039" alt="Soul Slot logo" loading="lazy">
-                            <div class="proj-badge badge-ai">AI · Live</div>
+                <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                    <div class="ai-card-head">
+                        <div class="ai-card-names">
+                            <div class="ai-card-title">Soul Slot</div>
+                            <div class="ai-card-title-th">สุ่มตัวเลขแห่งโชคชะตา</div>
                         </div>
-                        <div class="proj-name">Soul Slot</div>
-                        <div class="proj-name-th">สุ่มตัวเลขแห่งโชคชะตา</div>
-                        <div class="proj-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
+                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/logo2%20(1)%20(1).png?updatedAt=1772818994039" alt="Soul Slot" loading="lazy">
                     </div>
-                    <div class="proj-arrow">↗</div>
+                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/rune2.png?updatedAt=1772818993769" alt="Soul Slot cover" loading="lazy">
+                    <div class="ai-card-body">
+                        <span class="proj-badge badge-ai">AI · Live</span>
+                        <div class="ai-card-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
+                    </div>
+                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
                 </a>
             </div>
         </div>
@@ -328,6 +387,40 @@
         creative: { cls: 'badge-creative', label: 'Creative' },
     };
 
+    // ── AI Tools: tall portrait card (grid-astrology) ────────────
+    function buildAICard(p) {
+        const status  = (p.status || '').toLowerCase().trim();
+        const isSold  = status === 'sold-out'    || status === 'sold_out';
+        const isSoon  = status === 'coming-soon' || status === 'coming_soon';
+        const cat     = (p.category || '').toLowerCase().trim();
+        const badge   = BADGE_MAP[cat] || BADGE_MAP.business;
+        const hasUrl  = p.link && !isSold && !isSoon;
+        const tag     = hasUrl ? 'a' : 'div';
+        const href    = hasUrl ? `href="${p.link}" target="_blank"` : '';
+        const cls     = `ai-card${isSold ? ' sold-out' : isSoon ? ' coming' : ''}`;
+        const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+        const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+        const desc    = p.descriptionTh || p.description || '';
+        const cover   = p.previewImage || p.cover || '';
+        const logo    = p.logo || '';
+        return `<${tag} class="${cls}" ${href}>
+            <div class="ai-card-head">
+                <div class="ai-card-names">
+                    <div class="ai-card-title">${p.title || ''}</div>
+                    ${p.titleTh ? `<div class="ai-card-title-th">${p.titleTh}</div>` : ''}
+                </div>
+                ${logo ? `<img class="ai-card-logo" src="${logo}" alt="" loading="lazy">` : ''}
+            </div>
+            ${cover ? `<img class="ai-card-cover" src="${cover}" alt="" loading="lazy">` : ''}
+            <div class="ai-card-body">
+                <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
+                <div class="ai-card-desc">${desc}</div>
+            </div>
+            ${hasUrl ? '<div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>' : ''}
+        </${tag}>`;
+    }
+
+    // ── Other sections: standard card ────────────────────────────
     function buildCard(p) {
         const status   = (p.status || '').toLowerCase().trim();
         const isSold   = status === 'sold-out'    || status === 'sold_out';
@@ -377,9 +470,10 @@
             fetch(APPS_SCRIPT_URL + '?sheet=work__creative').then(r => r.json()),
         ]);
 
-        // AI / Astrology section — ถ้ามีข้อมูลให้แทนที่ static cards
+        // AI / Astrology section — use tall AI card style
         if (r1.status === 'fulfilled' && r1.value.success && r1.value.data.length) {
-            loadGrid('grid-astrology', r1.value.data, false);
+            const grid = document.getElementById('grid-astrology');
+            if (grid) grid.innerHTML = r1.value.data.map(buildAICard).join('');
         }
         // Commerce section
         if (r2.status === 'fulfilled' && r2.value.success && r2.value.data.length) {
@@ -397,5 +491,13 @@
 
     loadWorks();
     </script>
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
 </body>
 </html>
