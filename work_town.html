@@ -16,7 +16,7 @@
         .map-btn { background: #ffffff; color: var(--text-dark); text-decoration: none; padding: 8px 24px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
         .map-btn:hover { transform: scale(1.05); }
 
-        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1200px; margin: 0 auto; gap: 30px; }
         .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
         .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; }
 
@@ -39,7 +39,7 @@
         .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
 
         /* ── AI TOOLS — reference-style cards (3 cols, outline CTA) ── */
-        .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .ai-card {
             background: #2a2a2a; border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px; overflow: hidden; text-decoration: none; color: #fff;
@@ -113,7 +113,7 @@
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .main-content { padding: 100px 24px 60px; }
-            /* keep 2-col grids on tablet */
+            .ai-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 640px) {
             .main-content { padding: 90px 16px 48px; }
