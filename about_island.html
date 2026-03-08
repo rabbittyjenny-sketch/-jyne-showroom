@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent: #E65C00; }
+        :root { --bg-color: #1A1A1A; --text-dark: #1A1A1A; --accent: #F5B800; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
@@ -54,7 +54,7 @@
         .hl li:last-child { border-bottom: none; }
         .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
         .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .cs-pill { background: var(--accent); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .cs-pill { background: #F5B800; color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         /* resume */
         .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         /* photo slot */
@@ -74,7 +74,7 @@
         .stat-label { font-size: 0.72rem; color: #888; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         /* big buttons */
         .big-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        .big-btn { display: block; background: var(--accent); color: #fff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 10px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; }
+        .big-btn { display: block; background: #F5B800; color: #1A1A1A; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
         .big-btn:hover { opacity: 0.85; }
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
@@ -118,9 +118,9 @@
         .stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
         /* Button lift */
         .big-btn { transition: opacity 0.2s, transform 0.2s; }
-        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(230,92,0,0.35); }
+        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,184,0,0.35); }
         /* Cursor glow */
-        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(230,92,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
+        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(245,184,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
         /* YouTube thumbnail cards — replaces broken iframes */
         .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
         .video-wrap:hover img { opacity: 0.82; }
@@ -130,10 +130,10 @@
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
         .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
-        .footer-brand span.dot-r { color: #EA4335; }
-        .footer-brand span.dot-g { color: #34A853; }
-        .footer-brand span.dot-b { color: #4285F4; }
-        .footer-brand span.dot-y { color: #FBBC05; }
+        .footer-brand span.dot-r { color: #F5B800; }
+        .footer-brand span.dot-g { color: #F5B800; }
+        .footer-brand span.dot-b { color: #F5B800; }
+        .footer-brand span.dot-y { color: #F5B800; }
         .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
         .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
     </style>
