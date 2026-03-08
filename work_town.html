@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #FBBC05; --text-dark: #1A1A1A; --accent: #FBBC05; }
+        :root { --bg-color: #111111; --text-dark: #1A1A1A; --accent: #ffffff; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: var(--text-dark); }
 
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
@@ -21,7 +21,7 @@
         .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; }
 
         /* SECTION CARD */
-        .content-card { background: #1A1A1A; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+        .content-card { background: #1e1e1e; border-radius: 20px; width: 100%; padding: 50px; color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
         .content-card.white { background: #ffffff; color: var(--text-dark); }
         .section-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
         .section-sub { font-size: 0.88rem; color: #aaa; margin: 0 0 30px; font-weight: 300; }
@@ -38,31 +38,41 @@
         .badge-creative { background: rgba(180,130,255,0.25); color: #c9a0ff; }
         .badge-sold { background: rgba(255,80,80,0.2); color: #ff7070; }
 
-        /* ── AI TOOLS — tall portrait cards ── */
-        .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+        /* ── AI TOOLS — reference-style cards (3 cols, outline CTA) ── */
+        .ai-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .ai-card {
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+            background: #2a2a2a; border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px; overflow: hidden; text-decoration: none; color: #fff;
-            display: flex; flex-direction: column; transition: transform 0.2s, background 0.2s;
+            display: flex; flex-direction: column; position: relative;
+            transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s;
         }
-        .ai-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.13); }
+        .ai-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
         .ai-card.coming { opacity: 0.5; cursor: default; pointer-events: none; }
         .ai-card.sold-out { opacity: 0.5; cursor: default; pointer-events: none; position: relative; }
-        .ai-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 10px; right: 12px; background: rgba(255,80,80,0.85); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 1px; }
-        .ai-card-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 16px 10px; gap: 8px; }
+        .ai-card.sold-out::after { content: "SOLD OUT"; position: absolute; top: 12px; right: 14px; background: rgba(234,67,53,0.9); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; letter-spacing: 1px; }
+        /* Card header: title left, logo right */
+        .ai-card-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 22px 22px 16px; gap: 12px; }
         .ai-card-names { flex: 1; min-width: 0; }
-        .ai-card-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 2px; line-height: 1.3; }
-        .ai-card-title-th { font-size: 0.72rem; color: rgba(255,255,255,0.55); font-weight: 300; }
-        .ai-card-logo { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; flex-shrink: 0; }
-        .ai-card-cover { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
-        .ai-card-body { padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
-        .ai-card-desc { font-size: 0.76rem; line-height: 1.55; color: rgba(255,255,255,0.72); font-weight: 300; flex: 1; }
-        .ai-card-cta {
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-            color: rgba(255,255,255,0.7);
+        .ai-card-title { font-weight: 700; font-size: 1.05rem; margin: 0 0 4px; line-height: 1.3; color: #fff; transition: color 0.2s; }
+        .ai-card:hover .ai-card-title { color: #4285F4; }
+        .ai-card-title-th { font-size: 0.78rem; color: rgba(255,255,255,0.5); font-weight: 300; }
+        .ai-card-logo { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; flex-shrink: 0; }
+        /* Preview image 16:9 */
+        .ai-card-cover { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.4s; }
+        .ai-card:hover .ai-card-cover { transform: scale(1.04); }
+        /* Body */
+        .ai-card-body { padding: 16px 22px 12px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .ai-card-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.65); font-weight: 300; flex: 1; }
+        /* Outline CTA button */
+        .ai-card-footer { padding: 14px 22px 20px; display: flex; justify-content: center; }
+        .ai-view-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 24px; border-radius: 30px;
+            font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            color: #fff; border: 1px solid rgba(255,255,255,0.35); background: transparent;
+            text-decoration: none; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
         }
+        .ai-view-btn:hover { background: #fff; color: #1a1a1a; border-color: #fff; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,255,255,0.15); }
 
         /* ── OTHER SECTIONS — standard grid cards ── */
         .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -162,7 +172,7 @@
                         <span class="proj-badge badge-ai">AI · Live</span>
                         <div class="ai-card-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม</div>
                     </div>
-                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
+                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
                 </a>
                 <a class="ai-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
                     <div class="ai-card-head">
@@ -177,7 +187,7 @@
                         <span class="proj-badge badge-ai">AI · Live</span>
                         <div class="ai-card-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI</div>
                     </div>
-                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
+                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
                 </a>
                 <a class="ai-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
                     <div class="ai-card-head">
@@ -192,22 +202,7 @@
                         <span class="proj-badge badge-ai">AI · Live</span>
                         <div class="ai-card-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
                     </div>
-                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
-                </a>
-                <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
-                    <div class="ai-card-head">
-                        <div class="ai-card-names">
-                            <div class="ai-card-title">Soul Slot</div>
-                            <div class="ai-card-title-th">สุ่มตัวเลขแห่งโชคชะตา</div>
-                        </div>
-                        <img class="ai-card-logo" src="https://ik.imagekit.io/ideas365logo/logo2%20(1)%20(1).png?updatedAt=1772818994039" alt="Soul Slot" loading="lazy">
-                    </div>
-                    <img class="ai-card-cover" src="https://ik.imagekit.io/ideas365logo/rune2.png?updatedAt=1772818993769" alt="Soul Slot cover" loading="lazy">
-                    <div class="ai-card-body">
-                        <span class="proj-badge badge-ai">AI · Live</span>
-                        <div class="ai-card-desc">หมุนสล็อตลุ้นอักษรรูนส์ 3 ตัวจาก 24 สัญลักษณ์ เพื่อค้นหาคำตอบและแนวทางของคุณ</div>
-                    </div>
-                    <div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>
+                    <div class="ai-card-footer"><a class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</a></div>
                 </a>
             </div>
         </div>
@@ -416,7 +411,7 @@
                 <span class="proj-badge ${badgeCls}">${badgeLbl}</span>
                 <div class="ai-card-desc">${desc}</div>
             </div>
-            ${hasUrl ? '<div class="ai-card-cta">VIEW PROJECT / ดูโปรเจกต์ →</div>' : ''}
+            ${hasUrl ? '<div class="ai-card-footer"><span class="ai-view-btn">VIEW PROJECT / ดูโปรเจกต์ →</span></div>' : ''}
         </${tag}>`;
     }
 
