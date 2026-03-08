@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #1A1A1A; --text-dark: #1A1A1A; --accent: #F5B800; }
+        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent: #E65C00; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
@@ -54,7 +54,7 @@
         .hl li:last-child { border-bottom: none; }
         .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
         .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .cs-pill { background: #F5B800; color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .cs-pill { background: var(--accent); color: #ffffff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         /* resume */
         .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         /* photo slot */
@@ -74,7 +74,7 @@
         .stat-label { font-size: 0.72rem; color: #888; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         /* big buttons */
         .big-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        .big-btn { display: block; background: #1A1A1A; color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
+        .big-btn { display: block; background: var(--accent); color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
         .big-btn:hover { opacity: 0.85; }
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
@@ -118,9 +118,9 @@
         .stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
         /* Button lift */
         .big-btn { transition: opacity 0.2s, transform 0.2s; }
-        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(230,92,0,0.35); }
         /* Cursor glow */
-        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(245,184,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
+        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(230,92,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
         /* YouTube thumbnail cards — replaces broken iframes */
         .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
         .video-wrap:hover img { opacity: 0.82; }
@@ -168,7 +168,7 @@
                 ============================================================ -->
                 <div class="photo-slot" style="aspect-ratio:unset;background:#f0ede8;">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/profile_1.jpg"
+                        src="https://ik.imagekit.io/ideas365logo/profile_1.jpg?tr=w-900,q-95"
                         alt="Jyne Profile Photo"
                         style="width:100%;height:auto;object-fit:unset;"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -254,10 +254,6 @@
                         <span class="tag">Team Structure</span>
                     </div>
                 </div>
-                <div class="big-btn-row" style="margin-top:20px">
-                    <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/copy-of-bio" target="_blank">MORE EXPERIENCE</a>
-                    <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/project" target="_blank">ANOTHER SKILL</a>
-                </div>
             </div>
             <!-- คอลัมน์รูปสูง 2:3 -->
             <div class="skills-photo-col">
@@ -267,7 +263,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032"
+                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032&tr=w-600,q-95"
                         alt="Skills Photo 1"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -283,7 +279,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730"
+                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730&tr=w-600,q-95"
                         alt="Skills Photo 2"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -319,7 +315,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032"
+                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032&tr=w-600,q-95"
                         alt="Skills Photo 1"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -335,7 +331,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730"
+                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730&tr=w-600,q-95"
                         alt="Skills Photo 2"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -377,38 +373,6 @@
             </div>
         </div>
 
-        <!-- SALES FIGURES -->
-        <div class="content-card single">
-            <h2 class="col-title">SALES RESULTS · ยอดขาย Live Commerce</h2>
-            <p class="col-desc" style="color:#888;margin-bottom:20px">ผลลัพธ์จริงจาก Live Stream — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
-            <div class="stats-row">
-                <div class="stat-box">
-                    <div class="stat-num">114K</div>
-                    <div class="stat-label">GMV สูงสุด / Live</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num">2 hr</div>
-                    <div class="stat-label">ต่อ 1 Live Session</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num">20+</div>
-                    <div class="stat-label">แบรนด์ที่ร่วมงาน</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-num">6 fig</div>
-                    <div class="stat-label">ยอดขายใน 2 ชั่วโมง</div>
-                </div>
-            </div>
-            <div class="proof-grid" style="margin-top:20px">
-                <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-            </div>
-            <div style="text-align:center;margin-top:20px">
-                <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank" style="display:inline-block;padding:14px 40px">More proof ↗</a>
-            </div>
-        </div>
 
         <!-- RESUME -->
         <div class="content-card single">
