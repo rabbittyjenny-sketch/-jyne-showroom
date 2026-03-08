@@ -139,10 +139,10 @@
         .ai-card.coming  { opacity: 0.45; pointer-events: none; }
         .ai-card.soldout { opacity: 0.45; pointer-events: none; }
 
-        /* Portrait cover 3:4 */
+        /* Cover — landscape 16:9 to fit actual app screenshots */
         .ai-cover {
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 16 / 9;
             position: relative;
             overflow: hidden;
             background: #333;
@@ -156,7 +156,7 @@
         }
         .ai-cover-placeholder {
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 16 / 9;
             background: linear-gradient(160deg, #303030 0%, #262626 100%);
             display: flex;
             align-items: center;
@@ -219,7 +219,7 @@
             flex: 1;
         }
 
-        /* CTA button — no hover */
+        /* CTA button — consistent on every card, no hover */
         .ai-footer {
             padding: 10px 18px 18px;
         }
@@ -237,6 +237,13 @@
             color: #fff;
             text-decoration: none;
             background: transparent;
+        }
+        /* Dim state — card has no link yet */
+        .ai-cta.dim,
+        .proj-cta.dim {
+            opacity: 0.25;
+            cursor: default;
+            pointer-events: none;
         }
 
         /* ═══════════════════════════════════════════════════
@@ -611,6 +618,7 @@
                     <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
                     <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
                 </div>
+                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
             </div>
             <div class="proj-card">
                 <div class="proj-body">
@@ -619,6 +627,7 @@
                     <div class="proj-name-th">ผลิตวีดีโอสินค้า</div>
                     <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
                 </div>
+                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
             </div>
             <div class="proj-card">
                 <div class="proj-body">
@@ -627,6 +636,7 @@
                     <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
                     <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก พร้อมแผนปฏิบัติที่วัดผลได้</div>
                 </div>
+                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
             </div>
             <div class="proj-card">
                 <div class="proj-body">
@@ -635,6 +645,7 @@
                     <div class="proj-name-th">ออกแบบระบบองค์กร</div>
                     <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
                 </div>
+                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
             </div>
             <div class="proj-card coming">
                 <div class="proj-body">
@@ -643,6 +654,7 @@
                     <div class="proj-name-th">สร้าง QR Code</div>
                     <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์และสีสันให้เป็นเอกลักษณ์</div>
                 </div>
+                <div class="proj-footer"><span class="proj-cta dim">COMING SOON</span></div>
             </div>
         </div>
     </div>
@@ -831,16 +843,17 @@ function buildAICard(p) {
                <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
            </div>`;
 
-    const footerHTML = hasUrl
-        ? `<div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>`
-        : '';
+    /* Always render footer — dim if no link so all cards have consistent height */
+    const ctaCls   = hasUrl ? 'ai-cta' : 'ai-cta dim';
+    const ctaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
+    const footerHTML = `<div class="ai-footer"><span class="${ctaCls}">${ctaLabel}</span></div>`;
 
     return `<${tag} class="${cls}" ${href}>
         ${coverHTML}
         <div class="ai-body">
             <div class="ai-title-en">${p.title || ''}</div>
             ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
-            <div class="ai-desc">${desc}</div>
+            <div class="ai-desc">${desc || '&nbsp;'}</div>
         </div>
         ${footerHTML}
     </${tag}>`;
@@ -864,8 +877,10 @@ function buildProjCard(p) {
     const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
     const coverHTML = cover
         ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>` : '';
-    const footerHTML = hasUrl
-        ? `<div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>` : '';
+    /* Always render footer consistently */
+    const projCtaCls   = hasUrl ? 'proj-cta' : 'proj-cta dim';
+    const projCtaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
+    const footerHTML   = `<div class="proj-footer"><span class="${projCtaCls}">${projCtaLabel}</span></div>`;
 
     return `<${tag} class="${cls}" ${href}>
         ${coverHTML}
@@ -876,7 +891,7 @@ function buildProjCard(p) {
             </div>
             <div class="proj-name-en">${p.title || ''}</div>
             ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
-            <div class="proj-desc">${desc}</div>
+            <div class="proj-desc">${desc || '&nbsp;'}</div>
         </div>
         ${footerHTML}
     </${tag}>`;
