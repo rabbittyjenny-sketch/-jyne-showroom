@@ -33,19 +33,20 @@
         .section-sub { font-size: 0.88rem; color: #888; margin: 0 0 28px; font-weight: 300; }
         .status-msg { text-align: center; color: #888; padding: 30px; font-size: 0.9rem; }
 
-        /* ─── SCHOOL CARDS (green theme, Brand CI) ─── */
-        .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .school-card {
-            background: #fff; border: 3px solid var(--card-green); border-radius: 16px; padding: 28px;
-            box-shadow: 5px 5px 0 var(--card-green);
-            display: flex; flex-direction: column; text-decoration: none; color: var(--text-dark);
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        /* ─── SCHOOL CARDS (commerce-style, light on white) ─── */
+        .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .school-item {
+            background: #f6fcf7; border: 1px solid rgba(52,168,83,0.22);
+            border-radius: 14px; padding: 0; text-decoration: none; color: var(--text-dark);
+            display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s;
         }
-        .school-card:hover { transform: translate(-3px, -3px); box-shadow: 8px 8px 0 var(--card-green); }
-        .sc-tag { align-self: flex-start; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; background: var(--card-green); color: #fff; }
-        .sc-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px; line-height: 1.2; }
-        .sc-desc { font-size: 0.85rem; line-height: 1.6; color: #444; font-weight: 300; flex-grow: 1; margin: 0 0 12px; }
-        .sc-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; }
+        .school-item:hover { background: #ecf8ef; transform: translateY(-2px); }
+        .school-item-info { flex: 1; padding: 18px 20px; }
+        .school-item-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(52,168,83,0.15); color: #1e7e3e; margin-bottom: 10px; }
+        .school-item-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; line-height: 1.25; color: var(--text-dark); }
+        .school-item-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; margin: 0 0 10px; }
+        .school-item-meta { font-size: 0.7rem; color: #999; font-weight: 300; }
+        .school-item-arrow { padding: 0 20px 14px; text-align: right; font-size: 1rem; color: #34A853; }
 
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
@@ -87,10 +88,22 @@
         }
         .srv-letsgo:hover { opacity: 0.88; transform: translateX(2px); }
 
-        @media(max-width: 768px) {
-            .school-grid, .service-grid { grid-template-columns: 1fr; }
-            .content-card { padding: 30px; }
-            .nav-header { padding: 15px 20px; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep auto-fill grids on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .school-grid, .service-grid { grid-template-columns: 1fr !important; }
+            .section-heading { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -153,11 +166,14 @@
             const excerpt = p.excerpt_thai || p.excerpt_eng || '';
             const href    = p.course_url || (p.slug ? `blog_post.html?slug=${p.slug}` : '#');
             const isExt   = href.startsWith('http');
-            return `<a class="school-card" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
-                <div class="sc-tag">${p.category || 'Course'}</div>
-                <div class="sc-title">${(p.title || '').toUpperCase()}</div>
-                <div class="sc-desc">${excerpt}</div>
-                <div class="sc-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}&nbsp;<strong>Read more →</strong></div>
+            return `<a class="school-item" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
+                <div class="school-item-info">
+                    <div class="school-item-badge">${p.category || 'Course'}</div>
+                    <div class="school-item-title">${(p.title || '').toUpperCase()}</div>
+                    <div class="school-item-desc">${excerpt}</div>
+                    <div class="school-item-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}</div>
+                </div>
+                <div class="school-item-arrow">Read more →</div>
             </a>`;
         }).join('');
     }

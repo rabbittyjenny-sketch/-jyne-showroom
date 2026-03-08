@@ -75,7 +75,31 @@
         }
         .blog-card p { font-weight: 300; font-size: 0.92rem; line-height: 1.6; margin: 0 0 12px 0; color: #444; flex-grow: 1; }
         .blog-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; }
-        @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; } .nav-header { padding: 15px 20px; } }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep auto-fill grid on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .blog-grid { grid-template-columns: 1fr !important; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
+        }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-y { color: #FBBC05; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
     </style>
 </head>
 <body>
@@ -154,5 +178,13 @@
     }
     loadBlog();
     </script>
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
 </body>
 </html>
