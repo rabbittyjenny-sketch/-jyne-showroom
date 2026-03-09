@@ -315,33 +315,26 @@
         btn.disabled = true;
         btn.textContent = 'กำลังดำเนินการ…';
 
-        try {
-            const res  = await fetch(SUBSCRIBE_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify({
-                    userName: name, businessType: biz, email,
-                    id: currentResource.id, name: currentResource.name,
-                    category: currentResource.category, url: currentResource.url,
-                }),
-            });
-            const data = await res.json();
-            if (data.success) {
-                showSuccess();
-                // เปิดไฟล์
-                const win = window.open(currentResource.url, '_blank');
-                if (!win || win.closed) {
-                    const a = document.createElement('a');
-                    a.href = currentResource.url; a.target = '_blank'; a.rel = 'noopener';
-                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                }
-            } else {
-                showErr(data.error || 'ไม่สามารถบันทึกข้อมูลได้');
-                btn.disabled = false; btn.textContent = 'Subscribe & Download';
-            }
-        } catch (err) {
-            showErr('เกิดข้อผิดพลาด กรุณาลองใหม่');
-            btn.disabled = false; btn.textContent = 'Subscribe & Download';
+        // ส่งข้อมูลไปบันทึก Sheet2 แบบ fire-and-forget (no-cors หลีกเลี่ยง CORS preflight)
+        fetch(SUBSCRIBE_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({
+                userName: name, businessType: biz, email,
+                id: currentResource.id, name: currentResource.name,
+                category: currentResource.catagory || currentResource.category || '',
+                url: currentResource.url,
+            }),
+        }).catch(() => {});
+
+        // แสดงผลสำเร็จและเปิดไฟล์ทันที (ไม่รอ response)
+        showSuccess();
+        const win = window.open(currentResource.url, '_blank');
+        if (!win || win.closed) {
+            const a = document.createElement('a');
+            a.href = currentResource.url; a.target = '_blank'; a.rel = 'noopener';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
     }
 
