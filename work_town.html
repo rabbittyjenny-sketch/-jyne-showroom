@@ -559,7 +559,7 @@
             <div class="section-title">AI TOOLS &amp; ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
         </div>
-        <div class="ai-grid" id="grid-astrology">
+        <div class="proj-grid" id="grid-astrology">
             <p class="loading-msg">กำลังโหลด…</p>
         </div>
     </div>
@@ -733,62 +733,7 @@ const BADGE_MAP = {
     creative: { cls: 'badge-creative', label: 'Creative' },
 };
 
-/* ── Section 1: portrait AI card ── */
-function buildAICard(p) {
-    const status   = (p.status || '').toLowerCase().trim();
-    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
-
-    /* category column = system sale status ("Avaliable" / "SOULD OUT") */
-    const cat      = (p.category || '').toLowerCase().trim();
-    const sysSold  = cat.includes('sold') || cat.includes('sould');
-    const sysAvail = cat.includes('avail');
-
-    const hasUrl   = !!p.link && !isSoon;
-    const tag      = hasUrl ? 'a' : 'div';
-    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
-    const cls      = `ai-card${isSoon ? ' coming' : ''}`;
-
-    /* AI type badge — top-right on cover */
-    const badgeLbl = isSoon ? 'Coming Soon' : 'AI · Live';
-    const badgeCls = isSoon ? 'badge-soon'  : 'badge-ai';
-
-    const desc     = p.descriptionTh || p.description || '';
-    const cover    = p.previewImage || p.cover || '';
-    const logo     = p.logo || '';
-
-    const coverHTML = cover
-        ? `<div class="ai-cover">
-               <img src="${cover}" alt="" loading="lazy">
-               ${logo ? `<div class="ai-logo-chip"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
-               <div class="ai-badge-chip"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
-           </div>`
-        : `<div class="ai-cover-placeholder">◆
-               ${logo ? `<div class="ai-logo-chip" style="position:absolute;top:10px;left:10px;"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
-               <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
-           </div>`;
-
-    /* System sale status badge — shown in card body */
-    const saleHTML = sysSold  ? `<div class="sale-status sold">✓ ขายระบบแล้ว</div>`
-                  : sysAvail  ? `<div class="sale-status avail">🏷 ระบบพร้อมขาย</div>`
-                  : '';
-
-    const ctaCls   = hasUrl ? 'ai-cta' : 'ai-cta dim';
-    const ctaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
-    const footerHTML = `<div class="ai-footer"><span class="${ctaCls}">${ctaLabel}</span></div>`;
-
-    return `<${tag} class="${cls}" ${href}>
-        ${coverHTML}
-        <div class="ai-body">
-            ${saleHTML}
-            <div class="ai-title-en">${p.title || ''}</div>
-            ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
-            <div class="ai-desc">${desc || '&nbsp;'}</div>
-        </div>
-        ${footerHTML}
-    </${tag}>`;
-}
-
-/* ── Sections 2 & 3: project card ── */
+/* ── Unified card builder for all 3 sections ── */
 function buildProjCard(p) {
     const status   = (p.status || '').toLowerCase().trim();
     const isSold   = status === 'sold-out' || status === 'sold_out';
@@ -830,6 +775,20 @@ function buildProjCard(p) {
     </${tag}>`;
 }
 
+function renderGrid(result, elementId) {
+    const el = document.getElementById(elementId);
+    if (result.status === 'fulfilled' && result.value?.success && result.value.data?.length) {
+        el.innerHTML = result.value.data.map(buildProjCard).join('');
+    } else {
+        el.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
+        if (result.status === 'fulfilled' && !result.value?.success) {
+            console.warn(`[${elementId}] Apps Script returned success=false`, result.value);
+        } else if (result.status === 'rejected') {
+            console.warn(`[${elementId}] fetch failed`, result.reason);
+        }
+    }
+}
+
 async function loadWorks() {
     if (!APPS_SCRIPT_URL) return;
     const [r1, r2, r3] = await Promise.allSettled([
@@ -838,27 +797,9 @@ async function loadWorks() {
         fetch(APPS_SCRIPT_URL + '?sheet=work_creative').then(r => r.json()),
     ]);
 
-    /* Section 1 — AI portrait cards */
-    if (r1.status === 'fulfilled' && r1.value?.success && r1.value.data?.length) {
-        document.getElementById('grid-astrology').innerHTML =
-            r1.value.data.map(buildAICard).join('');
-    }
-
-    /* Section 2 — Commerce */
-    if (r2.status === 'fulfilled' && r2.value?.success && r2.value.data?.length) {
-        document.getElementById('grid-commerce').innerHTML =
-            r2.value.data.map(buildProjCard).join('');
-    }
-
-    /* Section 3 — Creative */
-    const g3 = document.getElementById('grid-creative');
-    if (r3.status === 'fulfilled' && r3.value?.success) {
-        g3.innerHTML = r3.value.data?.length
-            ? r3.value.data.map(buildProjCard).join('')
-            : '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
-    } else {
-        g3.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
-    }
+    renderGrid(r1, 'grid-astrology');   /* Section 1 — AI */
+    renderGrid(r2, 'grid-commerce');    /* Section 2 — Commerce */
+    renderGrid(r3, 'grid-creative');    /* Section 3 — Creative */
 }
 
 loadWorks();
