@@ -8,8 +8,8 @@
     <style>
         * { box-sizing: border-box; }
         :root {
-            --bg-color:  #34A853;
-            --accent:    #34A853;
+            --bg-color: #1E7A3E;
+            --accent: #1E7A3E;
             --text-dark: #1A1A1A;
         }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
@@ -25,25 +25,25 @@
         .page-subtitle { font-size: 1.1rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
 
         /* ─── WHITE CONTENT CARD ─── */
-        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
-        .section-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: #34A853; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #34A853; padding-bottom: 12px; }
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .section-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
         .section-sub { font-size: 0.88rem; color: #888; margin: 0 0 28px; font-weight: 300; }
         .status-msg { text-align: center; color: #888; padding: 30px; font-size: 0.9rem; }
 
         /* ─── SCHOOL CARDS (commerce-style, light on white) ─── */
         .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .school-item {
-            background: #f0faf3; border: 1.5px solid rgba(52,168,83,0.4);
+            background: #faf9f0; border: 1px solid rgba(245,184,0,0.4);
             border-radius: 14px; padding: 0; text-decoration: none; color: var(--text-dark);
             display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s;
         }
-        .school-item:hover { background: #d6f5df; transform: translateY(-2px); }
+        .school-item:hover { background: #f5f0d8; transform: translateY(-2px); }
         .school-item-info { flex: 1; padding: 18px 20px; }
-        .school-item-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(52,168,83,0.2); color: #1a6632; margin-bottom: 10px; }
+        .school-item-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(245,184,0,0.25); color: #7a5900; margin-bottom: 10px; }
         .school-item-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; line-height: 1.25; color: var(--text-dark); }
         .school-item-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; margin: 0 0 10px; }
         .school-item-meta { font-size: 0.7rem; color: #999; font-weight: 300; }
-        .school-item-arrow { padding: 0 20px 14px; text-align: right; font-size: 1rem; color: #1a6632; }
+        .school-item-arrow { padding: 0 20px 14px; text-align: right; font-size: 1rem; color: #7a5900; }
 
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
@@ -57,27 +57,27 @@
 
         /* ─── SERVICE SECTION wrapper ─── */
         .service-section { width: 100%; padding: 10px 0 20px; }
-        .service-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: #fff; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.5); padding-bottom: 12px; }
-        .service-sub { font-size: 0.88rem; color: rgba(255,255,255,0.8); margin: 0 0 28px; font-weight: 300; }
+        .service-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: #fff; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.35); padding-bottom: 12px; }
+        .service-sub { font-size: 0.88rem; color: rgba(255,255,255,0.7); margin: 0 0 28px; font-weight: 300; }
 
         /* ─── SERVICE CARDS (with price) ─── */
         .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .srv-card {
-            background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.18);
             border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px;
             transition: background 0.2s, transform 0.2s; color: #fff;
         }
         .srv-card.has-link { cursor: pointer; }
-        .srv-card.has-link:hover { background: rgba(0,0,0,0.25); transform: translateY(-3px); }
-        .srv-badge { align-self: flex-start; padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.25); color: #fff; letter-spacing: 0.5px; }
+        .srv-card.has-link:hover { background: rgba(0,0,0,0.28); transform: translateY(-3px); }
+        .srv-badge { align-self: flex-start; padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; }
         .srv-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; line-height: 1.2; }
-        .srv-title-th { font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 300; }
-        .srv-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.85); font-weight: 300; flex-grow: 1; }
-        .srv-price { font-size: 0.85rem; font-weight: 700; color: #ffffff; margin-top: 4px; }
-        .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.6); margin-left: 4px; }
+        .srv-title-th { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+        .srv-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.78); font-weight: 300; flex-grow: 1; }
+        .srv-price { font-size: 0.85rem; font-weight: 700; color: #FBBC05; margin-top: 4px; }
+        .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 4px; }
         .srv-coming { opacity: 0.45; cursor: default; }
         .srv-letsgo {
-            display: inline-block; background: #ffffff; color: #34A853;
+            display: inline-block; background: #F5B800; color: #1A1A1A;
             font-family: 'Noto Sans Thai', sans-serif; font-size: 0.78rem; font-weight: 700;
             padding: 9px 20px; border-radius: 30px; text-decoration: none;
             text-transform: uppercase; letter-spacing: 0.5px; align-self: flex-start;
@@ -199,7 +199,7 @@
                 : '';
             return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
                 ${coverHTML}
-                <span class="srv-badge" style="${isFree ? 'background:#ffffff;color:#34A853' : isSoon ? '' : ''}">${badgeLbl}</span>
+                <span class="srv-badge" style="${isFree ? 'background:#F5B800;color:#1A1A1A' : isSoon ? '' : 'background:rgba(245,184,0,0.3);color:#F5B800'}">${badgeLbl}</span>
                 <div class="srv-title">${(p.title || '').toUpperCase()}</div>
                 ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
                 <div class="srv-desc">${desc}</div>

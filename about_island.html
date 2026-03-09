@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #9B3908; --text-dark: #1A1A1A; --accent: #E65C00; }
+        :root { --bg-color: #B03A00; --text-dark: #1A1A1A; --accent: #F5B800; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
@@ -54,7 +54,7 @@
         .hl li:last-child { border-bottom: none; }
         .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
         .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .cs-pill { background: var(--accent); color: #ffffff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .cs-pill { background: #F5B800; color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         /* resume */
         .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         /* photo slot */
@@ -74,7 +74,7 @@
         .stat-label { font-size: 0.72rem; color: #888; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         /* big buttons */
         .big-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        .big-btn { display: block; background: var(--accent); color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
+        .big-btn { display: block; background: #1A1A1A; color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
         .big-btn:hover { opacity: 0.85; }
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
@@ -118,9 +118,9 @@
         .stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
         /* Button lift */
         .big-btn { transition: opacity 0.2s, transform 0.2s; }
-        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(230,92,0,0.35); }
+        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
         /* Cursor glow */
-        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(230,92,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
+        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(245,184,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
         /* YouTube thumbnail cards — replaces broken iframes */
         .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
         .video-wrap:hover img { opacity: 0.82; }
@@ -149,13 +149,19 @@
         <p class="page-subtitle">Don't try to make it perfect. Make it work.</p>
 
         <!-- PROFILE + PHOTO -->
+
+
         <div class="content-card">
             <div>
-                <h2 class="col-title">PROFILE</h2>
-                <p class="col-desc"><strong>Jyne (เจนจิรา จัยสิน)</strong><br>Systems Architect, AI Builder และ Live Commerce Strategist</p>
-                <p class="col-desc">เส้นทางที่ไม่ได้เดินตามแบบแผน เริ่มจากธุรกิจ Jewelry 8 ปี ผ่านการเป็น Executive Secretary to MD และ Director of Operation to Chef ให้กับธุรกิจร้านอาหาร มาตรฐาน Michelin Star, กว่า 8 ปีในวงการอาหาร มาถึงหน้าจอ Live Stream ที่สร้างยอดขาย <strong>6 หลักใน 2 ชั่วโมง</strong></p>
-                <p class="col-desc">ปัจจุบัน Solo-founder ที่ iDEAS365 — ทีมทั้งหมดเป็น AI ทำงานจากกรุงเทพฯ ระดับสากล</p>
-                <div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
+                <h2 class="col-title">WHO IS JYNE</h2>
+                <p class="col-desc"><strong>ชื่อ เจนจิรา นามสกุล จัยสิน  แต่ส่วนใหญ่รู้จักกันในชื่อ Jyne</strong><br> Self-Starter, Action-Oriented Person, Get things DONE</p>
+                
+                <p class="col-desc">เส้นทางที่ไม่ได้เดินตามแบบแผน เริ่มจากธุรกิจ Jewelry 8 ปี ผ่านการเป็น Executive Secretary to MD และ Director of Operation to Chef ให้กับธุรกิจร้านอาหาร มาตรฐาน Michelin Star กว่า 8 ปีในวงการอาหาร 
+                    มาถึงหน้าจอ Live Stream ที่สร้างยอดขาย 6 หลักใน 2 ชั่วโมง</p>
+                <p class="col-desc">แต่ละช่วงสอนอะไรบางอย่างเสมอ เพราะทุกอย่างที่ได้จากการเรียนรู้ในสิ่งที่รัก มันคือการมองเห็นปัญหาก่อนที่มันจะเกิดและได้ลงมือซ่อมจุดที่เป็นปัญหานั้นๆได้ ไปจนถึงการพัฒนาระบบต่างๆที่สร้างด้วยแรงบันดาลใจ "ของความขี้เกียจ" ซึ่งต้องเป็นระบบที่ทำแล้ว..ต้องช่วยให้ดีขึ้นในระยะยาว</p>
+                <p class="col-desc">ปัจจุบันเป็น Solo-founder ที่ iDEAS365 @กรุงเทพฯ  — มีทีมงานทั้งหมด"เป็น AI" ทำงานได้ทุกที่ขอแค่มีไฟฟ้าใช้ ภายใต้ขอบเขตการทำงานระดับสากล</p>
+
+                 <div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
                     <p class="col-desc" style="color:#888;font-size:0.82rem;font-style:italic;margin:0">"อย่าพยายามทำให้สมบูรณ์แบบ แต่ทำให้มันใช้งานได้จริง"</p>
                     <p class="col-desc" style="font-size:0.82rem;margin:8px 0 0"><strong>Smart Lazy · Operational Intelligence · Quietly Confident</strong></p>
                 </div>
@@ -168,7 +174,7 @@
                 ============================================================ -->
                 <div class="photo-slot" style="aspect-ratio:unset;background:#f0ede8;">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/profile_1.jpg?tr=w-900,q-95"
+                        src="https://ik.imagekit.io/ideas365logo/profile_1.jpg"
                         alt="Jyne Profile Photo"
                         style="width:100%;height:auto;object-fit:unset;"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
@@ -190,25 +196,33 @@
                     <div class="tl-year">2022 — ปัจจุบัน</div>
                     <div class="tl-role">Freelance Live Stream Host &amp; Brand Presenter</div>
                     <div class="tl-place">TikTok LIVE · Facebook Live · Shopee Live</div>
-                    <div class="tl-desc">สร้าง Framework ของตัวเองจนทำยอดขาย 6 หลักใน 2 ชั่วโมง ทีมรันเองได้โดยไม่ต้องรอ</div>
+                    <div class="tl-desc">- Multi-Platform Management</div>
+                     <div class="tl-desc">- Client-Facing Experience</div>
+                     <div class="tl-desc">- Content Strategy Background </div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-year">ก่อนหน้า</div>
                     <div class="tl-role">Assistant Restaurant Manager</div>
                     <div class="tl-place">MUU Bangkok Hotel</div>
-                    <div class="tl-desc">ดูแลการดำเนินงานห้องอาหาร 5 outlet</div>
+                    <div class="tl-desc">High-end service standards</div>
+                    <div class="tl-desc">Complex operations management </div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-year">ก่อนหน้า</div>
                     <div class="tl-role">Director of Operations</div>
-                    <div class="tl-place">Chef Andy Yang — Michelin Star ⭐</div>
-                    <div class="tl-desc">วางระบบ SOP มาตรฐานที่ไม่มีพื้นที่สำหรับความผิดพลาด</div>
+                    <div class="tl-place">Chef Andy Yang — Michelin Star </div>
+                    <div class="tl-desc">- Operations Management Background </div>
+                    <div class="tl-desc">- Content Creation & Marketing BackgroundEvent</div>
+                    <div class="tl-desc">- Coordination Experience </div>
                 </div>
                 <div class="tl-item">
                     <div class="tl-year">ก่อนหน้า</div>
                     <div class="tl-role">Executive Secretary</div>
-                    <div class="tl-place">Chef Chumpol Jangprai (R-HAAN) — Michelin Star ⭐</div>
-                    <div class="tl-desc">VIP Operations การประสานงาน การตัดสินใจเชิงกลยุทธ์</div>
+                    <div class="tl-place">Chef Chumpol Jangprai (R-HAAN) — Michelin Star </div>
+                    <div class="tl-desc">- Michelin Star Standards & VIP Client Handling Expert</div>
+                    <div class="tl-desc">- Operations Management BackgroundVIP Client Handling Expert</div>
+                    <div class="tl-desc">- VIP Client Handling ExpertMichelin Star Restaurant Experience = Luxury Standards
+</div>
                 </div>
             </div>
             <div>
@@ -254,6 +268,10 @@
                         <span class="tag">Team Structure</span>
                     </div>
                 </div>
+                <div class="big-btn-row" style="margin-top:20px">
+                    <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/copy-of-bio" target="_blank">MORE EXPERIENCE</a>
+                    <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/project" target="_blank">ANOTHER SKILL</a>
+                </div>
             </div>
             <!-- คอลัมน์รูปสูง 2:3 -->
             <div class="skills-photo-col">
@@ -263,7 +281,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032&tr=w-600,q-95"
+                        src="https://ik.imagekit.io/ideas365logo/about3.png"
                         alt="Skills Photo 1"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -279,7 +297,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730&tr=w-600,q-95"
+                        src="https://ik.imagekit.io/ideas365logo/about2.png"
                         alt="Skills Photo 2"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -297,9 +315,9 @@
             <div>
                 <h2 class="col-title">CORE SKILLS</h2>
                 <ul class="hl" style="margin-bottom:16px">
-                    <li>Built live commerce generating <strong>6-figure sales in 2 hours</strong></li>
+                    <li>System Thinking & Process Excellence <strong>6-figure sales in 2 hours</strong></li>
+                    <li>Detail-Oriented + Results-Driven </li>
                     <li>Designed launch frameworks used by early-stage brands</li>
-                    <li>Created operational playbooks that teams actually follow</li>
                     <li>ทำงานกับแบรนด์มากกว่า <strong>20 แบรนด์</strong></li>
                     <li>Based in Bangkok, working globally</li>
                 </ul>
@@ -315,7 +333,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(66).png?updatedAt=1772849650032&tr=w-600,q-95"
+                        src="https://ik.imagekit.io/ideas365logo/Daylight%20podcast%20set.png"
                         alt="Skills Photo 1"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -331,7 +349,7 @@
                 ============================================================ -->
                 <div class="photo-slot photo-slot-tall" style="width:calc(50% - 5px);">
                     <img
-                        src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730&tr=w-600,q-95"
+                        src="https://ik.imagekit.io/ideas365logo/The%20Storyteller.png"
                         alt="Skills Photo 2"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
                     >
@@ -348,7 +366,7 @@
         <div class="content-card">
             <div>
                 <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
-                <p class="col-desc"><strong>Challenge:</strong> Launch live selling channel with no prior experience or systems</p>
+                <p class="col-desc"><strong>Challenge:</strong> self-starter, independent, และ get things done </p>
                 <ul class="hl" style="margin-top:12px">
                     <li>Product curation strategy — what sells on camera</li>
                     <li>Script framework development — what to say, when</li>
@@ -364,15 +382,47 @@
             <div>
                 <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
                 <div class="proof-grid">
-                    <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                    <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                    <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
-                    <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.parentNode.style.background='#f0f0f0'">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229'">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965'">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281'">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100027.png?updatedAt=1772938870951'">
                 </div>
                 <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
             </div>
         </div>
 
+        <!-- SALES FIGURES -->
+        <div class="content-card single">
+            <h2 class="col-title">SALES RESULTS · ยอดขาย Live Commerce</h2>
+            <p class="col-desc" style="color:#888;margin-bottom:20px">ผลลัพธ์จริงจาก Live Stream — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-num">114K</div>
+                    <div class="stat-label">GMV สูงสุด / Live</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">2 hr</div>
+                    <div class="stat-label">ต่อ 1 Live Session</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">20+</div>
+                    <div class="stat-label">แบรนด์ที่ร่วมงาน</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num">6 fig</div>
+                    <div class="stat-label">ยอดขายใน 2 ชั่วโมง</div>
+                </div>
+            </div>
+            <div class="proof-grid" style="margin-top:20px">
+                <img src="https://ik.imagekit.io/ideas365logo/Brand%20logo/bbl.jpeg'">
+                <img src="https://ik.imagekit.io/ideas365logo/Brand%20logo/hiq.jpeg'">
+                <img src="https://ik.imagekit.io/ideas365logo/Brand%20logo/images-4.png'">
+                <img src="https://ik.imagekit.io/ideas365logo/Brand%20logo/images.png'">
+            </div>
+            <div style="text-align:center;margin-top:20px">
+                <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank" style="display:inline-block;padding:14px 40px">More proof ↗</a>
+            </div>
+        </div>
 
         <!-- RESUME -->
         <div class="content-card single">
