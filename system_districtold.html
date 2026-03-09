@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHOOL · SERVICE - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root {
+            --bg-color:  #1A1A1A;
+            --accent:    #F5B800;
+            --text-dark: #1A1A1A;
+        }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+
+        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+        .logo-img:hover { transform: scale(1.05); }
+
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1100px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(3.5rem, 9vw, 7rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.1rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
+
+        /* ─── WHITE CONTENT CARD ─── */
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .section-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--accent); padding-bottom: 12px; }
+        .section-sub { font-size: 0.88rem; color: #888; margin: 0 0 28px; font-weight: 300; }
+        .status-msg { text-align: center; color: #888; padding: 30px; font-size: 0.9rem; }
+
+        /* ─── SCHOOL CARDS (commerce-style, light on white) ─── */
+        .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .school-item {
+            background: #faf9f0; border: 1px solid rgba(245,184,0,0.4);
+            border-radius: 14px; padding: 0; text-decoration: none; color: var(--text-dark);
+            display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s;
+        }
+        .school-item:hover { background: #f5f0d8; transform: translateY(-2px); }
+        .school-item-info { flex: 1; padding: 18px 20px; }
+        .school-item-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(245,184,0,0.25); color: #7a5900; margin-bottom: 10px; }
+        .school-item-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; line-height: 1.25; color: var(--text-dark); }
+        .school-item-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; margin: 0 0 10px; }
+        .school-item-meta { font-size: 0.7rem; color: #999; font-weight: 300; }
+        .school-item-arrow { padding: 0 20px 14px; text-align: right; font-size: 1rem; color: #7a5900; }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #F5B800; }
+        .footer-brand span.dot-g { color: #F5B800; }
+        .footer-brand span.dot-b { color: #F5B800; }
+        .footer-brand span.dot-y { color: #F5B800; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
+
+        /* ─── SERVICE SECTION wrapper ─── */
+        .service-section { width: 100%; padding: 10px 0 20px; }
+        .service-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: #fff; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.35); padding-bottom: 12px; }
+        .service-sub { font-size: 0.88rem; color: rgba(255,255,255,0.7); margin: 0 0 28px; font-weight: 300; }
+
+        /* ─── SERVICE CARDS (with price) ─── */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .srv-card {
+            background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px;
+            transition: background 0.2s, transform 0.2s; color: #fff;
+        }
+        .srv-card.has-link { cursor: pointer; }
+        .srv-card.has-link:hover { background: rgba(0,0,0,0.28); transform: translateY(-3px); }
+        .srv-badge { align-self: flex-start; padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; }
+        .srv-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; line-height: 1.2; }
+        .srv-title-th { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+        .srv-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.78); font-weight: 300; flex-grow: 1; }
+        .srv-price { font-size: 0.85rem; font-weight: 700; color: #FBBC05; margin-top: 4px; }
+        .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 4px; }
+        .srv-coming { opacity: 0.45; cursor: default; }
+        .srv-letsgo {
+            display: inline-block; background: #F5B800; color: #1A1A1A;
+            font-family: 'Noto Sans Thai', sans-serif; font-size: 0.78rem; font-weight: 700;
+            padding: 9px 20px; border-radius: 30px; text-decoration: none;
+            text-transform: uppercase; letter-spacing: 0.5px; align-self: flex-start;
+            margin-top: 4px; transition: opacity 0.2s, transform 0.2s;
+        }
+        .srv-letsgo:hover { opacity: 0.88; transform: translateX(2px); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep auto-fill grids on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .school-grid, .service-grid { grid-template-columns: 1fr !important; }
+            .section-heading { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
+        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
+    </header>
+
+    <main class="main-content">
+        <h1 class="page-title">SCHOOL<br>SERVICE</h1>
+        <p class="page-subtitle">From the Practitioner be the Educator</p>
+
+        <!-- ─── SCHOOL SECTION (blog-card style) ─── -->
+        <div class="content-card">
+            <h2 class="section-heading">SCHOOL</h2>
+            <p class="section-sub">คอร์สและ Workshop สำหรับสร้างระบบธุรกิจและ Live Commerce</p>
+            <div id="school-grid" class="school-grid">
+                <p class="status-msg">กำลังโหลด…</p>
+            </div>
+        </div>
+
+        <!-- ─── SERVICE SECTION (with price) ─── -->
+        <div class="service-section">
+            <h2 class="service-heading">SERVICE</h2>
+            <p class="service-sub">บริการที่ปรึกษาและวางระบบสำหรับธุรกิจ</p>
+            <div id="service-grid" class="service-grid">
+                <p class="status-msg" style="color:rgba(255,255,255,0.6);">กำลังโหลด…</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
+
+    <script>
+    // ══════════════════════════════════════════════════════════════
+    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
+    // ══════════════════════════════════════════════════════════════
+    // Sheet tabs ที่ใช้:
+    //   school_service1 → SCHOOL cards (blog-style, same columns as blog tab)
+    //     Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+    //   school_service2 → SERVICE cards with price
+    //     Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
+    //     type values: free / premium / coming-soon
+
+    // ─── Render SCHOOL cards (school_service1) ──────────────────
+    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+    function renderSchool(items) {
+        const grid = document.getElementById('school-grid');
+        if (!items.length) { grid.innerHTML = '<p class="status-msg">ยังไม่มีคอร์สในขณะนี้</p>'; return; }
+        grid.innerHTML = items.map(p => {
+            const excerpt = p.excerpt_thai || p.excerpt_eng || '';
+            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${p.slug}` : '#');
+            const isExt   = href.startsWith('http');
+            return `<a class="school-item" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
+                <div class="school-item-info">
+                    <div class="school-item-badge">${p.category || 'Course'}</div>
+                    <div class="school-item-title">${(p.title || '').toUpperCase()}</div>
+                    <div class="school-item-desc">${excerpt}</div>
+                    <div class="school-item-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}</div>
+                </div>
+                <div class="school-item-arrow">Read more →</div>
+            </a>`;
+        }).join('');
+    }
+
+    // ─── Render SERVICE cards (school_service2) ──────────────────
+    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture | course_url
+    // type: free / premium / coming-soon
+    // price: ฿4,700 / FREE / TBA / etc.
+    // url_picture: รูปประกอบ (ไม่ใช่ link)
+    // course_url: ถ้ามีค่า → แสดงปุ่ม Let's Go; ถ้าว่าง → ไม่มีปุ่ม
+    function renderService(items) {
+        const grid = document.getElementById('service-grid');
+        if (!items.length) { grid.innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ยังไม่มีบริการในขณะนี้</p>'; return; }
+        grid.innerHTML = items.map(p => {
+            const type      = (p.type || '').toLowerCase();
+            const isSoon    = type.includes('soon') || type.includes('coming');
+            const isFree    = type === 'free';
+            const badgeLbl  = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
+            const desc      = p.descriptionTh || p.description || '';
+            const courseUrl = (p.course_url || '').trim();
+            const coverHTML = p.url_picture
+                ? `<img src="${p.url_picture}" alt="${p.title}" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px;" loading="lazy">`
+                : '';
+            const letsGo = courseUrl && !isSoon
+                ? `<a href="${courseUrl}" class="srv-letsgo" target="_blank" rel="noopener">Let's Go →</a>`
+                : '';
+            return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
+                ${coverHTML}
+                <span class="srv-badge" style="${isFree ? 'background:#F5B800;color:#1A1A1A' : isSoon ? '' : 'background:rgba(245,184,0,0.3);color:#F5B800'}">${badgeLbl}</span>
+                <div class="srv-title">${(p.title || '').toUpperCase()}</div>
+                ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
+                <div class="srv-desc">${desc}</div>
+                ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
+                ${letsGo}
+            </div>`;
+        }).join('');
+    }
+
+    // ─── Load all data ───────────────────────────────────────────
+    async function loadData() {
+        if (!APPS_SCRIPT_URL) {
+            document.getElementById('school-grid').innerHTML  = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
+            document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
+            return;
+        }
+        const [r1, r2] = await Promise.allSettled([
+            fetch(APPS_SCRIPT_URL + '?sheet=school_service1').then(r => r.json()),
+            fetch(APPS_SCRIPT_URL + '?sheet=school_service2').then(r => r.json()),
+        ]);
+        if (r1.status === 'fulfilled' && r1.value.success) renderSchool(r1.value.data);
+        else document.getElementById('school-grid').innerHTML = '<p class="status-msg">ไม่สามารถโหลดข้อมูลได้</p>';
+
+        if (r2.status === 'fulfilled' && r2.value.success) renderService(r2.value.data);
+        else document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ไม่สามารถโหลดข้อมูลได้</p>';
+    }
+
+    loadData();
+    </script>
+</body>
+</html>
