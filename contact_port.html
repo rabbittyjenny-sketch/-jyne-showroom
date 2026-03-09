@@ -40,6 +40,57 @@
         .contact-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 1px; }
         .contact-value { font-size: 0.92rem; font-weight: 600; }
 
+        /* CONTACT FORM */
+        .form-divider { border: none; border-top: 1.5px solid rgba(0,0,0,0.15); margin: 20px 0 18px; }
+        .form-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.25rem; color: #1A1A1A; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+        .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(0,0,0,0.65); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(0,0,0,0.08);
+            border: 1.5px solid rgba(0,0,0,0.18);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: #1A1A1A;
+            font-family: 'Noto Sans Thai', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: #1A1A1A; background: rgba(0,0,0,0.05); }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .consent-row { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; }
+        .consent-row input[type="checkbox"] { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; accent-color: #1A1A1A; cursor: pointer; }
+        .consent-text { font-size: 0.73rem; line-height: 1.6; color: rgba(0,0,0,0.65); }
+        .consent-text a { color: #1A1A1A; text-decoration: underline; }
+        .submit-btn {
+            display: block; width: 100%; padding: 13px;
+            background: #1A1A1A; color: #fff;
+            border: none; border-radius: 30px;
+            font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; cursor: pointer;
+            font-family: 'Noto Sans Thai', sans-serif;
+            transition: opacity 0.2s;
+        }
+        .submit-btn:hover:not(:disabled) { opacity: 0.82; }
+        .submit-btn:disabled { opacity: 0.4; cursor: default; }
+        .success-msg {
+            display: none;
+            background: rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #1A1A1A;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 12px;
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .container { padding: 100px 24px 60px; }
@@ -81,7 +132,6 @@
         <div class="content-card">
             <div class="col">
                 <h2 class="col-title">GET IN TOUCH</h2>
-                <p>พร้อมรับฟังโปรเจกต์ของคุณ ตอบกลับภายใน 24 ชั่วโมง</p>
                 <a class="contact-item" href="mailto:jyne@ideas365.online">
                     <span class="contact-icon">✉️</span>
                     <div>
@@ -96,14 +146,56 @@
                         <div class="contact-value">@jennyjyne</div>
                     </div>
                 </a>
-                <a class="contact-item" href="https://www.tiktok.com/@tiktoksmethailand" target="_blank">
-                    <span class="contact-icon">🎵</span>
-                    <div>
-                        <div class="contact-label">TikTok SME Thailand</div>
-                        <div class="contact-value">@tiktoksmethailand</div>
+
+                <hr class="form-divider">
+                <p class="form-title">ส่งข้อความถึงเรา</p>
+
+                <form id="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="cf-name">ชื่อ – นามสกุล *</label>
+                        <input type="text" id="cf-name" placeholder="ชื่อของคุณ" required>
                     </div>
-                </a>
-                <p style="margin-top:14px;font-size:0.8rem;opacity:0.75">iDEAS365 · Based in Bangkok, working globally</p>
+                    <div class="form-group">
+                        <label for="cf-email">อีเมล *</label>
+                        <input type="email" id="cf-email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-biz">ชื่อธุรกิจ / แบรนด์</label>
+                        <input type="text" id="cf-biz" placeholder="ชื่อธุรกิจของคุณ">
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-biztype">ประเภทธุรกิจ</label>
+                        <select id="cf-biztype">
+                            <option value="">-- เลือกประเภท --</option>
+                            <option>ร้านค้าออนไลน์ / E-commerce</option>
+                            <option>ร้านค้าหน้าร้าน (Offline)</option>
+                            <option>Startup / ธุรกิจใหม่</option>
+                            <option>SME / ธุรกิจขนาดกลาง-เล็ก</option>
+                            <option>Freelance / Solo founder</option>
+                            <option>องค์กร / Corporate</option>
+                            <option>อื่นๆ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-detail">รายละเอียดที่ต้องการติดต่อ *</label>
+                        <textarea id="cf-detail" placeholder="บอกเล่าสิ่งที่คุณต้องการ หรือโปรเจกต์ที่อยากพูดคุย…" required></textarea>
+                    </div>
+
+                    <div class="consent-row">
+                        <input type="checkbox" id="cf-consent" required>
+                        <label for="cf-consent" class="consent-text">
+                            ข้าพเจ้ายินยอมให้ iDEAS365 เก็บรวบรวมและใช้ข้อมูลส่วนบุคคล (ชื่อ อีเมล และรายละเอียดธุรกิจ)
+                            เพื่อวัตถุประสงค์ในการติดต่อและให้บริการ ตาม <a href="#" onclick="return false">นโยบายความเป็นส่วนตัว</a>
+                            ข้าพเจ้าสามารถเพิกถอนความยินยอมได้ทุกเมื่อตาม PDPA พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 *
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn" disabled>ส่งข้อความ →</button>
+                </form>
+                <div class="success-msg" id="success-msg">
+                    ✅ ได้รับข้อความของคุณเรียบร้อยค่ะ ขอบคุณที่ติดต่อเข้ามา<br>
+                    อย่าลืมรักษาสุขภาพกันด้วยนะคะ 💛
+                </div>
             </div>
             <div class="col">
                 <h2 class="col-title">OUR PROMISE</h2>
@@ -125,5 +217,44 @@
         <p class="footer-tagline">Smart Lazy Style</p>
         <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
     </footer>
+<script>
+const APPS_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
+
+/* Enable submit only when consent is checked */
+const consent  = document.getElementById('cf-consent');
+const submitBtn = document.getElementById('submit-btn');
+consent.addEventListener('change', () => { submitBtn.disabled = !consent.checked; });
+
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const biz     = document.getElementById('cf-biz').value.trim();
+    const biztype = document.getElementById('cf-biztype').value;
+    const detail  = document.getElementById('cf-detail').value.trim();
+
+    if (!name || !email || !detail) { alert('กรุณากรอกชื่อ อีเมล และรายละเอียดให้ครบค่ะ'); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'กำลังส่ง…';
+
+    try {
+        const params = new URLSearchParams({
+            action: 'contact',
+            sheet:  'contacts',
+            name, email,
+            business_name: biz,
+            business_type: biztype,
+            datail: detail,
+            timestamp: new Date().toISOString()
+        });
+        await fetch(APPS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+    } catch (_) { /* no-cors ไม่ return error จริง */ }
+
+    /* Show success regardless (no-cors ไม่อ่าน response ได้) */
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'block';
+});
+</script>
 </body>
 </html>
