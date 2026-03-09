@@ -573,69 +573,7 @@
             <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
         </div>
         <div class="proj-grid" id="grid-commerce">
-            <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-ai">AI · Live</span></div>
-                    <div class="proj-name-en">Caption Factory</div>
-                    <div class="proj-name-th">โรงงานสร้างแคปชั่น</div>
-                    <div class="proj-desc">สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วมของผู้ชม และปรับโทนตามแพลตฟอร์ม</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
-            </a>
-            <a class="proj-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-biz">Business · Live</span></div>
-                    <div class="proj-name-en">Event ROI Calculator</div>
-                    <div class="proj-name-th">คำนวณผลตอบแทนอีเวนต์</div>
-                    <div class="proj-desc">เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์ มีตัวเลขจริงทุกขั้นตอน</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
-            </a>
-            <div class="proj-card">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
-                    <div class="proj-name-en">Social Commerce Architecture</div>
-                    <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
-                    <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
-            </div>
-            <div class="proj-card">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
-                    <div class="proj-name-en">Video Production</div>
-                    <div class="proj-name-th">ผลิตวีดีโอสินค้า</div>
-                    <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
-            </div>
-            <div class="proj-card">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
-                    <div class="proj-name-en">Strategy Consulting</div>
-                    <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
-                    <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก พร้อมแผนปฏิบัติที่วัดผลได้</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
-            </div>
-            <div class="proj-card">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
-                    <div class="proj-name-en">Systems Design</div>
-                    <div class="proj-name-th">ออกแบบระบบองค์กร</div>
-                    <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta dim">VIEW PROJECT →</span></div>
-            </div>
-            <div class="proj-card coming">
-                <div class="proj-body">
-                    <div class="proj-logo-row"><span class="badge badge-soon">Coming Soon</span></div>
-                    <div class="proj-name-en">QR Code Generator</div>
-                    <div class="proj-name-th">สร้าง QR Code</div>
-                    <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์และสีสันให้เป็นเอกลักษณ์</div>
-                </div>
-                <div class="proj-footer"><span class="proj-cta dim">COMING SOON</span></div>
-            </div>
+            <p class="loading-msg">กำลังโหลด…</p>
         </div>
     </div>
 
@@ -865,12 +803,20 @@ function buildProjCard(p) {
     const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
     const desc     = p.descriptionTh || p.description || '';
     const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
+
+    /* Cover image (16:9) — from previewImage or cover field */
+    const cover    = p.previewImage || p.cover || '';
+    const coverHTML = cover
+        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>`
+        : '';
+
     /* Always render footer consistently */
     const projCtaCls   = hasUrl ? 'proj-cta' : 'proj-cta dim';
     const projCtaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
     const footerHTML   = `<div class="proj-footer"><span class="${projCtaCls}">${projCtaLabel}</span></div>`;
 
     return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
         <div class="proj-body">
             <div class="proj-logo-row">
                 ${logoHTML}
