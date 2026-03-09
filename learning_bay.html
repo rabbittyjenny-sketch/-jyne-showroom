@@ -110,9 +110,9 @@
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
         .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
-        .footer-brand span.dot-r { color: #F5B800; }
-        .footer-brand span.dot-g { color: #F5B800; }
-        .footer-brand span.dot-b { color: #F5B800; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
         .footer-brand span.dot-y { color: #F5B800; }
         .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
         .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
@@ -121,7 +121,7 @@
 <body>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
+        <a href="index.html" class="map-btn">🗺 MAP</a>
     </header>
     <main class="main-content">
         <h1 class="page-title">LEARNING<br>BAY</h1>
@@ -318,7 +318,7 @@
         try {
             const res  = await fetch(SUBSCRIBE_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain' },
                 body: JSON.stringify({
                     userName: name, businessType: biz, email,
                     id: currentResource.id, name: currentResource.name,
