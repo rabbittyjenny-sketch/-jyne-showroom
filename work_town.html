@@ -37,8 +37,7 @@
             z-index: 200;
         }
         .logo-img { height: 40px; display: block; }
-        .back-btn { background: #ffffff; color: #1A1A1A; text-decoration: none; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
-        .back-btn:hover { transform: scale(1.05); }
+        .back-btn img { height: 44px; width: auto; display: block; }
 
         /* ═══════════════ HERO ═══════════════ */
         .hero {
@@ -109,13 +108,13 @@
             letter-spacing: 0.5px;
             line-height: 1.6;
         }
-        .badge-ai       { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .badge-live     { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .badge-biz      { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .badge-sys      { background: rgba(245,184,0,0.22); color: #F5B800; }
+        .badge-ai       { background: rgba(251,188,5,0.18);   color: #FBBC05; }
+        .badge-live     { background: rgba(234,67,53,0.18);   color: #ff6b6b; }
+        .badge-biz      { background: rgba(52,168,83,0.18);   color: #5bdb8a; }
+        .badge-sys      { background: rgba(100,180,255,0.15); color: #7ec8ff; }
         .badge-soon     { background: rgba(255,255,255,0.08); color: #888; }
-        .badge-creative { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .badge-sold     { background: rgba(255,255,255,0.12); color: #aaa; }
+        .badge-creative { background: rgba(180,130,255,0.18); color: #c9a0ff; }
+        .badge-sold     { background: rgba(255,80,80,0.15);   color: #ff7070; }
 
         /* ═══════════════════════════════════════════════════
            SECTION 1 — AI CARDS  3-col · portrait · no shadow
@@ -140,7 +139,7 @@
         .ai-card.coming  { opacity: 0.45; pointer-events: none; }
         .ai-card.soldout { opacity: 0.45; pointer-events: none; }
 
-        /* Cover — portrait 3:4 as requested */
+        /* Portrait cover 3:4 */
         .ai-cover {
             width: 100%;
             aspect-ratio: 3 / 4;
@@ -171,19 +170,18 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            width: 54px;
-            height: 54px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.95);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.55);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         .ai-logo-chip img {
-            width: 44px;
-            height: 44px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
         }
         /* Badge chip — overlaid top-right */
@@ -221,7 +219,7 @@
             flex: 1;
         }
 
-        /* CTA button — consistent on every card, no hover */
+        /* CTA button — no hover */
         .ai-footer {
             padding: 10px 18px 18px;
         }
@@ -229,49 +227,16 @@
             display: block;
             width: 100%;
             text-align: center;
-            padding: 10px 14px;
+            padding: 9px 14px;
             border-radius: 30px;
-            border: none;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #1A1A1A;
-            text-decoration: none;
-            background: #F5B800;
-            font-family: 'Noto Sans Thai', sans-serif;
-        }
-        /* Dim state — card has no link yet */
-        .ai-cta.dim,
-        .proj-cta.dim {
-            opacity: 0.25;
-            cursor: default;
-            pointer-events: none;
-        }
-
-        /* ── Sale status badge (system for sale / sold) ── */
-        .sale-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            border: 1px solid rgba(255,255,255,0.28);
             font-size: 0.67rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            width: fit-content;
-            margin-bottom: 6px;
-        }
-        .sale-status.avail {
-            background: rgba(52, 168, 83, 0.22);
-            color: #6ee79a;
-            border: 1px solid rgba(52, 168, 83, 0.45);
-        }
-        .sale-status.sold {
-            background: rgba(255,255,255,0.07);
-            color: rgba(255,255,255,0.4);
-            border: 1px solid rgba(255,255,255,0.14);
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
         }
 
         /* ═══════════════════════════════════════════════════
@@ -356,17 +321,16 @@
             display: block;
             width: 100%;
             text-align: center;
-            padding: 10px 14px;
+            padding: 8px 14px;
             border-radius: 30px;
-            border: none;
-            font-size: 0.72rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #1A1A1A;
+            letter-spacing: 1px;
+            color: #fff;
             text-decoration: none;
-            background: #F5B800;
-            font-family: 'Noto Sans Thai', sans-serif;
+            background: transparent;
         }
 
         /* ═══════════════ VIDEO GRID ═══════════════ */
@@ -497,7 +461,7 @@
         .dot-r { color: #EA4335; }
         .dot-g { color: #34A853; }
         .dot-b { color: #4285F4; }
-        .dot-y { color: #F5B800; }
+        .dot-y { color: #FBBC05; }
         .footer-tagline {
             font-size: 0.73rem;
             letter-spacing: 3px;
@@ -541,7 +505,9 @@
         <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
     </a>
     <span></span>
-    <a href="index.html" class="back-btn">🗺 MAP</a>
+    <a href="index.html" class="back-btn">
+        <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map">
+    </a>
 </header>
 
 <div class="hero">
@@ -559,8 +525,55 @@
             <div class="section-title">AI TOOLS &amp; ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
         </div>
-        <div class="proj-grid" id="grid-astrology">
-            <p class="loading-msg">กำลังโหลด…</p>
+        <div class="ai-grid" id="grid-astrology">
+            <!-- Static fallback — replaced by JS if sheet loads -->
+            <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">Soul Cards</div>
+                    <div class="ai-title-th">ไพ่ออราเคิล</div>
+                    <div class="ai-desc">เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม พร้อมคำอธิบายเชิงลึกและแนวทางปฏิบัติ</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
+
+            <a class="ai-card" href="https://the-soul-weaver.lovable.app/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755" alt="Soul Weaver" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">The Soul Weaver</div>
+                    <div class="ai-title-th">ความลับแห่งดวงดาว</div>
+                    <div class="ai-desc">ฟังคำทำนายดวงชะตาเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายจาก AI พร้อมคำแนะนำรายเดือน</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
+
+            <a class="ai-card" href="https://kaisin-e3aeho.manus.space/" target="_blank">
+                <div class="ai-cover">
+                    <img src="https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757" alt="KAIXIN" loading="lazy">
+                    <div class="ai-logo-chip">
+                        <img src="https://ik.imagekit.io/ideas365logo/kaixin_logo.png?updatedAt=1772818993931" alt="" loading="lazy">
+                    </div>
+                    <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
+                </div>
+                <div class="ai-body">
+                    <div class="ai-title-en">KAIXIN</div>
+                    <div class="ai-title-th">ค้นหาหินประจำตัว</div>
+                    <div class="ai-desc">กรอก วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่เสริมพลังงานบวกให้คุณโดยเฉพาะ</div>
+                </div>
+                <div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>
+            </a>
         </div>
     </div>
 
@@ -573,7 +586,64 @@
             <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
         </div>
         <div class="proj-grid" id="grid-commerce">
-            <p class="loading-msg">กำลังโหลด…</p>
+            <a class="proj-card" href="https://ideas365-caption-result.netlify.app/" target="_blank">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-ai">AI · Live</span></div>
+                    <div class="proj-name-en">Caption Factory</div>
+                    <div class="proj-name-th">โรงงานสร้างแคปชั่น</div>
+                    <div class="proj-desc">สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วมของผู้ชม และปรับโทนตามแพลตฟอร์ม</div>
+                </div>
+                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
+            </a>
+            <a class="proj-card" href="https://event-simulator-roi.netlify.app/" target="_blank">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business · Live</span></div>
+                    <div class="proj-name-en">Event ROI Calculator</div>
+                    <div class="proj-name-th">คำนวณผลตอบแทนอีเวนต์</div>
+                    <div class="proj-desc">เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์ มีตัวเลขจริงทุกขั้นตอน</div>
+                </div>
+                <div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>
+            </a>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
+                    <div class="proj-name-en">Social Commerce Architecture</div>
+                    <div class="proj-name-th">สถาปัตยกรรม Social Commerce</div>
+                    <div class="proj-desc">วางระบบการขายบนโซเชียลมีเดียแบบครบวงจร เพื่อการเติบโตอย่างยั่งยืน</div>
+                </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-live">Live Commerce</span></div>
+                    <div class="proj-name-en">Video Production</div>
+                    <div class="proj-name-th">ผลิตวีดีโอสินค้า</div>
+                    <div class="proj-desc">วีดีโอสินค้า คลิปสอน และคอนเทนต์โปรโมท — ครบ จบ ในที่เดียว</div>
+                </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
+                    <div class="proj-name-en">Strategy Consulting</div>
+                    <div class="proj-name-th">ที่ปรึกษากลยุทธ์</div>
+                    <div class="proj-desc">แผนธุรกิจที่มีตัวเลขจริง ไม่ใช่แค่ความรู้สึก พร้อมแผนปฏิบัติที่วัดผลได้</div>
+                </div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-biz">Business</span></div>
+                    <div class="proj-name-en">Systems Design</div>
+                    <div class="proj-name-th">ออกแบบระบบองค์กร</div>
+                    <div class="proj-desc">ระบบงานที่ขยายได้โดยไม่พัง — SOP, KPI และ Transfer Ownership</div>
+                </div>
+            </div>
+            <div class="proj-card coming">
+                <div class="proj-body">
+                    <div class="proj-logo-row"><span class="badge badge-soon">Coming Soon</span></div>
+                    <div class="proj-name-en">QR Code Generator</div>
+                    <div class="proj-name-th">สร้าง QR Code</div>
+                    <div class="proj-desc">สร้าง QR Code พร้อมปรับแต่งแบรนด์และสีสันให้เป็นเอกลักษณ์</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -722,7 +792,6 @@
     <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
 </footer>
 
-    
 <script>
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45eAVE2JsaTvCrLXjyuw4Gpa7j3O7XRdUXF6GwYAAnTZgH0nU5AMXlrnIp07Gl3hH/exec';
 
@@ -734,7 +803,50 @@ const BADGE_MAP = {
     creative: { cls: 'badge-creative', label: 'Creative' },
 };
 
-/* ── Unified card builder for all 3 sections ── */
+/* ── Section 1: portrait AI card ── */
+function buildAICard(p) {
+    const status   = (p.status || '').toLowerCase().trim();
+    const isSold   = status === 'sold-out' || status === 'sold_out';
+    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+    const cat      = (p.category || '').toLowerCase().trim();
+    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+    const hasUrl   = p.link && !isSold && !isSoon;
+    const tag      = hasUrl ? 'a' : 'div';
+    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+    const cls      = `ai-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
+    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage || p.cover || '';
+    const logo     = p.logo || '';
+
+    const coverHTML = cover
+        ? `<div class="ai-cover">
+               <img src="${cover}" alt="" loading="lazy">
+               ${logo ? `<div class="ai-logo-chip"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`
+        : `<div class="ai-cover-placeholder">◆
+               ${logo ? `<div class="ai-logo-chip" style="position:absolute;top:10px;left:10px;"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`;
+
+    const footerHTML = hasUrl
+        ? `<div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>`
+        : '';
+
+    return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
+        <div class="ai-body">
+            <div class="ai-title-en">${p.title || ''}</div>
+            ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
+            <div class="ai-desc">${desc}</div>
+        </div>
+        ${footerHTML}
+    </${tag}>`;
+}
+
+/* ── Sections 2 & 3: project card ── */
 function buildProjCard(p) {
     const status   = (p.status || '').toLowerCase().trim();
     const isSold   = status === 'sold-out' || status === 'sold_out';
@@ -748,18 +860,12 @@ function buildProjCard(p) {
     const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
     const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
     const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage  || p.cover || '';
     const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
-
-    /* Cover image (16:9) — from previewImage or cover field */
-    const cover    = p.previewImage || p.cover || '';
     const coverHTML = cover
-        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>`
-        : '';
-
-    /* Always render footer consistently */
-    const projCtaCls   = hasUrl ? 'proj-cta' : 'proj-cta dim';
-    const projCtaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
-    const footerHTML   = `<div class="proj-footer"><span class="${projCtaCls}">${projCtaLabel}</span></div>`;
+        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>` : '';
+    const footerHTML = hasUrl
+        ? `<div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>` : '';
 
     return `<${tag} class="${cls}" ${href}>
         ${coverHTML}
@@ -770,24 +876,10 @@ function buildProjCard(p) {
             </div>
             <div class="proj-name-en">${p.title || ''}</div>
             ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
-            <div class="proj-desc">${desc || '&nbsp;'}</div>
+            <div class="proj-desc">${desc}</div>
         </div>
         ${footerHTML}
     </${tag}>`;
-}
-
-function renderGrid(result, elementId) {
-    const el = document.getElementById(elementId);
-    if (result.status === 'fulfilled' && result.value?.success && result.value.data?.length) {
-        el.innerHTML = result.value.data.map(buildProjCard).join('');
-    } else {
-        el.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
-        if (result.status === 'fulfilled' && !result.value?.success) {
-            console.warn(`[${elementId}] Apps Script returned success=false`, result.value);
-        } else if (result.status === 'rejected') {
-            console.warn(`[${elementId}] fetch failed`, result.reason);
-        }
-    }
 }
 
 async function loadWorks() {
@@ -798,9 +890,27 @@ async function loadWorks() {
         fetch(APPS_SCRIPT_URL + '?sheet=work_creative').then(r => r.json()),
     ]);
 
-    renderGrid(r1, 'grid-astrology');   /* Section 1 — AI */
-    renderGrid(r2, 'grid-commerce');    /* Section 2 — Commerce */
-    renderGrid(r3, 'grid-creative');    /* Section 3 — Creative */
+    /* Section 1 — AI portrait cards */
+    if (r1.status === 'fulfilled' && r1.value?.success && r1.value.data?.length) {
+        document.getElementById('grid-astrology').innerHTML =
+            r1.value.data.map(buildAICard).join('');
+    }
+
+    /* Section 2 — Commerce */
+    if (r2.status === 'fulfilled' && r2.value?.success && r2.value.data?.length) {
+        document.getElementById('grid-commerce').innerHTML =
+            r2.value.data.map(buildProjCard).join('');
+    }
+
+    /* Section 3 — Creative */
+    const g3 = document.getElementById('grid-creative');
+    if (r3.status === 'fulfilled' && r3.value?.success) {
+        g3.innerHTML = r3.value.data?.length
+            ? r3.value.data.map(buildProjCard).join('')
+            : '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
+    } else {
+        g3.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
+    }
 }
 
 loadWorks();
