@@ -171,18 +171,19 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.55);
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.95);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
         .ai-logo-chip img {
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             object-fit: contain;
         }
         /* Badge chip — overlaid top-right */
@@ -246,6 +247,31 @@
             opacity: 0.25;
             cursor: default;
             pointer-events: none;
+        }
+
+        /* ── Sale status badge (system for sale / sold) ── */
+        .sale-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.67rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            width: fit-content;
+            margin-bottom: 6px;
+        }
+        .sale-status.avail {
+            background: rgba(52, 168, 83, 0.22);
+            color: #6ee79a;
+            border: 1px solid rgba(52, 168, 83, 0.45);
+        }
+        .sale-status.sold {
+            background: rgba(255,255,255,0.07);
+            color: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.14);
         }
 
         /* ═══════════════════════════════════════════════════
@@ -537,9 +563,9 @@
             <!-- Static fallback — replaced by JS if sheet loads -->
             <a class="ai-card" href="https://soul-card-oracle.lovable.app/" target="_blank">
                 <div class="ai-cover">
-                    <img src="https://ik.imagekit.io/ideas365logo/unnamed%20(62).png?updatedAt=1772849649730" alt="Soul Cards" loading="lazy">
+                    <img src="https://ik.imagekit.io/ideas365logo/soulcard.png?updatedAt=1772818993849" alt="Soul Cards" loading="lazy">
                     <div class="ai-logo-chip">
-                        <img src="https://ik.imagekit.io/ideas365logo/soul-weaver-logo.png?updatedAt=1772818993894" alt="" loading="lazy">
+                        <img src="https://ik.imagekit.io/ideas365logo/soulcard.png?updatedAt=1772818993849" alt="" loading="lazy">
                     </div>
                     <div class="ai-badge-chip"><span class="badge badge-ai">AI · Live</span></div>
                 </div>
@@ -819,16 +845,22 @@ const BADGE_MAP = {
 /* ── Section 1: portrait AI card ── */
 function buildAICard(p) {
     const status   = (p.status || '').toLowerCase().trim();
-    const isSold   = status === 'sold-out' || status === 'sold_out';
     const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+
+    /* category column = system sale status ("Avaliable" / "SOULD OUT") */
     const cat      = (p.category || '').toLowerCase().trim();
-    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
-    const hasUrl   = p.link && !isSold && !isSoon;
+    const sysSold  = cat.includes('sold') || cat.includes('sould');
+    const sysAvail = cat.includes('avail');
+
+    const hasUrl   = !!p.link && !isSoon;
     const tag      = hasUrl ? 'a' : 'div';
     const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
-    const cls      = `ai-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
-    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
-    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const cls      = `ai-card${isSoon ? ' coming' : ''}`;
+
+    /* AI type badge — top-right on cover */
+    const badgeLbl = isSoon ? 'Coming Soon' : 'AI · Live';
+    const badgeCls = isSoon ? 'badge-soon'  : 'badge-ai';
+
     const desc     = p.descriptionTh || p.description || '';
     const cover    = p.previewImage || p.cover || '';
     const logo     = p.logo || '';
@@ -844,7 +876,11 @@ function buildAICard(p) {
                <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
            </div>`;
 
-    /* Always render footer — dim if no link so all cards have consistent height */
+    /* System sale status badge — shown in card body */
+    const saleHTML = sysSold  ? `<div class="sale-status sold">✓ ขายระบบแล้ว</div>`
+                  : sysAvail  ? `<div class="sale-status avail">🏷 ระบบพร้อมขาย</div>`
+                  : '';
+
     const ctaCls   = hasUrl ? 'ai-cta' : 'ai-cta dim';
     const ctaLabel = isSoon ? 'COMING SOON' : 'VIEW PROJECT →';
     const footerHTML = `<div class="ai-footer"><span class="${ctaCls}">${ctaLabel}</span></div>`;
@@ -852,6 +888,7 @@ function buildAICard(p) {
     return `<${tag} class="${cls}" ${href}>
         ${coverHTML}
         <div class="ai-body">
+            ${saleHTML}
             <div class="ai-title-en">${p.title || ''}</div>
             ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
             <div class="ai-desc">${desc || '&nbsp;'}</div>
