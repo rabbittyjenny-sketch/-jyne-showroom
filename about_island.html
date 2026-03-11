@@ -46,7 +46,7 @@
         .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; position: relative; display: block; text-decoration: none; }
         .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
         /* proof */
-        .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+        .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px; }
         .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; }
         /* highlight list */
         .hl { list-style: none; padding: 0; margin: 0; }
@@ -54,7 +54,7 @@
         .hl li:last-child { border-bottom: none; }
         .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
         .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .cs-pill { background: #F5B800; color: #1A1A1A; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .cs-pill { background: #B03A00; color: #ffffff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
         /* resume */
         .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         /* photo slot */
@@ -74,7 +74,7 @@
         .stat-label { font-size: 0.72rem; color: #888; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         /* big buttons */
         .big-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        .big-btn { display: block; background: #1A1A1A; color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
+        .big-btn { display: block; background: #B03A00; color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
         .big-btn:hover { opacity: 0.85; }
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
@@ -89,7 +89,7 @@
             .logo-img { height: 36px; }
             /* collapse all grids to 1 column */
             .content-card, .ext-cards, .video-grid,
-            .proof-grid { grid-template-columns: 1fr !important; }
+            .proof-grid { grid-template-columns: 1fr 1fr !important; }
             /* keep stats and buttons at 2 columns on mobile */
             .stats-row { grid-template-columns: repeat(2, 1fr); }
             .big-btn-row { grid-template-columns: 1fr 1fr; }
@@ -136,13 +136,18 @@
         .footer-brand span.dot-y { color: #F5B800; }
         .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
         .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
+
+        /* back button — fixed bottom right */
+        .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
+        .back-fixed img { height: 45px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
+        .back-fixed:hover img { transform: scale(1.08); }
     </style>
 </head>
 <body>
     <div id="cursor-glow"></div>
     <header class="nav-header">
-        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn">🗺 MAP</a>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277"></a>
+        
     </header>
     <main class="main-content">
         <h1 class="page-title">ABOUT<br>ISLAND</h1>
@@ -154,7 +159,7 @@
         <div class="content-card">
             <div>
                 <h2 class="col-title">WHO IS JYNE</h2>
-                <p class="col-desc"><strong>ชื่อ เจนจิรา นามสกุล จัยสิน  แต่ส่วนใหญ่รู้จักกันในชื่อ Jyne</strong><br> Self-Starter, Action-Oriented Person, Get things DONE</p>
+                <p class="col-desc"><strong style="font-size:1.15rem;line-height:1.5;">ชื่อ:เจนจิรา    นามสกุล:จัยสิน --Jyne:</strong><br> Self-Starter, Action-Oriented Person, Get things DONE</p>
                 
                 <p class="col-desc">เส้นทางที่ไม่ได้เดินตามแบบแผน เริ่มจากธุรกิจ Jewelry 8 ปี ผ่านการเป็น Executive Secretary to MD และ Director of Operation to Chef ให้กับธุรกิจร้านอาหาร มาตรฐาน Michelin Star กว่า 8 ปีในวงการอาหาร 
                     มาถึงหน้าจอ Live Stream ที่สร้างยอดขาย 6 หลักใน 2 ชั่วโมง</p>
@@ -379,10 +384,10 @@
             <div>
                 <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
                 <div class="proof-grid">
-                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229'">
-                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965'">
-                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281'">
-                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100027.png?updatedAt=1772938870951'">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100027.png?updatedAt=1772938870951">
                 </div>
                 <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
             </div>
@@ -392,12 +397,12 @@
         <div class="content-card single">
             <h2 class="col-title">PREVIOUS WORK EXPERIENCE · งานที่ผ่านมา </h2>
                 <div class="proof-grid">
-                    <img src="https://ik.imagekit.io/ideas365logo/ChefC1.jpg'">
-                    <img src="https://ik.imagekit.io/ideas365logo/RHAAN1.jpg'">
-                    <img src="https://ik.imagekit.io/ideas365logo/rhaan4.jpg'">
-                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot_20230818_031225_Instagram.jpg'">
-                    <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg'">
-                    <img src="https://ik.imagekit.io/ideas365logo/MUU1.jpg'">
+                    <img src="https://ik.imagekit.io/ideas365logo/ChefC1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/RHAAN1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/rhaan4.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot_20230818_031225_Instagram.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/MUU1.jpg">
                 </div>
             <div style="text-align:center;margin-top:20px">
                 <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank" style="display:inline-block;padding:14px 40px">More proof ↗</a>
@@ -407,9 +412,7 @@
         <!-- RESUME -->
         <div class="content-card single">
             <p style="font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:3px;color:var(--accent);margin:0 0 6px">iDEAS365</p>
-            <h2 class="col-title" style="font-size:3.5rem;margin-bottom:4px">RESUME</h2>
-            <p style="font-weight:700;font-size:0.9rem;color:#333;margin:0 0 2px">JENJIRA  JAISIN</p>
-            <p style="font-size:0.8rem;color:#aaa;margin:0 0 24px">Date: October 9, 1983</p>
+            <h2 class="col-title" style="font-size:3.5rem;margin-bottom:16px">RESUME</h2>
             <img
                 src="https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797"
                 alt="Jyne Resume 2025"
@@ -445,5 +448,9 @@
         <p class="footer-tagline">Smart Lazy Style</p>
         <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
     </footer>
+
+<a href="index.html" class="back-fixed">
+    <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back">
+</a>
 </body>
 </html>
