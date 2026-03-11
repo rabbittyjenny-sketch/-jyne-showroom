@@ -17,8 +17,6 @@
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
-        .map-btn { background: #ffffff; color: #1A1A1A; text-decoration: none; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: transform 0.2s; }
-        .map-btn:hover { transform: scale(1.05); }
 
         .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1100px; margin: 0 auto; gap: 30px; }
         .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(3.5rem, 9vw, 7rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
@@ -48,84 +46,57 @@
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
         .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
-        .footer-brand span.dot-r { color: #EA4335; }
-        .footer-brand span.dot-g { color: #34A853; }
-        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-r { color: #F5B800; }
+        .footer-brand span.dot-g { color: #F5B800; }
+        .footer-brand span.dot-b { color: #F5B800; }
         .footer-brand span.dot-y { color: #F5B800; }
         .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
         .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
 
-        /* ─── SERVICE SECTION wrapper (dark card, brand book) ─── */
-        .service-section {
-            width: 100%;
-            background: #1A1A1A;
-            border-radius: 22px;
-            padding: 42px 42px 48px;
-        }
-        .service-heading {
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
-            font-size: 1.75rem; color: #F5B800; margin: 0 0 6px;
-            text-transform: uppercase; letter-spacing: 0.3px;
-            border-bottom: 1.5px solid rgba(255,255,255,0.1); padding-bottom: 12px;
-        }
-        .service-sub { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin: 0 0 28px; font-weight: 300; padding-top: 4px; }
+        /* ─── SERVICE SECTION wrapper ─── */
+        .service-section { width: 100%; padding: 10px 0 20px; }
+        .service-heading { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: #fff; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.35); padding-bottom: 12px; }
+        .service-sub { font-size: 0.88rem; color: rgba(255,255,255,0.7); margin: 0 0 28px; font-weight: 300; }
 
-        /* ─── SERVICE CARDS (brand book dark style) ─── */
-        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        /* ─── SERVICE CARDS (with price) ─── */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .srv-card {
-            background: #222222; border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px; overflow: hidden;
-            display: flex; flex-direction: column; color: #fff;
+            background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px;
+            transition: background 0.2s, transform 0.2s; color: #fff;
         }
-        .srv-card.srv-coming { opacity: 0.45; pointer-events: none; }
-        .srv-card-cover { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #333; flex-shrink: 0; }
-        .srv-card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .srv-card-body { padding: 18px 20px 12px; flex: 1; display: flex; flex-direction: column; gap: 5px; }
-        .srv-badge {
-            display: inline-block; padding: 3px 10px; border-radius: 20px;
-            font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            width: fit-content; margin-bottom: 4px;
+        .srv-card.has-link { cursor: pointer; }
+        .srv-card.has-link:hover { background: rgba(0,0,0,0.28); transform: translateY(-3px); }
+        .srv-badge { align-self: flex-start; padding: 3px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.2); color: #fff; letter-spacing: 0.5px; }
+        .srv-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; line-height: 1.2; }
+        .srv-title-th { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+        .srv-desc { font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.78); font-weight: 300; flex-grow: 1; }
+        .srv-price { font-size: 0.85rem; font-weight: 700; color: #FBBC05; margin-top: 4px; }
+        .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 4px; }
+        .srv-coming { opacity: 0.45; cursor: default; }
+        .srv-letsgo {
+            display: inline-block; background: #F5B800; color: #1A1A1A;
+            font-family: 'Noto Sans Thai', sans-serif; font-size: 0.78rem; font-weight: 700;
+            padding: 9px 20px; border-radius: 30px; text-decoration: none;
+            text-transform: uppercase; letter-spacing: 0.5px; align-self: flex-start;
+            margin-top: 4px; transition: opacity 0.2s, transform 0.2s;
         }
-        .srv-badge.free     { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .srv-badge.premium  { background: rgba(245,184,0,0.22); color: #F5B800; }
-        .srv-badge.soon     { background: rgba(255,255,255,0.08); color: #888; }
-        .srv-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; line-height: 1.22; color: #fff; }
-        .srv-title-th { font-size: 0.77rem; color: rgba(255,255,255,0.5); font-weight: 300; }
-        .srv-desc { font-size: 0.8rem; line-height: 1.6; color: rgba(255,255,255,0.6); font-weight: 300; flex: 1; margin-top: 4px; }
-        .srv-price { font-size: 0.88rem; font-weight: 700; color: #F5B800; margin-top: 6px; }
-        .srv-footer { padding: 10px 20px 18px; display: flex; flex-direction: column; gap: 8px; }
-        .srv-buy-btn {
-            display: block; width: 100%; text-align: center;
-            background: #F5B800; color: #1A1A1A;
-            padding: 10px 14px; border-radius: 30px;
-            font-size: 0.75rem; font-weight: 700; text-decoration: none;
-            text-transform: uppercase; letter-spacing: 0.8px;
-            font-family: 'Noto Sans Thai', sans-serif;
-        }
-        .srv-more-info {
-            display: block; text-align: center;
-            font-size: 0.72rem; color: rgba(255,255,255,0.4);
-            text-decoration: underline; text-underline-offset: 2px;
-            font-family: 'Noto Sans Thai', sans-serif;
-        }
+        .srv-letsgo:hover { opacity: 0.88; transform: translateX(2px); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 1024px) {
             .main-content { padding: 100px 24px 60px; }
             /* keep auto-fill grids on tablet */
         }
-        @media (max-width: 1024px) {
-            .service-grid { grid-template-columns: repeat(2, 1fr); }
-        }
         @media (max-width: 640px) {
             .main-content { padding: 90px 16px 48px; }
             .page-title { font-size: clamp(3rem, 14vw, 5rem); }
             .content-card { padding: 24px 20px; border-radius: 16px; }
-            .service-section { padding: 26px 20px 32px; border-radius: 18px; }
             .nav-header { padding: 14px 16px; }
             .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
             .school-grid, .service-grid { grid-template-columns: 1fr !important; }
-            .section-heading, .service-heading { font-size: 1.35rem; }
+            .section-heading { font-size: 1.6rem; }
             .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
             .footer-brand { font-size: 1.3rem; }
         }
@@ -134,7 +105,7 @@
 <body>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn">🗺 MAP</a>
+        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
     </header>
 
     <main class="main-content">
@@ -172,7 +143,7 @@
     <script>
     // ══════════════════════════════════════════════════════════════
     // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45eAVE2JsaTvCrLXjyuw4Gpa7j3O7XRdUXF6GwYAAnTZgH0nU5AMXlrnIp07Gl3hH/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
     // ══════════════════════════════════════════════════════════════
     // Sheet tabs ที่ใช้:
     //   school_service1 → SCHOOL cards (blog-style, same columns as blog tab)
@@ -203,46 +174,35 @@
     }
 
     // ─── Render SERVICE cards (school_service2) ──────────────────
-    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
-    // type: ถ้าเป็น URL (http...) → ปุ่ม BUY ME! ลิงก์ไปยัง URL นั้น
-    //       "free"         → badge FREE, ไม่มีราคา
-    //       "coming-soon"  → badge Coming Soon, การ์ด dimmed
+    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture | course_url
+    // type: free / premium / coming-soon
+    // price: ฿4,700 / FREE / TBA / etc.
+    // url_picture: รูปประกอบ (ไม่ใช่ link)
+    // course_url: ถ้ามีค่า → แสดงปุ่ม Let's Go; ถ้าว่าง → ไม่มีปุ่ม
     function renderService(items) {
         const grid = document.getElementById('service-grid');
         if (!items.length) { grid.innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ยังไม่มีบริการในขณะนี้</p>'; return; }
         grid.innerHTML = items.map(p => {
-            const type     = (p.type || '').trim();
-            const isBuyUrl = type.startsWith('http');
-            const isSoon   = !isBuyUrl && (type.toLowerCase().includes('soon') || type.toLowerCase().includes('coming'));
-            const isFree   = !isBuyUrl && type.toLowerCase() === 'free';
-
-            const badgeLbl = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
-            const badgeCls = isSoon ? 'soon' : isFree ? 'free' : 'premium';
-            const desc     = p.descriptionTh || p.description || '';
-
+            const type      = (p.type || '').toLowerCase();
+            const isSoon    = type.includes('soon') || type.includes('coming');
+            const isFree    = type === 'free';
+            const badgeLbl  = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
+            const desc      = p.descriptionTh || p.description || '';
+            const courseUrl = (p.course_url || '').trim();
             const coverHTML = p.url_picture
-                ? `<div class="srv-card-cover"><img src="${p.url_picture}" alt="" loading="lazy"></div>`
+                ? `<img src="${p.url_picture}" alt="${p.title}" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px;" loading="lazy">`
                 : '';
-
-            const buyBtn = isBuyUrl
-                ? `<a href="${type}" class="srv-buy-btn" target="_blank" rel="noopener">BUY ME! →</a>`
-                : `<span class="srv-buy-btn" style="background:rgba(245,184,0,0.12);color:rgba(245,184,0,0.5);cursor:default;">${isSoon ? 'COMING SOON' : 'BUY ME!'}</span>`;
-
-            const footer = `<div class="srv-footer">
-                ${buyBtn}
-                <a href="contact_port.html" class="srv-more-info">More info →</a>
-            </div>`;
-
+            const letsGo = courseUrl && !isSoon
+                ? `<a href="${courseUrl}" class="srv-letsgo" target="_blank" rel="noopener">Let's Go →</a>`
+                : '';
             return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
                 ${coverHTML}
-                <div class="srv-card-body">
-                    <span class="srv-badge ${badgeCls}">${badgeLbl}</span>
-                    <div class="srv-title">${(p.title || '').toUpperCase()}</div>
-                    ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
-                    <div class="srv-desc">${desc}</div>
-                    ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
-                </div>
-                ${footer}
+                <span class="srv-badge" style="${isFree ? 'background:#F5B800;color:#1A1A1A' : isSoon ? '' : 'background:rgba(245,184,0,0.3);color:#F5B800'}">${badgeLbl}</span>
+                <div class="srv-title">${(p.title || '').toUpperCase()}</div>
+                ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
+                <div class="srv-desc">${desc}</div>
+                ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
+                ${letsGo}
             </div>`;
         }).join('');
     }
