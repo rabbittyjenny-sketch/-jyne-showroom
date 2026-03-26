@@ -1,5 +1,0 @@
-# Dependencies
-node_modules/
-
-# Build artifacts (keep analytics.bundle.js as it's needed for production)
-# Note: analytics.bundle.js is intentionally NOT ignored as it's required for the site to work
