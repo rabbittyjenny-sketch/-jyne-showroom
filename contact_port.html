@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT PORT - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --bg-color: #1A1A1A; --accent: #EA4335; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100%; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+
+        /* ── NAV ── */
+        .nav-header { position: fixed; top: 0; left: 0; width: 100%; padding: 20px 30px; z-index: 100; display: flex; justify-content: space-between; align-items: flex-start; }
+        .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+        /* MAP button as image (top-right) */
+        .map-btn {
+            display: block;
+            height: 52px;
+            width: auto;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+        }
+        .map-btn img {
+            height: 52px;
+            width: auto;
+            display: block;
+        }
+        .map-btn:hover { transform: scale(1.06); opacity: 0.9; }
+
+        /* BACK button fixed bottom-right */
+        .back-btn-fixed {
+            position: fixed;
+            bottom: 28px;
+            right: 30px;
+            z-index: 200;
+            display: block;
+            height: 52px;
+            width: auto;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+        }
+        .back-btn-fixed img {
+            height: 52px;
+            width: auto;
+            display: block;
+        }
+        .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
+
+        /* ── LAYOUT ── */
+        .container { max-width: 1000px; margin: 0 auto; padding: 120px 20px 100px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 8rem); text-align: center; margin: 0; line-height: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.2rem; font-weight: 400; margin: 0; text-align: center; opacity: 0.8; }
+
+        /* RED CARD */
+        .content-card { background-color: var(--accent); border-radius: 20px; padding: 50px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; color: #1A1A1A; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; margin: 0 0 18px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid rgba(0,0,0,0.2); padding-bottom: 12px; color: #1A1A1A; }
+        .col p { font-size: 0.92rem; line-height: 1.8; margin: 0 0 12px; font-weight: 400; color: #1A1A1A; }
+        .col p:last-child { margin-bottom: 0; }
+        .col a { color: #1A1A1A; font-weight: 700; }
+
+        /* PROMISE LIST */
+        .promise-list { list-style: none; padding: 0; margin: 0 0 10px; }
+        .promise-list li { font-size: 0.92rem; line-height: 1.7; padding: 10px 0 10px 22px; border-bottom: 1px solid rgba(234,67,53,0.15); position: relative; color: #1A1A1A; font-weight: 400; }
+        .promise-list li:last-child { border-bottom: none; }
+        .promise-list li::before { content: "✦"; position: absolute; left: 0; top: 13px; font-size: 0.7rem; color: #1A1A1A; }
+        .promise-list li strong { font-weight: 700; color: #1A1A1A; }
+
+        /* CONTACT ITEMS */
+        .contact-item { display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.1); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; text-decoration: none; color: #1A1A1A; transition: background 0.2s; }
+        .contact-item:hover { background: rgba(0,0,0,0.18); }
+        .contact-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .contact-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 1px; }
+        .contact-value { font-size: 0.92rem; font-weight: 600; }
+
+        /* CONTACT FORM */
+        .form-divider { border: none; border-top: 1.5px solid rgba(0,0,0,0.15); margin: 20px 0 18px; }
+        .form-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.25rem; color: #1A1A1A; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+        .form-group label { font-size: 0.75rem; font-weight: 700; color: rgba(0,0,0,0.65); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(0,0,0,0.08);
+            border: 1.5px solid rgba(0,0,0,0.18);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            color: #1A1A1A;
+            font-family: 'Noto Sans Thai', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: #1A1A1A; background: rgba(0,0,0,0.05); }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+        .consent-row { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; }
+        .consent-row input[type="checkbox"] { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; accent-color: #1A1A1A; cursor: pointer; }
+        .consent-text { font-size: 0.73rem; line-height: 1.6; color: rgba(0,0,0,0.65); }
+        .consent-text a { color: #1A1A1A; text-decoration: underline; }
+        .submit-btn {
+            display: block; width: 100%; padding: 13px;
+            background: #1A1A1A; color: #fff;
+            border: none; border-radius: 30px;
+            font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; cursor: pointer;
+            font-family: 'Noto Sans Thai', sans-serif;
+            transition: opacity 0.2s;
+        }
+        .submit-btn:hover:not(:disabled) { opacity: 0.82; }
+        .submit-btn:disabled { opacity: 0.4; cursor: default; }
+        .success-msg {
+            display: none;
+            background: rgba(0,0,0,0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #1A1A1A;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* QR CODE */
+        .qr-block { text-align: center; margin: 14px 0 10px; }
+        .qr-label-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .line-logo-img { height: 26px; width: auto; object-fit: contain; }
+        .qr-label-text { font-family: 'Anton', sans-serif; font-size: 1rem; letter-spacing: 1px; color: #1A1A1A; text-transform: uppercase; }
+        .qr-hint  { font-size: 0.72rem; color: rgba(0,0,0,0.55); margin: 8px 0 0; letter-spacing: 0.3px; }
+        .qr-wrapper { display: flex; justify-content: center; }
+        .qr-wrapper img {
+            width: 190px; height: 190px; object-fit: contain;
+            border-radius: 12px; background: #fff; padding: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: block;
+        }
+        /* Social icon images */
+        .social-icon-img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; border-radius: 6px; }
+        .social-list { display: flex; flex-direction: column; gap: 0; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .container { padding: 100px 24px 80px; }
+        }
+        @media (max-width: 640px) {
+            .container { padding: 90px 16px 80px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; gap: 24px; grid-template-columns: 1fr !important; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            .col-title { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
+            .map-btn, .map-btn img { height: 44px; }
+            .back-btn-fixed, .back-btn-fixed img { height: 44px; }
+            .back-btn-fixed { bottom: 20px; right: 16px; }
+            .qr-wrapper img { width: 150px; height: 150px; }
+            .social-list .contact-item { padding: 10px 14px; }
+        }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-y { color: #F5B800; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAV ── -->
+    <div class="nav-header">
+        <a href="index.html">
+            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
+        </a>
+        <!-- MAP button — image version -->
+        <a href="index.html" class="map-btn">
+            <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="MAP">
+        </a>
+    </div>
+
+    <main class="container">
+        <h1 class="page-title">CONTACT<br>PORT</h1>
+        <p class="page-subtitle">Clear Next Steps. No Pressure.</p>
+
+        <div class="content-card">
+            <!-- ── LEFT COL ── -->
+            <div class="col">
+                <h2 class="col-title">GET IN TOUCH</h2>
+
+                <!-- ✅ Email updated to contact@ideas365.space -->
+                <a class="contact-item" href="mailto:contact@ideas365.space">
+                    <span class="contact-icon">✉️</span>
+                    <div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">contact@ideas365.space</div>
+                    </div>
+                </a>
+
+                <hr class="form-divider">
+                <p class="form-title">ส่งข้อความถึงเรา</p>
+
+                <form id="contact-form" novalidate>
+                    <div class="form-group">
+                        <label for="cf-name">ชื่อ – นามสกุล *</label>
+                        <input type="text" id="cf-name" placeholder="ชื่อของคุณ" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-email">อีเมล *</label>
+                        <input type="email" id="cf-email" placeholder="email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-biz">ชื่อธุรกิจ / แบรนด์</label>
+                        <input type="text" id="cf-biz" placeholder="ชื่อธุรกิจของคุณ">
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-biztype">ประเภทธุรกิจ</label>
+                        <select id="cf-biztype">
+                            <option value="">-- เลือกประเภท --</option>
+                            <option>ร้านค้าออนไลน์ / E-commerce</option>
+                            <option>ร้านค้าหน้าร้าน (Offline)</option>
+                            <option>Startup / ธุรกิจใหม่</option>
+                            <option>SME / ธุรกิจขนาดกลาง-เล็ก</option>
+                            <option>Freelance / Solo founder</option>
+                            <option>องค์กร / Corporate</option>
+                            <option>อื่นๆ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cf-detail">รายละเอียดที่ต้องการติดต่อ *</label>
+                        <textarea id="cf-detail" placeholder="บอกเล่าสิ่งที่คุณต้องการ หรือโปรเจกต์ที่อยากพูดคุย…" required></textarea>
+                    </div>
+
+                    <div class="consent-row">
+                        <input type="checkbox" id="cf-consent" required>
+                        <label for="cf-consent" class="consent-text">
+                            ข้าพเจ้ายินยอมให้ iDEAS365 เก็บรวบรวมและใช้ข้อมูลส่วนบุคคล (ชื่อ อีเมล และรายละเอียดธุรกิจ)
+                            เพื่อวัตถุประสงค์ในการติดต่อและให้บริการ ตาม <a href="#" onclick="return false">นโยบายความเป็นส่วนตัว</a>
+                            ข้าพเจ้าสามารถเพิกถอนความยินยอมได้ทุกเมื่อตาม PDPA พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 *
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn" disabled>ส่งข้อความ →</button>
+                </form>
+                <div class="success-msg" id="success-msg">
+                    ✅ ได้รับข้อความของคุณเรียบร้อยค่ะ ขอบคุณที่ติดต่อเข้ามา<br>
+                    อย่าลืมรักษาสุขภาพกันด้วยนะคะ 💛
+                </div>
+            </div>
+
+            <!-- ── RIGHT COL ── -->
+            <div class="col">
+                <h2 class="col-title">OUR PROMISE</h2>
+                <ul class="promise-list">
+                    <li><strong>Quick Response</strong> — ตอบกลับภายใน 24 ชั่วโมง</li>
+                    <li><strong>Clear Next Steps</strong> — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ</li>
+                    <li><strong>Honest Assessment</strong> — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่</li>
+                    <li><strong>No Pressure</strong> — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน</li>
+                </ul>
+
+                <!-- QR Code LINE -->
+                <div class="qr-block">
+                    <div class="qr-label-row">
+                        <img src="https://ik.imagekit.io/ideas365logo/line-logo.png" alt="LINE" class="line-logo-img">
+                        <span class="qr-label-text">Scan เพิ่มเพื่อน</span>
+                    </div>
+                    <div class="qr-wrapper">
+                        <img
+                            src="https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226"
+                            alt="LINE QR Code"
+                            onerror="this.alt='⚠️ QR โหลดไม่ขึ้น — ลอง refresh'"
+                        >
+                    </div>
+                    <p class="qr-hint">รับข่าวสารก่อนใคร</p>
+                </div>
+
+                <!-- Social links -->
+                <div class="social-list">
+                    <a class="contact-item" href="https://www.tiktok.com/@jennyjyne" target="_blank">
+                        <img src="https://ik.imagekit.io/ideas365logo/tik-tok.png" alt="TikTok" class="social-icon-img">
+                        <div>
+                            <div class="contact-label">TikTok</div>
+                            <div class="contact-value">@jennyjyne</div>
+                        </div>
+                    </a>
+                    <a class="contact-item" href="https://www.facebook.com/ideas365" target="_blank">
+                        <img src="https://ik.imagekit.io/ideas365logo/facebook%20(1).png" alt="Facebook" class="social-icon-img">
+                        <div>
+                            <div class="contact-label">Facebook</div>
+                            <div class="contact-value">iDEAS365</div>
+                        </div>
+                    </a>
+                    <a class="contact-item" href="https://www.youtube.com/@ideas365" target="_blank">
+                        <img src="https://ik.imagekit.io/ideas365logo/youtube.png" alt="YouTube" class="social-icon-img">
+                        <div>
+                            <div class="contact-label">YouTube</div>
+                            <div class="contact-value">@ideas365</div>
+                        </div>
+                    </a>
+                    <a class="contact-item" href="https://www.instagram.com/ideas365" target="_blank">
+                        <img src="https://ik.imagekit.io/ideas365logo/instagram.png" alt="Instagram" class="social-icon-img">
+                        <div>
+                            <div class="contact-label">Instagram</div>
+                            <div class="contact-value">@ideas365</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
+
+    <!-- ✅ BACK button fixed bottom-right — same height as MAP button (52px) -->
+    <a href="index.html" class="back-btn-fixed">
+        <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="BACK">
+    </a>
+
+    <script>
+    /* Google Apps Script — รับข้อมูลและบันทึก Sheet */
+    const APPS_URL = 'https://script.google.com/macros/s/AKfycbz45eAVE2JsaTvCrLXjyuw4Gpa7j3O7XRdUXF6GwYAAnTZgH0nU5AMXlrnIp07Gl3hH/exec';
+
+    /* Enable submit only when consent is checked */
+    const consent   = document.getElementById('cf-consent');
+    const submitBtn = document.getElementById('submit-btn');
+    consent.addEventListener('change', () => { submitBtn.disabled = !consent.checked; });
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name    = document.getElementById('cf-name').value.trim();
+        const email   = document.getElementById('cf-email').value.trim();
+        const biz     = document.getElementById('cf-biz').value.trim();
+        const biztype = document.getElementById('cf-biztype').value;
+        const detail  = document.getElementById('cf-detail').value.trim();
+
+        if (!name || !email || !detail) {
+            alert('กรุณากรอกชื่อ อีเมล และรายละเอียดให้ครบค่ะ');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'กำลังส่ง…';
+
+        try {
+            const params = new URLSearchParams({
+                action:        'contact',
+                sheet:         'contacts',
+                name,
+                email,
+                business_name: biz,
+                business_type: biztype,
+                datail:        detail,
+                timestamp:     new Date().toISOString()
+            });
+            await fetch(APPS_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+        } catch (_) { /* no-cors ไม่ return error จริง — ข้อมูลถูกส่งแล้ว */ }
+
+        /* ซ่อน form + แสดง inline msg + popup */
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('success-msg').style.display  = 'block';
+        showSuccessPopup(name);
+    });
+
+    function showSuccessPopup(name) {
+        const overlay = document.createElement('div');
+        overlay.id = 'success-overlay';
+        overlay.innerHTML = `
+            <div class="popup-box">
+                <div class="popup-icon">✅</div>
+                <h3 class="popup-title">ได้รับข้อความแล้วค่ะ!</h3>
+                <p class="popup-body">
+                    ขอบคุณที่ติดต่อเข้ามานะคะ คุณ${name} 💛<br>
+                    ทีมงานจะติดต่อกลับภายใน <strong>24 ชั่วโมง</strong><br>
+                    อย่าลืมรักษาสุขภาพกันด้วยนะคะ 🌿
+                </p>
+                <button class="popup-close" onclick="document.getElementById('success-overlay').remove()">ปิด</button>
+            </div>`;
+        document.body.appendChild(overlay);
+    }
+    </script>
+
+    <style>
+    #success-overlay {
+        position: fixed; inset: 0; z-index: 999;
+        background: rgba(0,0,0,0.65);
+        display: flex; align-items: center; justify-content: center;
+        padding: 20px;
+        animation: fadeIn .25s ease;
+    }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+    .popup-box {
+        background: #fff; color: #1A1A1A;
+        border-radius: 20px; padding: 40px 36px;
+        max-width: 400px; width: 100%; text-align: center;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+        animation: slideUp .3s ease;
+    }
+    @keyframes slideUp { from { transform:translateY(24px); opacity:0 } to { transform:translateY(0); opacity:1 } }
+    .popup-icon  { font-size: 2.8rem; margin-bottom: 12px; }
+    .popup-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.5rem; margin: 0 0 14px; color: #EA4335; letter-spacing: 0.5px; }
+    .popup-body  { font-family: 'Noto Sans Thai', sans-serif; font-size: 0.95rem; line-height: 2; color: #333; margin: 0 0 24px; font-weight: 400; }
+    .popup-body strong { color: #EA4335; font-weight: 700; }
+    .popup-close {
+        background: #EA4335; color: #fff; border: none;
+        border-radius: 30px; padding: 12px 40px;
+        font-size: 0.9rem; font-weight: 700; cursor: pointer;
+        font-family: 'Noto Sans Thai', sans-serif;
+        letter-spacing: 0.5px; transition: opacity .2s;
+    }
+    .popup-close:hover { opacity: 0.85; }
+    </style>
+</body>
+</html>
