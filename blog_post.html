@@ -3,189 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLOG UPDATE - iDEAS365</title>
+    <title>Blog - iDEAS365</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --text-dark:   #1A1A1A;
-            --blog-blue:   #4285F4;
-            --blog-yellow: #F5B800;
-            --blog-green:  #34A853;
-            --blog-red:    #EA4335;
-        }
-        body, html {
-            margin: 0; padding: 0; width: 100%; min-height: 100vh;
-            font-family: 'Noto Sans Thai', sans-serif; background-color: #ffffff; color: var(--text-dark);
-        }
+        :root { --text-dark: #1A1A1A; --accent: #4285F4; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background: #fff; color: var(--text-dark); }
         .nav-header {
-            position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px;
-            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;
+            position: fixed; top: 0; left: 0; width: 100%; padding: 20px 40px; box-sizing: border-box;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+            border-bottom: 1px solid #eee; z-index: 100;
         }
-        .logo-container { text-decoration: none; display: flex; align-items: center; }
-        .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-        .main-content {
-            display: flex; flex-direction: column; align-items: center;
-            padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto;
+        .logo-img { height: 32px; }
+        .nav-btns { display: flex; gap: 10px; }
+        .back-btn, .map-btn {
+            background: var(--text-dark); color: #fff; text-decoration: none;
+            padding: 7px 18px; border-radius: 25px; font-weight: 700; font-size: 13px;
         }
-        .page-title {
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem);
-            text-align: center; line-height: 0.9; margin: 0 0 15px 0;
-            text-transform: uppercase; letter-spacing: 1px;
+        .back-btn { background: transparent; color: var(--text-dark); border: 2px solid #ddd; }
+        .back-btn:hover { border-color: var(--text-dark); }
+        .container { max-width: 760px; margin: 0 auto; padding: 100px 20px 80px; }
+        .post-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+        .post-cat {
+            padding: 4px 14px; border-radius: 20px; font-size: 12px;
+            font-weight: 700; text-transform: uppercase; background: var(--accent); color: #fff;
         }
-        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px 0; text-align: center; }
-        .status-msg { text-align: center; font-size: 1rem; color: #888; padding: 40px; width: 100%; }
-        .blog-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px; width: 100%;
-        }
-        .blog-card {
-            background-color: #ffffff; border: 3px solid; border-radius: 16px; padding: 30px;
-            text-align: left; display: flex; flex-direction: column;
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-            text-decoration: none; color: var(--text-dark);
-        }
-        .blog-card[data-color="blue"]   { border-color: var(--blog-blue);   box-shadow: 6px 6px 0px var(--blog-blue); }
-        .blog-card[data-color="yellow"] { border-color: var(--blog-yellow); box-shadow: 6px 6px 0px var(--blog-yellow); }
-        .blog-card[data-color="dark"]   { border-color: var(--text-dark);   box-shadow: 6px 6px 0px var(--text-dark); }
-        .blog-card[data-color="green"]  { border-color: var(--blog-green);  box-shadow: 6px 6px 0px var(--blog-green); }
-        .blog-card[data-color="red"]    { border-color: var(--blog-red);    box-shadow: 6px 6px 0px var(--blog-red); }
-        .blog-card:hover { transform: translate(-4px, -4px); }
-        .blog-card[data-color="blue"]:hover   { box-shadow: 10px 10px 0px var(--blog-blue); }
-        .blog-card[data-color="yellow"]:hover { box-shadow: 10px 10px 0px var(--blog-yellow); }
-        .blog-card[data-color="dark"]:hover   { box-shadow: 10px 10px 0px var(--text-dark); }
-        .blog-card[data-color="green"]:hover  { box-shadow: 10px 10px 0px var(--blog-green); }
-        .blog-card[data-color="red"]:hover    { box-shadow: 10px 10px 0px var(--blog-red); }
-        .tag {
-            align-self: flex-start; padding: 6px 16px; border-radius: 20px; font-size: 12px;
-            font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff;
-        }
-        .blog-card[data-color="blue"]   .tag { background: var(--blog-blue); }
-        .blog-card[data-color="yellow"] .tag { background: var(--blog-yellow); color: var(--text-dark); }
-        .blog-card[data-color="dark"]   .tag { background: var(--text-dark); }
-        .blog-card[data-color="green"]  .tag { background: var(--blog-green); }
-        .blog-card[data-color="red"]    .tag { background: var(--blog-red); }
-        .blog-card h2 {
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.8rem; margin: 0 0 10px 0;
-            letter-spacing: 1px; line-height: 1.2; text-transform: uppercase;
-        }
-        .blog-card p { font-weight: 300; font-size: 0.92rem; line-height: 1.6; margin: 0 0 12px 0; color: #444; flex-grow: 1; }
-        .blog-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; }
-        /* ── RESPONSIVE ── */
-        @media (max-width: 1024px) {
-            .main-content { padding: 100px 24px 60px; }
-            /* keep auto-fill grid on tablet */
-        }
-        @media (max-width: 640px) {
-            .main-content { padding: 90px 16px 48px; }
-            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
-            .nav-header { padding: 14px 16px; }
-            .logo-img { height: 36px; }
-            /* collapse all grids to 1 column */
-            .blog-grid { grid-template-columns: 1fr !important; }
-            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
-            .footer-brand { font-size: 1.3rem; }
-        }
-
-        /* ─── FOOTER ─── */
-        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
-        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
-        .footer-brand span.dot-r { color: #EA4335; }
-        .footer-brand span.dot-g { color: #34A853; }
-        .footer-brand span.dot-b { color: #4285F4; }
-        .footer-brand span.dot-y { color: #F5B800; }
-        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
-        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
-        /* BACK button fixed bottom-right */
-        .back-btn-fixed { position: fixed; bottom: 28px; right: 30px; z-index: 200; display: block; text-decoration: none; transition: transform 0.2s, opacity 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
-        .back-btn-fixed img { height: 68px; width: auto; display: block; }
-        .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
+        .post-date { font-size: 0.8rem; color: #999; }
+        .post-rt   { font-size: 0.8rem; color: #999; }
+        h1.post-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(2.2rem, 6vw, 3.5rem); line-height: 1.1; margin: 0 0 30px; letter-spacing: 1px; text-transform: uppercase; }
+        .post-excerpt { font-size: 1.1rem; color: #555; font-weight: 300; line-height: 1.8; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid #eee; }
+        .post-content { font-size: 0.95rem; line-height: 1.85; color: #333; font-weight: 300; }
+        .post-content h2, .post-content h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; letter-spacing: 0.5px; margin-top: 32px; }
+        .post-content ul, .post-content ol { padding-left: 22px; }
+        .post-content li { margin-bottom: 8px; }
+        .post-content strong { font-weight: 700; color: var(--text-dark); }
+        .post-footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid #eee; }
+        .post-footer p { font-size: 0.9rem; color: #555; }
+        .cta-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+        .cta-link:hover { text-decoration: underline; }
+        .status-msg { text-align: center; font-size: 1rem; color: #888; padding: 60px 20px; }
+        @media (max-width: 768px) { .nav-header { padding: 15px 20px; } }
     </style>
 </head>
 <body>
     <header class="nav-header">
-        <a href="index.html" class="logo-container">
-            <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
-        </a>
-    </header>
-    <main class="main-content">
-        <h1 class="page-title">BLOG<br>UPDATE</h1>
-        <p class="page-subtitle">Thoughts, experiments, and frameworks.</p>
-        <div id="blog-container" class="blog-grid">
-            <p class="status-msg">กำลังโหลดบทความ…</p>
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
+        <div class="nav-btns">
+            <a href="blog.html" class="back-btn">← Blog</a>
+            <a href="index.html" class="map-btn">🗺 MAP</a>
         </div>
+    </header>
+    <main class="container">
+        <div id="post-container"><p class="status-msg">กำลังโหลดบทความ…</p></div>
     </main>
     <script>
-    // ══════════════════════════════════════════════════════════════
-    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45eAVE2JsaTvCrLXjyuw4Gpa7j3O7XRdUXF6GwYAAnTZgH0nU5AMXlrnIp07Gl3hH/exec';
-    // ══════════════════════════════════════════════════════════════
-    // Sheet tab ที่ใช้: "blog"
-    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
+    const SHEET_ID = '1R8_h1FGyIvalUj77AzBOgx-Ny4w0Xl75qHI1hidiVpE';
+    const BLOG_GID = '0';
+    const CSV_URL  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${BLOG_GID}`;
 
-    const COLOUR_MAP = {
-        'social media': 'blue', 'systems': 'green', 'system': 'green',
-        'live commerce': 'red', 'ai automation': 'dark', 'ai': 'dark',
-        'mindset': 'yellow', 'business': 'blue', 'tech': 'dark', 'marketing': 'yellow',
-    };
-    function colourFor(cat) { return COLOUR_MAP[(cat||'').toLowerCase()] || 'blue'; }
-
-    function renderPosts(posts) {
-        const container = document.getElementById('blog-container');
-        if (!posts.length) {
-            container.innerHTML = '<p class="status-msg">ยังไม่มีบทความในขณะนี้</p>';
-            return;
+    function parseCSVLine(line) {
+        const result = []; let current = '', inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const ch = line[i];
+            if (ch === '"') { inQuotes = !inQuotes; }
+            else if (ch === ',' && !inQuotes) { result.push(current.trim()); current = ''; }
+            else { current += ch; }
         }
-        container.innerHTML = posts.map(p => {
-            const title   = p.title    || '(ไม่มีชื่อ)';
-            const excerpt = p.excerpt_thai || p.excerpt_eng || p.excerpt || '';
-            const date    = p.date     || '';
-            const cat     = p.category || '';
-            const rt      = p.time     || p.readTime || '';
-            const colour  = colourFor(cat);
-            // ลิ้งค์ไปหน้าบทความ (course_url) ถ้าไม่มีให้ใช้ slug
-            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${encodeURIComponent(p.slug)}` : '#');
-            const isExt   = href.startsWith('http');
-            return `
-            <a href="${href}" class="blog-card" data-color="${colour}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
-                <div class="tag">${cat || 'Blog'}</div>
-                <h2>${title.toUpperCase()}</h2>
-                ${excerpt ? `<p>${excerpt}</p>` : ''}
-                <div class="blog-meta">${date}${rt ? ' · ' + rt : ''} &nbsp;<strong>Read Article →</strong></div>
-            </a>`;
-        }).join('');
+        result.push(current.trim());
+        return result.map(v => v.replace(/^"|"$/g, ''));
     }
 
-    async function loadBlog() {
-        const container = document.getElementById('blog-container');
-        if (!APPS_SCRIPT_URL) {
-            container.innerHTML = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL ในไฟล์ blog.html</p>';
+    function parseCSV(csvText) {
+        const lines = csvText.split('\n').filter(l => l.trim());
+        if (lines.length < 2) return [];
+        const headers = parseCSVLine(lines[0]);
+        return lines.slice(1).map(line => {
+            const vals = parseCSVLine(line);
+            const row = {};
+            headers.forEach((h, i) => row[h.trim()] = (vals[i] || '').trim());
+            return row;
+        });
+    }
+
+    function getParam(name) {
+        return new URLSearchParams(window.location.search).get(name) || '';
+    }
+
+    function renderPost(post) {
+        const container = document.getElementById('post-container');
+        const title    = post.title    || post.Title    || 'บทความ';
+        const excerpt  = post.excerpt  || post.Excerpt  || '';
+        const date     = post.date     || post.Date     || '';
+        const cat      = post.category || post.Category || '';
+        const rt       = post.readTime || post.ReadTime || '';
+        const content  = post.content  || post.Content  || '';
+
+        document.title = title + ' - iDEAS365';
+        container.innerHTML = `
+            <div class="post-meta">
+                ${cat ? `<span class="post-cat">${cat}</span>` : ''}
+                ${date ? `<span class="post-date">${date}</span>` : ''}
+                ${rt   ? `<span class="post-rt">${rt}</span>`   : ''}
+            </div>
+            <h1 class="post-title">${title}</h1>
+            ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
+            ${content ? `<div class="post-content">${content}</div>` : ''}
+            <div class="post-footer">
+                <p>ชอบบทความนี้ไหม? <a class="cta-link" href="contact_port.html">คุยกันเรื่องธุรกิจ →</a></p>
+            </div>
+        `;
+    }
+
+    async function loadPost() {
+        const container = document.getElementById('post-container');
+        const postId = getParam('id');
+        if (!postId) {
+            container.innerHTML = '<p class="status-msg">ไม่พบบทความ <a href="blog.html">← กลับไปหน้า Blog</a></p>';
             return;
         }
         try {
-            const res  = await fetch(APPS_SCRIPT_URL + '?sheet=blog');
-            const json = await res.json();
-            if (json.success) {
-                renderPosts(json.data);
-            } else {
-                container.innerHTML = `<p class="status-msg">Error: ${json.error}</p>`;
+            const res = await fetch(CSV_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const posts = parseCSV(await res.text());
+            const post = posts.find(p => (p.id || p.ID || '') === postId);
+            if (!post) {
+                container.innerHTML = '<p class="status-msg">ไม่พบบทความนี้ <a href="blog.html">← กลับไปหน้า Blog</a></p>';
+                return;
             }
+            renderPost(post);
         } catch (err) {
-            container.innerHTML = '<p class="status-msg">ไม่สามารถโหลดบทความได้<br><small>ตรวจสอบว่า Apps Script deploy แล้วและ Sheet ตั้งเป็น public</small></p>';
+            container.innerHTML = '<p class="status-msg">โหลดไม่ได้ <a href="blog.html">← กลับไป Blog</a></p>';
             console.error(err);
         }
     }
-    loadBlog();
+    loadPost();
     </script>
-    <footer class="site-footer">
-        <p class="footer-brand">
-            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
-            &nbsp;:&nbsp;iDEAS365
-        </p>
-        <p class="footer-tagline">Smart Lazy Style</p>
-        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
-    </footer>
-    <a href="index.html" class="back-btn-fixed">
-        <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="BACK">
-    </a>
 </body>
 </html>
