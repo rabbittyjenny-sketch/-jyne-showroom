@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORKS TOWN - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --yellow:   #F5B800;
+            --dark:     #1A1A1A;
+            --card-bg:  #222222;
+            --inner-bg: #2c2c2c;
+            --border:   rgba(255,255,255,0.1);
+            --muted:    rgba(255,255,255,0.5);
+        }
+
+        body, html {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans Thai', sans-serif;
+            background: var(--yellow);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════ NAV ═══════════════ */
+        .nav-header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            padding: 16px 36px;
+            z-index: 200;
+        }
+        .logo-img { height: 40px; display: block; }
+        .back-btn img { height: 44px; width: auto; display: block; }
+
+        /* ═══════════════ HERO ═══════════════ */
+        .hero {
+            padding: 130px 24px 56px;
+            text-align: center;
+        }
+        .page-title {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(5rem, 13vw, 9rem);
+            line-height: 0.87;
+            text-transform: uppercase;
+            color: var(--dark);
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--dark);
+            opacity: 0.65;
+            font-weight: 400;
+        }
+
+        /* ═══════════════ MAIN CONTAINER ═══════════════ */
+        .main-content {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        /* ═══════════════ SECTION CARD ═══════════════ */
+        .section-card {
+            background: var(--dark);
+            border-radius: 22px;
+            padding: 42px 42px 48px;
+            width: 100%;
+        }
+        .section-head {
+            margin-bottom: 28px;
+        }
+        .section-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.75rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding-bottom: 12px;
+            border-bottom: 1.5px solid rgba(255,255,255,0.1);
+            margin-bottom: 6px;
+        }
+        .section-sub {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 300;
+            padding-top: 4px;
+        }
+
+        /* ═══════════════ BADGE ═══════════════ */
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        .badge-ai       { background: rgba(251,188,5,0.18);   color: #FBBC05; }
+        .badge-live     { background: rgba(234,67,53,0.18);   color: #ff6b6b; }
+        .badge-biz      { background: rgba(52,168,83,0.18);   color: #5bdb8a; }
+        .badge-sys      { background: rgba(100,180,255,0.15); color: #7ec8ff; }
+        .badge-soon     { background: rgba(255,255,255,0.08); color: #888; }
+        .badge-creative { background: rgba(180,130,255,0.18); color: #c9a0ff; }
+        .badge-sold     { background: rgba(255,80,80,0.15);   color: #ff7070; }
+
+        /* ═══════════════════════════════════════════════════
+           SECTION 1 — AI CARDS  3-col · portrait · no shadow
+        ═══════════════════════════════════════════════════ */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .ai-card {
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover transition */
+        }
+        .ai-card.coming  { opacity: 0.45; pointer-events: none; }
+        .ai-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Portrait cover 3:4 */
+        .ai-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            position: relative;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
+        }
+        .ai-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .ai-cover-placeholder {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(160deg, #303030 0%, #262626 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            opacity: 0.18;
+            flex-shrink: 0;
+        }
+        /* Logo chip — overlaid top-left on cover */
+        .ai-logo-chip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.55);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-logo-chip img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        /* Badge chip — overlaid top-right */
+        .ai-badge-chip {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Card body */
+        .ai-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ai-title-en {
+            font-weight: 700;
+            font-size: 0.97rem;
+            line-height: 1.25;
+            color: #fff;
+        }
+        .ai-title-th {
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .ai-desc {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.58);
+            font-weight: 300;
+            margin-top: 8px;
+            flex: 1;
+        }
+
+        /* CTA button — no hover */
+        .ai-footer {
+            padding: 10px 18px 18px;
+        }
+        .ai-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 9px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.28);
+            font-size: 0.67rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           SECTIONS 2 & 3 — PROJECT CARDS  3-col · no shadow
+        ═══════════════════════════════════════════════════ */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .proj-card {
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover */
+        }
+        .proj-card.coming  { opacity: 0.45; pointer-events: none; }
+        .proj-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Optional 16:9 cover */
+        .proj-cover {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
+        }
+        .proj-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .proj-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .proj-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .proj-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            border-radius: 7px;
+        }
+        .proj-name-en {
+            font-weight: 700;
+            font-size: 0.93rem;
+            line-height: 1.28;
+        }
+        .proj-name-th {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .proj-desc {
+            font-size: 0.77rem;
+            line-height: 1.58;
+            color: rgba(255,255,255,0.57);
+            font-weight: 300;
+            margin-top: 6px;
+            flex: 1;
+        }
+        .proj-footer {
+            padding: 10px 18px 18px;
+        }
+        .proj-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        /* ═══════════════ VIDEO GRID ═══════════════ */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .video-wrap {
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            position: relative;
+            text-decoration: none;
+        }
+        .video-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .yt-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .yt-play svg { width: 56px; height: 40px; }
+
+        /* ═══════════════ CASE STUDY ═══════════════ */
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .col-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.65rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .col-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .hl { list-style: none; padding: 0; }
+        .hl li {
+            font-size: 0.84rem;
+            line-height: 1.65;
+            padding: 8px 0 8px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            color: rgba(255,255,255,0.76);
+            font-weight: 300;
+        }
+        .hl li:last-child { border-bottom: none; }
+        .hl li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--yellow);
+            font-weight: 700;
+        }
+        .cs-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .cs-pill {
+            background: var(--yellow);
+            color: var(--dark);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .proof-grid img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            background: #2a2a2a;
+            min-height: 80px;
+        }
+        .proof-caption {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        /* ═══════════════ LOADING ═══════════════ */
+        .loading-msg {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.84rem;
+            text-align: center;
+            padding: 32px 0;
+            grid-column: 1 / -1;
+        }
+
+        /* ═══════════════ FOOTER ═══════════════ */
+        .site-footer {
+            background: var(--dark);
+            color: #fff;
+            text-align: center;
+            padding: 48px 20px 24px;
+            margin-top: 10px;
+        }
+        .footer-brand {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .dot-r { color: #EA4335; }
+        .dot-g { color: #34A853; }
+        .dot-b { color: #4285F4; }
+        .dot-y { color: #FBBC05; }
+        .footer-tagline {
+            font-size: 0.73rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 26px;
+        }
+        .footer-copy {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.25);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 18px;
+        }
+
+        /* ═══════════════ RESPONSIVE ═══════════════ */
+        @media (max-width: 1024px) {
+            .ai-grid  { grid-template-columns: repeat(2, 1fr); }
+            .proj-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .nav-header { padding: 12px 18px; }
+            .logo-img   { height: 32px; }
+            .back-btn img { height: 36px; }
+            .hero { padding: 95px 20px 36px; }
+            .page-title { font-size: clamp(3.5rem, 15vw, 5.5rem); }
+            .main-content { padding: 0 14px 56px; gap: 18px; }
+            .section-card { padding: 26px 20px 32px; border-radius: 18px; }
+            .section-title { font-size: 1.35rem; }
+            .ai-grid,
+            .proj-grid,
+            .video-grid,
+            .case-grid,
+            .proof-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="nav-header">
+    <a href="index.html">
+        <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
+    </a>
+    <span></span>
+    <a href="index.html" class="back-btn">
+        <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map">
+    </a>
+</header>
+
+<div class="hero">
+    <h1 class="page-title">WORKS<br>TOWN</h1>
+    <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
+</div>
+
+<main class="main-content">
+
+    <!-- ══════════════════════════════════════
+         SECTION 1 · AI TOOLS & ASTROLOGY
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">AI TOOLS &amp; ASTROLOGY</div>
+            <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
+        </div>
+        <div class="ai-grid" id="grid-astrology">
+            <p class="loading-msg">กำลังโหลด…</p>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 2 · COMMERCE & BUSINESS SYSTEMS
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">COMMERCE &amp; BUSINESS SYSTEMS</div>
+            <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
+        </div>
+        <div class="ai-grid" id="grid-commerce">
+            <p class="loading-msg">กำลังโหลด…</p>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION 3 · CREATIVE TOOLS & ELEMENTS
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">CREATIVE TOOLS &amp; ELEMENTS</div>
+            <div class="section-sub">เครื่องมือสร้างสรรค์ คอนเทนต์ และ Design Elements</div>
+        </div>
+        <div class="ai-grid" id="grid-creative">
+            <p class="loading-msg">กำลังโหลด…</p>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         PORTFOLIO MEDIA
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">PORTFOLIO MEDIA · คลิปและวีดีโอผลงาน</div>
+            <div class="section-sub">ตัวอย่างการไลฟ์ขาย — TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</div>
+        </div>
+        <div class="video-grid">
+            <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap" title="Live Commerce 1">
+                <img src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" alt="Live Commerce 1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap" title="Live Commerce 2">
+                <img src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" alt="Live Commerce 2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap" title="Live Commerce 3">
+                <img src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" alt="Live Commerce 3" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap" title="Live Commerce 4">
+                <img src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" alt="Live Commerce 4" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap" title="Live Commerce 5">
+                <img src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" alt="Live Commerce 5" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap" title="Live Commerce 6">
+                <img src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" alt="Live Commerce 6" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap" title="Live Commerce 7">
+                <img src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" alt="Live Commerce 7" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap" title="Live Commerce 8">
+                <img src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" alt="Live Commerce 8" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap" title="Live Commerce 9">
+                <img src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" alt="Live Commerce 9" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap" title="Live Commerce 10">
+                <img src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" alt="Live Commerce 10" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap" title="Live Commerce 11">
+                <img src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" alt="Live Commerce 11" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         AI VOICE GENERATOR
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="section-head">
+            <div class="section-title">AI VOICE GENERATOR · AI สร้างเสียงพากย์</div>
+            <div class="section-sub">ตัวอย่างผลงาน AI Voice &amp; Animation Avatar Video</div>
+        </div>
+        <div class="video-grid">
+            <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap" title="AI Voice Demo 1">
+                <img src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" alt="AI Voice Demo 1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap" title="AI Voice Demo 2">
+                <img src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" alt="AI Voice Demo 2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap" title="AI Voice Demo 3">
+                <img src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" alt="AI Voice Demo 3" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.1">
+                <img src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" alt="AI Voice Tutorial Pt.1" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+            <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap" title="AI Voice Tutorial Pt.2">
+                <img src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" alt="AI Voice Tutorial Pt.2" loading="lazy">
+                <div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00"/><path d="M45 24 27 14v20" fill="#fff"/></svg></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         JENNY JYNE · CASE STUDY
+    ══════════════════════════════════════ -->
+    <div class="section-card">
+        <div class="case-grid">
+            <div>
+                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
+                <p class="col-desc"><strong style="color:#fff">Challenge:</strong> สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น โดยไม่มีประสบการณ์หรือระบบมาก่อน</p>
+                <ul class="hl">
+                    <li>Product curation strategy — เลือกสินค้าที่ขายได้จริงบนหน้าจอ</li>
+                    <li>Script framework development — กำหนดว่าจะพูดอะไร เมื่อไหร่</li>
+                    <li>Technical setup &amp; optimization — แสง มุมกล้อง และแพลตฟอร์ม</li>
+                    <li>Host training &amp; operations — รูปแบบไลฟ์ 2 ชั่วโมงที่ทีมทำเองได้</li>
+                </ul>
+                <div class="cs-pills">
+                    <span class="cs-pill">✦ 6-figure ใน 2 ชั่วโมง</span>
+                    <span class="cs-pill">✦ รูปแบบที่ทำซ้ำได้</span>
+                    <span class="cs-pill">✦ ทีมรันเองโดยไม่ต้องรอ</span>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
+                <div class="proof-grid">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof1.jpg" alt="59,936 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof2.jpg" alt="114,762 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof3.jpg" alt="109,857 GMV" onerror="this.style.minHeight='80px'">
+                    <img src="https://ik.imagekit.io/ideas365logo/proof4.jpg" alt="83,224 GMV" onerror="this.style.minHeight='80px'">
+                </div>
+                <p class="proof-caption">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    <p class="footer-brand">
+        <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+        &nbsp;:&nbsp;iDEAS365
+    </p>
+    <p class="footer-tagline">Smart Lazy Style</p>
+    <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+</footer>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45eAVE2JsaTvCrLXjyuw4Gpa7j3O7XRdUXF6GwYAAnTZgH0nU5AMXlrnIp07Gl3hH/exec';
+
+const BADGE_MAP = {
+    ai:       { cls: 'badge-ai',       label: 'AI Tool' },
+    business: { cls: 'badge-biz',      label: 'Business' },
+    live:     { cls: 'badge-live',     label: 'Live Commerce' },
+    system:   { cls: 'badge-sys',      label: 'System Dev' },
+    creative: { cls: 'badge-creative', label: 'Creative' },
+};
+
+/* ── Section 1: portrait AI card ── */
+function buildAICard(p) {
+    const status   = (p.status || '').toLowerCase().trim();
+    const isSold   = status === 'sold-out' || status === 'sold_out';
+    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+    const cat      = (p.category || '').toLowerCase().trim();
+    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+    const hasUrl   = p.link && !isSold && !isSoon;
+    const tag      = hasUrl ? 'a' : 'div';
+    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+    const cls      = `ai-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
+    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage || p.cover || '';
+    const logo     = p.logo || '';
+
+    const coverHTML = cover
+        ? `<div class="ai-cover">
+               <img src="${cover}" alt="" loading="lazy">
+               ${logo ? `<div class="ai-logo-chip"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`
+        : `<div class="ai-cover-placeholder">◆
+               ${logo ? `<div class="ai-logo-chip" style="position:absolute;top:10px;left:10px;"><img src="${logo}" alt="" loading="lazy"></div>` : ''}
+               <div class="ai-badge-chip" style="position:absolute;top:10px;right:10px;"><span class="badge ${badgeCls}">${badgeLbl}</span></div>
+           </div>`;
+
+    const footerHTML = hasUrl
+        ? `<div class="ai-footer"><span class="ai-cta">VIEW PROJECT →</span></div>`
+        : '';
+
+    return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
+        <div class="ai-body">
+            <div class="ai-title-en">${p.title || ''}</div>
+            ${p.titleTh ? `<div class="ai-title-th">${p.titleTh}</div>` : ''}
+            <div class="ai-desc">${desc}</div>
+        </div>
+        ${footerHTML}
+    </${tag}>`;
+}
+
+/* ── Sections 2 & 3: project card ── */
+function buildProjCard(p) {
+    const status   = (p.status || '').toLowerCase().trim();
+    const isSold   = status === 'sold-out' || status === 'sold_out';
+    const isSoon   = status === 'coming-soon' || status === 'coming_soon';
+    const cat      = (p.category || '').toLowerCase().trim();
+    const badge    = BADGE_MAP[cat] || BADGE_MAP.business;
+    const hasUrl   = p.link && !isSold && !isSoon;
+    const tag      = hasUrl ? 'a' : 'div';
+    const href     = hasUrl ? `href="${p.link}" target="_blank"` : '';
+    const cls      = `proj-card${isSold ? ' soldout' : isSoon ? ' coming' : ''}`;
+    const badgeLbl = isSoon ? 'Coming Soon' : isSold ? 'Sold Out' : badge.label;
+    const badgeCls = isSoon ? 'badge-soon'  : isSold ? 'badge-sold' : badge.cls;
+    const desc     = p.descriptionTh || p.description || '';
+    const cover    = p.previewImage  || p.cover || '';
+    const logoHTML = p.logo ? `<img class="proj-logo" src="${p.logo}" alt="" loading="lazy">` : '';
+    const coverHTML = cover
+        ? `<div class="proj-cover"><img src="${cover}" alt="" loading="lazy"></div>` : '';
+    const footerHTML = hasUrl
+        ? `<div class="proj-footer"><span class="proj-cta">VIEW PROJECT →</span></div>` : '';
+
+    return `<${tag} class="${cls}" ${href}>
+        ${coverHTML}
+        <div class="proj-body">
+            <div class="proj-logo-row">
+                ${logoHTML}
+                <span class="badge ${badgeCls}">${badgeLbl}</span>
+            </div>
+            <div class="proj-name-en">${p.title || ''}</div>
+            ${p.titleTh ? `<div class="proj-name-th">${p.titleTh}</div>` : ''}
+            <div class="proj-desc">${desc}</div>
+        </div>
+        ${footerHTML}
+    </${tag}>`;
+}
+
+async function loadWorks() {
+    if (!APPS_SCRIPT_URL) return;
+    const [r1, r2, r3] = await Promise.allSettled([
+        fetch(APPS_SCRIPT_URL + '?sheet=work_ai').then(r => r.json()),
+        fetch(APPS_SCRIPT_URL + '?sheet=work_commerce').then(r => r.json()),
+        fetch(APPS_SCRIPT_URL + '?sheet=work_creative').then(r => r.json()),
+    ]);
+
+    /* ── Unified render for all 3 sections ── */
+    function renderSection(result, elementId) {
+        const el = document.getElementById(elementId);
+        if (result.status === 'fulfilled' && result.value?.success && result.value.data?.length) {
+            el.innerHTML = result.value.data.map(buildAICard).join('');
+        } else {
+            el.innerHTML = '<p class="loading-msg">ยังไม่มีรายการในขณะนี้</p>';
+            console.warn('[' + elementId + ']', result.status === 'fulfilled' ? result.value : result.reason);
+        }
+    }
+
+    renderSection(r1, 'grid-astrology');
+    renderSection(r2, 'grid-commerce');
+    renderSection(r3, 'grid-creative');
+}
+
+loadWorks();
+</script>
+</body>
+</html>
