@@ -129,11 +129,12 @@
 
         /* QR CODE */
         .qr-block { text-align: center; margin: 14px 0 10px; }
-        .qr-label-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
-        .line-logo-img { height: 26px; width: auto; object-fit: contain; }
-        .qr-label-text { font-family: 'Anton', sans-serif; font-size: 1rem; letter-spacing: 1px; color: #1A1A1A; text-transform: uppercase; }
-        .qr-hint  { font-size: 0.72rem; color: rgba(0,0,0,0.55); margin: 8px 0 0; letter-spacing: 0.3px; }
-        .qr-wrapper { display: flex; justify-content: center; }
+        .qr-label-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
+        .line-logo-img { height: 28px; width: auto; object-fit: contain; }
+        .qr-label-text { font-family: 'Noto Sans Thai', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px; color: #1A1A1A; }
+
+        .qr-sub { font-family: 'Noto Sans Thai', sans-serif; font-size: 0.82rem; font-weight: 500; color: #1A1A1A; margin: 0; padding: 4px 0 0; text-align: center; }
+        .qr-wrapper { display: flex; justify-content: center; margin-bottom: 6px; }
         .qr-wrapper img {
             width: 190px; height: 190px; object-fit: contain;
             border-radius: 12px; background: #fff; padding: 8px;
@@ -266,24 +267,8 @@
                     <li><strong>No Pressure</strong> — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน</li>
                 </ul>
 
-                <!-- QR Code LINE -->
-                <div class="qr-block">
-                    <div class="qr-label-row">
-                        <img src="https://ik.imagekit.io/ideas365logo/line-logo.png" alt="LINE" class="line-logo-img">
-                        <span class="qr-label-text">Scan เพิ่มเพื่อน</span>
-                    </div>
-                    <div class="qr-wrapper">
-                        <img
-                            src="https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226"
-                            alt="LINE QR Code"
-                            onerror="this.alt='⚠️ QR โหลดไม่ขึ้น — ลอง refresh'"
-                        >
-                    </div>
-                    <p class="qr-hint">รับข่าวสารก่อนใคร</p>
-                </div>
-
-                <!-- Social links -->
-                <div class="social-list">
+                <!-- Social links — เว้นระยะจาก promise list -->
+                <div class="social-list" style="margin-top:20px;">
                     <a class="contact-item" href="https://www.tiktok.com/@jennyjyne" target="_blank">
                         <img src="https://ik.imagekit.io/ideas365logo/tik-tok.png" alt="TikTok" class="social-icon-img">
                         <div>
@@ -312,6 +297,22 @@
                             <div class="contact-value">@ideas365</div>
                         </div>
                     </a>
+                </div>
+
+                <!-- QR Code LINE — ล่างสุด -->
+                <div class="qr-block">
+                    <div class="qr-label-row">
+                        <img src="https://ik.imagekit.io/ideas365logo/line-logo.png" alt="LINE" class="line-logo-img">
+                        <span class="qr-label-text">Scan QR Code</span>
+                    </div>
+                    <div class="qr-wrapper">
+                        <img
+                            src="https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226"
+                            alt="LINE QR Code"
+                            onerror="this.alt='⚠️ QR โหลดไม่ขึ้น — ลอง refresh'"
+                        >
+                    </div>
+                    <p class="qr-sub">เพิ่มเพื่อน / สอบถามเพิ่มเติม / รับข่าวสารก่อนใคร</p>
                 </div>
             </div>
         </div>
