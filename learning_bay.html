@@ -118,6 +118,22 @@
         .back-btn-fixed { position: fixed; bottom: 28px; right: 30px; z-index: 200; display: block; text-decoration: none; transition: transform 0.2s, opacity 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
         .back-btn-fixed img { height: 68px; width: auto; display: block; }
         .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
+    
+        .hover {
+        color: #0000;
+        background: 
+        linear-gradient(90deg, #4285F4 50%, #ffffff 0) 
+        var(--_p, 100%) / 200% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        transition: .4s;
+        cursor: pointer;
+        }
+        .hover:hover {
+        --_p: 0%;
+        }
+
+    
     </style>
 </head>
 <body>
@@ -125,7 +141,7 @@
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
     </header>
     <main class="main-content">
-        <h1 class="page-title">LEARNING<br>BAY</h1>
+        <h1 class="page-title hover">LEARNING<br>BAY</h1>
         <p class="page-subtitle">Playbooks, Free Resources &amp; Guides</p>
 
         <!-- FREE RESOURCES (ดึงจาก Google Sheets ผ่าน Apps Script) -->
