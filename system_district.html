@@ -13,6 +13,7 @@
             --text-dark: #1A1A1A;
         }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+        * { font-family: inherit; }
 
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: flex-start; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
@@ -45,7 +46,7 @@
 
         /* ─── FOOTER ─── */
         .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
-        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
         .footer-brand span.dot-r { color: #F5B800; }
         .footer-brand span.dot-g { color: #F5B800; }
         .footer-brand span.dot-b { color: #F5B800; }
@@ -105,6 +106,22 @@
         .back-btn-fixed img { height: 68px; width: auto; display: block; }
         .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
         @media (max-width: 640px) { .back-btn-fixed img { height: 56px; } .back-btn-fixed { bottom: 20px; right: 16px; } }
+    
+    /* --- Text Hover Effect --- */
+.hover {
+  color: #0000;
+  background: 
+    linear-gradient(90deg, #1A1A1A 50%, #ffffff 0) 
+    var(--_p, 100%) / 200% no-repeat;
+  -webkit-background-clip: text;
+          background-clip: text;
+  transition: .4s;
+  cursor: pointer; /* ทำให้รู้ว่าคลิกได้ */
+}
+.hover:hover {
+  --_p: 0%;
+}
+  
     </style>
 </head>
 <body>
@@ -114,7 +131,7 @@
     </header>
 
     <main class="main-content">
-        <h1 class="page-title">SCHOOL<br>SERVICE</h1>
+        <h1 class="page-title hover">SCHOOL<br>SERVICE</h1>
         <p class="page-subtitle">From the Practitioner be the Educator</p>
 
         <!-- ─── SCHOOL SECTION (blog-card style) ─── -->
