@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREVIOUS WORK EXPERIENCE - iDEAS365</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #1565C0;
+            --accent: #1E88E5;
+            --text-dark: #1A1A1A;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans Thai', sans-serif;
+            background-color: var(--bg-color);
+            color: #ffffff;
+        }
+
+        * {
+            font-family: inherit;
+        }
+
+        .nav-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo-img {
+            height: 45px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 120px 20px 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        .page-title {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: clamp(4rem, 10vw, 7.5rem);
+            text-align: center;
+            line-height: 0.9;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: titleIn 0.9s ease forwards;
+        }
+
+        .page-subtitle {
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin: 0 0 20px;
+            text-align: center;
+            opacity: 0;
+            animation: titleIn 0.9s ease 0.35s forwards;
+        }
+
+        @keyframes titleIn {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-card {
+            background: #ffffff;
+            border-radius: 20px;
+            width: 100%;
+            padding: 50px;
+            color: var(--text-dark);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+        }
+
+        .content-card.single {
+            grid-template-columns: 1fr;
+        }
+
+        .content-card.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-card.in-view:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 28px 55px rgba(0, 0, 0, 0.26);
+        }
+
+        .col-title {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin: 0 0 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .col-desc {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-weight: 300;
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        .col-desc strong {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .tl-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tl-item:last-child {
+            border-bottom: none;
+        }
+
+        .tl-year {
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .tl-role {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 1px;
+        }
+
+        .tl-place {
+            font-size: 0.76rem;
+            color: #888;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tl-desc {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: #555;
+            font-weight: 300;
+        }
+
+        .skg {
+            margin-bottom: 14px;
+        }
+
+        .skt {
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 7px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            padding: 3px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #444;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .hl {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hl li {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            padding: 8px 0 8px 16px;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            color: #333;
+            font-weight: 300;
+        }
+
+        .hl li:last-child {
+            border-bottom: none;
+        }
+
+        .hl li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .cs-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .cs-pill {
+            background: #1565C0;
+            color: #ffffff;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .proof-grid-result {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .proof-grid-result img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .proof-grid-work {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .proof-grid-work img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .photo-slot {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #e3f2fd;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .photo-slot:hover {
+            transform: scale(1.03);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-slot-tall {
+            aspect-ratio: 2/3;
+        }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .skills-photo-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .video-wrap {
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #000;
+            position: relative;
+            display: block;
+            text-decoration: none;
+        }
+
+        .video-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.25s;
+        }
+
+        .video-wrap:hover img {
+            opacity: 0.82;
+        }
+
+        .yt-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .yt-play svg {
+            width: 60px;
+            height: 42px;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+        }
+
+        .big-btn {
+            display: inline-block;
+            background: #1565C0;
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .big-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(30, 136, 229, 0.15) 0%, transparent 68%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            left: -999px;
+            top: -999px;
+            transition: left 0.07s, top 0.07s;
+        }
+
+        .site-footer {
+            background: #0D47A1;
+            color: #fff;
+            text-align: center;
+            padding: 52px 20px 28px;
+            margin-top: 60px;
+            width: 100%;
+        }
+
+        .footer-brand {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            margin: 0 0 4px;
+        }
+
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin: 20px 0 0;
+        }
+
+        .back-fixed {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: block;
+        }
+
+        .back-fixed img {
+            height: 68px;
+            display: block;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+            transition: transform 0.2s;
+        }
+
+        .back-fixed:hover img {
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 640px) {
+            .main-content {
+                padding: 90px 16px 48px;
+            }
+
+            .page-title {
+                font-size: clamp(3rem, 14vw, 5rem);
+            }
+
+            .content-card {
+                padding: 24px 20px;
+                border-radius: 16px;
+                gap: 24px;
+                grid-template-columns: 1fr !important;
+            }
+
+            .nav-header {
+                padding: 14px 16px;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .proof-grid-result {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .proof-grid-work {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cursor-glow"></div>
+    <header class="nav-header">
+        <a href="index.html"><img
+                src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
+                class="logo-img"></a>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">WORK<br>MARINA</h1>
+        <p class="page-subtitle">Experience · Results · Proof of Work</p>
+
+        <!-- 1. EXPERIENCE + SKILLS -->
+        <div class="content-card" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div>
+                <h2 class="col-title">EXPERIENCE</h2>
+                <div class="tl-item">
+                    <div class="tl-year">2022 — ปัจจุบัน</div>
+                    <div class="tl-role">Freelance Live Stream Host &amp; Brand Presenter</div>
+                    <div class="tl-place">TikTok LIVE · Facebook Live · Shopee Live</div>
+                    <div class="tl-desc">- Multi-Platform Management</div>
+                    <div class="tl-desc">- Client-Facing Experience</div>
+                    <div class="tl-desc">- Content Strategy Background</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Assistant Restaurant Manager</div>
+                    <div class="tl-place">MUU Bangkok Hotel</div>
+                    <div class="tl-desc">High-end service standards</div>
+                    <div class="tl-desc">Complex operations management</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Director of Operations</div>
+                    <div class="tl-place">Chef Andy Yang — Michelin Star</div>
+                    <div class="tl-desc">- Operations Management Background</div>
+                    <div class="tl-desc">- Content Creation &amp; Marketing Background</div>
+                    <div class="tl-desc">- Coordination Experience</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Executive Secretary</div>
+                    <div class="tl-place">Chef Chumpol Jangprai (R-HAAN) — Michelin Star</div>
+                    <div class="tl-desc">- Michelin Star Standards &amp; VIP Client Handling Expert</div>
+                    <div class="tl-desc">- Operations Management Background</div>
+                    <div class="tl-desc">- Luxury Standards &amp; Fine Dining Experience</div>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">CORE SKILLS</h2>
+                <div class="skg">
+                    <div class="skt">Live Commerce &amp; Content</div>
+                    <div class="tags"><span class="tag">Live Stream Hosting</span><span class="tag">Sales
+                            Scripting</span><span class="tag">Audience Engagement</span><span class="tag">Social Media
+                            Algorithm</span><span class="tag">Brand Presenting</span></div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Systems &amp; Operations</div>
+                    <div class="tags"><span class="tag">Operational Framework Design</span><span class="tag">SOP
+                            Development</span><span class="tag">Team Training</span><span class="tag">KPI
+                            Setting</span><span class="tag">Transfer Ownership</span></div>
+                </div>
+                <div class="skg">
+                    <div class="skt">AI &amp; Technology</div>
+                    <div class="tags"><span class="tag">AI Agent Design</span><span class="tag">Prompt
+                            Engineering</span><span class="tag">AI Voice Generation</span><span
+                            class="tag">ChatGPT</span><span class="tag">Canva</span><span class="tag">CapCut</span><span
+                            class="tag">Make.com</span></div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Business Strategy</div>
+                    <div class="tags"><span class="tag">Brand Positioning</span><span class="tag">Launch
+                            Framework</span><span class="tag">Financial Modeling</span><span class="tag">Team
+                            Structure</span></div>
+                </div>
+            </div>
+            <div class="skills-photo-col">
+                <div class="photo-slot photo-slot-tall"><img src="https://ik.imagekit.io/ideas365logo/about3.png"
+                        alt="Photo 1" onerror="this.style.display='none'"></div>
+                <div class="photo-slot photo-slot-tall"><img src="https://ik.imagekit.io/ideas365logo/about2.png"
+                        alt="Photo 2" onerror="this.style.display='none'"></div>
+            </div>
+        </div>
+
+        <!-- 2. CASE STUDY + RESULT -->
+        <div class="content-card">
+            <div>
+                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>
+                <p class="col-desc"><strong>Challenge:</strong> self-starter, independent, และ get things done</p>
+                <ul class="hl" style="margin-top:12px">
+                    <li>Product curation strategy — what sells on camera</li>
+                    <li>Script framework development — what to say, when</li>
+                    <li>Technical setup &amp; optimization — lighting, angles, platform</li>
+                    <li>Host training &amp; operations — sustainable 2-hour format</li>
+                </ul>
+                <div class="cs-pills">
+                    <span class="cs-pill">✦ 6-figure in 2 hrs</span>
+                    <span class="cs-pill">✦ Repeatable format</span>
+                    <span class="cs-pill">✦ Team runs independently</span>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
+                <div class="proof-grid-result">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229"
+                        alt="Result 1">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965"
+                        alt="Result 2">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281"
+                        alt="Result 3">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100027.png?updatedAt=1772938870951"
+                        alt="Result 4">
+                    <img src="https://ik.imagekit.io/ideas365logo/20231121_203324.heic?updatedAt=1773203264925"
+                        alt="Result 5">
+                    <img src="https://ik.imagekit.io/ideas365logo/20231207_231147.heic" alt="Result 6">
+                </div>
+                <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee
+                    · BBL · Big C Thailand</p>
+            </div>
+        </div>
+
+        <!-- 3. PREVIOUS WORK EXPERIENCE -->
+        <div class="content-card single">
+            <h2 class="col-title">PREVIOUS WORK EXPERIENCE · งานที่ผ่านมา</h2>
+            <div class="proof-grid-work">
+                <img src="https://ik.imagekit.io/ideas365logo/ChefC1.jpg" alt="Chef">
+                <img src="https://ik.imagekit.io/ideas365logo/RHAAN1.jpg" alt="RHAAN">
+                <img src="https://ik.imagekit.io/ideas365logo/rhaan4.jpg" alt="RHAAN 4">
+                <img src="https://ik.imagekit.io/ideas365logo/Screenshot_20230818_031225_Instagram.jpg" alt="Work">
+                <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg" alt="Makeup">
+                <img src="https://ik.imagekit.io/ideas365logo/MUU1.jpg" alt="MUU">
+                <img src="https://ik.imagekit.io/ideas365logo/NORTH_TEAM.jpg?updatedAt=1773138763237" alt="North Team">
+                <img src="https://ik.imagekit.io/ideas365logo/rhaan3.jpg?updatedAt=1773138763781" alt="RHAAN 3">
+            </div>
+            <div style="text-align:center;margin-top:20px">
+                <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank">More
+                    proof ↗</a>
+            </div>
+        </div>
+
+        <!-- 4. PORTFOLIO MEDIA -->
+        <div class="content-card single">
+            <h2 class="col-title">PORTFOLIO MEDIA · คลิปและวีดีโอผลงาน</h2>
+            <p class="col-desc" style="margin-bottom:16px">ตัวอย่างการไลฟ์ขาย — TikTok LIVE · Facebook · Shopee · BBL ·
+                Big C Thailand</p>
+            <div class="video-grid">
+                <a href="https://www.youtube.com/watch?v=N9nEHwZt3Sc" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/N9nEHwZt3Sc/hqdefault.jpg" loading="lazy" alt="Live 1">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=jH3mrj2UwWk" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/jH3mrj2UwWk/hqdefault.jpg" loading="lazy" alt="Live 2">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=_9Mcp2mgNrg" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/_9Mcp2mgNrg/hqdefault.jpg" loading="lazy" alt="Live 3">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=rhTlI_Rh3jM" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/rhTlI_Rh3jM/hqdefault.jpg" loading="lazy" alt="Live 4">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=_erzZjnwLAU" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/_erzZjnwLAU/hqdefault.jpg" loading="lazy" alt="Live 5">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=Or9s_hJYaYc" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/Or9s_hJYaYc/hqdefault.jpg" loading="lazy" alt="Live 6">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=IS-MwUWzGMs" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/IS-MwUWzGMs/hqdefault.jpg" loading="lazy" alt="Live 7">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=hA291t_W_iE" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/hA291t_W_iE/hqdefault.jpg" loading="lazy" alt="Live 8">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=QbuyU8EGMjU" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/QbuyU8EGMjU/hqdefault.jpg" loading="lazy" alt="Live 9">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=NniW6ScMdkw" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/NniW6ScMdkw/hqdefault.jpg" loading="lazy" alt="Live 10">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=2QrneqkWJyQ" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/2QrneqkWJyQ/hqdefault.jpg" loading="lazy" alt="Live 11">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. AI VOICE GENERATOR -->
+        <div class="content-card single">
+            <h2 class="col-title">AI VOICE GENERATOR · AI สร้างเสียงพากย์</h2>
+            <p class="col-desc" style="margin-bottom:16px">ตัวอย่างผลงาน AI Voice &amp; Animation Avatar Video</p>
+            <div class="video-grid">
+                <a href="https://www.youtube.com/watch?v=vIuNytBwue8" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/vIuNytBwue8/hqdefault.jpg" loading="lazy" alt="AI Voice 1">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=kBFF7zDOb5Y" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/kBFF7zDOb5Y/hqdefault.jpg" loading="lazy" alt="AI Voice 2">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=m_w56qFvlss" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/m_w56qFvlss/hqdefault.jpg" loading="lazy" alt="AI Voice 3">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=Sby6V-5khkk" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/Sby6V-5khkk/hqdefault.jpg" loading="lazy" alt="AI Voice 4">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+                <a href="https://www.youtube.com/watch?v=A7WZ0NMpclo" target="_blank" class="video-wrap"><img
+                        src="https://img.youtube.com/vi/A7WZ0NMpclo/hqdefault.jpg" loading="lazy" alt="AI Voice 5">
+                    <div class="yt-play"><svg viewBox="0 0 68 48">
+                            <path
+                                d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z"
+                                fill="#f00" />
+                            <path d="M45 24 27 14v20" fill="#fff" />
+                        </svg></div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-brand">iDEAS365</p>
+        <p class="footer-copy">© 2025 iDEAS365 · All rights reserved</p>
+    </footer>
+
+    <a href="index.html" class="back-fixed">
+        <img src="https://ik.imagekit.io/ideas365logo/back_button.png" alt="Back to Map"
+            onerror="this.style.display='none'">
+    </a>
+
+    <script>
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', e => { glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; });
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.content-card').forEach(c => observer.observe(c));
+    </script>
+</body>
+
+</html>
