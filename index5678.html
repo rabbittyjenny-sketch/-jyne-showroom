@@ -1,144 +1,354 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>iDEAS365 - The Interactive Archipelago</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --island-shadow: drop-shadow(0 12px 15px rgba(0,0,0,0.35));
+            --island-shadow: drop-shadow(0 12px 15px rgba(0, 0, 0, 0.35));
             --transition-smooth: all 0.4s ease-out;
         }
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             font-family: 'Noto Sans Thai', sans-serif;
-            /* 📸 เปลี่ยน URL background ที่นี่ */
             background-image: url('https://ik.imagekit.io/ideas365logo/background_mix.png?updatedAt=1772818424869');
-            background-size: cover; background-position: center; background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             background-color: #6FB3D2;
             overflow: hidden;
+            /* desktop: no scroll */
         }
 
         /* LOGO — มุมบนซ้าย */
         .nav-header {
-            position: fixed; top: 0; left: 0; width: 40%; padding: 25px 40px;
-            display: flex; justify-content: flex-start; align-items: center; z-index: 100;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 100;
             pointer-events: none;
         }
-        /* 📸 เปลี่ยน URL โลโก้ที่นี่ */
-        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); pointer-events: auto; }
+
+        .logo-img {
+            height: 45px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            pointer-events: auto;
+        }
 
         #view-map {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .map-wrapper {
-            position: relative; width: 100%; max-width: 1400px; height: 100vh; margin: 0 auto;
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            height: 100vh;
+            margin: 0 auto;
         }
 
         .island {
-            position: absolute; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center;
-            filter: var(--island-shadow); transform-origin: center bottom;
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            filter: var(--island-shadow);
+            transform-origin: center bottom;
             text-decoration: none;
             transition: var(--transition-smooth);
         }
 
-        /* แอนิเมชันลอยน้ำ — นุ่มนวล ไม่สั่น */
         @keyframes individualFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50%       { transform: translateY(-8px) rotate(0.4deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(0.4deg);
+            }
         }
 
-        /* 🏝️ ตำแหน่งเกาะ — ปรับเลข % ตรงนี้ถ้าต้องการย้าย */
-        #island-system  { top: 20%; left: 42%; width: 15%; animation: individualFloat 7s ease-in-out infinite; }
-        #island-profile { top: 26%; left: 20%; width: 18%; animation: individualFloat 8s ease-in-out infinite; }
-        #island-work    { top: 22%; right: 19%; width: 18%; animation: individualFloat 9s ease-in-out infinite; animation-delay: -0.5s; }
-        #island-library { top: 58%; left: 14%; width: 18%; animation: individualFloat 7.5s ease-in-out infinite; animation-delay: 0.8s; }
-        #island-blog    { bottom: 8%; left: 43%; width: 19%; animation: individualFloat 8.5s ease-in-out infinite; animation-delay: -1.2s; }
-        #island-contact { bottom: 0; right: 5%; width: 27%; animation: none; filter: drop-shadow(0 -8px 12px rgba(0,0,0,0.2)); }
+        /* 🏝️ Desktop positions — ไม่แตะเลย */
+        #island-system {
+            top: 20%;
+            left: 42%;
+            width: 17%;
+            animation: individualFloat 7s ease-in-out infinite;
+        }
 
+        #island-profile {
+            top: 26%;
+            left: 16%;
+            width: 20%;
+            animation: individualFloat 8s ease-in-out infinite;
+        }
 
-        /* Hover — ใช้ scale แยกออกจาก transform เพื่อไม่ตีกับ float animation */
+        #island-work {
+            top: 28%;
+            right: 16%;
+            width: 20%;
+            animation: individualFloat 9s ease-in-out infinite;
+            animation-delay: -0.5s;
+        }
+
+        #island-library {
+            top: 56%;
+            left: 10%;
+            width: 20%;
+            animation: individualFloat 7.5s ease-in-out infinite;
+            animation-delay: 0.8s;
+        }
+
+        #island-blog {
+            bottom: 8%;
+            left: 43%;
+            width: 20%;
+            animation: individualFloat 8.5s ease-in-out infinite;
+            animation-delay: -1.2s;
+        }
+
+        #island-contact {
+            bottom: 0;
+            right: 5%;
+            width: 27%;
+            animation: none;
+            filter: drop-shadow(0 -8px 12px rgba(0, 0, 0, 0.2));
+        }
+
+        #island-marina {
+            top: 48%;
+            right: 0%;
+            width: 16%;
+            animation: individualFloat 8.2s ease-in-out infinite;
+            animation-delay: -2s;
+        }
+
         .island:hover {
             scale: 1.05;
             margin-top: -8px;
-            filter: brightness(1.1) drop-shadow(0 20px 25px rgba(255,255,255,0.35));
+            filter: brightness(1.1) drop-shadow(0 20px 25px rgba(255, 255, 255, 0.35));
             z-index: 100;
         }
 
-        .island img { width: 100%; height: auto; display: block; }
+        .island img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-        /* Badge — อยู่ภายในวงกลมเกาะ */
+        /* Badge */
         .island-badge {
-            position: absolute; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.95); color: #000; padding: 4px 6px;
-            border-radius: 16px; font-size: 10px; font-weight: 600; top: -350px !important
-            white-space: nowrap; transition: var(--transition-smooth); z-index: 10;
-        }
-        
-        /* 💬 ระบบ Pop-up แบบ "Cute POP" (เด้งดึ๋ง สไตล์การ์ตูน โผล่ด้านบน) */
-        .island::after {
-            content: attr(data-tooltip); 
             position: absolute;
-            top: 10px; left: 50%; /* เริ่มต้นซ่อนอยู่หลังป้ายชื่อเกาะ */
-            transform: translateX(-50%) scale(0.3); 
-            transform-origin: bottom center; /* จุดศูนย์ถ่วงอยู่ด้านล่าง ให้พุ่งขึ้นบน */
-            background: #ffffff; /* สีพื้นหลังลูกโป่ง */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
             color: #000;
-            padding: 8px 10px; border-radius: 30px; 
-            font-size: 9px; font-weight: 650;
-            white-space: nowrap; pointer-events: none;
-            opacity: 0; visibility: hidden; 
-            /* 🎀 สูตรลับความเด้งดึ๋ง (Bouncy Physics) */
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 200; 
-            /* สไตล์ Pop Art: ขอบดำหนา + เงาแข็ง */
-            border: 1px solid #000;
-            box-shadow:  2px 0 #000;
+            padding: 4px 6px;
+            border-radius: 16px;
+            font-size: 10px;
+            font-weight: 600;
+            top: -28px;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+            z-index: 10;
         }
-            .island:hover::after {
-            opacity: 1; visibility: visible;
-            top: -50px; /* เด้งทะลุขึ้นไปเหนือป้ายชื่อเกาะ */
+
+        /* 💬 Tooltip ::after — desktop hover */
+        .island::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.3);
+            transform-origin: bottom center;
+            background: #ffffff;
+            color: #000;
+            padding: 8px 10px;
+            border-radius: 30px;
+            font-size: 9px;
+            font-weight: 650;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 200;
+            border: 1px solid #000;
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .island:hover::after {
+            opacity: 1;
+            visibility: visible;
+            top: -55px;
+            /* สูงกว่า badge → ไม่ทับ */
             transform: translateX(-50%) scale(1);
         }
-        
-            /* 📱 2. จอมือถือ (Mobile) - เรียงซิกแซกครบ 6 เกาะ ป้องกันการทับซ้อน */
-            @media (max-width: 200px) {
-            .nav-header { padding: 4px 10px; }
-            .logo-img { height: 100px; } 
 
-            /* ซ้าย-ขวา สลับกัน */
-            #island-profile { top: 20%; left: 5%; width: 60%; right: auto; }
-            #island-work    { top: 22%; right: 8%; left: auto; width: 66%; }
-            #island-library { top: 42%; left: 5%; width: 49%; right: auto; }
-            #island-system  { top: 58%; right: 5%; left: auto; width: 62%; } 
-            #island-blog    { bottom: 15%; left: 19%; width: 70%; right: auto; }
-            #island-contact { bottom: 10; right: 0; left: auto; width: 85%; }
-            
-            /* ย่อขนาดป้ายชื่อบนมือถือลงนิดนึง */
-            .island-badge { font-size: 10px; padding: 4px 10px; top: -30px; }
+        /* ============================================================
+           📱 MOBILE FIXES — แก้เฉพาะส่วนนี้ ไม่ยุ่ง desktop เลย
+           ============================================================ */
+        @media (max-width: 768px) {
+
+            /* 1. เปิด scroll — แก้ contact หาย */
+            body,
+            html {
+                overflow: auto !important;
+                height: auto !important;
+            }
+
+            #view-map {
+                position: relative !important;
+                height: auto !important;
+                display: block !important;
+            }
+
+            .map-wrapper {
+                height: 1580px !important;
+                width: 100% !important;
+            }
+
+            /* 2. ซ่อน tooltip บนมือถือ (touch ทำให้ค้าง) */
+            .island::after,
+            .island:hover::after {
+                display: none !important;
+            }
+
+            /* 3. Logo */
+            .nav-header {
+                padding: 10px 16px;
+                width: 60%;
+            }
+
+            .logo-img {
+                height: 32px;
+            }
+
+            /* 4. เกาะ — ปิด float, ขยายขนาด */
+            .island {
+                animation: none !important;
+                width: 55% !important;
+            }
+
+            /* zigzag: About(ซ้าย) → Works(ขวา) → Academe(ซ้าย) → Learning(ขวา) → Blog(กลาง-ซ้าย) → Contact(ขวา) */
+            #island-profile {
+                top: 3% !important;
+                left: 3% !important;
+                right: auto !important;
+                bottom: auto !important;
+            }
+
+            #island-work {
+                top: 16% !important;
+                right: 3% !important;
+                left: auto !important;
+                bottom: auto !important;
+            }
+
+            #island-system {
+                top: 30% !important;
+                left: 3% !important;
+                right: auto !important;
+                bottom: auto !important;
+            }
+
+            #island-library {
+                top: 44% !important;
+                right: 3% !important;
+                left: auto !important;
+                bottom: auto !important;
+            }
+
+            #island-blog {
+                top: 58% !important;
+                left: 10% !important;
+                right: auto !important;
+                bottom: auto !important;
+            }
+
+            #island-contact {
+                top: 73% !important;
+                right: 3% !important;
+                left: auto !important;
+                bottom: auto !important;
+                filter: var(--island-shadow) !important;
+            }
+
+            #island-marina {
+                top: 86% !important;
+                left: 10% !important;
+                right: auto !important;
+                bottom: auto !important;
+            }
+
+            /* 5. Badge */
+            .island-badge {
+                font-size: 10px !important;
+                padding: 4px 10px !important;
+                top: -28px !important;
+            }
         }
-        
     </style>
 </head>
+
 <body>
-    <!-- โลโก้มุมบนซ้าย -->
     <header class="nav-header">
-        <!-- 📸 เปลี่ยน URL โลโก้ที่นี่ -->
-        <img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365" class="logo-img">
+        <img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
+            class="logo-img">
     </header>
 
     <div id="view-map">
         <div class="map-wrapper">
-            <a href="about_island.html"    class="island" id="island-profile" data-tooltip="เกี่ยวกับ-JYNE"><div class="island-badge">ABOUT ISLAND</div><img src="https://ik.imagekit.io/ideas365logo/profile.png"></a>
-            <a href="work_town.html"       class="island" id="island-work"  data-tooltip="ทำอะไรมาบ้าง?" ><div class="island-badge">WORKS WAREHOUSE</div><img src="https://ik.imagekit.io/ideas365logo/work.png"></a>
-            <a href="system_district.html" class="island" id="island-system" data-tooltip="ความสำเร็จอยู่ในหลักสูตร" ><div class="island-badge">ACADEME BAY</div><img src="https://ik.imagekit.io/ideas365logo/system.png"></a>
-            <a href="learning_bay.html"    class="island" id="island-library" data-tooltip="รวมไอเดียความรู้" ><div class="island-badge">LEARNING BRIDGE</div><img src="https://ik.imagekit.io/ideas365logo/library.png"></a>
-            <a href="blog.html"            class="island" id="island-blog" data-tooltip="365Blog"  ><div class="island-badge">BLOG HARBOR</div><img src="https://ik.imagekit.io/ideas365logo/blog.png"></a>
-            <a href="contact_port.html"    class="island" id="island-contact"  data-tooltip="ติดต่อที่นี่"><div class="island-badge">CONTACT PIER</div><img src="https://ik.imagekit.io/ideas365logo/contact.png"></a>
+            <a href="about_island.html" class="island" id="island-profile" data-tooltip="เกี่ยวกับ-JYNE">
+                <div class="island-badge">ABOUT ISLAND</div><img src="https://ik.imagekit.io/ideas365logo/profile.png">
+            </a>
+            <a href="work_town.html" class="island" id="island-work" data-tooltip="ทำอะไรมาบ้าง?">
+                <div class="island-badge">SOLO-PROJECT WAREHOUSE</div><img
+                    src="https://ik.imagekit.io/ideas365logo/work.png">
+            </a>
+            <a href="system_district.html" class="island" id="island-system" data-tooltip="ความสำเร็จอยู่ในหลักสูตร">
+                <div class="island-badge">ACADEMY BAY</div><img src="https://ik.imagekit.io/ideas365logo/system.png">
+            </a>
+            <a href="learning_bay.html" class="island" id="island-library" data-tooltip="รวมไอเดียความรู้">
+                <div class="island-badge">LEARNING BRIDGE</div><img
+                    src="https://ik.imagekit.io/ideas365logo/library.png">
+            </a>
+            <a href="blog.html" class="island" id="island-blog" data-tooltip="365Blog">
+                <div class="island-badge">BLOG HARBOR</div><img src="https://ik.imagekit.io/ideas365logo/blog.png">
+            </a>
+            <a href="contact_port.html" class="island" id="island-contact" data-tooltip="ติดต่อที่นี่">
+                <div class="island-badge">CONTACT PIER</div><img src="https://ik.imagekit.io/ideas365logo/contact.png">
+            </a>
+            <a href="work_marina.html" class="island" id="island-marina" data-tooltip="ประสบการณ์การทำงาน">
+                <div class="island-badge">WORK MARINA</div><img
+                    src="https://ik.imagekit.io/ideas365logo/Work_Experion.png">
+            </a>
         </div>
     </div>
 </body>
+
 </html>
