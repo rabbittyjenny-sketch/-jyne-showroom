@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        :root { --bg-color: #B03A00; --text-dark: #1A1A1A; --accent: #B03A00; }
+        :root { --bg-color: #B03A00; --text-dark: #3a3a3a; --accent: #B03A00; }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
@@ -19,8 +19,8 @@
         .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .content-card.single { grid-template-columns: 1fr; }
         .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 20px; padding-bottom: 15px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
-        .col-desc { font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #333; }
-        .col-desc strong { font-weight: 700; color: var(--text-dark); }
+        .col-desc { font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #444; }
+        .col-desc strong { font-weight: 600; color: #3a3a3a; }
         /* timeline */
         .tl-item { padding: 12px 0; border-bottom: 1px solid #eee; }
         .tl-item:last-child { border-bottom: none; }
@@ -105,6 +105,23 @@
         .page-title { animation: titleIn 0.9s ease forwards; }
         .page-subtitle { opacity: 0; animation: titleIn 0.9s ease 0.35s forwards; }
         @keyframes titleIn { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+        /* col-title — gradient text on hover */
+        .col-title {
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            transition: background-position 0.4s ease;
+        }
+        .content-card:hover .col-title {
+            background: linear-gradient(90deg, #B03A00 0%, #e8621a 50%, #B03A00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            background-position: right center;
+        }
         /* Photo hover */
         .photo-slot { transition: transform 0.35s ease, box-shadow 0.35s ease; }
         .photo-slot:hover { transform: scale(1.03); box-shadow: 0 14px 32px rgba(0,0,0,0.2); }
@@ -117,8 +134,6 @@
         /* Button lift */
         .big-btn { transition: opacity 0.2s, transform 0.2s; }
         .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
-        /* Cursor glow */
-        #cursor-glow { position: fixed; width: 340px; height: 340px; background: radial-gradient(circle, rgba(245,184,0,0.11) 0%, transparent 68%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); z-index: 0; left: -999px; top: -999px; transition: left 0.07s, top 0.07s; }
         /* YouTube thumbnail cards — replaces broken iframes */
         .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
         .video-wrap:hover img { opacity: 0.82; }
@@ -194,17 +209,22 @@
     </style>
 </head>
 <body>
-    <div id="cursor-glow"></div>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <div class="lang-toggle">
-            <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
-            <button class="lang-btn" onclick="setLang('th')" id="btn-th">TH</button>
-        </div>
     </header>
     <main class="main-content">
         <h1 class="page-title">ABOUT<br>ISLAND</h1>
         <p class="page-subtitle">Don't try to make it perfect. Make it work.</p>
+
+        <!-- LANG TOGGLE — sits just above the WHO IS JYNE card -->
+        <div style="display:flex; justify-content:flex-end; width:100%; margin-bottom:-18px; position:relative; z-index:10;">
+            <div style="display:flex; gap:0; background:rgba(255,255,255,0.15); border-radius:30px; overflow:hidden; border:1.5px solid rgba(255,255,255,0.3); backdrop-filter:blur(6px);">
+                <button id="btn-en" onclick="setLang('en')"
+                    style="background:rgba(255,255,255,0.9); border:none; color:#B03A00; font-family:'Anton',sans-serif; font-size:0.82rem; letter-spacing:2px; padding:7px 22px; cursor:pointer; transition:all 0.2s;">EN</button>
+                <button id="btn-th" onclick="setLang('th')"
+                    style="background:transparent; border:none; color:rgba(255,255,255,0.75); font-family:'Anton',sans-serif; font-size:0.82rem; letter-spacing:2px; padding:7px 22px; cursor:pointer; transition:all 0.2s;">TH</button>
+            </div>
+        </div>
 
         <!-- PROFILE + PHOTO — 12-grid: 7col text / 5col photo -->
         <div class="content-card who-card" style="grid-template-columns: 7fr 5fr; align-items: start; gap: 40px;">
@@ -392,7 +412,7 @@
                         <span class="tag">Stripe</span>
                         <span class="tag">Wix.com</span>
                         <span class="tag">Line API</span>
-                        <span class="tag">Napkins</span>       
+                        <span class="tag">Napkins</span> 
                     </div>
                 </div>
                 <div class="skg">
@@ -559,25 +579,20 @@
     </main>
 
     <script>
-        // Language toggle — wires nav buttons to bio sections
+        // Language toggle
         function setLang(lang) {
             document.getElementById('bio-en').style.display = lang === 'en' ? 'block' : 'none';
             document.getElementById('bio-th').style.display = lang === 'th' ? 'block' : 'none';
-            // nav toggle active state
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-th').classList.toggle('active', lang === 'th');
+            const btnEn = document.getElementById('btn-en');
+            const btnTh = document.getElementById('btn-th');
+            btnEn.style.background = lang === 'en' ? 'rgba(255,255,255,0.9)' : 'transparent';
+            btnEn.style.color      = lang === 'en' ? '#B03A00' : 'rgba(255,255,255,0.75)';
+            btnTh.style.background = lang === 'th' ? 'rgba(255,255,255,0.9)' : 'transparent';
+            btnTh.style.color      = lang === 'th' ? '#B03A00' : 'rgba(255,255,255,0.75)';
         }
-        // default = EN
         setLang('en');
 
-        // Cursor glow follows mouse
-        const glow = document.getElementById('cursor-glow');
-        document.addEventListener('mousemove', e => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top  = e.clientY + 'px';
-        });
-
-        // Scroll reveal — cards fade + slide up when entering viewport
+        // Scroll reveal
         const observer = new IntersectionObserver(entries => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
