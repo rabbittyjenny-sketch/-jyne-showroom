@@ -8,18 +8,14 @@
     <style>
         * { box-sizing: border-box; }
         :root {
-            --bg-color: #34A853;
-            --accent:   #34A853;
+            --bg-color: #1E7A3E;
+            --accent: #1E7A3E;
             --text-dark: #1A1A1A;
-            --card-blue:   #4285F4;
-            --card-yellow: #FBBC05;
-            --card-red:    #EA4335;
-            --card-green:  #34A853;
-            --card-dark:   #1A1A1A;
         }
         body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+        * { font-family: inherit; }
 
-        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: flex-start; align-items: center; z-index: 100; }
         .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
         .logo-img:hover { transform: scale(1.05); }
 
@@ -33,28 +29,42 @@
         .section-sub { font-size: 0.88rem; color: #888; margin: 0 0 28px; font-weight: 300; }
         .status-msg { text-align: center; color: #888; padding: 30px; font-size: 0.9rem; }
 
-        /* ─── SCHOOL CARDS (commerce-style, light on white) ─── */
+        /* ─── SCHOOL CARDS ─── */
         .school-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .school-item {
-            background: #f6fcf7; border: 1px solid rgba(52,168,83,0.22);
+            background: #ffffff; border: 1px solid rgba(30,122,62,0.25);
             border-radius: 14px; padding: 0; text-decoration: none; color: var(--text-dark);
-            display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s;
+            display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-        .school-item:hover { background: #ecf8ef; transform: translateY(-2px); }
-        .school-item-info { flex: 1; padding: 18px 20px; }
-        .school-item-badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; background: rgba(52,168,83,0.15); color: #1e7e3e; margin-bottom: 10px; }
-        .school-item-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; line-height: 1.25; color: var(--text-dark); }
-        .school-item-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; margin: 0 0 10px; }
-        .school-item-meta { font-size: 0.7rem; color: #999; font-weight: 300; }
-        .school-item-arrow { padding: 0 20px 14px; text-align: right; font-size: 1rem; color: #34A853; }
+        .school-item:hover { background: #f4faf7; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,122,62,0.12); }
+        .school-item-info { flex: 1; padding: 20px 22px 14px; }
+
+        /* tier badge — ชื่อคอร์ส (MICRO EXPRESS etc.) */
+        .school-item-badge {
+            display: inline-block; padding: 5px 14px; border-radius: 20px;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1.1rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.5px;
+            background: rgba(30,122,62,0.1); color: #1E7A3E;
+            margin-bottom: 6px; line-height: 1.3;
+        }
+        /* course format tag — เล็ก ใต้ชื่อคอร์ส */
+        .school-item-format {
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: #888; margin-bottom: 10px; display: block;
+        }
+        /* ชื่อวิชา — รองลงมา */
+        .school-item-title { font-size: 0.92rem; font-weight: 600; margin: 0 0 8px; line-height: 1.4; color: #2a2a2a; }
+        .school-item-desc { font-size: 0.8rem; line-height: 1.65; color: #555; font-weight: 300; margin: 0 0 10px; }
+        .school-item-meta { font-size: 0.68rem; color: #aaa; font-weight: 300; }
+        .school-item-arrow { padding: 0 22px 16px; text-align: right; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; color: #aaa; }
 
         /* ─── FOOTER ─── */
-        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 0; }
         .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
         .footer-brand span.dot-r { color: #EA4335; }
         .footer-brand span.dot-g { color: #34A853; }
         .footer-brand span.dot-b { color: #4285F4; }
-        .footer-brand span.dot-y { color: #FBBC05; }
+        .footer-brand span.dot-y { color: #F5B800; }
         .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
         .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
 
@@ -80,9 +90,9 @@
         .srv-price small { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.5); margin-left: 4px; }
         .srv-coming { opacity: 0.45; cursor: default; }
         .srv-letsgo {
-            display: inline-block; background: #fff; color: #1a6b30;
-            font-family: 'Anton', sans-serif; font-size: 0.78rem; font-weight: 700;
-            padding: 7px 20px; border-radius: 30px; text-decoration: none;
+            display: inline-block; background: #F5B800; color: #1A1A1A;
+            font-family: 'Noto Sans Thai', sans-serif; font-size: 0.78rem; font-weight: 700;
+            padding: 9px 20px; border-radius: 30px; text-decoration: none;
             text-transform: uppercase; letter-spacing: 0.5px; align-self: flex-start;
             margin-top: 4px; transition: opacity 0.2s, transform 0.2s;
         }
@@ -105,36 +115,190 @@
             .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
             .footer-brand { font-size: 1.3rem; }
         }
+        /* BACK button fixed bottom-right */
+        .back-btn-fixed { position: fixed; bottom: 28px; right: 30px; z-index: 200; display: block; text-decoration: none; transition: transform 0.2s, opacity 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
+        .back-btn-fixed img { height: 68px; width: auto; display: block; }
+        .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
+        @media (max-width: 640px) { .back-btn-fixed img { height: 56px; } .back-btn-fixed { bottom: 20px; right: 16px; } }
+
+        /* GO TO ACADEMY — inline centered button */
+        .academy-btn-wrap { width: 100%; display: flex; justify-content: center; padding: 40px 20px 50px; }
+        .academy-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: #1E7A3E; color: #fff;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+            padding: 16px 40px; border-radius: 40px; text-decoration: none;
+            box-shadow: 0 8px 24px rgba(30,122,62,0.35);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .academy-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(30,122,62,0.45); background: #155c2e; }
+        .academy-btn::after { content: '→'; font-size: 1.1rem; }
+    
+    /* --- Text Hover Effect --- */
+.hover {
+  color: #0000;
+  background: 
+    linear-gradient(90deg, #1A1A1A 50%, #ffffff 0) 
+    var(--_p, 100%) / 200% no-repeat;
+  -webkit-background-clip: text;
+          background-clip: text;
+  transition: .4s;
+  cursor: pointer; /* ทำให้รู้ว่าคลิกได้ */
+}
+.hover:hover {
+  --_p: 0%;
+}
+  
     </style>
 </head>
 <body>
     <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
-        <a href="index.html" class="map-btn" style="background:none;border:none;box-shadow:none;padding:0;"><img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map" style="height:48px;width:auto;display:block;"></a>
+    </header>
     </header>
 
     <main class="main-content">
-        <h1 class="page-title">SCHOOL<br>SERVICE</h1>
+        <h1 class="page-title hover">SCHOOL<br>SERVICE</h1>
         <p class="page-subtitle">From the Practitioner be the Educator</p>
 
-        <!-- ─── SCHOOL SECTION (blog-card style) ─── -->
+        <!-- ─── SCHOOL SECTION ─── -->
         <div class="content-card">
             <h2 class="section-heading">SCHOOL</h2>
-            <p class="section-sub">คอร์สและ Workshop สำหรับสร้างระบบธุรกิจและ Live Commerce</p>
-            <div id="school-grid" class="school-grid">
-                <p class="status-msg">กำลังโหลด…</p>
+            <p class="section-sub">Live Commerce Host Academy · Psychology-First · Data-Driven · AI-Ready · มาตรฐานสากล</p>
+
+            <!-- Value Ladder label -->
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:2px;color:#888;text-transform:uppercase;">Value Ladder</div>
+                <div style="flex:1;height:1px;background:#eee;"></div>
+                <div style="font-size:0.72rem;color:#bbb;font-weight:300;">Micro Express → Short Course → Masterclass</div>
+            </div>
+
+            <div class="school-grid">
+
+                <!-- MICRO EXPRESS -->
+                <div class="school-item" style="cursor:default;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge">Micro Express</div>
+                        <span class="school-item-format">Online Self-paced · 3 hrs</span>
+                        <div class="school-item-title">30-Second Hook Formula</div>
+                        <div class="school-item-desc">Lead Magnet หลักของ Academy — เรียนรู้สูตร Hook 3 วินาทีที่หยุดนิ้ว, 15 วินาทีที่ดึงให้อยู่, และ 30 วินาทีที่สร้าง Social Proof พร้อม Template 5 แบบตามประเภทสินค้า: แฟชั่น / ความงาม / เทคโนโลยี / อาหาร / ไลฟ์สไตล์</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: ผู้เริ่มต้น · Host Level 1-2 · ผู้ที่อยากทดลองก่อน</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+                <!-- SHORT COURSE A -->
+                <div class="school-item" style="cursor:default;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge">Short Course A</div>
+                        <span class="school-item-format">Online + Live Session · 6 hrs</span>
+                        <div class="school-item-title">Hook, Voice & Camera Presence</div>
+                        <div class="school-item-desc">'3 ชั่วโมงที่เปลี่ยนการพูดของคุณตลอดชีพ' — เจาะลึก Hook Psychology, Voice Modulation สำหรับไลฟ์, Camera Confidence และ Dead Air Management ต่ำกว่า 3 วินาที แก้ Pain Point #1 ของโฮสต์ไทย เห็นผลในไลฟ์ถัดไป</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: Host Level 2-3 · ผู้ที่ไลฟ์อยู่แล้วแต่ยอดไม่ดี</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+                <!-- SHORT COURSE B -->
+                <div class="school-item" style="cursor:default;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge">Short Course B</div>
+                        <span class="school-item-format">Online + Workshop · 6 hrs</span>
+                        <div class="school-item-title">Platform Mastery & Live Analytics</div>
+                        <div class="school-item-desc">อ่านและใช้ KPI จริง — TikTok Live Analytics, Shopee Live Center, Conversion Funnel, Product Click Rate + GMV Formula: GMV = ราคา × Conversion Rate × Margin สร้าง Post-Live Report ส่งแบรนด์ได้ทันที แก้ Pain Point #2 โฮสต์ที่อ่านตัวเลขไม่เป็น</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: Host Level 2-3 · In-house Brand Team · ผู้ต้องการ KPI จริง</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+                <!-- MASTERCLASS I -->
+                <div class="school-item" style="cursor:default; border-color:rgba(30,122,62,0.4); background:#f6fbf8;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge" style="background:rgba(30,122,62,0.15);color:#155c2e;">Signature Masterclass I</div>
+                        <span class="school-item-format">Onsite / Online Intensive · 2 วัน · 16 hrs</span>
+                        <div class="school-item-title">Psychology × Sales Mastery</div>
+                        <div class="school-item-desc">ศาสตร์แห่งการเปลี่ยนผู้ชมเป็นผู้ซื้อ — S-O-R Framework, PAD Theory, FOMO Ladder, Narrative Transportation และ Conversion Psychology ที่โฮสต์มืออาชีพใช้จริง Conversion Rate มาตรฐาน 0.8–1.5% → โฮสต์ที่ใช้จิตวิทยา 3–12% (ต่างกัน 4–8 เท่า)</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: Host Level 3-4 · ผู้ต้องการเป็นโฮสต์ระดับแบรนด์ใหญ่ · Career Changer</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+                <!-- MASTERCLASS II -->
+                <div class="school-item" style="cursor:default; border-color:rgba(30,122,62,0.4); background:#f6fbf8;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge" style="background:rgba(30,122,62,0.15);color:#155c2e;">Signature Masterclass II</div>
+                        <span class="school-item-format">Onsite / Online Intensive · 2 วัน · 16 hrs</span>
+                        <div class="school-item-title">Business × Global Expansion</div>
+                        <div class="school-item-desc">หลักสูตรเดียวในไทยที่รวม AI Tools + Cross-border Strategy + P&L ใน 2 วัน — วิเคราะห์ P&L และ Net Margin, TikTok Shop Global, Amazon Live Roadmap, สร้าง Electronic Press Kit (EPK) และ Global Pitch Simulation ระดับ MCN สากล</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: Host ที่ผ่าน Masterclass I · Brand Owner · ผู้ต้องการเปิด Live Commerce Business</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+                <!-- COMBO PASS -->
+                <div class="school-item" style="cursor:default; border-color:rgba(30,122,62,0.55); background:#edf7f2;">
+                    <div class="school-item-info">
+                        <div class="school-item-badge" style="background:rgba(30,122,62,0.2);color:#0e4a25;font-size:1rem;">Combo Pass</div>
+                        <span class="school-item-format">Masterclass I + II · 4 วัน · 32 hrs</span>
+                        <div class="school-item-title">Full Transformation Pass</div>
+                        <div class="school-item-desc">สูงสุดของ Value Ladder — รวม Psychology × Sales Mastery และ Business × Global Expansion ในแพ็กเกจเดียว พร้อม Priority Support, Early Bird Discount 15-20% และ Certification ระดับที่ MCN และ Agency ระดับโลกยอมรับ</div>
+                        <div class="school-item-meta">เหมาะสำหรับ: ผู้ที่ต้องการ Full Transformation · In-house Brand Team · ผู้ต้องการ Certification สากล</div>
+                    </div>
+                    <div class="school-item-arrow">SOON</div>
+                </div>
+
+            </div><!-- /school-grid -->
+
+            <!-- Why iDEAS365 strip -->
+            <div style="margin-top:32px;padding:20px 24px;background:#f9f9f9;border-radius:12px;border-left:3px solid #1E7A3E;">
+                <div style="font-size:0.72rem;font-weight:700;letter-spacing:2px;color:#1E7A3E;text-transform:uppercase;margin-bottom:8px;">ทำไมต้องเรียนกับ iDEAS365</div>
+                <div style="display:flex;flex-wrap:wrap;gap:16px;">
+                    <div style="font-size:0.82rem;color:#444;font-weight:300;flex:1;min-width:200px;">🧠 <strong style="font-weight:600;color:#222;">Psychology-First</strong> — หลักสูตรเดียวในไทยที่สอน S-O-R Framework และ PAD Theory ด้วยการปฏิบัติจริงในไลฟ์</div>
+                    <div style="font-size:0.82rem;color:#444;font-weight:300;flex:1;min-width:200px;">📊 <strong style="font-weight:600;color:#222;">Data-Driven</strong> — ทุกเทคนิคอ้างอิงสถิติจริงปี 2024-2025 จาก Meltwater, TikTok Academy, Amazon</div>
+                    <div style="font-size:0.82rem;color:#444;font-weight:300;flex:1;min-width:200px;">🤖 <strong style="font-weight:600;color:#222;">AI-Ready</strong> — หลักสูตรเดียวในไทยที่รวม AI Tools + Cross-border Strategy + P&L ใน 2 วัน</div>
+                </div>
             </div>
         </div>
 
-        <!-- ─── SERVICE SECTION (with price) ─── -->
+        <!-- ─── SERVICE SECTION ─── -->
         <div class="service-section">
             <h2 class="service-heading">SERVICE</h2>
-            <p class="service-sub">บริการที่ปรึกษาและวางระบบสำหรับธุรกิจ</p>
-            <div id="service-grid" class="service-grid">
-                <p class="status-msg" style="color:rgba(255,255,255,0.6);">กำลังโหลด…</p>
+            <p class="service-sub">บริการที่ปรึกษาและวางระบบ Live Commerce สำหรับแบรนด์และองค์กร</p>
+            <div class="service-grid">
+
+                <div class="srv-card">
+                    <span class="srv-badge">Consulting</span>
+                    <div class="srv-title">Live Commerce Audit</div>
+                    <div class="srv-title-th">วิเคราะห์และตรวจระบบไลฟ์</div>
+                    <div class="srv-desc">วิเคราะห์ระบบไลฟ์ปัจจุบันของแบรนด์ — KPI, Script Framework, Host Performance, Platform Setup และ GMV Potential ส่ง Report พร้อม Action Plan</div>
+                    <div class="srv-price" style="color:rgba(255,255,255,0.4);font-size:0.75rem;font-weight:600;letter-spacing:1px;">SOON</div>
+                </div>
+
+                <div class="srv-card">
+                    <span class="srv-badge">Training</span>
+                    <div class="srv-title">In-house Host Training</div>
+                    <div class="srv-title-th">ฝึกทีม Host ในองค์กร</div>
+                    <div class="srv-desc">ออกแบบและดำเนินการฝึกอบรมทีม In-house Host ของแบรนด์ — ตั้งแต่ Script Framework, KPI Standard ไปจนถึง SOP ที่ทีมรันเองได้</div>
+                    <div class="srv-price" style="color:rgba(255,255,255,0.4);font-size:0.75rem;font-weight:600;letter-spacing:1px;">SOON</div>
+                </div>
+
+                <div class="srv-card">
+                    <span class="srv-badge">Strategy</span>
+                    <div class="srv-title">Live Commerce System Design</div>
+                    <div class="srv-title-th">ออกแบบระบบ Live Commerce</div>
+                    <div class="srv-desc">วางระบบ Live Commerce ตั้งแต่ต้น — Product Curation Strategy, Script Framework, Technical Setup, KPI Dashboard และ Launch Framework สำหรับแบรนด์ที่เพิ่งเริ่มหรือต้องการ Relaunch</div>
+                    <div class="srv-price" style="color:rgba(255,255,255,0.4);font-size:0.75rem;font-weight:600;letter-spacing:1px;">SOON</div>
+                </div>
+
             </div>
         </div>
     </main>
+
+    <!-- 🎓 Go to Academy — ใส่ลิงค์ใน href ได้เลยค่ะ -->
+    <div class="academy-btn-wrap">
+        <a href="#" class="academy-btn">Go to Academy</a>
+    </div>
 
     <footer class="site-footer">
         <p class="footer-brand">
@@ -146,91 +310,11 @@
     </footer>
 
     <script>
-    // ══════════════════════════════════════════════════════════════
-    // 📌 วาง URL ของ Apps Script ที่ deploy แล้วตรงนี้
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8OtwsAK1mZlAbPCrm9TGchP20oEZZqDpJWBSn8LXs39V6XDqOWR6BTfY-3tOQnJ0A/exec';
-    // ══════════════════════════════════════════════════════════════
-    // Sheet tabs ที่ใช้:
-    //   school_service1 → SCHOOL cards (blog-style, same columns as blog tab)
-    //     Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
-    //   school_service2 → SERVICE cards with price
-    //     Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture
-    //     type values: free / premium / coming-soon
-
-    // ─── Render SCHOOL cards (school_service1) ──────────────────
-    // Columns: id | slug | title | category | excerpt_thai | excerpt_eng | time | date | image_url | course_url
-    function renderSchool(items) {
-        const grid = document.getElementById('school-grid');
-        if (!items.length) { grid.innerHTML = '<p class="status-msg">ยังไม่มีคอร์สในขณะนี้</p>'; return; }
-        grid.innerHTML = items.map(p => {
-            const excerpt = p.excerpt_thai || p.excerpt_eng || '';
-            const href    = p.course_url || (p.slug ? `blog_post.html?slug=${p.slug}` : '#');
-            const isExt   = href.startsWith('http');
-            return `<a class="school-item" href="${href}"${isExt ? ' target="_blank" rel="noopener"' : ''}>
-                <div class="school-item-info">
-                    <div class="school-item-badge">${p.category || 'Course'}</div>
-                    <div class="school-item-title">${(p.title || '').toUpperCase()}</div>
-                    <div class="school-item-desc">${excerpt}</div>
-                    <div class="school-item-meta">${p.date || ''}${p.time ? ' · ' + p.time : ''}</div>
-                </div>
-                <div class="school-item-arrow">Read more →</div>
-            </a>`;
-        }).join('');
-    }
-
-    // ─── Render SERVICE cards (school_service2) ──────────────────
-    // Columns: id | title | titleTh | description | descriptionTh | type | price | url_picture | course_url
-    // type: free / premium / coming-soon
-    // price: ฿4,700 / FREE / TBA / etc.
-    // url_picture: รูปประกอบ (ไม่ใช่ link)
-    // course_url: ถ้ามีค่า → แสดงปุ่ม Let's Go; ถ้าว่าง → ไม่มีปุ่ม
-    function renderService(items) {
-        const grid = document.getElementById('service-grid');
-        if (!items.length) { grid.innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ยังไม่มีบริการในขณะนี้</p>'; return; }
-        grid.innerHTML = items.map(p => {
-            const type      = (p.type || '').toLowerCase();
-            const isSoon    = type.includes('soon') || type.includes('coming');
-            const isFree    = type === 'free';
-            const badgeLbl  = isSoon ? 'Coming Soon' : isFree ? 'FREE' : 'Premium';
-            const desc      = p.descriptionTh || p.description || '';
-            const courseUrl = (p.course_url || '').trim();
-            const coverHTML = p.url_picture
-                ? `<img src="${p.url_picture}" alt="${p.title}" style="width:100%;border-radius:10px;aspect-ratio:16/9;object-fit:cover;display:block;margin-bottom:12px;" loading="lazy">`
-                : '';
-            const letsGo = courseUrl && !isSoon
-                ? `<a href="${courseUrl}" class="srv-letsgo" target="_blank" rel="noopener">Let's Go →</a>`
-                : '';
-            return `<div class="srv-card${isSoon ? ' srv-coming' : ''}">
-                ${coverHTML}
-                <span class="srv-badge" style="${isFree ? 'background:rgba(52,168,83,0.4)' : isSoon ? '' : 'background:rgba(251,188,5,0.3);color:#FBBC05'}">${badgeLbl}</span>
-                <div class="srv-title">${(p.title || '').toUpperCase()}</div>
-                ${p.titleTh ? `<div class="srv-title-th">${p.titleTh}</div>` : ''}
-                <div class="srv-desc">${desc}</div>
-                ${p.price && p.price !== 'FREE' ? `<div class="srv-price">${p.price}</div>` : ''}
-                ${letsGo}
-            </div>`;
-        }).join('');
-    }
-
-    // ─── Load all data ───────────────────────────────────────────
-    async function loadData() {
-        if (!APPS_SCRIPT_URL) {
-            document.getElementById('school-grid').innerHTML  = '<p class="status-msg">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
-            document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">⚠️ ยังไม่ได้ตั้งค่า APPS_SCRIPT_URL</p>';
-            return;
-        }
-        const [r1, r2] = await Promise.allSettled([
-            fetch(APPS_SCRIPT_URL + '?sheet=school_service1').then(r => r.json()),
-            fetch(APPS_SCRIPT_URL + '?sheet=school_service2').then(r => r.json()),
-        ]);
-        if (r1.status === 'fulfilled' && r1.value.success) renderSchool(r1.value.data);
-        else document.getElementById('school-grid').innerHTML = '<p class="status-msg">ไม่สามารถโหลดข้อมูลได้</p>';
-
-        if (r2.status === 'fulfilled' && r2.value.success) renderService(r2.value.data);
-        else document.getElementById('service-grid').innerHTML = '<p class="status-msg" style="color:rgba(255,255,255,0.6)">ไม่สามารถโหลดข้อมูลได้</p>';
-    }
-
-    loadData();
+    // Content hardcoded — no external fetch required
     </script>
+    <a href="index.html" class="back-btn-fixed">
+        <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="BACK">
+    </a>
+
 </body>
 </html>
