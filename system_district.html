@@ -16,7 +16,7 @@
         * { font-family: inherit; }
 
         .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: flex-start; align-items: center; z-index: 100; }
-        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.8s; }
         .logo-img:hover { transform: scale(1.05); }
 
         .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1100px; margin: 0 auto; gap: 30px; }
@@ -34,7 +34,7 @@
         .school-item {
             background: #ffffff; border: 1px solid rgba(30,122,62,0.25);
             border-radius: 14px; padding: 0; text-decoration: none; color: var(--text-dark);
-            display: flex; flex-direction: column; transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column; transition: background 0.45s, transform 0.2s, box-shadow 0.2s;
         }
         .school-item:hover { background: #f4faf7; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(30,122,62,0.12); }
         .school-item-info { flex: 1; padding: 20px 22px 14px; }
@@ -78,7 +78,7 @@
         .srv-card {
             background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.18);
             border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 10px;
-            transition: background 0.2s, transform 0.2s; color: #fff;
+            transition: background 0.45s, transform 0.2s; color: #fff;
         }
         .srv-card.has-link { cursor: pointer; }
         .srv-card.has-link:hover { background: rgba(0,0,0,0.28); transform: translateY(-3px); }
@@ -135,21 +135,55 @@
         .academy-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(30,122,62,0.45); background: #155c2e; }
         .academy-btn::after { content: '→'; font-size: 1.1rem; }
     
-    /* --- Text Hover Effect --- */
-.hover {
-  color: #0000;
-  background: 
-    linear-gradient(90deg, #1A1A1A 50%, #ffffff 0) 
-    var(--_p, 100%) / 200% no-repeat;
-  -webkit-background-clip: text;
-          background-clip: text;
-  transition: .4s;
-  cursor: pointer; /* ทำให้รู้ว่าคลิกได้ */
-}
-.hover:hover {
-  --_p: 0%;
-}
-  
+    /* ── HOVER TEXT SWEEP — ทั่วหน้า ── */
+
+    /* page title: ขาว → ดำ (บน bg เขียว) */
+    .hover {
+        color: #0000;
+        background: linear-gradient(90deg, #1A1A1A 50%, #ffffff 0) var(--_p,100%) / 200% no-repeat;
+        -webkit-background-clip: text; background-clip: text;
+        transition: .4s; cursor: default;
+    }
+    .hover:hover { --_p: 0%; }
+
+    /* section-heading บน card ขาว: เขียว → ดำ */
+    .section-heading {
+        color: #0000;
+        background: linear-gradient(90deg, #1a1a1a 50%, #1E7A3E 0) var(--_p,100%) / 200% no-repeat;
+        -webkit-background-clip: text; background-clip: text;
+        transition: background-position 0.45s ease; cursor: default;
+    }
+    .section-heading:hover { --_p: 0%; }
+
+    /* service-heading บน bg เขียว: ขาว → ดำ */
+    .service-heading {
+        color: #0000;
+        background: linear-gradient(90deg, #1a1a1a 50%, #ffffff 0) var(--_p,100%) / 200% no-repeat;
+        -webkit-background-clip: text; background-clip: text;
+        transition: background-position 0.45s ease; cursor: default;
+    }
+    .service-heading:hover { --_p: 0%; }
+
+    /* school-item tier badge: เขียว → ดำ เมื่อ hover card */
+    .school-item:hover .school-item-badge {
+        color: #0000;
+        background:
+            linear-gradient(90deg, #1a1a1a 50%, #1E7A3E 0) 0% / 200% no-repeat,
+            rgba(30,122,62,0.1);
+        -webkit-background-clip: text, padding-box;
+        background-clip: text, padding-box;
+    }
+
+    /* school-item title: เมื่อ hover card ตัวหนังสือเขียวขึ้น */
+    .school-item:hover .school-item-title { color: #1E7A3E; transition: color 0.3s; }
+
+    /* srv-title บน service card: ขาว → เขียวอ่อน */
+    .srv-card:hover .srv-title {
+        color: #0000;
+        background: linear-gradient(90deg, #a8f0c6 50%, #ffffff 0) 0% / 200% no-repeat;
+        -webkit-background-clip: text; background-clip: text;
+    }
+
     </style>
 </head>
 <body>
