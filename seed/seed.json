@@ -1,0 +1,1160 @@
+{
+  "_readme": "ข้อมูลตั้งต้นชุดเดียว ใช้สร้างไฟล์ SQL (scripts/build-seed-sql.mjs) และใช้เป็นข้อมูลจำลองตอนทดสอบหน้าเว็บ (VITE_MOCK=1) — แก้ที่นี่ที่เดียว",
+  "site_settings": {
+    "main_map_image": "https://ik.imagekit.io/ideas365logo/background_mix.png?updatedAt=1772818424869",
+    "main_map_aspect": "16/9",
+    "logo": "https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343",
+    "contact_email": "contact@ideas365.space",
+    "socials": [
+      {
+        "label": "TikTok",
+        "handle": "@jennyjyne",
+        "url": "https://www.tiktok.com/@jennyjyne"
+      },
+      {
+        "label": "Facebook",
+        "handle": "iDEAS365",
+        "url": "https://www.facebook.com/ideas365"
+      },
+      {
+        "label": "YouTube",
+        "handle": "@ideas365",
+        "url": "https://www.youtube.com/@ideas365"
+      },
+      {
+        "label": "Instagram",
+        "handle": "@ideas365",
+        "url": "https://www.instagram.com/ideas365"
+      }
+    ]
+  },
+  "island_templates": [
+    {
+      "slug": "standard",
+      "name_th": "เกาะทั่วไป",
+      "name_en": "Standard island",
+      "icon": "🏝️",
+      "default_features": {
+        "has_filters": true,
+        "has_tags": true,
+        "has_route_tags": true,
+        "has_contact_cta": true,
+        "has_download": false,
+        "is_redirect": false,
+        "has_contact_form": false
+      }
+    },
+    {
+      "slug": "profile",
+      "name_th": "เกาะโปรไฟล์",
+      "name_en": "Profile island",
+      "icon": "🏛️",
+      "default_features": {
+        "has_filters": false,
+        "has_tags": true,
+        "has_route_tags": true,
+        "has_contact_cta": true,
+        "has_download": true,
+        "is_redirect": false,
+        "has_contact_form": false
+      }
+    },
+    {
+      "slug": "redirect",
+      "name_th": "เกาะพาไปเว็บอื่น",
+      "name_en": "Redirect island",
+      "icon": "⛴️",
+      "default_features": {
+        "has_filters": false,
+        "has_tags": false,
+        "has_route_tags": false,
+        "has_contact_cta": false,
+        "has_download": false,
+        "is_redirect": true,
+        "has_contact_form": false
+      }
+    },
+    {
+      "slug": "contact",
+      "name_th": "เกาะติดต่อ",
+      "name_en": "Contact island",
+      "icon": "📡",
+      "default_features": {
+        "has_filters": false,
+        "has_tags": false,
+        "has_route_tags": false,
+        "has_contact_cta": false,
+        "has_download": false,
+        "is_redirect": false,
+        "has_contact_form": true
+      }
+    }
+  ],
+  "item_types": [
+    {
+      "slug": "text_block",
+      "name_th": "ข้อความ",
+      "name_en": "Text block",
+      "default_display": "text",
+      "features": {
+        "has_cover": false,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "body_th",
+          "label_th": "เนื้อหา (ไทย)",
+          "label_en": "Body (TH)",
+          "type": "textarea",
+          "required": true
+        },
+        {
+          "key": "body_en",
+          "label_th": "เนื้อหา (อังกฤษ)",
+          "label_en": "Body (EN)",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "image",
+          "label_th": "รูปประกอบ",
+          "label_en": "Image",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "experience",
+      "name_th": "ประสบการณ์ทำงาน",
+      "name_en": "Work experience",
+      "default_display": "timeline",
+      "features": {
+        "has_cover": false,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "role",
+          "label_th": "ตำแหน่ง",
+          "label_en": "Role",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "organization",
+          "label_th": "องค์กร / ที่ทำงาน",
+          "label_en": "Organization",
+          "type": "text",
+          "required": true
+        },
+        {
+          "key": "location",
+          "label_th": "สถานที่",
+          "label_en": "Location",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "start",
+          "label_th": "เริ่ม (ปี-เดือน)",
+          "label_en": "Start",
+          "type": "month",
+          "required": true
+        },
+        {
+          "key": "end",
+          "label_th": "จบ (ว่าง = ปัจจุบัน)",
+          "label_en": "End",
+          "type": "month",
+          "required": false
+        },
+        {
+          "key": "highlights_th",
+          "label_th": "ผลงานเด่น (บรรทัดละข้อ)",
+          "label_en": "Highlights",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "logo",
+          "label_th": "โลโก้",
+          "label_en": "Logo",
+          "type": "image",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "certificate",
+      "name_th": "ใบประกาศ",
+      "name_en": "Certificate",
+      "default_display": "gallery",
+      "features": {
+        "has_cover": false,
+        "bulk_field": "certificate_image"
+      },
+      "fields": [
+        {
+          "key": "certificate_image",
+          "label_th": "รูปใบประกาศ",
+          "label_en": "Certificate image",
+          "type": "image",
+          "required": true
+        },
+        {
+          "key": "issuer",
+          "label_th": "ผู้ออก",
+          "label_en": "Issuer",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "issued_on",
+          "label_th": "วันที่ได้รับ (ปี-เดือน)",
+          "label_en": "Issued",
+          "type": "month",
+          "required": false
+        },
+        {
+          "key": "file_url",
+          "label_th": "ไฟล์ PDF (ถ้ามี)",
+          "label_en": "PDF",
+          "type": "file",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "case_study",
+      "name_th": "กรณีศึกษา",
+      "name_en": "Case study",
+      "default_display": "cards",
+      "features": {
+        "has_cover": true,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "challenge_th",
+          "label_th": "โจทย์",
+          "label_en": "Challenge",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "actions_th",
+          "label_th": "สิ่งที่ทำ (บรรทัดละข้อ)",
+          "label_en": "What I did",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "results_th",
+          "label_th": "ผลลัพธ์ (บรรทัดละข้อ)",
+          "label_en": "Results",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "platforms",
+          "label_th": "แพลตฟอร์ม",
+          "label_en": "Platforms",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "clip",
+      "name_th": "คลิป",
+      "name_en": "Video clip",
+      "default_display": "video_grid",
+      "features": {
+        "has_cover": false,
+        "bulk_field": "video_url"
+      },
+      "fields": [
+        {
+          "key": "video_url",
+          "label_th": "ลิงก์คลิป",
+          "label_en": "Video link",
+          "type": "video",
+          "required": true
+        },
+        {
+          "key": "platform",
+          "label_th": "แพลตฟอร์ม",
+          "label_en": "Platform",
+          "type": "select",
+          "required": false,
+          "options": [
+            {
+              "value": "youtube",
+              "label": "YouTube"
+            },
+            {
+              "value": "tiktok",
+              "label": "TikTok"
+            },
+            {
+              "value": "facebook",
+              "label": "Facebook"
+            },
+            {
+              "value": "other",
+              "label": "อื่นๆ"
+            }
+          ]
+        },
+        {
+          "key": "client",
+          "label_th": "ลูกค้า / แบรนด์",
+          "label_en": "Client",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "duration",
+          "label_th": "ความยาว",
+          "label_en": "Duration",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "photo",
+      "name_th": "รูปผลงาน",
+      "name_en": "Photo",
+      "default_display": "gallery",
+      "features": {
+        "has_cover": false,
+        "bulk_field": "image"
+      },
+      "fields": [
+        {
+          "key": "image",
+          "label_th": "รูป",
+          "label_en": "Image",
+          "type": "image",
+          "required": true
+        },
+        {
+          "key": "caption_th",
+          "label_th": "คำบรรยาย",
+          "label_en": "Caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "client",
+          "label_th": "ลูกค้า / งาน",
+          "label_en": "Client",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "design_work",
+      "name_th": "งานออกแบบ",
+      "name_en": "Design work",
+      "default_display": "cards",
+      "features": {
+        "has_cover": true,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "url",
+          "label_th": "ลิงก์ผลงาน",
+          "label_en": "Link",
+          "type": "url",
+          "required": false
+        },
+        {
+          "key": "role_th",
+          "label_th": "สิ่งที่ฉันออกแบบ / ทำ",
+          "label_en": "My role",
+          "type": "textarea",
+          "required": false
+        },
+        {
+          "key": "tools",
+          "label_th": "เครื่องมือที่ใช้",
+          "label_en": "Tools",
+          "type": "text",
+          "required": false
+        },
+        {
+          "key": "file_url",
+          "label_th": "ไฟล์ประกอบ (ถ้ามี)",
+          "label_en": "File",
+          "type": "file",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "tool",
+      "name_th": "เครื่องมือ",
+      "name_en": "Tool",
+      "default_display": "cards",
+      "features": {
+        "has_cover": true,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "url",
+          "label_th": "ลิงก์ใช้งาน / ทดลอง",
+          "label_en": "Link",
+          "type": "url",
+          "required": true
+        },
+        {
+          "key": "tool_kind",
+          "label_th": "แบบ",
+          "label_en": "Kind",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "free",
+              "label": "เล่นฟรี · ใช้ฟรี"
+            },
+            {
+              "value": "pro",
+              "label": "ระบบใหญ่ (ทดลองได้ → ติดต่อ)"
+            }
+          ]
+        },
+        {
+          "key": "how_to_try_th",
+          "label_th": "วิธีทดลอง",
+          "label_en": "How to try",
+          "type": "textarea",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "document",
+      "name_th": "เอกสาร / เทมเพลต",
+      "name_en": "Document",
+      "default_display": "list",
+      "features": {
+        "has_cover": true,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "file_url",
+          "label_th": "ไฟล์ หรือลิงก์",
+          "label_en": "File or link",
+          "type": "file",
+          "required": true
+        },
+        {
+          "key": "download_mode",
+          "label_th": "การดาวน์โหลด",
+          "label_en": "Download",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "direct",
+              "label": "ดาวน์โหลดได้เลย"
+            },
+            {
+              "value": "email",
+              "label": "แลกอีเมลก่อน"
+            }
+          ]
+        },
+        {
+          "key": "pages",
+          "label_th": "จำนวนหน้า",
+          "label_en": "Pages",
+          "type": "number",
+          "required": false
+        }
+      ]
+    },
+    {
+      "slug": "resume",
+      "name_th": "เรซูเม่",
+      "name_en": "Resume",
+      "default_display": "list",
+      "features": {
+        "has_cover": false,
+        "bulk_field": null
+      },
+      "fields": [
+        {
+          "key": "file_url",
+          "label_th": "ไฟล์เรซูเม่",
+          "label_en": "Resume file",
+          "type": "file",
+          "required": true
+        },
+        {
+          "key": "language",
+          "label_th": "ภาษา",
+          "label_en": "Language",
+          "type": "select",
+          "required": true,
+          "options": [
+            {
+              "value": "th",
+              "label": "ไทย"
+            },
+            {
+              "value": "en",
+              "label": "English"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tag_groups": [
+    {
+      "slug": "platform",
+      "name_th": "แพลตฟอร์ม",
+      "name_en": "Platform",
+      "allow_multiple": true,
+      "tags": [
+        [
+          "tiktok",
+          "TikTok",
+          "TikTok"
+        ],
+        [
+          "facebook",
+          "Facebook",
+          "Facebook"
+        ],
+        [
+          "shopee",
+          "Shopee",
+          "Shopee"
+        ],
+        [
+          "youtube",
+          "YouTube",
+          "YouTube"
+        ],
+        [
+          "lazada",
+          "Lazada",
+          "Lazada"
+        ]
+      ]
+    },
+    {
+      "slug": "industry",
+      "name_th": "อุตสาหกรรม",
+      "name_en": "Industry",
+      "allow_multiple": true,
+      "tags": [
+        [
+          "beauty",
+          "ความงาม",
+          "Beauty"
+        ],
+        [
+          "food",
+          "อาหาร",
+          "Food & beverage"
+        ],
+        [
+          "fashion",
+          "แฟชั่น",
+          "Fashion"
+        ],
+        [
+          "health",
+          "สุขภาพ",
+          "Health"
+        ],
+        [
+          "lifestyle",
+          "ไลฟ์สไตล์",
+          "Lifestyle"
+        ]
+      ]
+    },
+    {
+      "slug": "skill",
+      "name_th": "ทักษะ",
+      "name_en": "Skill",
+      "allow_multiple": true,
+      "tags": [
+        [
+          "live-selling",
+          "ไลฟ์ขาย",
+          "Live selling"
+        ],
+        [
+          "event",
+          "จัดอีเวนต์",
+          "Events"
+        ],
+        [
+          "design",
+          "ออกแบบ",
+          "Design"
+        ],
+        [
+          "systems",
+          "วางระบบ",
+          "Systems"
+        ],
+        [
+          "ai",
+          "AI",
+          "AI"
+        ],
+        [
+          "team",
+          "บริหารทีม",
+          "Team management"
+        ]
+      ]
+    }
+  ],
+  "islands": [
+    {
+      "slug": "profile",
+      "template": "profile",
+      "name_th": "โปรไฟล์และประวัติ",
+      "name_en": "Profile",
+      "tooltip_th": "ฉันคือใคร ทำอะไรมาบ้าง",
+      "button_image": "https://ik.imagekit.io/ideas365logo/profile.png",
+      "land_image": "/islands/profile/land.webp",
+      "pos": [
+        16,
+        26,
+        20
+      ],
+      "sort_order": 1,
+      "sections": [
+        {
+          "slug": "about-me",
+          "name_th": "โปรไฟล์ตัวฉัน",
+          "name_en": "About me",
+          "item_type": "text_block",
+          "display": "text",
+          "pos": [
+            62,
+            6,
+            16
+          ]
+        },
+        {
+          "slug": "timeline",
+          "name_th": "ประวัติการทำงาน · ไทม์ไลน์",
+          "name_en": "Work timeline",
+          "item_type": "experience",
+          "display": "timeline",
+          "pos": [
+            4,
+            16,
+            26
+          ]
+        },
+        {
+          "slug": "certificates",
+          "name_th": "ใบประกาศ · ทักษะอื่น",
+          "name_en": "Certificates",
+          "item_type": "certificate",
+          "display": "gallery",
+          "pos": [
+            52,
+            38,
+            18
+          ]
+        },
+        {
+          "slug": "freelance-live",
+          "name_th": "Live Streamer (Freelance)",
+          "name_en": "Live streamer (freelance)",
+          "item_type": "case_study",
+          "display": "cards",
+          "pos": [
+            52,
+            62,
+            28
+          ]
+        },
+        {
+          "slug": "resume",
+          "name_th": "เรซูเม่",
+          "name_en": "Resume",
+          "item_type": "resume",
+          "display": "list",
+          "pos": [
+            4,
+            60,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "clips",
+      "template": "standard",
+      "name_th": "คลิปวิดีโอ",
+      "name_en": "Video clips",
+      "tooltip_th": "คลิปไลฟ์ คอนเทนต์ AI อีเวนต์",
+      "button_image": "https://ik.imagekit.io/ideas365logo/blog.png",
+      "land_image": "/islands/clips/land.webp",
+      "pos": [
+        43,
+        64,
+        20
+      ],
+      "sort_order": 2,
+      "sections": [
+        {
+          "slug": "live-selling",
+          "name_th": "ไลฟ์ขายของ",
+          "name_en": "Live selling",
+          "item_type": "clip",
+          "display": "video_grid"
+        },
+        {
+          "slug": "live-content",
+          "name_th": "ไลฟ์คอนเทนต์",
+          "name_en": "Live content",
+          "item_type": "clip",
+          "display": "video_grid"
+        },
+        {
+          "slug": "content-work",
+          "name_th": "รับทำคอนเทนต์",
+          "name_en": "Content work",
+          "item_type": "clip",
+          "display": "video_grid"
+        },
+        {
+          "slug": "ai-clips",
+          "name_th": "คลิปสร้างจาก AI",
+          "name_en": "AI-made clips",
+          "item_type": "clip",
+          "display": "video_grid"
+        },
+        {
+          "slug": "event-promo",
+          "name_th": "อีเวนต์ · โปรโมท F&B",
+          "name_en": "Events & F&B promo",
+          "item_type": "clip",
+          "display": "video_grid"
+        },
+        {
+          "slug": "ai-voice",
+          "name_th": "AI Voice · Avatar",
+          "name_en": "AI voice & avatar",
+          "item_type": "clip",
+          "display": "video_grid"
+        }
+      ]
+    },
+    {
+      "slug": "photos",
+      "template": "standard",
+      "name_th": "รูปผลงาน",
+      "name_en": "Photos",
+      "tooltip_th": "แต่งหน้า ทำผม อาหาร ออกบูธ",
+      "button_image": "https://ik.imagekit.io/ideas365logo/Work_Experion.png",
+      "land_image": "/islands/photos/land.webp",
+      "pos": [
+        84,
+        48,
+        16
+      ],
+      "sort_order": 3,
+      "sections": [
+        {
+          "slug": "makeup-hair",
+          "name_th": "แต่งหน้า · ทำผม",
+          "name_en": "Makeup & hair",
+          "item_type": "photo",
+          "display": "gallery"
+        },
+        {
+          "slug": "food",
+          "name_th": "อาหาร",
+          "name_en": "Food",
+          "item_type": "photo",
+          "display": "gallery"
+        },
+        {
+          "slug": "booth-event",
+          "name_th": "ออกบูธ · อีเวนต์",
+          "name_en": "Booths & events",
+          "item_type": "photo",
+          "display": "gallery"
+        },
+        {
+          "slug": "live-results",
+          "name_th": "ผลไลฟ์",
+          "name_en": "Live results",
+          "item_type": "photo",
+          "display": "gallery"
+        }
+      ]
+    },
+    {
+      "slug": "design",
+      "template": "standard",
+      "name_th": "งานออกแบบ",
+      "name_en": "Design",
+      "tooltip_th": "หน้าเว็บ กราฟิก แผนการตลาด",
+      "button_image": "/islands/design/map-button.png",
+      "land_image": "/islands/design/land.webp",
+      "pos": [
+        66,
+        6,
+        14
+      ],
+      "sort_order": 4,
+      "sections": [
+        {
+          "slug": "web-design",
+          "name_th": "หน้าเว็บ (Wix)",
+          "name_en": "Web design",
+          "item_type": "design_work",
+          "display": "cards"
+        },
+        {
+          "slug": "creative",
+          "name_th": "Creative · กราฟิก",
+          "name_en": "Creative & graphics",
+          "item_type": "design_work",
+          "display": "cards"
+        },
+        {
+          "slug": "marketing-plans",
+          "name_th": "แผนคอนเทนต์การตลาด",
+          "name_en": "Marketing plans",
+          "item_type": "design_work",
+          "display": "cards"
+        }
+      ]
+    },
+    {
+      "slug": "tools",
+      "template": "standard",
+      "name_th": "เครื่องมือ",
+      "name_en": "Tools",
+      "tooltip_th": "เครื่องมือที่สร้างเอง",
+      "button_image": "https://ik.imagekit.io/ideas365logo/work.png",
+      "land_image": "/islands/tools/land.webp",
+      "pos": [
+        64,
+        28,
+        20
+      ],
+      "sort_order": 5,
+      "sections": [
+        {
+          "slug": "free-tools",
+          "name_th": "เล่นฟรี · ใช้ฟรี",
+          "name_en": "Free tools",
+          "item_type": "tool",
+          "display": "cards"
+        },
+        {
+          "slug": "pro-systems",
+          "name_th": "ระบบใหญ่ (ทดลองได้)",
+          "name_en": "Systems (try, then contact)",
+          "item_type": "tool",
+          "display": "cards"
+        }
+      ]
+    },
+    {
+      "slug": "docs",
+      "template": "standard",
+      "name_th": "เอกสาร · ความรู้",
+      "name_en": "Docs & knowledge",
+      "tooltip_th": "เอกสารฟรี เทมเพลต บทความ",
+      "button_image": "https://ik.imagekit.io/ideas365logo/library.png",
+      "land_image": "/islands/docs/land.webp",
+      "pos": [
+        10,
+        56,
+        20
+      ],
+      "sort_order": 6,
+      "sections": [
+        {
+          "slug": "free-docs",
+          "name_th": "เอกสารฟรี · หนังสือ",
+          "name_en": "Free documents",
+          "item_type": "document",
+          "display": "list"
+        },
+        {
+          "slug": "templates",
+          "name_th": "เทมเพลต · ตารางช่วยงาน",
+          "name_en": "Templates",
+          "item_type": "document",
+          "display": "list"
+        },
+        {
+          "slug": "c365-toolbox",
+          "name_th": "เทมเพลตสายไลฟ์ (Creatr365)",
+          "name_en": "Live templates (Creatr365)",
+          "item_type": null,
+          "display": "feed",
+          "source_type": "c365_toolbox"
+        },
+        {
+          "slug": "articles",
+          "name_th": "บทความ (Creatr365)",
+          "name_en": "Articles (Creatr365)",
+          "item_type": null,
+          "display": "feed",
+          "source_type": "c365_articles"
+        }
+      ]
+    },
+    {
+      "slug": "contact",
+      "template": "contact",
+      "name_th": "ติดต่อ",
+      "name_en": "Contact",
+      "tooltip_th": "ติดต่อที่นี่",
+      "button_image": "https://ik.imagekit.io/ideas365logo/contact.png",
+      "land_image": null,
+      "pos": [
+        72,
+        66,
+        20
+      ],
+      "sort_order": 7,
+      "sections": []
+    },
+    {
+      "slug": "academy",
+      "template": "redirect",
+      "name_th": "Academy",
+      "name_en": "Academy",
+      "tooltip_th": "ไปเรียนกับ Creatr365",
+      "button_image": "https://ik.imagekit.io/ideas365logo/system.png",
+      "land_image": null,
+      "intro_th": "Creatr365 คือบ้านที่ฉันสอนการเป็นโฮสต์ไลฟ์คอมเมิร์ซอย่างมืออาชีพ กำลังพาคุณไปที่หน้าคอร์ส…",
+      "redirect_url": "https://c365.ideas365.space",
+      "pos": [
+        42,
+        20,
+        17
+      ],
+      "sort_order": 8,
+      "sections": []
+    },
+    {
+      "slug": "structure",
+      "template": "redirect",
+      "name_th": "รับวางระบบ",
+      "name_en": "Systems & strategy",
+      "tooltip_th": "รับวางโครงสร้าง ระบบ กลยุทธ์",
+      "button_image": "/islands/structure/map-button.png",
+      "land_image": null,
+      "intro_th": "งานวางโครงสร้าง ระบบ และกลยุทธ์ธุรกิจ กำลังพาคุณไปที่หน้ารายละเอียด…",
+      "redirect_url": "https://i-deas-365-web.vercel.app/services",
+      "pos": [
+        30,
+        4,
+        13
+      ],
+      "sort_order": 9,
+      "sections": []
+    }
+  ],
+  "routes": [
+    {
+      "slug": "fnb-assistant",
+      "title_th": "F&B · ผู้ช่วยผู้บริหาร",
+      "title_en": "F&B · Executive assistant",
+      "headline_th": "ประสบการณ์บริหารงานบริการระดับมิชลิน พร้อมระบบเอกสารและเครื่องมือที่สร้างเอง",
+      "variants": [
+        [
+          "assistant",
+          "ผู้ช่วยผู้บริหาร",
+          "Executive assistant"
+        ],
+        [
+          "restaurant",
+          "ผู้จัดการร้านอาหาร",
+          "Restaurant manager"
+        ]
+      ]
+    },
+    {
+      "slug": "live-streamer",
+      "title_th": "Live Streamer",
+      "title_en": "Live streamer",
+      "headline_th": "โฮสต์ไลฟ์ขายของบน TikTok, Facebook และ Shopee",
+      "variants": []
+    },
+    {
+      "slug": "beauty-content",
+      "title_th": "Beauty · Content",
+      "title_en": "Beauty & content",
+      "headline_th": "งานแต่งหน้า ทำผม และคอนเทนต์",
+      "variants": []
+    }
+  ],
+  "_items_note": "คลิป 16 อันย้ายมาจากหน้า work_marina.html เดิม: 11 อันแรกอยู่ใต้หัวข้อ 'ตัวอย่างการไลฟ์ขาย' อีก 5 อันอยู่ใต้ 'AI VOICE GENERATOR' — ชื่อคลิปเป็นชื่อชั่วคราว แก้ได้ในหลังบ้าน",
+  "items": [
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #1",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=N9nEHwZt3Sc",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #2",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=jH3mrj2UwWk",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #3",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=_9Mcp2mgNrg",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #4",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=rhTlI_Rh3jM",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #5",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=_erzZjnwLAU",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #6",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=Or9s_hJYaYc",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #7",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=IS-MwUWzGMs",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #8",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=hA291t_W_iE",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #9",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=QbuyU8EGMjU",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #10",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=NniW6ScMdkw",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "live-selling",
+      "title_th": "ไลฟ์ขาย #11",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=2QrneqkWJyQ",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "ai-voice",
+      "title_th": "AI Voice · Avatar #1",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=vIuNytBwue8",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "ai-voice",
+      "title_th": "AI Voice · Avatar #2",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=kBFF7zDOb5Y",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "ai-voice",
+      "title_th": "AI Voice · Avatar #3",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=m_w56qFvlss",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "ai-voice",
+      "title_th": "AI Voice · Avatar #4",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=Sby6V-5khkk",
+        "platform": "youtube"
+      }
+    },
+    {
+      "island": "clips",
+      "section": "ai-voice",
+      "title_th": "AI Voice · Avatar #5",
+      "data": {
+        "video_url": "https://www.youtube.com/watch?v=A7WZ0NMpclo",
+        "platform": "youtube"
+      }
+    }
+  ]
+}
