@@ -1,3 +1,4 @@
+import type { IslandTheme } from './themes';
 // Shapes of the i365_ tables (see supabase/migrations/20261030120000_i365_schema.sql).
 
 export type FieldType =
@@ -45,11 +46,13 @@ export interface Island {
   button_image: string | null; land_image: string | null; land_aspect: string; mobile_focus_x: number;
   pos_left: number | null; pos_top: number | null; pos_width: number | null;
   redirect_url: string | null; redirect_delay_ms: number;
+  /** colour theme: { preset, ...colour overrides } — see src/lib/themes.ts */
+  theme: IslandTheme;
   is_published: boolean; sort_order: number; deleted_at: string | null;
 }
 
 export type SourceType = 'items' | 'c365_articles' | 'c365_toolbox' | 'external_link' | 'contact_form';
-export type DisplayStyle = 'cards' | 'video_grid' | 'gallery' | 'timeline' | 'list' | 'text' | 'feed';
+export type DisplayStyle = 'cards' | 'video_grid' | 'gallery' | 'timeline' | 'list' | 'text' | 'feed' | 'detail';
 
 export const SOURCE_LABELS: Record<SourceType, string> = {
   items: 'ผลงานในระบบ',
@@ -66,6 +69,7 @@ export const DISPLAY_LABELS: Record<DisplayStyle, string> = {
   timeline: 'ไทม์ไลน์',
   list: 'รายการดาวน์โหลด',
   text: 'บทความ / ข้อความ',
+  detail: 'แสดงเต็มทุกช่อง (กรณีศึกษา)',
   feed: 'ดึงจากแหล่งอื่น',
 };
 
@@ -114,6 +118,8 @@ export interface SiteSettings {
   socials?: { label: string; handle: string; url: string }[];
   /** LINE OA QR image + the line shown under it (contact island) */
   line_qr?: string; line_qr_caption?: string;
+  /** picture used for the fixed "back" button at the bottom right (old site's BACK image) */
+  back_button?: string;
   /** promises listed beside the contact form, one per line */
   contact_promise_th?: string;
 }

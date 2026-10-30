@@ -177,3 +177,198 @@
   .i365-list > li { flex-direction: column; }
   .i365-fields div { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* ═════════════════════════════════════════════════════════════
+   THEMED ISLAND PAGES — ported from the original island pages
+   (about_island / work_marina / work_town / learning_bay /
+   system_district / blog / contact_port). Colours come from the
+   island's theme as CSS variables (src/lib/themes.ts).
+   ═════════════════════════════════════════════════════════════ */
+.i365-themed { background: var(--t-bg); color: var(--t-onbg); font-family: 'Noto Sans Thai', sans-serif; overflow-x: hidden; }
+.i365-themed .i365-header { position: absolute; top: 0; left: 0; right: 0; padding: 25px 40px; }
+.i365-themed .i365-logo img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform .3s; }
+.i365-themed .i365-logo img:hover { transform: scale(1.05); }
+.i365-themed .i365-logo span { color: var(--t-onbg); }
+
+/* hero: ABOUT / ISLAND */
+.i365-hero { padding: 120px 20px 10px; text-align: center; }
+.i365-page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: clamp(4rem, 10vw, 7.5rem); line-height: .9; margin: 0; text-transform: uppercase; letter-spacing: 1px; display: flex; flex-direction: column; align-items: center; }
+.i365-theme-works .i365-page-title { font-size: clamp(5rem, 13vw, 9rem); line-height: .87; }
+.i365-page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 14px 0 0; opacity: .8; }
+.i365-island-intro { text-align: center; max-width: 680px; margin: 10px auto 0; padding: 0 20px; opacity: .9; line-height: 1.7; }
+
+/* hover text sweep (old .hover-white / .col-title) */
+.i365-sweep-page, .i365-sweep-title {
+  color: #0000;
+  background: linear-gradient(90deg, var(--_to) 50%, var(--_from) 0) var(--_p, 100%) / 200% no-repeat;
+  -webkit-background-clip: text; background-clip: text;
+  transition: background-position .9s ease;
+}
+.i365-sweep-page { --_from: var(--t-onbg); --_to: var(--t-page-sweep); }
+.i365-sweep-title { --_from: var(--t-accent); --_to: var(--t-title-sweep); }
+.i365-sweep-page:hover, .i365-col-title:hover .i365-sweep-title { --_p: 0%; }
+
+/* content column + cards */
+.i365-content { display: flex; flex-direction: column; align-items: stretch; gap: 30px; max-width: 1000px; margin: 0 auto; padding: 30px 20px 80px; }
+.i365-theme-works .i365-content { max-width: 1160px; }
+.i365-content-card { background: var(--t-card); color: var(--t-text); border-radius: 20px; padding: 50px; box-shadow: 0 15px 35px rgba(0,0,0,.2); transition: transform .3s ease, box-shadow .3s ease; }
+.i365-content-card:hover { transform: translateY(-5px); box-shadow: 0 28px 55px rgba(0,0,0,.26); }
+.i365-theme-works .i365-content-card { border-radius: 22px; padding: 42px 42px 48px; box-shadow: none; }
+.i365-theme-contact .i365-content-card { box-shadow: 0 20px 40px rgba(0,0,0,.3); }
+.i365-col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 2.2rem; margin: 0 0 20px; padding-bottom: 15px; border-bottom: 2px solid var(--t-accent); text-transform: uppercase; letter-spacing: .5px; line-height: 1.15; cursor: default; }
+.i365-theme-works .i365-col-title { font-size: 1.75rem; border-bottom: 1.5px solid var(--t-line); }
+.i365-theme-contact .i365-col-title { border-bottom-color: rgba(0,0,0,.2); }
+.i365-card-muted { color: var(--t-muted); font-size: .9rem; font-weight: 300; }
+
+/* entrance animations (old titleIn + scroll reveal) */
+@media (prefers-reduced-motion: no-preference) {
+  .i365-page-title { animation: i365-title-in .9s ease both; }
+  .i365-page-subtitle { animation: i365-title-in .9s ease .35s both; }
+  .i365-reveal { animation: i365-rise .6s ease .15s both; }
+}
+@keyframes i365-title-in { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
+@keyframes i365-rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+/* sub-menu pills on the coloured page */
+.i365-themed .i365-subnav { justify-content: center; flex-wrap: wrap; padding: 22px 20px 0; overflow: visible; }
+.i365-themed .i365-subnav a { background: transparent; color: var(--t-onbg); border: 1.5px solid currentColor; opacity: .85; font-weight: 600; padding: 7px 16px; transition: background .25s, color .25s, opacity .25s; }
+.i365-themed .i365-subnav a:hover { opacity: 1; }
+.i365-themed .i365-subnav a.is-active { background: var(--t-onbg); color: var(--t-bg); border-color: var(--t-onbg); opacity: 1; }
+
+/* big pill buttons (old .big-btn) */
+.i365-big-btn { display: inline-block; background: var(--t-accent, #1a1a1a); color: var(--t-accent-text, #fff); text-decoration: none; text-align: center; padding: 14px 26px; border-radius: 30px; font-weight: 700; font-size: .9rem; letter-spacing: .5px; border: none; cursor: pointer; font-family: 'Noto Sans Thai', sans-serif; transition: transform .2s, box-shadow .2s; }
+.i365-big-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.i365-big-btn.is-ghost { background: transparent; color: var(--t-accent); border: 2px solid var(--t-accent); }
+.i365-big-btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.i365-big-btn-grid .i365-big-btn { background: var(--t-card); color: var(--t-accent); font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.25rem; letter-spacing: 1px; padding: 22px 20px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,.18); }
+
+/* text blocks inside cards (old col-desc) */
+.i365-themed .i365-text-blocks { gap: 40px; margin-top: 0; }
+.i365-themed .i365-text-block { background: transparent; border: none; padding: 0; color: var(--t-text); }
+.i365-themed .i365-text-block p { font-size: .95rem; line-height: 1.8; font-weight: 300; margin: 0 0 12px; }
+.i365-themed .i365-text-block img { max-width: 300px; width: 40%; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.12); margin: 0 0 16px 28px; transition: transform .35s ease; }
+.i365-themed .i365-text-block img:hover { transform: scale(1.03); }
+.i365-quote { margin: 14px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--t-accent); font-size: 1rem; font-weight: 600; line-height: 1.7; }
+.i365-display-text > .i365-col-title.i365-section-title { display: none; }
+
+/* timeline (old .tl-item) */
+.i365-themed .i365-timeline { border-left: none; margin: 0; }
+.i365-themed .i365-timeline li { padding: 14px 0; border-bottom: 1px solid var(--t-line); }
+.i365-themed .i365-timeline li:last-child { border-bottom: none; }
+.i365-themed .i365-timeline li::before { display: none; }
+.i365-themed .i365-timeline-when { font-size: .7rem; letter-spacing: 2px; color: var(--t-accent); text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+.i365-themed .i365-timeline-card { background: transparent; border: none; padding: 0; }
+.i365-themed .i365-timeline-card h3 { font-weight: 700; font-size: 1rem; color: var(--t-text); }
+.i365-themed .i365-timeline-card .i365-muted { font-size: .8rem; color: var(--t-muted); font-weight: 600; margin: 0 0 4px; }
+.i365-themed .i365-timeline-card ul { list-style: none; padding: 0; font-size: .85rem; line-height: 1.6; font-weight: 300; }
+.i365-themed .i365-timeline-card li { padding: 0 0 0 16px; border: none; position: relative; }
+.i365-themed .i365-timeline-card li::before { display: block; content: '→'; position: absolute; left: 0; top: 0; width: auto; height: auto; background: none; color: var(--t-accent); font-weight: 700; }
+
+/* field lists (case study etc.) */
+.i365-themed .i365-fields dt { color: var(--t-muted); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .5px; }
+.i365-themed .i365-fields dd ul { list-style: none; padding: 0; }
+.i365-themed .i365-fields dd li { padding: 6px 0 6px 16px; border-bottom: 1px solid var(--t-line); position: relative; font-weight: 300; }
+.i365-themed .i365-fields dd li:last-child { border-bottom: none; }
+.i365-themed .i365-fields dd li::before { content: '→'; position: absolute; left: 0; color: var(--t-accent); font-weight: 700; }
+.i365-themed .i365-fields a { color: var(--t-accent); font-weight: 700; }
+
+/* cards grid inside a content card */
+.i365-themed .i365-card { background: var(--t-inner); color: var(--t-text); border: 1px solid var(--t-line); border-radius: 16px; }
+.i365-themed .i365-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,.15); }
+.i365-themed .i365-card-pic { background: var(--t-line); }
+.i365-themed .i365-card-nopic { color: var(--t-accent); font-family: 'Anton', sans-serif; font-weight: 400; }
+.i365-themed .i365-card-body h3 { font-weight: 700; font-size: .97rem; line-height: 1.3; }
+.i365-themed .i365-card-body p, .i365-themed .i365-muted { color: var(--t-muted); }
+.i365-themed .i365-grid-gallery .i365-card { border-radius: 10px; border: none; }
+.i365-theme-works .i365-grid-cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.i365-theme-works .i365-grid-cards .i365-card-pic { aspect-ratio: 3 / 4; }
+.i365-themed .i365-video, .i365-themed .i365-card-pic.is-video { border-radius: 10px; }
+
+/* blog look: white cards with the four brand colours as borders */
+.i365-theme-blog .i365-content-card { border: 3px solid #1A1A1A; box-shadow: none; }
+.i365-theme-blog .i365-content > .i365-content-card:nth-of-type(4n+1) { border-color: #4285F4; }
+.i365-theme-blog .i365-content > .i365-content-card:nth-of-type(4n+2) { border-color: #F5B800; }
+.i365-theme-blog .i365-content > .i365-content-card:nth-of-type(4n+3) { border-color: #34A853; }
+.i365-theme-blog .i365-content > .i365-content-card:nth-of-type(4n+4) { border-color: #EA4335; }
+.i365-theme-blog .i365-card { background: #fff; border: 2px solid #1A1A1A; }
+
+/* tags, filters, lists */
+.i365-themed .i365-tag { background: transparent; border: 1px solid var(--t-line); color: var(--t-text); border-radius: 4px; transition: background .2s, color .2s, border-color .2s; }
+.i365-themed .i365-tag:hover { background: var(--t-accent); border-color: var(--t-accent); color: var(--t-accent-text); }
+.i365-themed .i365-tag-strong { background: var(--t-accent); color: var(--t-accent-text); border-color: var(--t-accent); }
+.i365-themed .i365-filters button { background: transparent; color: var(--t-text); border: 1px solid var(--t-line); }
+.i365-themed .i365-filters button.is-active { background: var(--t-accent); color: var(--t-accent-text); border-color: var(--t-accent); }
+.i365-themed .i365-list > li { background: var(--t-inner); border: 1px solid var(--t-line); color: var(--t-text); border-radius: 14px; }
+.i365-themed .i365-pill-solid { background: #1A1A1A; color: #fff; }
+.i365-themed .i365-empty { color: var(--t-muted); }
+
+/* call to action under a section */
+.i365-themed .i365-cta { margin: 0; background: transparent; border: 2px dashed currentColor; color: var(--t-onbg); border-radius: 20px; }
+
+/* contact (old contact_port: red card, dark text, ✦ promises) */
+.i365-themed .i365-contact { grid-template-columns: 1fr 1fr; gap: 40px; }
+.i365-themed .i365-form label { color: var(--t-muted); font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.i365-themed .i365-form input, .i365-themed .i365-form select, .i365-themed .i365-form textarea { background: var(--t-input); border: 1.5px solid var(--t-line); color: var(--t-text); text-transform: none; letter-spacing: 0; font-size: .9rem; }
+.i365-themed .i365-form .i365-pill-solid { background: var(--t-accent); color: var(--t-accent-text); border: none; box-shadow: none; padding: 13px 20px; font-weight: 700; }
+.i365-themed .i365-contact-side .i365-pill { justify-content: flex-start; background: var(--t-inner); color: var(--t-text); border: none; box-shadow: none; border-radius: 10px; padding: 14px 18px; }
+.i365-themed .i365-contact-side .i365-pill:hover { filter: brightness(.95); transform: none; }
+.i365-themed .i365-promise { list-style: none; padding: 0; }
+.i365-themed .i365-promise li { padding: 10px 0 10px 22px; border-bottom: 1px solid var(--t-line); position: relative; }
+.i365-themed .i365-promise li:last-child { border-bottom: none; }
+.i365-themed .i365-promise li::before { content: '✦'; position: absolute; left: 0; top: 12px; font-size: .7rem; }
+
+/* redirect card */
+.i365-themed .i365-redirect { background: var(--t-card); color: var(--t-text); border: none; box-shadow: 0 15px 35px rgba(0,0,0,.2); border-radius: 20px; padding: 40px 36px; margin: 30px auto 80px; }
+.i365-themed .i365-loadbar { background: var(--t-accent); }
+
+/* routes */
+.i365-themed.i365-theme-blog .i365-lead { color: var(--t-text); }
+
+/* footer (old .site-footer) */
+.i365-site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+.i365-footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+.i365-footer-brand .dot-r { color: #EA4335; } .i365-footer-brand .dot-g { color: #34A853; }
+.i365-footer-brand .dot-b { color: #4285F4; } .i365-footer-brand .dot-y { color: #F5B800; }
+.i365-footer-tagline { font-size: .78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.45); margin: 0 0 22px; }
+.i365-footer-mail { margin: 0 0 18px; font-size: .85rem; } .i365-footer-mail a { color: rgba(255,255,255,.75); }
+.i365-footer-copy { font-size: .72rem; color: rgba(255,255,255,.3); border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px; margin: 0; }
+.i365-theme-contact .i365-site-footer { border-top: 1px solid rgba(255,255,255,.08); }
+
+/* fixed back button bottom-right (old BACK image) */
+.i365-back-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; text-decoration: none; }
+.i365-back-float img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)); transition: transform .2s; }
+.i365-back-float:hover img { transform: scale(1.08); }
+.i365-back-float-text { display: inline-block; background: #fff; color: #1A1A1A; border: 1px solid #000; box-shadow: 2px 2px 0 #000; border-radius: 999px; padding: 10px 18px; font-weight: 700; font-size: 14px; }
+
+/* map badge: colour sweep on hover (old index .island-badge) */
+.i365-btn:hover .i365-badge { color: #0000; background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0 / 200% no-repeat, rgba(255,255,255,.97); -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
+
+@media (max-width: 640px) {
+  .i365-themed .i365-header { padding: 14px 16px; }
+  .i365-themed .i365-logo img { height: 36px; }
+  .i365-hero { padding-top: 90px; }
+  .i365-page-title { font-size: clamp(3rem, 14vw, 5rem); }
+  .i365-content { padding: 24px 16px 60px; }
+  .i365-content-card, .i365-theme-works .i365-content-card { padding: 24px 20px; border-radius: 16px; }
+  .i365-col-title { font-size: 1.6rem; }
+  .i365-themed .i365-contact { grid-template-columns: 1fr; }
+  .i365-themed .i365-text-block img { float: none; width: 100%; max-width: none; margin: 0 0 14px; }
+  .i365-theme-works .i365-grid-cards { grid-template-columns: repeat(2, 1fr); }
+  .i365-back-float { bottom: 16px; right: 16px; }
+  .i365-back-float img { height: 52px; }
+  .i365-site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+}
+.i365-themed .i365-modal-box { background: var(--t-card); color: var(--t-text); }
+.i365-themed .i365-modal-close { color: var(--t-text); }
+.i365-themed .i365-cta .i365-big-btn { background: var(--t-card); color: var(--t-accent); }
+
+/* detail display: each item in full (case study) */
+.i365-details { display: grid; gap: 36px; }
+.i365-detail + .i365-detail { border-top: 1px solid var(--t-line, #e3ddd2); padding-top: 32px; }
+.i365-detail-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.6rem; color: var(--t-accent, inherit); margin: 0 0 6px; text-transform: uppercase; letter-spacing: .5px; }
+.i365-detail-pic { width: 100%; max-height: 460px; object-fit: cover; object-position: top; border-radius: 12px; margin: 12px 0; display: block; }
+.i365-detail .i365-fields div { grid-template-columns: 150px 1fr; }
+.i365-display-detail > .i365-col-title.i365-section-title { margin-bottom: 26px; }
+.i365-themed { display: flex; flex-direction: column; min-height: 100vh; }
+.i365-themed > .i365-site-footer { margin-top: auto; }
+.i365-themed > main.i365-content, .i365-themed > section.i365-content, .i365-themed > nav.i365-content { margin-bottom: 60px; }

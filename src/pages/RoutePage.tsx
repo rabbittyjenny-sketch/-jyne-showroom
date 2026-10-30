@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { getRouteBundle, getSettings } from '@/lib/data';
 import { useLoad } from '@/lib/useLoad';
-import { Loading, NotFoundBlock, PageShell, SiteFooter, SiteHeader } from '@/components/site/SiteChrome';
+import { BackFloat, Loading, NotFoundBlock, PageShell, PageTitle, SiteFooter, SiteHeader } from '@/components/site/SiteChrome';
 import { ItemsDisplay } from '@/components/site/ItemViews';
 import { ContactForm } from '@/components/site/ContactForm';
 import type { DisplayStyle } from '@/lib/types';
@@ -31,21 +31,22 @@ export default function RoutePage() {
   }
 
   return (
-    <PageShell tone="paper">
+    <PageShell theme={{ preset: 'blog' }}>
       <SiteHeader settings={settings} />
-      <main className="i365-section i365-route">
-        <p className="i365-kicker">โปรไฟล์สำหรับตำแหน่ง</p>
-        <h1>{title}</h1>
-        {headline && <p className="i365-lead">{headline}</p>}
-        {route.summary_th && <p>{route.summary_th}</p>}
-        <div className="i365-route-actions">
-          {route.resume_url && <a className="i365-pill i365-pill-solid" href={route.resume_url} target="_blank" rel="noreferrer">ดาวน์โหลดเรซูเม่ ↓</a>}
-          <Link className="i365-pill" to="/i/profile">ดูโปรไฟล์เต็ม</Link>
+      <PageTitle title={title} subtitle="โปรไฟล์สำหรับตำแหน่งนี้" />
+      <main className="i365-content i365-route">
+        <div className="i365-content-card i365-reveal">
+          {headline && <p className="i365-lead">{headline}</p>}
+          {route.summary_th && <p>{route.summary_th}</p>}
+          <div className="i365-route-actions">
+            {route.resume_url && <a className="i365-big-btn" href={route.resume_url} target="_blank" rel="noreferrer">ดาวน์โหลดเรซูเม่ ↓</a>}
+            <Link className="i365-big-btn is-ghost" to="/i/profile">ดูโปรไฟล์เต็ม</Link>
+          </div>
         </div>
-        {groups.length === 0 && <div className="i365-empty"><p>ยังไม่ได้เลือกผลงานให้เส้นทางนี้</p></div>}
+        {groups.length === 0 && <div className="i365-content-card"><p>ยังไม่ได้เลือกผลงานให้เส้นทางนี้</p></div>}
         {groups.map((g) => (
-          <section key={g.key} className="i365-route-group">
-            <h2>{g.label}</h2>
+          <section key={g.key} className={`i365-content-card i365-display-${g.style} i365-reveal`}>
+            <h2 className="i365-col-title"><span className="i365-sweep-title">{g.label}</span></h2>
             <ItemsDisplay
               style={g.style}
               items={g.list}
@@ -55,9 +56,13 @@ export default function RoutePage() {
             />
           </section>
         ))}
-        <section className="i365-panel"><h2>ติดต่อ</h2><ContactForm settings={settings} sourceRoute={slug} /></section>
+        <section className="i365-content-card i365-reveal">
+          <h2 className="i365-col-title"><span className="i365-sweep-title">ติดต่อ</span></h2>
+          <ContactForm settings={settings} sourceRoute={slug} />
+        </section>
       </main>
       <SiteFooter settings={settings} />
+      <BackFloat settings={settings} to="/" label="แผนที่หลัก" />
     </PageShell>
   );
 }

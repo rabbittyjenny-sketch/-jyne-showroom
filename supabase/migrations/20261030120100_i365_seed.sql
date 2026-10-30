@@ -9,6 +9,7 @@ insert into public.i365_site_settings (key, value) values ('socials', '[{"label"
 insert into public.i365_site_settings (key, value) values ('line_qr', '"https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_site_settings (key, value) values ('line_qr_caption', '"เพิ่มเพื่อน / สอบถามเพิ่มเติม / รับข่าวสารก่อนใคร"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_site_settings (key, value) values ('contact_promise_th', '"Quick Response — ตอบกลับภายใน 24 ชั่วโมง\nClear Next Steps — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ\nHonest Assessment — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่\nNo Pressure — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน"'::jsonb) on conflict (key) do nothing;
+insert into public.i365_site_settings (key, value) values ('back_button', '"https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_island_templates (slug, name_th, name_en, icon, default_features, sort_order)
 values ('standard', 'เกาะทั่วไป', 'Standard island', '🏝️', '{"has_filters":true,"has_tags":true,"has_route_tags":true,"has_contact_cta":true,"has_download":false,"is_redirect":false,"has_contact_form":false}'::jsonb, 1)
 on conflict (slug) do nothing;
@@ -140,7 +141,7 @@ insert into public.i365_sections (island_id, slug, name_th, name_en, item_type_i
   display_style, button_image, pos_left, pos_top, pos_width, is_published, sort_order)
 select i.id, 'freelance-live', 'Live Streamer (Freelance)', 'Live streamer (freelance)',
   (select id from public.i365_item_types where slug = 'case_study'),
-  'items', 'cards', '/islands/profile/btn-freelance-live.png', 52, 62, 28, true, 4
+  'items', 'detail', '/islands/profile/btn-freelance-live.png', 52, 62, 28, true, 4
 from public.i365_islands i where i.slug = 'profile'
 on conflict (island_id, slug) do nothing;
 insert into public.i365_sections (island_id, slug, name_th, name_en, item_type_id, source_type,

@@ -105,6 +105,7 @@ export function Settings() {
           ))}
           <Button size="sm" variant="outline" onClick={() => setS({ ...s, socials: [...(s.socials ?? []), { label: '', handle: '', url: '' }] })}>+ เพิ่ม</Button>
         </div>
+        <div className="space-y-1"><Label>รูปปุ่มย้อนกลับ (มุมขวาล่างทุกหน้า)</Label><UploadOrUrl value={s.back_button ?? ''} onChange={(v) => setS({ ...s, back_button: v })} accept="image/*" folder="brand" preview /></div>
         <div className="space-y-1"><Label>รูป QR LINE (เกาะติดต่อ)</Label><UploadOrUrl value={s.line_qr ?? ''} onChange={(v) => setS({ ...s, line_qr: v })} accept="image/*" folder="brand" preview /></div>
         <div className="space-y-1"><Label>ข้อความใต้ QR</Label><Input value={s.line_qr_caption ?? ''} onChange={(e) => setS({ ...s, line_qr_caption: e.target.value })} /></div>
         <div className="space-y-1"><Label>คำสัญญาข้างฟอร์มติดต่อ (บรรทัดละข้อ)</Label><Textarea rows={4} value={s.contact_promise_th ?? ''} onChange={(e) => setS({ ...s, contact_promise_th: e.target.value })} /></div>

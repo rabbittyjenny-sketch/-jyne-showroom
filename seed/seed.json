@@ -29,7 +29,8 @@
     ],
     "line_qr": "https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226",
     "line_qr_caption": "เพิ่มเพื่อน / สอบถามเพิ่มเติม / รับข่าวสารก่อนใคร",
-    "contact_promise_th": "Quick Response — ตอบกลับภายใน 24 ชั่วโมง\nClear Next Steps — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ\nHonest Assessment — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่\nNo Pressure — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน"
+    "contact_promise_th": "Quick Response — ตอบกลับภายใน 24 ชั่วโมง\nClear Next Steps — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ\nHonest Assessment — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่\nNo Pressure — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน",
+    "back_button": "https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277"
   },
   "island_templates": [
     {
@@ -692,7 +693,7 @@
           "name_th": "Live Streamer (Freelance)",
           "name_en": "Live streamer (freelance)",
           "item_type": "case_study",
-          "display": "cards",
+          "display": "detail",
           "pos": [
             52,
             62,
@@ -711,7 +712,10 @@
             18
           ]
         }
-      ]
+      ],
+      "theme": {
+        "preset": "about"
+      }
     },
     {
       "slug": "clips",
@@ -770,7 +774,10 @@
           "item_type": "clip",
           "display": "video_grid"
         }
-      ]
+      ],
+      "theme": {
+        "preset": "marina"
+      }
     },
     {
       "slug": "photos",
@@ -815,7 +822,10 @@
           "item_type": "photo",
           "display": "gallery"
         }
-      ]
+      ],
+      "theme": {
+        "preset": "district"
+      }
     },
     {
       "slug": "design",
@@ -853,7 +863,10 @@
           "item_type": "design_work",
           "display": "cards"
         }
-      ]
+      ],
+      "theme": {
+        "preset": "blog"
+      }
     },
     {
       "slug": "tools",
@@ -884,7 +897,10 @@
           "item_type": "tool",
           "display": "cards"
         }
-      ]
+      ],
+      "theme": {
+        "preset": "works"
+      }
     },
     {
       "slug": "docs",
@@ -931,7 +947,10 @@
           "display": "feed",
           "source_type": "c365_articles"
         }
-      ]
+      ],
+      "theme": {
+        "preset": "learning"
+      }
     },
     {
       "slug": "contact",
@@ -947,7 +966,10 @@
         20
       ],
       "sort_order": 7,
-      "sections": []
+      "sections": [],
+      "theme": {
+        "preset": "contact"
+      }
     },
     {
       "slug": "academy",
@@ -965,7 +987,10 @@
         17
       ],
       "sort_order": 8,
-      "sections": []
+      "sections": [],
+      "theme": {
+        "preset": "district"
+      }
     },
     {
       "slug": "structure",
@@ -983,7 +1008,10 @@
         13
       ],
       "sort_order": 9,
-      "sections": []
+      "sections": [],
+      "theme": {
+        "preset": "works"
+      }
     }
   ],
   "routes": [

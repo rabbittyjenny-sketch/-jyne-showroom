@@ -7,6 +7,7 @@ type SeedSection = { slug: string; name_th: string; name_en: string; item_type: 
 type SeedIsland = {
   slug: string; template: string; name_th: string; name_en: string; tooltip_th: string; intro_th?: string;
   button_image: string | null; land_image: string | null; pos: number[]; sort_order: number; redirect_url?: string; sections: SeedSection[];
+  theme?: Record<string, string>;
 };
 
 const templates: IslandTemplate[] = seed.island_templates.map((t, i) => ({
@@ -29,7 +30,7 @@ const sections: Section[] = [];
     tooltip_th: s.tooltip_th, intro_th: s.intro_th ?? null, intro_en: null, features: { ...tpl.default_features },
     button_image: s.button_image, land_image: s.land_image, land_aspect: '1344/768', mobile_focus_x: 50,
     pos_left: s.pos[0], pos_top: s.pos[1], pos_width: s.pos[2], redirect_url: s.redirect_url ?? null,
-    redirect_delay_ms: 2500, is_published: true, sort_order: s.sort_order, deleted_at: null,
+    redirect_delay_ms: 2500, theme: (s.theme ?? {}) as Island['theme'], is_published: true, sort_order: s.sort_order, deleted_at: null,
   });
   s.sections.forEach((sec, i) => {
     sections.push({

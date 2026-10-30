@@ -22,9 +22,11 @@ export interface StageButton {
 }
 
 export function MapStage({
-  background, aspect = '16/9', buttons, mobileFocusX = 50, children, floating = true,
+  background, aspect = '16/9', buttons, mobileFocusX = 50, children, floating = true, fallback,
 }: {
   background: string | null; aspect?: string; buttons: StageButton[]; mobileFocusX?: number; children?: ReactNode; floating?: boolean;
+  /** shown instead of the whole stage while there is no background picture (or it fails to load) */
+  fallback?: ReactNode;
 }) {
   const placed = buttons.filter((b) => b.left !== null && b.top !== null && b.width !== null);
   const unplaced = buttons.filter((b) => !placed.includes(b));
@@ -40,6 +42,8 @@ export function MapStage({
     const stageWidth = wrap.scrollWidth;
     wrap.scrollLeft = Math.max(0, (stageWidth * mobileFocusX) / 100 - wrap.clientWidth / 2);
   }, [mobileFocusX, buttons.length]);
+
+  if (fallback !== undefined && (!background || bgFailed)) return <>{fallback}</>;
 
   return (
     <>

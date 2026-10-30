@@ -59,7 +59,7 @@ function TagChips({ tags }: { tags: Tag[] }) {
   return <div className="i365-tags">{tags.map((t) => <span key={t.id} className="i365-tag">{t.name_th}</span>)}</div>;
 }
 
-function VideoPlayer({ url, title }: { url: string; title: string }) {
+function VideoPlayer({ url, title, autoplay = true }: { url: string; title: string; autoplay?: boolean }) {
   const id = parseYouTubeId(url);
   if (!id) {
     return <a className="i365-pill" href={url} target="_blank" rel="noreferrer">เปิดคลิป ↗</a>;
@@ -68,7 +68,7 @@ function VideoPlayer({ url, title }: { url: string; title: string }) {
   return (
     <div className={`i365-video ${vertical ? 'is-vertical' : ''}`}>
       <iframe
-        src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
+        src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=${autoplay ? 1 : 0}&rel=0`}
         title={title}
         allow="autoplay; encrypted-media; picture-in-picture"
         allowFullScreen
@@ -124,9 +124,11 @@ export function ItemsDisplay({
       <div className="i365-text-blocks">
         {items.map((it) => (
           <article key={it.id} className="i365-text-block">
-            <h2>{it.title_th}</h2>
+            <h2 className="i365-col-title"><span className="i365-sweep-title">{it.title_th}</span></h2>
             <SafeImg src={str(it.data.image)} />
-            {lines(it.data.body_th).map((p, i) => <p key={i}>{p}</p>)}
+            {lines(it.data.body_th).map((p, i) => (/^["“]/.test(p)
+              ? <blockquote key={i} className="i365-quote">{p}</blockquote>
+              : <p key={i}>{p}</p>))}
             {showTags && <TagChips tags={tagsFor(it.id)} />}
           </article>
         ))}
@@ -155,6 +157,24 @@ export function ItemsDisplay({
           </li>
         ))}
       </ol>
+    );
+  }
+
+  if (style === 'detail') {
+    // every item shown in full on the page (case studies): picture, summary and all its fields
+    return (
+      <div className="i365-details">
+        {items.map((it) => (
+          <article key={it.id} className="i365-detail">
+            <h3 className="i365-detail-title">{it.title_th}</h3>
+            {it.summary_th && <p className="i365-card-muted">{it.summary_th}</p>}
+            <SafeImg className="i365-detail-pic" src={itemPicture(it, type)} alt={it.title_th} />
+            {videoKey && str(it.data[videoKey]) && <VideoPlayer url={str(it.data[videoKey])} title={it.title_th} autoplay={false} />}
+            <FieldList item={it} fields={fields} skip={[videoKey ?? '']} />
+            {showTags && <TagChips tags={tagsFor(it.id)} />}
+          </article>
+        ))}
+      </div>
     );
   }
 

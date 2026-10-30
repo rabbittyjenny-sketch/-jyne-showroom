@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getFeed, getSectionBundle, getSettings } from '@/lib/data';
 import { useLoad } from '@/lib/useLoad';
-import { Loading, NotFoundBlock, PageShell, SiteFooter, SiteHeader } from '@/components/site/SiteChrome';
+import { BackFloat, Loading, NotFoundBlock, PageShell, PageTitle, SiteFooter, SiteHeader } from '@/components/site/SiteChrome';
 import { FeedDisplay, ItemsDisplay } from '@/components/site/ItemViews';
 import { ContactForm } from '@/components/site/ContactForm';
 
@@ -35,43 +35,47 @@ export default function SectionPage() {
   const topCats = categories.filter((c) => !c.parent_id);
 
   return (
-    <PageShell tone="paper">
-      <SiteHeader settings={data!.settings} back={{ to: `/i/${island.slug}`, label: island.name_th }} />
+    <PageShell theme={island.theme ?? {}}>
+      <SiteHeader settings={data!.settings} />
+      <PageTitle title={island.name_en || island.name_th} subtitle={island.name_en && island.name_en !== island.name_th ? island.name_th : null} />
       <nav className="i365-subnav" aria-label={`เมนูใน${island.name_th}`}>
         {siblings.map((s) => (
           <Link key={s.id} to={`/i/${island.slug}/${s.slug}`} className={s.id === section.id ? 'is-active' : ''}>{s.name_th}</Link>
         ))}
       </nav>
-      <main className="i365-section">
-        <h1>{section.name_th}</h1>
-        {section.description_th && <p className="i365-muted">{section.description_th}</p>}
+      <main className="i365-content">
+        <div className={`i365-content-card i365-display-${section.display_style} i365-reveal`}>
+          <h2 className="i365-col-title i365-section-title"><span className="i365-sweep-title">{section.name_th}</span></h2>
+          {section.description_th && <p className="i365-card-muted">{section.description_th}</p>}
 
-        {f.has_filters !== false && section.filter_mode === 'categories' && topCats.length > 0 && (
-          <div className="i365-filters" role="group" aria-label="กรองตามหมวด">
-            <button className={!cat ? 'is-active' : ''} onClick={() => setCat(null)}>ทั้งหมด</button>
-            {topCats.map((c) => (
-              <button key={c.id} className={cat === c.id ? 'is-active' : ''} onClick={() => setCat(c.id)}>{c.name_th}</button>
-            ))}
-          </div>
-        )}
+          {f.has_filters !== false && section.filter_mode === 'categories' && topCats.length > 0 && (
+            <div className="i365-filters" role="group" aria-label="กรองตามหมวด">
+              <button className={!cat ? 'is-active' : ''} onClick={() => setCat(null)}>ทั้งหมด</button>
+              {topCats.map((c) => (
+                <button key={c.id} className={cat === c.id ? 'is-active' : ''} onClick={() => setCat(c.id)}>{c.name_th}</button>
+              ))}
+            </div>
+          )}
 
-        {section.source_type === 'items' && (
-          <ItemsDisplay style={section.display_style} items={shown} type={itemType} tagsFor={tagsFor} showTags={f.has_tags !== false} />
-        )}
-        {(section.source_type === 'c365_articles' || section.source_type === 'c365_toolbox') && <FeedDisplay entries={data!.feed} />}
-        {section.source_type === 'contact_form' && <ContactForm settings={data!.settings} sourceIsland={island.slug} />}
-        {section.source_type === 'external_link' && section.external_url && (
-          <a className="i365-pill i365-pill-solid" href={section.external_url}>ไปที่หน้านี้ →</a>
-        )}
+          {section.source_type === 'items' && (
+            <ItemsDisplay style={section.display_style} items={shown} type={itemType} tagsFor={tagsFor} showTags={f.has_tags !== false} />
+          )}
+          {(section.source_type === 'c365_articles' || section.source_type === 'c365_toolbox') && <FeedDisplay entries={data!.feed} />}
+          {section.source_type === 'contact_form' && <ContactForm settings={data!.settings} sourceIsland={island.slug} />}
+          {section.source_type === 'external_link' && section.external_url && (
+            <a className="i365-big-btn" href={section.external_url}>ไปที่หน้านี้ →</a>
+          )}
+        </div>
 
         {f.has_contact_cta && (
-          <div className="i365-cta">
+          <div className="i365-cta i365-reveal">
             <p>สนใจงานแบบนี้?</p>
-            <Link to="/i/contact" className="i365-pill i365-pill-solid">ติดต่อ →</Link>
+            <Link to="/i/contact" className="i365-big-btn">ติดต่อ →</Link>
           </div>
         )}
       </main>
       <SiteFooter settings={data!.settings} />
+      <BackFloat settings={data!.settings} to={`/i/${island.slug}`} label={island.name_th} />
     </PageShell>
   );
 }

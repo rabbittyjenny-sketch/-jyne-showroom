@@ -141,7 +141,7 @@ create table if not exists public.i365_sections (
   source_config   jsonb not null default '{}'::jsonb,
   external_url    text,
   display_style   text not null default 'cards'
-                  check (display_style in ('cards', 'video_grid', 'gallery', 'timeline', 'list', 'text', 'feed')),
+                  check (display_style in ('cards', 'video_grid', 'gallery', 'timeline', 'list', 'text', 'feed', 'detail')),
   filter_mode     text not null default 'categories' check (filter_mode in ('categories', 'tags', 'none')),
   button_image    text,
   cover_image     text,

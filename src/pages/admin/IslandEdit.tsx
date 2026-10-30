@@ -9,6 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { PositionInputs, UploadOrUrl } from '@/components/admin/FieldInputs';
 import { insert, list, slugify, update } from '@/lib/adminApi';
+import { THEME_FIELDS, THEME_PRESETS, resolveTheme, themeVars, type IslandTheme, type ThemePresetKey } from '@/lib/themes';
 import {
   DISPLAY_LABELS, FEATURE_LABELS, SOURCE_LABELS,
   type DisplayStyle, type Features, type Island, type ItemType, type Section, type SourceType,
@@ -86,6 +87,8 @@ export default function IslandEdit() {
             </div>
           )}
         </section>
+
+        <ThemeEditor theme={island.theme ?? {}} onChange={(theme) => set({ theme })} />
 
         <section className="rounded-lg border bg-background p-4 space-y-3 lg:col-span-2">
           <h2 className="font-semibold">รูปและตำแหน่ง</h2>
@@ -247,5 +250,55 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+/** Island colours: pick one of the old site's colour sets, then adjust any colour. */
+function ThemeEditor({ theme, onChange }: { theme: IslandTheme; onChange: (t: IslandTheme) => void }) {
+  const resolved = resolveTheme(theme);
+  const isHex = (v: string) => /^#[0-9a-fA-F]{6}$/.test(v);
+  return (
+    <section className="rounded-lg border bg-background p-4 space-y-3 lg:col-span-2">
+      <div className="flex items-center justify-between">
+        <h2 className="font-semibold">สีของเกาะ</h2>
+        <button className="text-xs underline text-muted-foreground" onClick={() => onChange({ preset: resolved.preset })}>ล้างสีที่ปรับเอง</button>
+      </div>
+      <p className="text-xs text-muted-foreground">ชุดสียกมาจากหน้าเกาะเดิม เลือกชุดแล้วปรับสีทีละจุดได้ สีที่ปรับเองจะทับชุดสี</p>
+      <div className="flex flex-wrap gap-2">
+        {(Object.keys(THEME_PRESETS) as ThemePresetKey[]).map((k) => {
+          const p = THEME_PRESETS[k];
+          return (
+            <button key={k} type="button" onClick={() => onChange({ preset: k })}
+              className={`flex items-center gap-2 rounded-md border px-2 py-1 text-xs ${resolved.preset === k ? 'ring-2 ring-primary' : ''}`}>
+              <span className="inline-flex h-5 w-8 overflow-hidden rounded border">
+                <span className="h-full w-1/2" style={{ background: p.bg }} /><span className="h-full w-1/2" style={{ background: p.card }} />
+              </span>
+              {p.label} <span className="text-muted-foreground">({p.from})</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {THEME_FIELDS.map((f) => {
+          const v = resolved[f.key];
+          return (
+            <label key={f.key} className="flex items-center gap-2 text-xs">
+              {isHex(v)
+                ? <input type="color" value={v} onChange={(e) => onChange({ ...theme, [f.key]: e.target.value.toUpperCase() })} className="h-8 w-10 cursor-pointer rounded border" />
+                : <span className="h-8 w-10 rounded border" style={{ background: v }} title={v} />}
+              <span>{f.label}{theme[f.key] ? ' •' : ''}</span>
+            </label>
+          );
+        })}
+      </div>
+      <div className="rounded-lg p-4" style={{ ...themeVars(theme), background: resolved.bg, color: resolved.onBg }}>
+        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 28, textTransform: 'uppercase', textAlign: 'center' }}>ตัวอย่าง ISLAND</div>
+        <div className="mt-2 rounded-xl p-4" style={{ background: resolved.card, color: resolved.cardText }}>
+          <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 20, color: resolved.accent, borderBottom: `2px solid ${resolved.accent}`, paddingBottom: 6 }}>หัวข้อในการ์ด</div>
+          <p className="mt-2 text-sm">ตัวหนังสือเนื้อหาในการ์ด</p>
+          <span className="inline-block rounded-full px-4 py-1 text-xs font-bold" style={{ background: resolved.accent, color: resolved.accentText }}>ปุ่ม</span>
+        </div>
+      </div>
+    </section>
   );
 }
