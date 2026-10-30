@@ -83,12 +83,15 @@ on conflict (slug) do nothing;`);
 });
 
 (seed.items ?? []).forEach((it, i) => {
-  // skip if this exact link is already in that section (re-run safe)
-  add(`insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, ${q(it.title_th)}, ${j(it.data)}, ${i + 1}
+  // re-run safe: a clip is matched by its link, anything else by its title within the same section
+  const dup = it.data.video_url
+    ? `x.data->>'video_url' = ${q(it.data.video_url)}`
+    : `x.title_th = ${q(it.title_th)}`;
+  add(`insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, ${q(it.title_th)}, ${q(it.title_en ?? null)}, ${q(it.summary_th ?? null)}, ${q(it.cover_image ?? null)}, ${j(it.data)}, ${it.is_published === false ? 'false' : 'true'}, ${i + 1}
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = ${q(it.island)} and s.slug = ${q(it.section)}
-  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = ${q(it.data.video_url)});`);
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and ${dup});`);
 });
 
 const file = join(root, 'supabase/migrations/20261030120100_i365_seed.sql');

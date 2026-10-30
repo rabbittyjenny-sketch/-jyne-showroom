@@ -3,6 +3,7 @@ import { AdminLayout, Notice } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { UploadOrUrl } from '@/components/admin/FieldInputs';
 import { insert, list, slugify, update, upsertSetting } from '@/lib/adminApi';
@@ -104,6 +105,9 @@ export function Settings() {
           ))}
           <Button size="sm" variant="outline" onClick={() => setS({ ...s, socials: [...(s.socials ?? []), { label: '', handle: '', url: '' }] })}>+ เพิ่ม</Button>
         </div>
+        <div className="space-y-1"><Label>รูป QR LINE (เกาะติดต่อ)</Label><UploadOrUrl value={s.line_qr ?? ''} onChange={(v) => setS({ ...s, line_qr: v })} accept="image/*" folder="brand" preview /></div>
+        <div className="space-y-1"><Label>ข้อความใต้ QR</Label><Input value={s.line_qr_caption ?? ''} onChange={(e) => setS({ ...s, line_qr_caption: e.target.value })} /></div>
+        <div className="space-y-1"><Label>คำสัญญาข้างฟอร์มติดต่อ (บรรทัดละข้อ)</Label><Textarea rows={4} value={s.contact_promise_th ?? ''} onChange={(e) => setS({ ...s, contact_promise_th: e.target.value })} /></div>
       </section>
     </AdminLayout>
   );

@@ -112,6 +112,10 @@ export interface RouteItem { route_id: string; item_id: string; sort_order: numb
 export interface SiteSettings {
   main_map_image?: string; main_map_aspect?: string; logo?: string; contact_email?: string;
   socials?: { label: string; handle: string; url: string }[];
+  /** LINE OA QR image + the line shown under it (contact island) */
+  line_qr?: string; line_qr_caption?: string;
+  /** promises listed beside the contact form, one per line */
+  contact_promise_th?: string;
 }
 
 export interface FeedEntry { id: string; title: string; summary: string | null; image: string | null; href: string }

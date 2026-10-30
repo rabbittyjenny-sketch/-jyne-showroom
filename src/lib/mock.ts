@@ -44,11 +44,20 @@ const sections: Section[] = [];
   });
 });
 
-const items: Item[] = (seed.items ?? []).map((it, i) => ({
-  id: `item-${i + 1}`, section_id: `sec-${it.island}-${it.section}`, item_type_id: 'type-clip', category_id: null,
-  title_th: it.title_th, title_en: null, summary_th: null, summary_en: null, cover_image: null,
-  data: it.data, is_featured: false, is_published: true, sort_order: i + 1, batch_id: null,
-}));
+type SeedItem = {
+  island: string; section: string; title_th: string; title_en?: string; summary_th?: string;
+  cover_image?: string; is_published?: boolean; data: Record<string, unknown>;
+};
+const items: Item[] = (seed.items as SeedItem[]).map((it, i) => {
+  const sectionId = `sec-${it.island}-${it.section}`;
+  return {
+    id: `item-${i + 1}`, section_id: sectionId,
+    item_type_id: sections.find((s) => s.id === sectionId)?.item_type_id ?? 'type-clip', category_id: null,
+    title_th: it.title_th, title_en: it.title_en ?? null, summary_th: it.summary_th ?? null, summary_en: null,
+    cover_image: it.cover_image ?? null, data: it.data, is_featured: false,
+    is_published: it.is_published !== false, sort_order: i + 1, batch_id: null,
+  };
+});
 
 const tagGroups: TagGroup[] = seed.tag_groups.map((g, i) => ({
   id: `tg-${g.slug}`, slug: g.slug, name_th: g.name_th, name_en: g.name_en, allow_multiple: g.allow_multiple, sort_order: i + 1,

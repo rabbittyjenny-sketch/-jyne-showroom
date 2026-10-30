@@ -135,12 +135,17 @@ export function ItemsDisplay({
   }
 
   if (style === 'timeline') {
-    const sorted = [...items].sort((a, b) => str(b.data.start).localeCompare(str(a.data.start)));
+    // Sort by start date only when every entry has one; otherwise keep the order set in the back office.
+    const sorted = items.every((it) => str(it.data.start))
+      ? [...items].sort((a, b) => str(b.data.start).localeCompare(str(a.data.start)))
+      : items;
+    const when = (it: Item) => str(it.data.period_th)
+      || (str(it.data.start) ? `${monthLabel(str(it.data.start))} – ${it.data.end ? monthLabel(str(it.data.end)) : 'ปัจจุบัน'}` : '');
     return (
       <ol className="i365-timeline">
         {sorted.map((it) => (
           <li key={it.id}>
-            <div className="i365-timeline-when">{monthLabel(str(it.data.start))} – {it.data.end ? monthLabel(str(it.data.end)) : 'ปัจจุบัน'}</div>
+            {when(it) && <div className="i365-timeline-when">{when(it)}</div>}
             <div className="i365-timeline-card">
               <h3>{str(it.data.role) || it.title_th}</h3>
               <p className="i365-muted">{[str(it.data.organization), str(it.data.location)].filter(Boolean).join(' · ')}</p>

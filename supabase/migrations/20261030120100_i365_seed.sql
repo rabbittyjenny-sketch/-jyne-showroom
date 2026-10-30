@@ -6,6 +6,9 @@ insert into public.i365_site_settings (key, value) values ('main_map_aspect', '"
 insert into public.i365_site_settings (key, value) values ('logo', '"https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_site_settings (key, value) values ('contact_email', '"contact@ideas365.space"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_site_settings (key, value) values ('socials', '[{"label":"TikTok","handle":"@jennyjyne","url":"https://www.tiktok.com/@jennyjyne"},{"label":"Facebook","handle":"iDEAS365","url":"https://www.facebook.com/ideas365"},{"label":"YouTube","handle":"@ideas365","url":"https://www.youtube.com/@ideas365"},{"label":"Instagram","handle":"@ideas365","url":"https://www.instagram.com/ideas365"}]'::jsonb) on conflict (key) do nothing;
+insert into public.i365_site_settings (key, value) values ('line_qr', '"https://ik.imagekit.io/ideas365logo/L_926gxgxq_BW-1.png?updatedAt=1774500421226"'::jsonb) on conflict (key) do nothing;
+insert into public.i365_site_settings (key, value) values ('line_qr_caption', '"เพิ่มเพื่อน / สอบถามเพิ่มเติม / รับข่าวสารก่อนใคร"'::jsonb) on conflict (key) do nothing;
+insert into public.i365_site_settings (key, value) values ('contact_promise_th', '"Quick Response — ตอบกลับภายใน 24 ชั่วโมง\nClear Next Steps — บอกขั้นตอนต่อไปที่ชัดเจน ไม่คลุมเครือ\nHonest Assessment — ประเมินตรงไปตรงมาว่าเหมาะสมกับโปรเจกต์หรือไม่\nNo Pressure — การปรึกษาไม่ได้หมายถึงข้อผูกมัดในการจ้างงาน"'::jsonb) on conflict (key) do nothing;
 insert into public.i365_island_templates (slug, name_th, name_en, icon, default_features, sort_order)
 values ('standard', 'เกาะทั่วไป', 'Standard island', '🏝️', '{"has_filters":true,"has_tags":true,"has_route_tags":true,"has_contact_cta":true,"has_download":false,"is_redirect":false,"has_contact_form":false}'::jsonb, 1)
 on conflict (slug) do nothing;
@@ -22,7 +25,7 @@ insert into public.i365_item_types (slug, name_th, name_en, fields, features, de
 values ('text_block', 'ข้อความ', 'Text block', '[{"key":"body_th","label_th":"เนื้อหา (ไทย)","label_en":"Body (TH)","type":"textarea","required":true},{"key":"body_en","label_th":"เนื้อหา (อังกฤษ)","label_en":"Body (EN)","type":"textarea","required":false},{"key":"image","label_th":"รูปประกอบ","label_en":"Image","type":"image","required":false}]'::jsonb, '{"has_cover":false,"bulk_field":null}'::jsonb, 'text', 1)
 on conflict (slug) do nothing;
 insert into public.i365_item_types (slug, name_th, name_en, fields, features, default_display, sort_order)
-values ('experience', 'ประสบการณ์ทำงาน', 'Work experience', '[{"key":"role","label_th":"ตำแหน่ง","label_en":"Role","type":"text","required":true},{"key":"organization","label_th":"องค์กร / ที่ทำงาน","label_en":"Organization","type":"text","required":true},{"key":"location","label_th":"สถานที่","label_en":"Location","type":"text","required":false},{"key":"start","label_th":"เริ่ม (ปี-เดือน)","label_en":"Start","type":"month","required":true},{"key":"end","label_th":"จบ (ว่าง = ปัจจุบัน)","label_en":"End","type":"month","required":false},{"key":"highlights_th","label_th":"ผลงานเด่น (บรรทัดละข้อ)","label_en":"Highlights","type":"textarea","required":false},{"key":"logo","label_th":"โลโก้","label_en":"Logo","type":"image","required":false}]'::jsonb, '{"has_cover":false,"bulk_field":null}'::jsonb, 'timeline', 2)
+values ('experience', 'ประสบการณ์ทำงาน', 'Work experience', '[{"key":"role","label_th":"ตำแหน่ง","label_en":"Role","type":"text","required":true},{"key":"organization","label_th":"องค์กร / ที่ทำงาน","label_en":"Organization","type":"text","required":true},{"key":"location","label_th":"สถานที่","label_en":"Location","type":"text","required":false},{"key":"period_th","label_th":"ช่วงเวลา (พิมพ์เอง เช่น 2022 — ปัจจุบัน)","label_en":"Period","type":"text","required":false},{"key":"start","label_th":"เริ่ม (ปี-เดือน)","label_en":"Start","type":"month","required":false},{"key":"end","label_th":"จบ (ว่าง = ปัจจุบัน)","label_en":"End","type":"month","required":false},{"key":"highlights_th","label_th":"ผลงานเด่น (บรรทัดละข้อ)","label_en":"Highlights","type":"textarea","required":false},{"key":"logo","label_th":"โลโก้","label_en":"Logo","type":"image","required":false}]'::jsonb, '{"has_cover":false,"bulk_field":null}'::jsonb, 'timeline', 2)
 on conflict (slug) do nothing;
 insert into public.i365_item_types (slug, name_th, name_en, fields, features, default_display, sort_order)
 values ('certificate', 'ใบประกาศ', 'Certificate', '[{"key":"certificate_image","label_th":"รูปใบประกาศ","label_en":"Certificate image","type":"image","required":true},{"key":"issuer","label_th":"ผู้ออก","label_en":"Issuer","type":"text","required":false},{"key":"issued_on","label_th":"วันที่ได้รับ (ปี-เดือน)","label_en":"Issued","type":"month","required":false},{"key":"file_url","label_th":"ไฟล์ PDF (ถ้ามี)","label_en":"PDF","type":"file","required":false}]'::jsonb, '{"has_cover":false,"bulk_field":"certificate_image"}'::jsonb, 'gallery', 3)
@@ -351,83 +354,258 @@ on conflict (slug) do nothing;
 insert into public.i365_routes (slug, title_th, title_en, headline_th, is_published, sort_order)
 values ('beauty-content', 'Beauty · Content', 'Beauty & content', 'งานแต่งหน้า ทำผม และคอนเทนต์', true, 3)
 on conflict (slug) do nothing;
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #1', '{"video_url":"https://www.youtube.com/watch?v=N9nEHwZt3Sc","platform":"youtube"}'::jsonb, 1
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #1', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=N9nEHwZt3Sc","platform":"youtube"}'::jsonb, true, 1
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=N9nEHwZt3Sc');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #2', '{"video_url":"https://www.youtube.com/watch?v=jH3mrj2UwWk","platform":"youtube"}'::jsonb, 2
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #2', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=jH3mrj2UwWk","platform":"youtube"}'::jsonb, true, 2
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=jH3mrj2UwWk');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #3', '{"video_url":"https://www.youtube.com/watch?v=_9Mcp2mgNrg","platform":"youtube"}'::jsonb, 3
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #3', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=_9Mcp2mgNrg","platform":"youtube"}'::jsonb, true, 3
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=_9Mcp2mgNrg');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #4', '{"video_url":"https://www.youtube.com/watch?v=rhTlI_Rh3jM","platform":"youtube"}'::jsonb, 4
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #4', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=rhTlI_Rh3jM","platform":"youtube"}'::jsonb, true, 4
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=rhTlI_Rh3jM');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #5', '{"video_url":"https://www.youtube.com/watch?v=_erzZjnwLAU","platform":"youtube"}'::jsonb, 5
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #5', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=_erzZjnwLAU","platform":"youtube"}'::jsonb, true, 5
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=_erzZjnwLAU');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #6', '{"video_url":"https://www.youtube.com/watch?v=Or9s_hJYaYc","platform":"youtube"}'::jsonb, 6
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #6', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=Or9s_hJYaYc","platform":"youtube"}'::jsonb, true, 6
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=Or9s_hJYaYc');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #7', '{"video_url":"https://www.youtube.com/watch?v=IS-MwUWzGMs","platform":"youtube"}'::jsonb, 7
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #7', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=IS-MwUWzGMs","platform":"youtube"}'::jsonb, true, 7
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=IS-MwUWzGMs');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #8', '{"video_url":"https://www.youtube.com/watch?v=hA291t_W_iE","platform":"youtube"}'::jsonb, 8
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #8', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=hA291t_W_iE","platform":"youtube"}'::jsonb, true, 8
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=hA291t_W_iE');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #9', '{"video_url":"https://www.youtube.com/watch?v=QbuyU8EGMjU","platform":"youtube"}'::jsonb, 9
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #9', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=QbuyU8EGMjU","platform":"youtube"}'::jsonb, true, 9
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=QbuyU8EGMjU');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #10', '{"video_url":"https://www.youtube.com/watch?v=NniW6ScMdkw","platform":"youtube"}'::jsonb, 10
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #10', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=NniW6ScMdkw","platform":"youtube"}'::jsonb, true, 10
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=NniW6ScMdkw');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'ไลฟ์ขาย #11', '{"video_url":"https://www.youtube.com/watch?v=2QrneqkWJyQ","platform":"youtube"}'::jsonb, 11
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ไลฟ์ขาย #11', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=2QrneqkWJyQ","platform":"youtube"}'::jsonb, true, 11
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'live-selling'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=2QrneqkWJyQ');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'AI Voice · Avatar #1', '{"video_url":"https://www.youtube.com/watch?v=vIuNytBwue8","platform":"youtube"}'::jsonb, 12
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'AI Voice · Avatar #1', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=vIuNytBwue8","platform":"youtube"}'::jsonb, true, 12
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'ai-voice'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=vIuNytBwue8');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'AI Voice · Avatar #2', '{"video_url":"https://www.youtube.com/watch?v=kBFF7zDOb5Y","platform":"youtube"}'::jsonb, 13
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'AI Voice · Avatar #2', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=kBFF7zDOb5Y","platform":"youtube"}'::jsonb, true, 13
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'ai-voice'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=kBFF7zDOb5Y');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'AI Voice · Avatar #3', '{"video_url":"https://www.youtube.com/watch?v=m_w56qFvlss","platform":"youtube"}'::jsonb, 14
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'AI Voice · Avatar #3', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=m_w56qFvlss","platform":"youtube"}'::jsonb, true, 14
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'ai-voice'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=m_w56qFvlss');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'AI Voice · Avatar #4', '{"video_url":"https://www.youtube.com/watch?v=Sby6V-5khkk","platform":"youtube"}'::jsonb, 15
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'AI Voice · Avatar #4', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=Sby6V-5khkk","platform":"youtube"}'::jsonb, true, 15
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'ai-voice'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=Sby6V-5khkk');
-insert into public.i365_items (section_id, item_type_id, title_th, data, sort_order)
-select s.id, s.item_type_id, 'AI Voice · Avatar #5', '{"video_url":"https://www.youtube.com/watch?v=A7WZ0NMpclo","platform":"youtube"}'::jsonb, 16
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'AI Voice · Avatar #5', null, null, null, '{"video_url":"https://www.youtube.com/watch?v=A7WZ0NMpclo","platform":"youtube"}'::jsonb, true, 16
 from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
 where isl.slug = 'clips' and s.slug = 'ai-voice'
   and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.data->>'video_url' = 'https://www.youtube.com/watch?v=A7WZ0NMpclo');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'เจน (เจนจิรา จัยสิน)', 'Jyne (Jenjira Jayasin)', null, null, '{"body_th":"ลงมือจริง · มาตรฐานของตัวเอง · เงียบแต่มั่นคง\nเจนไม่ได้วางแผนเส้นทางนี้ไว้ แต่เห็นโอกาส — แล้วก็เดินเข้าไป\nจุดเริ่มต้นของเธออยู่ในที่ที่คนส่วนใหญ่ไม่ได้คาดถึง เธอเรียนจบสาขาคอมพิวเตอร์อุตสาหกรรม — ในยุคที่ไม่มีโปรแกรมสำเร็จรูป ไม่มีเครื่องมือลากวาง และไม่มี AI ช่วยทำงาน เธอเขียนโค้ดด้วย Pascal และ C+ สร้าง Hardware ตั้งแต่ต้น และกัดลายวงจรไฟฟ้าด้วยมือตัวเอง เธอเรียนรู้ว่าระบบไม่ได้สร้างตัวเองได้\nคนนั้นคือเธอเสมอมา\nตั้งแต่วันที่เรียนจบ เธอขายมาตลอด — ผ่านอัญมณี ผ่านงานบริการ ผ่านทุกห้องที่เดินเข้าไป อ่านคน สร้างความเชื่อใจ ดูแลความสัมพันธ์ตั้งแต่รปภ. ยันผู้บริหารระดับสูงและแขก VVIP ชาวต่างชาติ สภาพแวดล้อมเปลี่ยน แต่ instinct ไม่เคยเปลี่ยน\nเกือบสิบปีในวงการ Fine Dining ระดับโลก เธอทำงานโดยตรงกับ Chef Chumpol Jangprai (R-HAAN, 2 Michelin Stars, Iron Chef Thailand) และ Chef Andy Yangeksakul (Table 38 Bangkok; ผู้ก่อตั้ง Rhong Tiam นิวยอร์ก — ร้านอาหารไทยที่บริหารโดยคนไทยแห่งแรกที่ได้รับ Michelin Star ในสหรัฐฯ) ในสภาพแวดล้อมที่ Inspector ไม่เปิดเผยตัวตนตรวจสอบทุกรายละเอียด — เธอเรียนรู้ว่า Operational Excellence ที่แท้จริงคืออะไร ไม่ใช่ในทฤษฎี แต่ภายใต้แรงกดดันจริง\nสามปีก่อน เธอมองเห็น Live Commerce: อันนี้มันไปได้\nเธอเริ่มเป็น Freelance Live Commerce Host บน TikTok LIVE, Facebook Live และ Shopee Live — ไม่มีทีม ไม่มีสูตรสำเร็จ ไม่มีใครกำหนดมาตรฐานให้ เธอจึงสร้างทุกอย่างเอง — Script, ระบบ, Platform Logic และ Technical Setup — คนเดียว\nผลลัพธ์: ยอดขาย 6 หลักในไลฟ์ปกติ 2 ชั่วโมง และทำซ้ำได้\nเมื่อคนเห็นผลลัพธ์ ปฏิกิริยาแรกมักจะเป็น: \"ดูง่ายดีนะ\"\nนั่นแหละคือประเด็น สิ่งที่สร้างมาอย่างดีมักดูเหมือนไม่ต้องพยายาม แต่ความจริงไม่ใช่แบบนั้น\n\"ใครๆ ก็ใช้ AI ได้ แต่ทำได้ กับ ทำเป็น ผลลัพธ์ต่างกันมาก\"\n\"สามปีที่แล้วการเป็น Live Streamer ไม่เคยอยู่ในแผน แต่เห็นว่ามันไปได้ ทุกคนไลฟ์ได้ แต่สิ่งที่ทำให้ยอดถึง 6 หลักไม่ใช่พรสวรรค์ มันมาจากการทำการบ้านหนักคนเดียว และตั้งมาตรฐานที่ไม่มีใครสอน ตัวเลขพูดแทน\"\n\"อย่าพยายามทำให้สมบูรณ์แบบ แต่ทำให้มันใช้งานได้จริง\"\nSmart Lazy · Operational Intelligence · Quietly Confident\nสาขาคอมพิวเตอร์อุตสาหกรรม · 20+ แบรนด์ · ยอดขาย 6 หลัก · สร้างจากศูนย์","body_en":"SELF-STARTER · STANDARDS-DRIVEN · QUIETLY CONFIDENT\nJyne didn''t plan this career. She saw an opportunity — and moved.\nHer foundation starts somewhere most people don''t expect. She graduated with a degree in Industrial Computer Technology — at a time when there were no ready-made programs, no drag-and-drop tools, no AI. She wrote code in Pascal and C+, built hardware from scratch, and etched circuit boards by hand. She learned that systems don''t build themselves. Someone has to understand them deeply enough to make them work.\nThat person has always been her.\nFrom the day she graduated, she was selling — across jewelry, hospitality, and every room she walked into. Reading people, earning trust, managing relationships from security staff to C-suite to international VVIP guests. The environment changed. The instinct didn''t.\nFor close to a decade, she worked inside two of Bangkok''s most internationally recognized fine dining operations — supporting and running the business side for Chef Chumpol Jangprai (R-HAAN, 2 Michelin Stars, Iron Chef Thailand) and Chef Andy Yangeksakul (Table 38 Bangkok; founder of Rhong Tiam, New York — the first Thai-operated restaurant to earn a Michelin Star in the US). In environments where anonymous global inspectors scrutinize every single detail, she learned what real operational excellence looks like — not in theory, but under sustained pressure.\nThree years ago, she saw live commerce the way she''d always seen things: this can work.\nShe became a freelance Live Commerce Host across TikTok LIVE, Facebook Live, and Shopee Live. No team. No blueprint. No one to define the standard for her. So she built her own — scripting, systems, platform logic, technical setup — solo.\nThe result: 6-figure GMV in a regular 2-hour live session. Repeatedly.\nWhen people see the output, the first reaction is usually: \"That looks easy.\"\nThat reaction is the point. Things that are built well look effortless. They aren''t.\n\"Don''t try to make it perfect. Make it work.\"","image":"https://ik.imagekit.io/ideas365logo/profile_1.jpg"}'::jsonb, true, 17
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'about-me'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'เจน (เจนจิรา จัยสิน)');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ทักษะหลัก', 'Core skills', null, null, '{"body_th":"Live Commerce & Content: Live Stream Hosting · Sales Scripting · Audience Engagement · Social Media Algorithm · Brand Presenting\nSystems & Operations: Operational Framework Design · SOP Development · Team Training · KPI Setting · Transfer Ownership\nAI & Technology: AI Agent Design · Prompt Engineering · AI Voice Generation\nเครื่องมือที่ใช้: Claude · Claude Code · Antigravity · Gemini · GitHub · VS code · Lovable · Make.com · Manus · Supabase · Neon Tech · Vercel · Netify · Elevenlabs · Notion · Telegram · ChatGPT · NotebookLM · Perplexity · Canva · Stripe · Wix.com · Line API · Napkins\nBusiness Strategy: Brand Positioning · Launch Framework · Financial Modeling · Team Structure"}'::jsonb, true, 18
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'about-me'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ทักษะหลัก');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ตัวเลขและจุดเด่น', 'Highlights', null, null, '{"body_th":"6-FIGURE — GMV · 2 hrs live\n20+ — Brands worked with\n10Y+ — World-class operations\nSystem Thinking & Process Excellence\nDetail-Oriented + Results-Driven\nDesigned launch frameworks used by early-stage brands\nBased in Bangkok, working globally"}'::jsonb, true, 19
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'about-me'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ตัวเลขและจุดเด่น');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Freelance Live Stream Host & Brand Presenter', null, null, null, '{"role":"Freelance Live Stream Host & Brand Presenter","organization":"TikTok LIVE · Facebook Live · Shopee Live","period_th":"2022 — ปัจจุบัน","highlights_th":"Multi-Platform Management\nClient-Facing Experience\nContent Strategy Background"}'::jsonb, true, 20
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'timeline'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Freelance Live Stream Host & Brand Presenter');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Assistant Restaurant Manager', null, null, null, '{"role":"Assistant Restaurant Manager","organization":"MUU Bangkok Hotel","period_th":"ก่อนหน้า","highlights_th":"High-end service standards\nComplex operations management"}'::jsonb, true, 21
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'timeline'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Assistant Restaurant Manager');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Director of Operations', null, null, null, '{"role":"Director of Operations","organization":"Chef Andy Yangeksakul — Table 38 Bangkok (Michelin Star · formerly Rhong Tiam, New York — 1st Thai-operated Michelin Star in the US)","period_th":"ก่อนหน้า","highlights_th":"Full Operations Management\nContent Creation & Marketing\nEvent Coordination"}'::jsonb, true, 22
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'timeline'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Director of Operations');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Executive Secretary to MD', null, null, null, '{"role":"Executive Secretary to MD","organization":"Chef Chumpol Jangprai — R-HAAN (2 Michelin Stars · Iron Chef Thailand)","period_th":"ก่อนหน้า","highlights_th":"World-class Fine Dining Operations\nVIP & VVIP Client Handling\nMichelin-standard Service Excellence"}'::jsonb, true, 23
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'timeline'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Executive Secretary to MD');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Jenny Jyne Live Commerce', null, 'สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น — 6-figure ใน 2 ชั่วโมง', null, '{"challenge_th":"สร้างช่องทางขายผ่านไลฟ์สดตั้งแต่เริ่มต้น โดยไม่มีประสบการณ์หรือระบบมาก่อน","actions_th":"Product curation strategy — เลือกสินค้าที่ขายได้จริงบนหน้าจอ\nScript framework development — กำหนดว่าจะพูดอะไร เมื่อไหร่\nTechnical setup & optimization — แสง มุมกล้อง และแพลตฟอร์ม\nHost training & operations — รูปแบบไลฟ์ 2 ชั่วโมงที่ทีมทำเองได้","results_th":"6-figure ใน 2 ชั่วโมง\nรูปแบบที่ทำซ้ำได้\nทีมรันเองโดยไม่ต้องรอ","platforms":"TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand"}'::jsonb, true, 24
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'freelance-live'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Jenny Jyne Live Commerce');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'เรซูเม่', null, null, null, '{"file_url":"https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797"}'::jsonb, false, 25
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'profile' and s.slug = 'resume'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'เรซูเม่');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานแต่งหน้า #1', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/makeup1.jpg"}'::jsonb, true, 26
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'makeup-hair'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานแต่งหน้า #1');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #1', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/ChefC1.jpg"}'::jsonb, false, 27
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #1');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #2', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/RHAAN1.jpg"}'::jsonb, false, 28
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #2');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #3', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/rhaan4.jpg"}'::jsonb, false, 29
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #3');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #4', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/rhaan3.jpg?updatedAt=1773138763781"}'::jsonb, false, 30
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #4');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #5', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/MUU1.jpg"}'::jsonb, false, 31
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #5');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #6', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/NORTH_TEAM.jpg?updatedAt=1773138763237"}'::jsonb, false, 32
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #6');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'งานที่ผ่านมา (เว็บเดิม) #7', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/Screenshot_20230818_031225_Instagram.jpg"}'::jsonb, false, 33
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'booth-event'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'งานที่ผ่านมา (เว็บเดิม) #7');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #1', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229"}'::jsonb, false, 34
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #1');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #2', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965"}'::jsonb, false, 35
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #2');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #3', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281"}'::jsonb, false, 36
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #3');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #4', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100027.png?updatedAt=1772938870951"}'::jsonb, false, 37
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #4');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #5', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/proof1.jpg"}'::jsonb, false, 38
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #5');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #6', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/proof2.jpg"}'::jsonb, false, 39
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #6');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #7', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/proof3.jpg"}'::jsonb, false, 40
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #7');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ผลไลฟ์ 2 ชม. #8', null, null, null, '{"image":"https://ik.imagekit.io/ideas365logo/proof4.jpg"}'::jsonb, false, 41
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'photos' and s.slug = 'live-results'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ผลไลฟ์ 2 ชม. #8');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ภาพประกอบโปรไฟล์ #1', null, null, 'https://ik.imagekit.io/ideas365logo/about2.png', '{}'::jsonb, false, 42
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'design' and s.slug = 'creative'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ภาพประกอบโปรไฟล์ #1');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'ภาพประกอบโปรไฟล์ #2', null, null, 'https://ik.imagekit.io/ideas365logo/about3.png', '{}'::jsonb, false, 43
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'design' and s.slug = 'creative'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'ภาพประกอบโปรไฟล์ #2');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Daylight podcast set', null, null, 'https://ik.imagekit.io/ideas365logo/Daylight%20podcast%20set.png', '{}'::jsonb, false, 44
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'design' and s.slug = 'creative'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Daylight podcast set');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'The Storyteller', null, null, 'https://ik.imagekit.io/ideas365logo/The%20Storyteller.png', '{}'::jsonb, false, 45
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'design' and s.slug = 'creative'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'The Storyteller');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'A Little Bit Idea (Wix)', null, null, null, '{"url":"https://adminccl.wixsite.com/a-little-bit-idea-2/home","tools":"Wix.com"}'::jsonb, false, 46
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'design' and s.slug = 'web-design'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'A Little Bit Idea (Wix)');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Soul Cards · ไพ่ออราเคิล', 'Soul Cards', 'เลือกไพ่ 3 ใบจากทั้งสำรับ 36 ใบ เพื่อไกด์ไลน์ในสิ่งที่คุณอยากถาม', 'https://ik.imagekit.io/ideas365logo/soulcard.png?updatedAt=1772818993849', '{"url":"https://soul-card-oracle.lovable.app/","tool_kind":"free"}'::jsonb, true, 47
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'tools' and s.slug = 'free-tools'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Soul Cards · ไพ่ออราเคิล');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'The Soul Weaver · ความลับแห่งดวงดาว', 'The Soul Weaver', 'ฟังคำทำนายดวงชะตาแบบเจาะลึกตามหลักโหราศาสตร์ตะวันตก ด้วยเสียงบรรยายพิเศษจาก AI', 'https://ik.imagekit.io/ideas365logo/soulweaver.png?updatedAt=1772818993755', '{"url":"https://the-soul-weaver.lovable.app/","tool_kind":"free"}'::jsonb, true, 48
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'tools' and s.slug = 'free-tools'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'The Soul Weaver · ความลับแห่งดวงดาว');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'KAIXIN · ค้นหาหินประจำตัว', 'KAIXIN', 'กรอกข้อมูล วัน/เดือน/ปีเกิด เพื่อค้นหา Energy Crystal ที่ช่วยเสริมพลังงานบวกให้กับคุณโดยเฉพาะ', 'https://ik.imagekit.io/ideas365logo/kaixin2.png?updatedAt=1772818993757', '{"url":"https://kaisin-e3aeho.manus.space/","tool_kind":"free"}'::jsonb, true, 49
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'tools' and s.slug = 'free-tools'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'KAIXIN · ค้นหาหินประจำตัว');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Caption Factory · โรงงานสร้างแคปชั่น', 'Caption Factory', 'สร้างแคปชั่นโซเชียลด้วย AI พร้อมทำนายการมีส่วนร่วม', null, '{"url":"https://ideas365-caption-result.netlify.app/","tool_kind":"free"}'::jsonb, true, 50
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'tools' and s.slug = 'free-tools'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Caption Factory · โรงงานสร้างแคปชั่น');
+insert into public.i365_items (section_id, item_type_id, title_th, title_en, summary_th, cover_image, data, is_published, sort_order)
+select s.id, s.item_type_id, 'Event ROI Calculator · คำนวณผลตอบแทนอีเวนต์', 'Event ROI Calculator', 'เครื่องมือจำลองการลงทุนและผลตอบแทนจากอีเวนต์', 'https://ik.imagekit.io/ideas365logo/roi.png?updatedAt=1772818993313', '{"url":"https://event-simulator-roi.netlify.app/","tool_kind":"free"}'::jsonb, true, 51
+from public.i365_sections s join public.i365_islands isl on isl.id = s.island_id
+where isl.slug = 'tools' and s.slug = 'free-tools'
+  and not exists (select 1 from public.i365_items x where x.section_id = s.id and x.title_th = 'Event ROI Calculator · คำนวณผลตอบแทนอีเวนต์');

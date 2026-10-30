@@ -50,7 +50,7 @@ export async function getSectionBundle(islandSlug: string, sectionSlug: string):
   if (!section) return null;
 
   if (IS_MOCK) {
-    const items = mock.items.filter((i) => i.section_id === section.id).sort(bySort);
+    const items = mock.items.filter((i) => i.section_id === section.id && i.is_published).sort(bySort);
     return {
       island: found.island, section, siblings: found.sections,
       itemType: mock.itemTypes.find((t) => t.id === section.item_type_id) ?? null,

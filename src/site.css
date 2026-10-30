@@ -137,6 +137,10 @@
 .i365-form .i365-check { display: flex; align-items: center; gap: 8px; font-weight: 400; }
 .i365-span2 { grid-column: span 2; }
 .i365-contact-side { display: flex; flex-direction: column; gap: 10px; }
+.i365-line-qr { margin: 8px 0 0; text-align: center; }
+.i365-line-qr img { width: 160px; max-width: 100%; border-radius: 12px; background: #fff; padding: 6px; }
+.i365-line-qr figcaption { font-size: 13px; margin-top: 6px; opacity: .8; }
+.i365-promise { margin: 8px 0 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
 .i365-sent { text-align: center; padding: 24px; }
 
 /* routes */

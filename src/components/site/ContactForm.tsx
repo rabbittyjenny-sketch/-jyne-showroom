@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { sendInquiry } from '@/lib/data';
 import type { SiteSettings } from '@/lib/types';
+import { SafeImg } from './SafeImg';
 
 const INTERESTS = [
   'F&B · ผู้ช่วยผู้บริหาร',
@@ -63,6 +64,17 @@ export function ContactForm({ settings, sourceIsland, sourceRoute }: { settings:
       <aside className="i365-contact-side">
         {settings?.contact_email && <a href={`mailto:${settings.contact_email}`} className="i365-pill">✉ {settings.contact_email}</a>}
         {settings?.socials?.map((s) => <a key={s.url} href={s.url} target="_blank" rel="noreferrer" className="i365-pill">{s.label} {s.handle}</a>)}
+        {settings?.line_qr && (
+          <figure className="i365-line-qr">
+            <SafeImg src={settings.line_qr} alt="LINE QR" />
+            {settings.line_qr_caption && <figcaption>{settings.line_qr_caption}</figcaption>}
+          </figure>
+        )}
+        {settings?.contact_promise_th && (
+          <ul className="i365-promise">
+            {settings.contact_promise_th.split('\n').map((l) => l.trim()).filter(Boolean).map((l) => <li key={l}>{l}</li>)}
+          </ul>
+        )}
       </aside>
     </div>
   );
