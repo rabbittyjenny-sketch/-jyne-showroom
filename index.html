@@ -306,17 +306,17 @@
             }
 
             #island-contact {
-                top: 73% !important;
-                right: 3% !important;
-                left: auto !important;
+                top: 86% !important;
+                left: 10% !important;
+                right: auto !important;
                 bottom: auto !important;
                 filter: var(--island-shadow) !important;
             }
 
             #island-marina {
-                top: 86% !important;
-                left: 10% !important;
-                right: auto !important;
+                top: 73% !important;
+                right: 3% !important;
+                left: auto !important;
                 bottom: auto !important;
             }
 
@@ -326,19 +326,6 @@
                 padding: 4px 10px !important;
                 top: -28px !important;
             }
-        }
-    </style>
-    <style>
-        /* ── เกาะใหม่จากหลังบ้าน: ใช้ class .island เดิมทุกอย่าง เพิ่มแค่ตำแหน่ง ── */
-        #map-extra { position: absolute; inset: 0; pointer-events: none; }
-        #map-extra .island { pointer-events: auto; top: var(--d-top); left: var(--d-left); width: var(--d-w);
-            animation: individualFloat var(--dur, 8s) ease-in-out infinite; animation-delay: var(--delay, 0s); }
-        #map-extra .island-ph { width: 100%; aspect-ratio: 4 / 3; border-radius: 48% 52% 45% 55% / 55% 45% 55% 45%;
-            background: radial-gradient(circle at 50% 40%, #a8d58f 0 55%, #e9d6ad 56% 70%, transparent 71%); }
-        @media (max-width: 768px) {
-            #view-map { padding-bottom: var(--extra-h, 0px); }
-            #map-extra { inset: auto 0 auto 0; top: 100%; height: var(--extra-h, 0px); }
-            #map-extra .island { top: var(--m-top) !important; left: var(--m-left) !important; right: auto !important; }
         }
     </style>
 </head>
@@ -351,82 +338,32 @@
 
     <div id="view-map">
         <div class="map-wrapper">
-            <a href="about_island.html" class="island" id="island-profile" data-tooltip="เกี่ยวกับ-JYNE">
+            <a href="island_about.html" class="island" id="island-profile" data-tooltip="เกี่ยวกับ-JYNE">
                 <div class="island-badge">ABOUT ISLAND</div><img src="https://ik.imagekit.io/ideas365logo/profile.png">
             </a>
-            <a href="work_town.html" class="island" id="island-work" data-tooltip="ทำอะไรมาบ้าง?">
+            <a href="island_works.html" class="island" id="island-work" data-tooltip="ทำอะไรมาบ้าง?">
                 <div class="island-badge">SOLO-PROJECT WAREHOUSE</div><img
                     src="https://ik.imagekit.io/ideas365logo/work.png">
             </a>
-            <a href="/i/academy" class="island" id="island-system" data-tooltip="ความสำเร็จอยู่ในหลักสูตร">
+            <a href="https://i-deas-365-web.vercel.app/services" class="island" id="island-system" data-tooltip="ความสำเร็จอยู่ในหลักสูตร">
                 <div class="island-badge">ACADEMY BAY</div><img src="https://ik.imagekit.io/ideas365logo/system.png">
             </a>
-            <a href="learning_bay.html" class="island" id="island-library" data-tooltip="รวมไอเดียความรู้">
+            <a href="island_learning.html" class="island" id="island-library" data-tooltip="รวมไอเดียความรู้">
                 <div class="island-badge">LEARNING BRIDGE</div><img
                     src="https://ik.imagekit.io/ideas365logo/library.png">
             </a>
-            <a href="blog.html" class="island" id="island-blog" data-tooltip="365Blog">
+            <a href="https://c365.ideas365.space/articles" class="island" id="island-blog" data-tooltip="365Blog">
                 <div class="island-badge">BLOG HARBOR</div><img src="https://ik.imagekit.io/ideas365logo/blog.png">
             </a>
             <a href="contact_port.html" class="island" id="island-contact" data-tooltip="ติดต่อที่นี่">
                 <div class="island-badge">CONTACT PIER</div><img src="https://ik.imagekit.io/ideas365logo/contact.png">
             </a>
-            <a href="work_marina.html" class="island" id="island-marina" data-tooltip="ประสบการณ์การทำงาน">
+            <a href="https://i-deas-365-web.vercel.app/services" class="island" id="island-marina" data-tooltip="ประสบการณ์การทำงาน">
                 <div class="island-badge">WORK MARINA</div><img
                     src="https://ik.imagekit.io/ideas365logo/Work_Experion.png">
             </a>
-            <!-- เกาะใหม่ (ดึงจากหลังบ้าน iDEAS365) — เพิ่มต่อจากเกาะเดิม ไม่แตะเกาะเดิม -->
-            <div id="map-extra"></div>
         </div>
     </div>
-    <script>
-    /* เกาะใหม่: อ่านรายการเกาะที่เผยแพร่และมีตำแหน่งจากหลังบ้าน แล้ววางเป็น .island แบบเดียวกับเกาะเดิม
-       ถ้าโหลดไม่ได้ แผนที่เดิมยังอยู่ครบเหมือนเดิม */
-    (function () {
-        var URL_ = 'https://exybvjqjdqxonhesydhk.supabase.co/rest/v1/i365_islands'
-            + '?select=slug,name_en,name_th,tooltip_th,button_image,pos_left,pos_top,pos_width,sort_order'
-            + '&is_published=eq.true&deleted_at=is.null&pos_left=not.is.null&order=sort_order';
-        var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4eWJ2anFqZHF4b25oZXN5ZGhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MzI1MTQsImV4cCI6MjA5NDUwODUxNH0.GPOJYTdWw_YXQnJkd_2RGErHnEWDF7YBtu_MevdmCtE';
-        var box = document.getElementById('map-extra');
-        if (!box || !window.fetch) return;
-        fetch(URL_, { headers: { apikey: KEY, Authorization: 'Bearer ' + KEY } })
-            .then(function (r) { return r.ok ? r.json() : []; })
-            .then(function (list) {
-                var GAP = 200;
-                list.forEach(function (isl, i) {
-                    var a = document.createElement('a');
-                    a.href = '/i/' + encodeURIComponent(isl.slug);
-                    a.className = 'island';
-                    if (isl.tooltip_th) a.setAttribute('data-tooltip', isl.tooltip_th);
-                    a.style.setProperty('--d-top', isl.pos_top + '%');
-                    a.style.setProperty('--d-left', isl.pos_left + '%');
-                    a.style.setProperty('--d-w', isl.pos_width + '%');
-                    a.style.setProperty('--dur', (7 + (i % 4) * 0.5) + 's');
-                    a.style.setProperty('--delay', (-0.6 * i) + 's');
-                    a.style.setProperty('--m-top', (20 + i * GAP) + 'px');
-                    a.style.setProperty('--m-left', (i % 2 ? '42%' : '3%'));
-                    var badge = document.createElement('div');
-                    badge.className = 'island-badge';
-                    badge.textContent = (isl.name_en || isl.name_th || '').toUpperCase();
-                    a.appendChild(badge);
-                    var ph = document.createElement('div');
-                    ph.className = 'island-ph';
-                    if (isl.button_image) {
-                        var img = document.createElement('img');
-                        img.src = isl.button_image;
-                        img.alt = '';
-                        img.onerror = function () { img.replaceWith(ph); };
-                        a.appendChild(img);
-                    } else {
-                        a.appendChild(ph);
-                    }
-                    box.appendChild(a);
-                });
-                document.documentElement.style.setProperty('--extra-h', list.length ? (list.length * GAP + 60) + 'px' : '0px');
-            })
-            .catch(function () {});
-    })();
-    </script>
 </body>
 
 </html>
