@@ -1,3 +1,22 @@
+# ชื่อไฟล์รูปปุ่มบนแผนที่ย่อย (อัปเดต 2 พ.ย. 2026)
+
+แผนที่หลัก (`index.html`) ใช้เกาะและรูปเดิมทั้งหมด ไม่ต้องทำรูปเพิ่ม
+รูปที่ต้องทำมีแค่ **ปุ่มบนแผนที่ย่อย 8 รูป** (.png พื้นโปร่งใส) วางใน `public/islands/...` ตามชื่อนี้ — ระหว่างยังไม่มีรูป จะแสดงเป็นกล่องดำตามแบบในรูปที่ส่งมา
+
+| แผนที่ย่อย | ปุ่ม | ชื่อไฟล์ |
+|---|---|---|
+| ABOUT ISLAND (`island_about.html`) | โปรไฟล์ | `public/islands/about/btn-profile.png` |
+| | ประวัติการทำงาน | `public/islands/about/btn-experience.png` |
+| | e-commerce Live Streaming | `public/islands/about/btn-live.png` |
+| SOLO-PROJECT WAREHOUSE (`island_works.html`) | คลิปวิดีโอ | `public/islands/works/btn-clips.png` |
+| | รูปผลงาน | `public/islands/works/btn-photos.png` |
+| LEARNING BRIDGE (`island_learning.html`) | รวมเครื่องมือ / ระบบ AI | `public/islands/learning/btn-tools.png` |
+| | เอกสาร · ความรู้ | `public/islands/learning/btn-docs.png` |
+| | งานออกแบบ | `public/islands/learning/btn-design.png` |
+
+---
+(รายการเดิมด้านล่างเป็นของระบบก่อนหน้า ไม่ได้ใช้แล้ว)
+
 # ชื่อไฟล์รูปของแต่ละเกาะ
 
 > **อัปเดต 1 พ.ย. 2026 — แผนที่หลักใช้ `index.html` เดิม และเกาะเดิม 7 เกาะใช้รูปเดิมจาก ImageKit เหมือนเดิมทุกอย่าง**

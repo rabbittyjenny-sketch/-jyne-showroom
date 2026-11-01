@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DESIGN WORKS - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --bg-color: #1A6BCC; --text-dark: #1A1A1A; --accent: #1155AA; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; overflow-x: hidden; }
+        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+        .logo-img:hover { transform: scale(1.05); }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 10px; text-align: center; opacity: 0.9; }
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .content-card.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; color: var(--accent); margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-desc { font-size: 0.88rem; line-height: 1.8; font-weight: 300; margin: 0 0 16px; color: #444; }
+        .notice { background: rgba(245,184,0,0.08); border: 1px solid rgba(245,184,0,0.25); border-radius: 12px; padding: 20px 24px; margin-top: 6px; }
+        .notice p { font-size: 0.88rem; color: #555; margin: 0; line-height: 1.7; font-weight: 300; }
+        .notice strong { color: var(--text-dark); font-weight: 700; }
+
+        /* ── FREE RESOURCES GRID (จาก Google Apps Script) ── */
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .res-card {
+            background: #f5f5f0; border: 1px solid #1A1A1A; border-radius: 14px;
+            padding: 20px 22px; display: flex; flex-direction: column; gap: 8px;
+        }
+        .res-top { display: flex; justify-content: space-between; align-items: flex-start; }
+        .res-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 9px; border-radius: 8px; }
+        .badge-template { background: rgba(245,184,0,0.2); color: #8a6800; }
+        .badge-guidebook { background: rgba(245,184,0,0.2); color: #8a6800; }
+        .badge-framework { background: rgba(245,184,0,0.2); color: #8a6800; }
+        .badge-default   { background: rgba(245,184,0,0.15); color: #8a6800; }
+        .res-free { font-size: 0.65rem; font-weight: 700; background: #F5B800; color: #1A1A1A; padding: 3px 9px; border-radius: 8px; }
+        .res-name { font-weight: 700; font-size: 0.9rem; color: var(--text-dark); }
+        .res-updated { font-size: 0.7rem; color: #999; font-weight: 300; }
+        .res-dl-btn {
+            margin-top: 4px; background: #1A1A1A; color: #ffffff; border: none; border-radius: 30px;
+            padding: 10px 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; width: fit-content; transition: opacity 0.2s;
+            font-family: 'Noto Sans Thai', sans-serif;
+        }
+        .res-dl-btn:hover { opacity: 0.85; }
+        .res-loading { text-align: center; color: #888; font-size: 0.9rem; padding: 20px; grid-column: 1/-1; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+            z-index: 9999; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: #fff; border-radius: 20px; padding: 40px; max-width: 460px; width: 100%;
+            position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.25); color: var(--text-dark);
+        }
+        .modal-close { position: absolute; top: 14px; right: 18px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999; }
+        .modal h2 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.6rem; margin: 0 0 4px; text-transform: uppercase; }
+        .modal .m-sub { font-size: 0.82rem; color: #888; margin: 0 0 16px; }
+        .modal .m-desc { font-size: 0.88rem; color: #444; margin-bottom: 20px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: #555; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+            font-size: 0.88rem; font-family: inherit; transition: border 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent); outline: none; }
+        .pdpa-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 16px; }
+        .pdpa-row input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; width: 16px; height: 16px; cursor: pointer; }
+        .pdpa-row label { font-size: 0.78rem; color: #555; line-height: 1.5; }
+        .pdpa-row a { color: var(--accent); }
+        .modal-error { color: #e53935; font-size: 0.8rem; margin-bottom: 10px; }
+        .modal-submit {
+            width: 100%; padding: 12px; background: #1A1A1A; color: #ffffff; border: none;
+            border-radius: 30px; font-size: 0.92rem; font-weight: 700; cursor: pointer;
+            font-family: inherit; transition: opacity 0.2s;
+        }
+        .modal-submit:hover:not(:disabled) { opacity: 0.85; }
+        .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .success-box { text-align: center; padding: 10px 0; }
+        .success-box .s-icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .success-box h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.4rem; margin: 0 0 8px; }
+        .success-box p { font-size: 0.88rem; color: #555; margin: 0 0 16px; }
+        .success-box a { display: inline-block; padding: 10px 24px; background: #1A1A1A; color: #ffffff; border-radius: 30px; font-weight: 700; text-decoration: none; font-size: 0.88rem; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep 2-col grids on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .content-card.two-col, .res-grid { grid-template-columns: 1fr !important; }
+            .content-card.two-col { gap: 24px; }
+            .col-title { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
+        }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-y { color: #F5B800; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
+        /* BACK button fixed bottom-right */
+        .back-btn-fixed { position: fixed; bottom: 28px; right: 30px; z-index: 200; display: block; text-decoration: none; transition: transform 0.2s, opacity 0.2s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35)); }
+        .back-btn-fixed img { height: 68px; width: auto; display: block; }
+        .back-btn-fixed:hover { transform: scale(1.06); opacity: 0.9; }
+    
+        .hover {
+        color: #0000;
+        background: 
+        linear-gradient(90deg, #4285F4 50%, #ffffff 0) 
+        var(--_p, 100%) / 200% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        transition: .4s;
+        cursor: pointer;
+        }
+        .hover:hover {
+        --_p: 0%;
+        }
+
+    
+    </style>
+
+    <style>
+        /* added: link back to the main island map (square, no frame) */
+        .main-menu-link { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.85rem; letter-spacing: 2px;
+            text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
+        .main-menu-link:hover { background: rgba(0,0,0,0.38); }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
+        <a href="index.html" class="main-menu-link">MAIN MENU</a>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title hover">DESIGN<br>WORKS</h1>
+        <p class="page-subtitle">งานออกแบบ</p>
+        <!-- WEB DESIGN (link to the Wix site already used on About Island) -->
+        <div class="content-card">
+            <h2 class="col-title">WEB DESIGN · หน้าเว็บ (Wix)</h2>
+            <p class="col-desc">เว็บไซต์ที่ออกแบบและทำเองบน Wix</p>
+            <a class="res-dl-btn" style="border-radius:0" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank">เปิดเว็บไซต์ ↗</a>
+        </div>
+
+        <!-- COMING SOON (added headings — content to come) -->
+        <div class="content-card">
+            <h2 class="col-title">COMING SOON</h2>
+            <p class="col-desc">Creative · กราฟิก<br>แผนคอนเทนต์การตลาด</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
+    <a href="island_learning.html" class="back-btn-fixed" onclick="return goBack(this.href)">
+        <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="BACK">
+    </a>
+
+<script>
+    /* added: BACK = previous page (or this island's map when opened directly) */
+    function goBack(fallback) {
+        try { if (document.referrer && new URL(document.referrer).origin === location.origin) { history.back(); return false; } } catch (e) {}
+        location.href = fallback; return false;
+    }
+</script>
+</body>
+</html>

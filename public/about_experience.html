@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORK HISTORY - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        :root { --bg-color: #B03A00; --text-dark: #3a3a3a; --accent: #B03A00; }
+        body, html { margin: 0; padding: 0; width: 100%; min-height: 100vh; font-family: 'Noto Sans Thai', sans-serif; background-color: var(--bg-color); color: #ffffff; }
+        .nav-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .logo-img { height: 45px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+        .logo-img:hover { transform: scale(1.05); }
+        .main-content { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 80px; max-width: 1000px; margin: 0 auto; gap: 30px; }
+        .page-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .page-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 20px; text-align: center; opacity: 0.8; }
+        /* CARD */
+        .content-card { background: #ffffff; border-radius: 20px; width: 100%; padding: 50px; color: var(--text-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 50px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .content-card.single { grid-template-columns: 1fr; }
+        .col-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2.2rem; color: var(--accent); margin: 0 0 20px; padding-bottom: 15px; border-bottom: 2px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .col-desc { font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin: 0 0 10px; color: #444; }
+        .col-desc strong { font-weight: 600; color: #3a3a3a; }
+        /* timeline */
+        .tl-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+        .tl-item:last-child { border-bottom: none; }
+        .tl-year { font-size: 0.68rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .tl-role { font-weight: 700; font-size: 0.95rem; color: var(--text-dark); margin-bottom: 1px; }
+        .tl-place { font-size: 0.76rem; color: #888; font-weight: 600; margin-bottom: 4px; }
+        .tl-desc { font-size: 0.82rem; line-height: 1.6; color: #555; font-weight: 300; }
+        /* skill tags */
+        .skg { margin-bottom: 14px; }
+        .skt { font-weight: 700; font-size: 0.78rem; letter-spacing: 0.5px; margin-bottom: 7px; color: #666; text-transform: uppercase; }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag { padding: 3px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.75rem; color: #444; }
+        /* ext links */
+        .ext-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+        .ext-card { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--text-dark); display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+        .ext-card:hover { background: #ebebeb; }
+        .ext-card-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+        .ext-card-sub { font-size: 0.72rem; color: #888; font-weight: 300; }
+        /* video */
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+        .video-wrap { border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; background: #000; position: relative; display: block; text-decoration: none; }
+        .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+        /* proof */
+        .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px; }
+        .proof-grid img { width: 100%; border-radius: 8px; object-fit: cover; display: block; }
+        /* highlight list */
+        .hl { list-style: none; padding: 0; margin: 0; }
+        .hl li { font-size: 0.88rem; line-height: 1.7; padding: 8px 0 8px 16px; border-bottom: 1px solid #eee; position: relative; color: #333; font-weight: 300; }
+        .hl li:last-child { border-bottom: none; }
+        .hl li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+        .cs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .cs-pill { background: #B03A00; color: #ffffff; padding: 5px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        /* resume */
+        .resume-img { width: 100%; border-radius: 12px; display: block; box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        /* photo slot */
+        .photo-slot { width: 100%; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; position: relative; background: #f0ede8; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+        .photo-slot-wide { aspect-ratio: 4/3; }
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .photo-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #aaa; font-size: 0.82rem; font-weight: 300; background: #f5f2ed; }
+        .photo-placeholder .ph-icon { font-size: 2.2rem; opacity: 0.4; }
+        .photo-placeholder .ph-label { font-size: 0.78rem; color: #bbb; }
+        .photo-placeholder .ph-hint { font-size: 0.65rem; color: #ccc; text-align: center; padding: 0 20px; }
+        .skills-photo-col { display: flex; flex-direction: column; gap: 14px; }
+        .photo-slot-tall { aspect-ratio: 2/3; }
+        /* sales stats */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 6px; }
+        .stat-box { background: #f5f5f5; border-radius: 12px; padding: 18px 14px; text-align: center; border: 1px solid #eee; }
+        .stat-num { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.8rem; color: var(--accent); line-height: 1; }
+        .stat-label { font-size: 0.72rem; color: #888; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* big buttons */
+        .big-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .big-btn { display: block; background: #B03A00; color: #ffffff; text-decoration: none; text-align: center; padding: 14px 20px; border-radius: 30px; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px; transition: opacity 0.2s; font-family: 'Noto Sans Thai', sans-serif; }
+        .big-btn:hover { opacity: 0.85; }
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-content { padding: 100px 24px 60px; }
+            /* keep 2-col grids on tablet */
+        }
+        @media (max-width: 640px) {
+            .main-content { padding: 90px 16px 48px; }
+            .page-title { font-size: clamp(3rem, 14vw, 5rem); }
+            .content-card { padding: 24px 20px; border-radius: 16px; gap: 30px; }
+            .nav-header { padding: 14px 16px; }
+            .logo-img { height: 36px; }
+            /* collapse all grids to 1 column */
+            .content-card, .ext-cards, .video-grid,
+            .proof-grid { grid-template-columns: 1fr 1fr !important; }
+            /* keep stats and buttons at 2 columns on mobile */
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .big-btn-row { grid-template-columns: 1fr 1fr; }
+            .col-title { font-size: 1.6rem; }
+            .site-footer { padding: 40px 16px 24px; margin-top: 40px; }
+            .footer-brand { font-size: 1.3rem; }
+        }
+
+        /* ===== EFFECTS ===== */
+        /* Scroll reveal */
+        .content-card { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease; }
+        .content-card.in-view { opacity: 1; transform: translateY(0); }
+        .content-card.in-view:hover { transform: translateY(-5px); box-shadow: 0 28px 55px rgba(0,0,0,0.26); }
+        /* Page title entrance */
+        .page-title { animation: titleIn 0.9s ease forwards; }
+        .page-subtitle { opacity: 0; animation: titleIn 0.9s ease 0.35s forwards; }
+        @keyframes titleIn { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── HOVER TEXT SWEEP — ใช้ทั่วหน้า ── */
+        /* สำหรับ text สีขาว (บน background สีส้ม) → sweep เป็นดำ */
+        .hover-white {
+            color: #0000;
+            background: linear-gradient(90deg, #1A1A1A 50%, #ffffff 0) var(--_p,100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text;
+            transition: background-position 0.9s ease, --_p 0.4s;
+        }
+        .hover-white:hover { --_p: 0%; }
+
+        /* สำหรับ col-title สีแดง (บน card ขาว) → sweep เป็นดำ */
+        .col-title {
+            color: #0000;
+            background: linear-gradient(90deg, #3a3a3a 50%, #B03A00 0) var(--_p,100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text;
+            transition: background-position 0.9s ease;
+            cursor: default;
+        }
+        .col-title:hover { --_p: 0%; }
+
+        /* Photo hover */
+        .photo-slot { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+        .photo-slot:hover { transform: scale(1.03); box-shadow: 0 14px 32px rgba(0,0,0,0.2); }
+        /* Skill tag hover */
+        .tag { transition: background 0.2s, border-color 0.2s, color 0.2s; cursor: default; }
+        .tag:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+        /* Stat box hover */
+        .stat-box { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .stat-box:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+        /* Button lift */
+        .big-btn { transition: opacity 0.2s, transform 0.2s; }
+        .big-btn:hover { opacity: 1 !important; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+        /* YouTube thumbnail cards */
+        .video-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.25s; }
+        .video-wrap:hover img { opacity: 0.82; }
+        .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .yt-play svg { width: 60px; height: 42px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+
+        /* ─── FOOTER ─── */
+        .site-footer { background: #1A1A1A; color: #fff; text-align: center; padding: 52px 20px 28px; margin-top: 60px; }
+        .footer-brand { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin: 0 0 4px; }
+        .footer-brand span.dot-r { color: #EA4335; }
+        .footer-brand span.dot-g { color: #34A853; }
+        .footer-brand span.dot-b { color: #4285F4; }
+        .footer-brand span.dot-y { color: #F5B800; }
+        .footer-tagline { font-size: 0.78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0 0 32px; }
+        .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; margin: 0; }
+
+        /* back button — fixed bottom right */
+        .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
+        .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
+        .back-fixed:hover img { transform: scale(1.08); }
+        /* ── RESULT GRID: 3 cols x 2 rows, taller images ── */
+        .proof-grid-result {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .proof-grid-result img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+        /* ── WORK GRID: 4 cols x 2 rows, portrait ── */
+        .proof-grid-work {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .proof-grid-work img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 10px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+        @media (max-width: 640px) {
+            .proof-grid-result { grid-template-columns: repeat(2, 1fr) !important; }
+            .proof-grid-work   { grid-template-columns: repeat(2, 1fr) !important; }
+            /* WHO IS JYNE — stack on mobile: photo first, then text */
+            .who-card { grid-template-columns: 1fr !important; }
+            .who-card .who-photo { order: -1; position: static !important; }
+        }
+
+        /* ── LANGUAGE TOGGLE ── */
+        .lang-toggle { display: flex; gap: 0; border: 2px solid rgba(255,255,255,0.35); border-radius: 30px; overflow: hidden; }
+        .lang-btn { background: transparent; border: none; color: rgba(255,255,255,0.55); font-family: 'Anton', sans-serif; font-size: 0.85rem; letter-spacing: 1.5px; padding: 7px 18px; cursor: pointer; transition: background 0.45s, color 0.2s; }
+        .lang-btn.active { background: rgba(255,255,255,0.18); color: #fff; }
+        .lang-btn:hover:not(.active) { color: #fff; }
+
+        /* hide/show language blocks */
+        .lang-en, .lang-th { display: none; }
+        body.lang-en .lang-en { display: block; }
+        body.lang-th .lang-th { display: block; }
+        /* inline spans */
+        span.lang-en, span.lang-th { display: none; }
+        body.lang-en span.lang-en { display: inline; }
+        body.lang-th span.lang-th { display: inline; }
+    </style>
+
+    <style>
+        /* added: link back to the main island map (square, no frame) */
+        .main-menu-link { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.85rem; letter-spacing: 2px;
+            text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
+        .main-menu-link:hover { background: rgba(0,0,0,0.38); }
+    </style>
+</head>
+<body>
+    <header class="nav-header">
+        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img"></a>
+        <a href="index.html" class="main-menu-link">MAIN MENU</a>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title hover-white">WORK<br>HISTORY</h1>
+        <p class="page-subtitle hover-white">ประวัติการทำงาน · ไทม์ไลน์ · ใบประกาศ · เรซูเม่</p>
+        <!-- EXPERIENCE + SKILLS -->
+        <div class="content-card" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div>
+                <h2 class="col-title">EXPERIENCE</h2>
+                <div class="tl-item">
+                    <div class="tl-year">2022 — ปัจจุบัน</div>
+                    <div class="tl-role">Freelance Live Stream Host &amp; Brand Presenter</div>
+                    <div class="tl-place">TikTok LIVE · Facebook Live · Shopee Live</div>
+                    <div class="tl-desc">- Multi-Platform Management</div>
+                     <div class="tl-desc">- Client-Facing Experience</div>
+                     <div class="tl-desc">- Content Strategy Background </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Assistant Restaurant Manager</div>
+                    <div class="tl-place">MUU Bangkok Hotel</div>
+                    <div class="tl-desc">High-end service standards</div>
+                    <div class="tl-desc">Complex operations management </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Director of Operations</div>
+                    <div class="tl-place">Chef Andy Yangeksakul — Table 38 Bangkok (Michelin Star · formerly Rhong Tiam, New York — 1st Thai-operated Michelin Star in the US)</div>
+                    <div class="tl-desc">- Full Operations Management</div>
+                    <div class="tl-desc">- Content Creation & Marketing</div>
+                    <div class="tl-desc">- Event Coordination</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Executive Secretary to MD</div>
+                    <div class="tl-place">Chef Chumpol Jangprai — R-HAAN (2 Michelin Stars · Iron Chef Thailand)</div>
+                    <div class="tl-desc">- World-class Fine Dining Operations</div>
+                    <div class="tl-desc">- VIP & VVIP Client Handling</div>
+                    <div class="tl-desc">- Michelin-standard Service Excellence</div>
+                </div>
+            </div>
+            <div>
+                <h2 class="col-title">CORE SKILLS</h2>
+                <div class="skg">
+                    <div class="skt">Live Commerce &amp; Content</div>
+                    <div class="tags">
+                        <span class="tag">Live Stream Hosting</span>
+                        <span class="tag">Sales Scripting</span>
+                        <span class="tag">Audience Engagement</span>
+                        <span class="tag">Social Media Algorithm</span>
+                        <span class="tag">Brand Presenting</span>
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Systems &amp; Operations</div>
+                    <div class="tags">
+                        <span class="tag">Operational Framework Design</span>
+                        <span class="tag">SOP Development</span>
+                        <span class="tag">Team Training</span>
+                        <span class="tag">KPI Setting</span>
+                        <span class="tag">Transfer Ownership</span>
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">AI &amp; Technology</div>
+                    <div class="tags">
+                       <span class="tag">AI Agent Design</span>
+                        <span class="tag">Prompt Engineering</span>
+                        <span class="tag">AI Voice Generation</span>
+                        <span class="tag">Claude</span>
+                        <span class="tag">Claude Code</span>
+                        <span class="tag">Antigravity</span>
+                        <span class="tag">Gemini</span>
+                        <span class="tag">GitHub</span>
+                        <span class="tag">VS code</span>
+                        <span class="tag">Lovable</span>
+                        <span class="tag">Make.com</span>
+                        <span class="tag">Manus</span>
+                        <span class="tag">Supabase</span>
+                        <span class="tag">Neon Tech</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">Netify</span>
+                        <span class="tag">Elevenlabs</span>
+                        <span class="tag">Notion</span>
+                        <span class="tag">Telegram</span>
+                        <span class="tag">ChatGPT</span>
+                        <span class="tag">NotebookLM</span>
+                        <span class="tag">Perplexity</span>
+                        <span class="tag">Canva</span>
+                        <span class="tag">Stripe</span>
+                        <span class="tag">Wix.com</span>
+                        <span class="tag">Line API</span>
+                        <span class="tag">Napkins</span> 
+                    </div>
+                </div>
+                <div class="skg">
+                    <div class="skt">Business Strategy</div>
+                    <div class="tags">
+                        <span class="tag">Brand Positioning</span>
+                        <span class="tag">Launch Framework</span>
+                        <span class="tag">Financial Modeling</span>
+                        <span class="tag">Team Structure</span>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- คอลัมน์รูปสูง 2:3 -->
+            <div class="skills-photo-col">
+                <!-- ============================================================
+                     📸 รูปคอลัมน์ EXPERIENCE/SKILLS — Photo 1 (บนสุด)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
+                <div class="photo-slot photo-slot-tall">
+                    <img
+                        src="https://ik.imagekit.io/ideas365logo/about3.png"
+                        alt="Skills Photo 1"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+                    >
+                    <div class="photo-placeholder" style="display:none">
+                        <span class="ph-icon">🖼️</span>
+                        <span class="ph-label">Photo 1</span>
+                        <span class="ph-hint">เปลี่ยน URL ในโค้ด</span>
+                    </div>
+                </div>
+                <!-- ============================================================
+                     📸 รูปคอลัมน์ EXPERIENCE/SKILLS — Photo 2 (ล่าง)
+                     วิธีเปลี่ยนรูป: แก้ไข src="..." ด้านล่าง
+                ============================================================ -->
+                <div class="photo-slot photo-slot-tall">
+                    <img
+                        src="https://ik.imagekit.io/ideas365logo/about2.png"
+                        alt="Skills Photo 2"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+                    >
+                    <div class="photo-placeholder" style="display:none">
+                        <span class="ph-icon">🖼️</span>
+                        <span class="ph-label">Photo 2</span>
+                        <span class="ph-hint">เปลี่ยน URL ในโค้ด</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SALES FIGURES -->
+        <div class="content-card single">
+            <h2 class="col-title">PREVIOUS WORK EXPERIENCE · งานที่ผ่านมา </h2>
+                <div class="proof-grid-work">
+                    <img src="https://ik.imagekit.io/ideas365logo/ChefC1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/RHAAN1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/rhaan4.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/Screenshot_20230818_031225_Instagram.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg">
+                    <img src="https://ik.imagekit.io/ideas365logo/MUU1.jpg">
+                     <img src="https://ik.imagekit.io/ideas365logo/NORTH_TEAM.jpg?updatedAt=1773138763237">
+                     <img src="https://ik.imagekit.io/ideas365logo/rhaan3.jpg?updatedAt=1773138763781">
+                </div>
+            <div style="text-align:center;margin-top:20px">
+                <a class="big-btn" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank" style="display:inline-block;padding:14px 40px">More proof ↗</a>
+            </div>
+        </div>
+
+
+        <!-- CERTIFICATES (added heading — content to come) -->
+        <div class="content-card single">
+            <h2 class="col-title">CERTIFICATES · ใบประกาศ · ทักษะอื่น</h2>
+            <p class="col-desc" style="color:#888">เร็วๆ นี้</p>
+        </div>
+
+        <!-- RESUME -->
+        <div class="content-card single">
+            <p style="font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:3px;color:var(--accent);margin:0 0 6px">iDEAS365</p>
+            <h2 class="col-title" style="font-size:3.5rem;margin-bottom:16px">RESUME</h2>
+            <img
+                src="https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797"
+                alt="Jyne Resume 2025"
+                class="resume-img"
+            >
+            <div style="text-align:center;margin-top:20px">
+                <a class="big-btn" href="https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797" download target="_blank" style="display:inline-block;padding:14px 40px;border-radius:0">DOWNLOAD RESUME ↓</a>
+            </div>
+        </div>
+
+</main>
+
+    <script>
+        // Language toggle
+        function setLang(lang) {
+            document.getElementById('bio-en').style.display = lang === 'en' ? 'block' : 'none';
+            document.getElementById('bio-th').style.display = lang === 'th' ? 'block' : 'none';
+            const btnEn = document.getElementById('btn-en');
+            const btnTh = document.getElementById('btn-th');
+            btnEn.style.background = lang === 'en' ? 'rgba(255,255,255,0.9)' : 'transparent';
+            btnEn.style.color      = lang === 'en' ? '#B03A00' : 'rgba(255,255,255,0.75)';
+            btnTh.style.background = lang === 'th' ? 'rgba(255,255,255,0.9)' : 'transparent';
+            btnTh.style.color      = lang === 'th' ? '#B03A00' : 'rgba(255,255,255,0.75)';
+        }
+        if (document.getElementById('bio-en')) setLang('en');
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('in-view'), i * 60);
+                }
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.content-card').forEach(c => observer.observe(c));
+    </script>
+    <footer class="site-footer">
+        <p class="footer-brand">
+            <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+            &nbsp;:&nbsp;iDEAS365
+        </p>
+        <p class="footer-tagline">Smart Lazy Style</p>
+        <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+    </footer>
+
+<a href="island_about.html" class="back-fixed" onclick="return goBack(this.href)">
+    <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="Back">
+</a>
+
+<script>
+    /* added: BACK = previous page (or this island's map when opened directly) */
+    function goBack(fallback) {
+        try { if (document.referrer && new URL(document.referrer).origin === location.origin) { history.back(); return false; } } catch (e) {}
+        location.href = fallback; return false;
+    }
+</script>
+</body>
+</html>
