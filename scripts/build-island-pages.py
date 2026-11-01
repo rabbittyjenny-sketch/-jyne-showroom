@@ -224,7 +224,7 @@ def submap(name, title, group, buttons):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{title} - iDEAS365</title>
+    <title>{title.replace('&amp;', '&')} - iDEAS365</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap"
         rel="stylesheet">
     {idx_css}
@@ -259,11 +259,11 @@ submap('island_about.html', 'ABOUT ISLAND', 'about', [
     ('about_experience.html', 'ประวัติการทำงาน', 'experience', (58, 54, 24), ['ไทม์ไลน์งานที่ผ่านมา', 'ใบประกาศ · ทักษะอื่น', 'เรซูเม่ (ดาวน์โหลด)']),
     ('about_live.html', 'e-commerce Live Streaming', 'live', (14, 36, 24), ['Case study', 'ผลไลฟ์ 2 ชั่วโมง']),
 ])
-submap('island_works.html', 'SOLO-PROJECT WAREHOUSE', 'works', [
+submap('island_works.html', 'PIC&amp;CLIP WAREHOUSE', 'works', [
     ('works_clips.html', 'คลิปวิดีโอ', 'clips', (14, 36, 26), ['ไลฟ์ขายของ', 'ไลฟ์คอนเทนต์', 'รับทำคอนเทนต์', 'สร้างจาก AI', 'อีเวนต์ · โปรโมท F&amp;B', 'AI Voice · Avatar']),
     ('works_photos.html', 'รูปผลงาน', 'photos', (58, 22, 26), ['แต่งหน้า · ทำผม', 'อาหาร', 'ออกบูธ · อีเวนต์', 'ผลไลฟ์ 6 หลัก']),
 ])
-submap('island_learning.html', 'LEARNING BRIDGE', 'learning', [
+submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'learning', [
     ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'tools', (12, 30, 24), ['เครื่องมือและระบบที่ทำงานร่วมกับ AI', 'สร้างเองทั้งระบบ']),
     ('learning_docs.html', 'เอกสาร · ความรู้', 'docs', (58, 14, 26), ['เอกสารฟรี · หนังสือ', 'เทมเพลต · ตารางช่วยงาน']),
     ('learning_design.html', 'งานออกแบบ', 'design', (56, 54, 26), ['หน้าเว็บ (Wix)', 'Creative · กราฟิก', 'แผนคอนเทนต์การตลาด']),
