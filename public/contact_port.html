@@ -297,7 +297,7 @@
     </footer>
 
     <!-- ✅ BACK button fixed bottom-right — same height as MAP button (52px) -->
-    <a href="index.html" class="back-btn-fixed">
+    <a href="index.html" class="back-btn-fixed" onclick="return goBack(this.href)">
         <img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="BACK">
     </a>
 
@@ -394,5 +394,12 @@
     }
     .popup-close:hover { opacity: 0.85; }
     </style>
+<script>
+    /* added: BACK = previous page (or the main map when opened directly) */
+    function goBack(fallback) {
+        try { if (document.referrer && new URL(document.referrer).origin === location.origin) { history.back(); return false; } } catch (e) {}
+        location.href = fallback; return false;
+    }
+</script>
 </body>
 </html>

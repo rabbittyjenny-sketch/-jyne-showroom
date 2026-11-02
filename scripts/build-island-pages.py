@@ -402,9 +402,11 @@ SUB_CSS = """
             background: rgba(0,0,0,0.55); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
         .main-menu-link { position: fixed; top: 28px; right: 40px; z-index: 101; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
             font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: #fff; background: rgba(0,0,0,0.55); padding: 9px 16px; }
-        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; }
-        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
-        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; overflow: hidden; }
+        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); }
+        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+
+        /* pins: polaroid picture on a stem; the tip touches the building */
         .pin { position: absolute; width: 8.5%; min-width: 46px; transform: translate(-50%, -100%); text-decoration: none; z-index: 5; }
         .pin-float { display: block; animation: pinFloat 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
         .pin:nth-of-type(2) .pin-float { animation-delay: -1.1s; }
@@ -415,43 +417,129 @@ SUB_CSS = """
         .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
         .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
         .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
-        .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -6px); min-width: 200px; max-width: 260px;
-            background: #1A1A1A; color: #fff; padding: 12px 14px; text-align: left; opacity: 0; visibility: hidden; pointer-events: none;
-            transition: opacity 0.2s, transform 0.2s; z-index: 10; font-family: 'Noto Sans Thai', sans-serif; }
-        .pin-pop b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .pin-pop span { display: block; font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
-        .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translate(-50%, -12px); }
+        /* pin name: pops up like the island tooltip on the main map (same size, timing and bounce), small square black label */
+        .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%) scale(0.3); transform-origin: bottom center;
+            background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; border-radius: 0; white-space: nowrap;
+            font-family: 'Noto Sans Thai', sans-serif; font-size: 12px; font-weight: 600; line-height: 1.3;
+            opacity: 0; visibility: hidden; pointer-events: none; z-index: 10;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-10px) scale(1); }
         .sub-list { display: none; }
+
+        /* arrival: cotton clouds part to the left and right, the island comes into focus, then the pins pop in.
+           Full version once per visit (sessionStorage); coming back to the page only fades in. */
+        .sub-intro { position: absolute; inset: -8% -4%; z-index: 20; pointer-events: none; }
+        .sub-haze { position: absolute; inset: 8% 4%; background: linear-gradient(180deg, #cfe9f8 0%, #eef8fe 100%); transition: opacity 1.1s ease 0.35s; }
+        .cloud-pack { position: absolute; top: 0; bottom: 0; width: 60%; transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1) 0.15s, opacity 0.9s ease 1.3s; }
+        .cloud-pack.left { left: 0; } .cloud-pack.right { right: 0; }
+        .cloud { position: absolute; display: block; height: auto; filter: drop-shadow(0 10px 14px rgba(70, 120, 170, 0.22)); animation: cloudBob 6s ease-in-out infinite; }
+        .cloud:nth-child(2) { animation-delay: -2s; } .cloud:nth-child(3) { animation-delay: -4s; }
+        @keyframes cloudBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+        .sub-loading { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: 8px; opacity: 0; transition: opacity 0.3s; }
+        .sub-loading i { width: 11px; height: 11px; border-radius: 50%; animation: dotHop 0.9s ease-in-out infinite; }
+        .sub-loading i:nth-child(1) { background: #4285F4; } .sub-loading i:nth-child(2) { background: #EA4335; animation-delay: 0.12s; }
+        .sub-loading i:nth-child(3) { background: #F5B800; animation-delay: 0.24s; } .sub-loading i:nth-child(4) { background: #34A853; animation-delay: 0.36s; }
+        @keyframes dotHop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } }
+        .sub-stage.is-loading .sub-loading { opacity: 1; }
+
+        .sub-stage .sub-map { opacity: 0; filter: blur(14px) saturate(0.7); transform: scale(1.05);
+            transition: opacity 1.3s ease 0.45s, filter 1.7s ease 0.45s, transform 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
+        .sub-stage .pin { opacity: 0; transform: translate(-50%, -100%) scale(0.6);
+            transition: opacity 0.4s ease 1.6s, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.6s; }
+        .sub-stage .pin:nth-of-type(2) { transition-delay: 1.75s; } .sub-stage .pin:nth-of-type(3) { transition-delay: 1.9s; }
+        .sub-stage.is-ready .sub-map { opacity: 1; filter: none; transform: none; }
+        .sub-stage.is-ready .pin { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+        .sub-stage.is-ready .sub-haze { opacity: 0; }
+        .sub-stage.is-ready .cloud-pack.left { transform: translateX(-118%); opacity: 0; }
+        .sub-stage.is-ready .cloud-pack.right { transform: translateX(118%); opacity: 0; }
+        .sub-stage.is-ready .sub-loading { opacity: 0; }
+        /* coming back to the page in the same visit: no clouds, short fade */
+        .sub-stage.quick .sub-intro { display: none; }
+        .sub-stage.quick .sub-map { filter: none; transform: none; transition: opacity 0.45s ease; }
+        .sub-stage.quick .pin { transition: opacity 0.35s ease 0.2s, transform 0.45s ease 0.2s; }
+        @media (prefers-reduced-motion: reduce) {
+            .sub-intro { display: none; }
+            .sub-stage .sub-map, .sub-stage .pin { filter: none; transform: translate(0, 0); transition: opacity 0.3s ease; }
+            .sub-stage .pin, .sub-stage.is-ready .pin { transform: translate(-50%, -100%); }
+            .pin-float, .cloud { animation: none; }
+        }
+
         .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
         .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
         .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
             .main-menu-link { top: 12px; right: 16px; }
             .submap-title { top: 60px; font-size: 1rem; }
-            .sub-wrap { position: static; display: block; padding: 104px 0 110px; }
+            .sub-wrap { position: static; display: block; padding: 136px 0 110px; overflow: hidden; }
+            .sub-intro { inset: 0; overflow: hidden; }                       /* phones: clouds stay over the map, not the menu below */
             .sub-stage { width: 100%; }
             .pin-stem { height: 8px; } .pin-dot { width: 8px; height: 8px; }
             .pin-pop { display: none; }
-            /* phones: a plain menu under the map */
+            /* phones: a plain menu under the map (names only, like the pins) */
             .sub-list { display: block; margin: 18px 16px 0; }
-            .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px; }
-            .sub-list b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; margin-bottom: 4px; }
-            .sub-list span { display: block; font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+            .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px;
+                font-family: 'Noto Sans Thai', sans-serif; font-size: 1rem; font-weight: 600; }
         }
     </style>
 """
 BACK_IMG = 'https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277'
 
+# one puffy cotton cloud (own drawing: overlapping round puffs, each shaded white → pale blue at its edge)
+CLOUD_SVG = ('<svg class="cloud" viewBox="0 0 240 150" style="{pos}" aria-hidden="true">'
+             '<use href="#i365-cloud"/></svg>')
+CLOUD_DEFS = """    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <radialGradient id="i365-puff" cx="0.38" cy="0.32" r="0.75">
+                <stop offset="0" stop-color="#ffffff"/><stop offset="0.55" stop-color="#ffffff"/>
+                <stop offset="0.82" stop-color="#e3eefa"/><stop offset="1" stop-color="#b9d2ee"/>
+            </radialGradient>
+            <g id="i365-cloud" fill="url(#i365-puff)">
+                <circle cx="70" cy="88" r="44"/><circle cx="118" cy="62" r="54"/><circle cx="168" cy="86" r="44"/>
+                <circle cx="42" cy="108" r="30"/><circle cx="200" cy="108" r="30"/><circle cx="96" cy="112" r="34"/>
+                <circle cx="144" cy="114" r="34"/><circle cx="120" cy="100" r="40"/>
+            </g>
+        </defs>
+    </svg>
+"""
+# where the clouds sit inside each half (% of that half) — together they cover the whole picture
+CLOUDS_LEFT = ['left:-18%;top:-14%;width:112%', 'left:4%;top:24%;width:118%', 'left:-22%;top:56%;width:120%']
+CLOUDS_RIGHT = ['right:-16%;top:-10%;width:116%', 'right:6%;top:28%;width:114%', 'right:-20%;top:58%;width:118%']
+
+SUB_JS = """
+<script>
+    /* added: arrival — clouds part once the map picture is ready (full version once per visit) */
+    (function () {
+        var st = document.querySelector('.sub-stage'), img = st && st.querySelector('.sub-map');
+        if (!st || !img) return;
+        var key = 'i365-intro:' + location.pathname, seen = false;
+        try { seen = sessionStorage.getItem(key) === '1'; sessionStorage.setItem(key, '1'); } catch (e) {}
+        if (seen) st.classList.add('quick');
+        var started = false;
+        function go() {
+            if (started) return; started = true;
+            st.classList.remove('is-loading');
+            requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('is-ready'); }); });
+            setTimeout(function () { var i = st.querySelector('.sub-intro'); if (i) i.remove(); }, 2800);
+        }
+        var slow = setTimeout(function () { if (!started) st.classList.add('is-loading'); }, 350);   // waiting dots only if the picture is slow
+        if (img.complete && img.naturalWidth) go();
+        else { img.addEventListener('load', go); img.addEventListener('error', go); setTimeout(go, 8000); }
+        window.addEventListener('pageshow', function (e) { if (e.persisted) { st.classList.add('quick', 'is-ready'); clearTimeout(slow); } });
+    })();
+</script>
+"""
+
 
 def submap(name, title, map_file, ratio, pins):
     pin_html, list_html = [], []
-    for href, label, pin_img, (x, y), items in pins:
-        lines = ''.join(f'<span>{i}</span>' for i in items)
+    for href, label, pin_img, (x, y) in pins:
         pin_html.append(f"""            <a href="{href}" class="pin" style="left:{x}%;top:{y}%" aria-label="{label}">
-                <span class="pin-pop"><b>{label}</b>{lines}</span>
+                <span class="pin-pop">{label}</span>
                 <span class="pin-float"><img class="pin-img" src="islands/{pin_img}" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
             </a>""")
-        list_html.append(f'            <a href="{href}"><b>{label}</b>{lines}</a>')
+        list_html.append(f'            <a href="{href}">{label}</a>')
+    clouds_l = ''.join(CLOUD_SVG.format(pos=p) for p in CLOUDS_LEFT)
+    clouds_r = ''.join(CLOUD_SVG.format(pos=p) for p in CLOUDS_RIGHT)
     html = f"""<!DOCTYPE html>
 <html lang="th">
 
@@ -466,7 +554,7 @@ def submap(name, title, map_file, ratio, pins):
 </head>
 
 <body>
-    <header class="nav-header">
+{CLOUD_DEFS}    <header class="nav-header">
         <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
             class="logo-img"></a>
     </header>
@@ -477,34 +565,40 @@ def submap(name, title, map_file, ratio, pins):
         <div class="sub-stage" style="--ar:{ratio}">
             <img class="sub-map" src="{MAP_URL}{map_file}" alt="{title}">
 {chr(10).join(pin_html)}
+            <div class="sub-intro" aria-hidden="true">
+                <div class="sub-haze"></div>
+                <div class="cloud-pack left">{clouds_l}</div>
+                <div class="cloud-pack right">{clouds_r}</div>
+                <div class="sub-loading"><i></i><i></i><i></i><i></i></div>
+            </div>
         </div>
         <nav class="sub-list" aria-label="{title}">
 {chr(10).join(list_html)}
         </nav>
     </main>
 
-    <a href="index.html" class="back-fixed"><img src="{BACK_IMG}" alt="Back"></a>
-</body>
+    <a href="index.html" class="back-fixed" onclick="return goBack(this.href)"><img src="{BACK_IMG}" alt="Back"></a>
+{BACK_JS}{SUB_JS}</body>
 
 </html>
 """
     write(name, html)
 
 
-#        page                       menu                         pin picture   tip on the map (x%, y%)   pop-up lines
+#        page                       pin name (the only text on the pin)   pin picture   tip on the map (x%, y%)
 submap('island_about.html', 'ABOUT ISLAND', 'sub-about-me.jpg', '2048 / 1152', [
-    ('about_profile.html', 'โปรไฟล์', 'A1.jpg', (58, 54), ['ตัวฉัน · สรุปสั้น', 'จุดแข็ง', 'เลือกเส้นทางตามงาน']),             # church cluster
-    ('about_experience.html', 'ประวัติการทำงาน', 'A2.jpg', (92, 30), ['ไทม์ไลน์งานที่ผ่านมา', 'ใบประกาศ · ทักษะอื่น', 'เรซูเม่ (ดาวน์โหลด)']),  # planetarium
-    ('about_live.html', 'e-commerce Live Streaming', 'A3.jpg', (28, 26), ['Case study', 'ผลไลฟ์ 2 ชั่วโมง']),                 # round parking tower
+    ('about_profile.html', 'โปรไฟล์', 'A1.jpg', (58, 54)),                        # church cluster
+    ('about_experience.html', 'ประวัติการทำงาน', 'A2.jpg', (92, 30)),             # planetarium
+    ('about_live.html', 'e-commerce Live Streaming', 'A3.jpg', (28, 26)),          # round parking tower
 ])
 submap('island_works.html', 'PIC&amp;CLIP WAREHOUSE', 'sub-pic-clip.jpg', '2048 / 1152', [
-    ('works_clips.html', 'คลิปวิดีโอ', 'P1.jpg', (65, 50), ['ไลฟ์ขายของ', 'ไลฟ์คอนเทนต์', 'รับทำคอนเทนต์', 'สร้างจาก AI', 'อีเวนต์ · โปรโมท F&amp;B', 'AI Voice · Avatar']),  # Film Studio Warehouse
-    ('works_photos.html', 'รูปผลงาน', 'P2.jpg', (50, 50), ['แต่งหน้า · ทำผม', 'อาหาร', 'ออกบูธ · อีเวนต์', 'ผลไลฟ์ 6 หลัก']),  # Dragon Theatre
+    ('works_clips.html', 'คลิปวิดีโอ', 'P1.jpg', (65, 50)),                        # Film Studio Warehouse
+    ('works_photos.html', 'รูปผลงาน', 'P2.jpg', (50, 50)),                         # Dragon Theatre
 ])
 submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'sub-ai.webp', '1920 / 1280', [
-    ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'ai1.jpg', (43, 36), ['เครื่องมือและระบบที่ทำงานร่วมกับ AI', 'สร้างเองทั้งระบบ']),  # LAB 01
-    ('learning_docs.html', 'เอกสาร · ความรู้', 'ai2.jpg', (27, 17), ['เอกสารฟรี · หนังสือ', 'เทมเพลต · ตารางช่วยงาน']),            # observatory
-    ('learning_design.html', 'งานออกแบบ', 'ai3.jpg', (75, 37), ['หน้าเว็บ (Wix)', 'Creative · กราฟิก', 'แผนคอนเทนต์การตลาด']),     # Data & Signal
+    ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'ai1.jpg', (43, 36)),       # LAB 01
+    ('learning_docs.html', 'เอกสาร · ความรู้', 'ai2.jpg', (27, 17)),               # observatory
+    ('learning_design.html', 'งานออกแบบ', 'ai3.jpg', (75, 37)),                     # Data & Signal
 ])
 
 # ── 404 (COMMUNITY HARBOR for now, and any address that does not exist) ─────────────────────────
