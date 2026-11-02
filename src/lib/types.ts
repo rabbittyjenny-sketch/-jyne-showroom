@@ -10,6 +10,8 @@ export interface FieldDef {
   type: FieldType;
   required: boolean;
   options?: { value: string; label: string }[];
+  /** upload rule for image/file fields (see src/lib/uploadRules.ts); default: image → 'image', file → 'document' */
+  upload?: 'image' | 'pdf' | 'document' | 'design' | 'audio';
 }
 
 export interface Features {

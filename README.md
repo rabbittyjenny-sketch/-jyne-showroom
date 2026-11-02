@@ -30,14 +30,14 @@ site-source/
   apps-script/           Google Apps Script เดิม (ฟอร์มติดต่อ / ตารางเครื่องมือ / เอกสาร)
 scripts/
   build-island-pages.py  สร้างหน้าใน public/ จาก originals  → npm run pages
-  build-content-sql.py   สร้าง supabase/data/i365_current_page_content.sql
+  build-content-sql.py   สร้าง supabase/data/i365_current_page_content.sql (เนื้อหาตั้งต้น — รันไปแล้ว ห้ามรันซ้ำ)
 src/
   community/             หน้า COMMUNITY HARBOR (app.html)
   pages/admin/           หลังบ้าน /backoffice (admin.html)
   components/admin/      ส่วนประกอบหลังบ้าน
   lib/                   supabase client, adminApi, articleTemplate, youtube, upload
 supabase/migrations/     โครงสร้างฐานข้อมูล i365_* (รันตามลำดับ)
-supabase/data/           เนื้อหาตั้งต้นของหน้า (รันซ้ำได้)
+supabase/data/           เนื้อหาตั้งต้นของหน้า (รันไปแล้ว 3 พ.ย. 2026 — ห้ามรันซ้ำ)
 docs/                    คู่มือ + first-admin.sql
 ```
 
@@ -47,7 +47,6 @@ docs/                    คู่มือ + first-admin.sql
 
 - `npm run pages` — สร้างหน้าใน `public/` ใหม่หลังแก้ originals / service-content.json / ตัวสร้าง
 - `npm run build` — build สำหรับ Vercel (หน้า static + app.html + admin.html)
-- `python3 scripts/build-content-sql.py` — สร้างไฟล์เนื้อหาตั้งต้นใหม่
 
 Vercel rewrites (`vercel.json`): `/community*` → app.html, `/backoffice*` → admin.html
 ค่าที่ต้องตั้งใน Vercel: `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`

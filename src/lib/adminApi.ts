@@ -1,7 +1,8 @@
 // Back-office data access: every write the admin does goes through here.
 // Without a database connection (no VITE_SUPABASE_* env) the screens open empty and writes are refused.
 import { supabase, IS_MOCK } from '@/integrations/supabase/client';
-import { sanitizeFileName, resolveContentType } from './uploadFile';
+import { sanitizeFileName } from './uploadFile';
+import { checkFile, contentTypeOf, type UploadKind } from './uploadRules';
 
 export type Table =
   | 'i365_island_templates' | 'i365_islands' | 'i365_sections' | 'i365_item_types' | 'i365_items'
@@ -52,18 +53,72 @@ export async function upsertSetting(key: string, value: unknown): Promise<void> 
 }
 
 /**
- * Upload one file to the i365-media bucket and record it in the media library.
- * Uses Creatr365's uploadFile helpers: Thai/space file names become a safe key
- * (original name kept), and the real MIME type is sent instead of text/plain.
+ * Upload one file to the i365-media bucket and record it in the media library (i365_media).
+ * The file must pass the upload rule of the box it came from (type + size, src/lib/uploadRules.ts).
+ * Thai/space file names become a safe key (original name kept in i365_media.file_name).
+ * Every upload is "pending" until the form it came from is saved or closed — see settleUploads().
  */
-export async function uploadMedia(file: File, folder = 'uploads'): Promise<string> {
+export async function uploadMedia(file: File, folder = 'uploads', kind: UploadKind = 'document'): Promise<string> {
   if (IS_MOCK) throw new Error(MOCK_WRITE_MSG);
+  const bad = checkFile(file, kind);
+  if (bad) throw new Error(bad);
   const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 7)}-${sanitizeFileName(file.name)}`;
-  const { error } = await supabase.storage.from('i365-media').upload(path, file, { contentType: resolveContentType(file), upsert: false });
+  const contentType = contentTypeOf(file);
+  const { error } = await supabase.storage.from(BUCKET).upload(path, file, { contentType, upsert: false });
   if (error) throw new Error(error.message);
-  const { data } = supabase.storage.from('i365-media').getPublicUrl(path);
-  await supabase.from('i365_media').insert({ path, public_url: data.publicUrl, file_name: file.name, mime_type: resolveContentType(file), size_bytes: file.size } as never);
+  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  pending.add(path);
+  await supabase.from('i365_media').insert({ path, public_url: data.publicUrl, file_name: file.name, mime_type: contentType, size_bytes: file.size } as never);
   return data.publicUrl;
+}
+
+// ── keeping storage in step with the data ─────────────────────────────────
+// A file in i365-media is kept while any i365 row still points at it (checked in the database by
+// i365_media_in_use, which looks through items, articles, sections, islands, settings, routes …).
+// When nothing points at it any more — the item was deleted, the file was replaced, or the form was
+// closed without saving — the file and its i365_media row are removed. Links to other sites
+// (ImageKit, YouTube …) are never touched.
+const BUCKET = 'i365-media';
+const pending = new Set<string>();
+
+/** Paths of i365-media files referenced anywhere inside `value` (a row, a form state, …). */
+export function mediaPathsIn(value: unknown): string[] {
+  const base = supabase.storage.from(BUCKET).getPublicUrl('').data.publicUrl.replace(/\/$/, '') + '/';
+  const text = JSON.stringify(value ?? null);
+  const out = new Set<string>();
+  let i = text.indexOf(base);
+  while (i !== -1) {
+    const rest = text.slice(i + base.length);
+    const path = rest.match(/^[^"\s?#\\]+/)?.[0];
+    if (path) out.add(decodeURIComponent(path));
+    i = text.indexOf(base, i + base.length);
+  }
+  return [...out];
+}
+
+/** Remove the given files from storage + i365_media when no i365 row refers to them any more. */
+export async function releaseMedia(paths: Iterable<string>): Promise<string[]> {
+  if (IS_MOCK) return [];
+  const removed: string[] = [];
+  for (const path of new Set(paths)) {
+    const { data: inUse, error } = await supabase.rpc('i365_media_in_use' as never, { _path: path } as never);
+    if (error || inUse !== false) continue;            // unsure or still used → keep it
+    const { error: e2 } = await supabase.storage.from(BUCKET).remove([path]);
+    if (e2) continue;
+    await supabase.from('i365_media').delete().eq('path', path);
+    removed.push(path);
+  }
+  return removed;
+}
+
+/**
+ * Call after a form is saved, deleted or closed: files uploaded in it that were not saved, plus the
+ * given files that the save/delete stopped using, are removed. Never throws (cleanup must not block work).
+ */
+export async function settleUploads(alsoCheck: string[] = []): Promise<void> {
+  const all = [...pending, ...alsoCheck];
+  pending.clear();
+  try { await releaseMedia(all); } catch { /* the next settle retries nothing; orphan stays, data is safe */ }
 }
 
 export const slugify = (s: string) =>

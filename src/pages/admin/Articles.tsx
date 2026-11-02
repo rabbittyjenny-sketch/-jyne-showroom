@@ -7,7 +7,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, Eye, EyeOff, Save, X, ExternalLink, Upload, Headphones } from 'lucide-react';
 import { AdminLayout, Notice } from '@/components/admin/AdminLayout';
 import { supabase, IS_MOCK } from '@/integrations/supabase/client';
-import { uploadMedia } from '@/lib/adminApi';
+import { mediaPathsIn, releaseMedia, settleUploads, uploadMedia } from '@/lib/adminApi';
+import { UPLOAD_RULES, acceptFor } from '@/lib/uploadRules';
 import { parseYouTubeId, youTubeThumb } from '@/lib/youtube';
 import { ArticleBody, isDocumentHtml } from '@/community/components/ArticleBody';
 import { looksLikeArticleScript, normalizeArticleScript, parseStructuredArticle, validateStructuredArticle } from '@/lib/articleTemplate';
@@ -72,10 +73,6 @@ const EMPTY: EditorForm = {
   audio_url: '', audio_duration_sec: null, audio_title: '', audio_image_url: '',
 };
 
-const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
-const AUDIO_TYPES: Record<string, string> = { mp3: 'audio/mpeg', m4a: 'audio/mp4', wav: 'audio/wav' };
-const MAX_AUDIO_BYTES = 50 * 1024 * 1024;
 const input = 'w-full bg-[#1a1a1a] border border-white/10 px-4 py-2.5 text-white text-sm focus:outline-none focus:border-[#D4A843]/50 placeholder-white/20';
 const label = 'text-xs text-white/40 font-medium block mb-1';
 
@@ -142,10 +139,8 @@ const ContentEditor: React.FC<{ initial: EditorForm; onSave: (f: EditorForm) => 
     e.target.value = '';
     if (!file) return;
     setError('');
-    if (!IMAGE_TYPES.includes(file.type)) { setError('รองรับเฉพาะไฟล์ JPG, PNG, GIF หรือ WebP'); return; }
-    if (file.size > MAX_IMAGE_BYTES) { setError('ไฟล์ใหญ่เกิน 5MB'); return; }
     setUploading(true);
-    try { set(field, await uploadMedia(file, folder)); }
+    try { set(field, await uploadMedia(file, folder, 'image')); }       // type + size checked by the 'image' rule
     catch (x) { setError('อัปโหลดไม่สำเร็จ: ' + (x instanceof Error ? x.message : String(x))); }
     finally { setUploading(false); }
   };
@@ -156,12 +151,9 @@ const ContentEditor: React.FC<{ initial: EditorForm; onSave: (f: EditorForm) => 
     e.target.value = '';
     if (!file) return;
     setError('');
-    const ext = file.name.split('.').pop()?.toLowerCase() ?? '';
-    if (!AUDIO_TYPES[ext]) { setError('รองรับเฉพาะไฟล์เสียง MP3, M4A หรือ WAV'); return; }
-    if (file.size > MAX_AUDIO_BYTES) { setError('ไฟล์เสียงใหญ่เกิน 50MB'); return; }
     setUploading(true);
     try {
-      const url = await uploadMedia(file, 'podcasts');
+      const url = await uploadMedia(file, 'podcasts', 'audio');             // type + size checked by the 'audio' rule
       const seconds = await new Promise<number | null>((resolve) => {
         const probe = new Audio();
         const obj = URL.createObjectURL(file);
@@ -284,10 +276,11 @@ const ContentEditor: React.FC<{ initial: EditorForm; onSave: (f: EditorForm) => 
                 <div className="flex flex-col sm:flex-row gap-2">
                   <label className="inline-flex items-center justify-center gap-2 bg-[#1a1a1a] border border-dashed border-white/15 px-4 py-3 text-white/40 text-sm cursor-pointer hover:text-white hover:border-white/30 transition-colors sm:w-56">
                     <Upload className="w-4 h-4" />{uploading ? 'กำลังอัปโหลด...' : 'อัปโหลดรูปปก'}
-                    <input type="file" accept="image/*" onChange={(e) => uploadImage(e, 'articles', 'cover_image_url')} disabled={uploading} className="hidden" />
+                    <input type="file" accept={acceptFor('image')} onChange={(e) => uploadImage(e, 'articles', 'cover_image_url')} disabled={uploading} className="hidden" />
                   </label>
                   <input className={`flex-1 ${input}`} placeholder="หรือวาง URL รูปปกจากภายนอก..." value={form.cover_image_url || ''} onChange={(e) => set('cover_image_url', e.target.value)} />
                 </div>
+                <p className="text-[11px] text-white/30 mt-1">{UPLOAD_RULES.image.hint}</p>
               </div>
               {!isClip && (
                 <div className="border border-white/10 p-4 space-y-3">
@@ -303,12 +296,13 @@ const ContentEditor: React.FC<{ initial: EditorForm; onSave: (f: EditorForm) => 
                   ) : <p className="text-xs text-white/30">ยังไม่มีเสียง — หน้าบทความจะไม่แสดงปุ่ม "ฟังเป็น Podcast"</p>}
                   <div className="flex flex-col sm:flex-row gap-2">
                     <label className="inline-flex items-center justify-center gap-2 bg-[#1a1a1a] border border-dashed border-white/15 px-4 py-3 text-white/40 text-sm cursor-pointer hover:text-white hover:border-white/30 transition-colors sm:w-56">
-                      <Upload className="w-4 h-4" />{uploading ? 'กำลังอัปโหลด...' : form.audio_url ? 'เปลี่ยนไฟล์เสียง' : 'อัปโหลดไฟล์เสียง (MP3/M4A/WAV, ≤50MB)'}
-                      <input type="file" accept=".mp3,.m4a,.wav,audio/*" onChange={uploadAudio} disabled={uploading} className="hidden" />
+                      <Upload className="w-4 h-4" />{uploading ? 'กำลังอัปโหลด...' : form.audio_url ? 'เปลี่ยนไฟล์เสียง' : 'อัปโหลดไฟล์เสียง'}
+                      <input type="file" accept={acceptFor('audio')} onChange={uploadAudio} disabled={uploading} className="hidden" />
                     </label>
                     <input className={`flex-1 ${input}`} placeholder="หรือวาง URL ไฟล์เสียงจากภายนอก..." value={form.audio_url || ''}
                       onChange={(e) => setForm((f) => ({ ...f, audio_url: e.target.value.trim(), audio_duration_sec: null }))} />
                   </div>
+                  <p className="text-[11px] text-white/30">{UPLOAD_RULES.audio.hint} · รูปสติกเกอร์: {UPLOAD_RULES.image.hint.replace(' · หรือวางลิงก์รูป', '')}</p>
                   {form.audio_url && (
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 items-end">
                       <div>
@@ -319,7 +313,7 @@ const ContentEditor: React.FC<{ initial: EditorForm; onSave: (f: EditorForm) => 
                         {form.audio_image_url && <img src={form.audio_image_url} alt="" className="w-10 h-10 object-cover border border-white/10" />}
                         <label className="inline-flex items-center gap-2 bg-[#1a1a1a] border border-dashed border-white/15 px-3 py-2.5 text-white/40 text-xs cursor-pointer hover:text-white hover:border-white/30 transition-colors">
                           <Upload className="w-3.5 h-3.5" />{form.audio_image_url ? 'เปลี่ยนรูปสติกเกอร์' : 'รูปสติกเกอร์ (เล็ก)'}
-                          <input type="file" accept="image/*" onChange={(e) => uploadImage(e, 'podcasts', 'audio_image_url')} disabled={uploading} className="hidden" />
+                          <input type="file" accept={acceptFor('image')} onChange={(e) => uploadImage(e, 'podcasts', 'audio_image_url')} disabled={uploading} className="hidden" />
                         </label>
                         {form.audio_image_url && <button type="button" onClick={() => set('audio_image_url', '')} className="text-[11px] text-[#FF6B7F] hover:opacity-80">เอาออก</button>}
                       </div>
@@ -404,6 +398,7 @@ export default function Articles() {
       : await supabase.from('i365_articles').insert([payload]);
     if (error) return error.code === '23505' ? 'Slug นี้มีอยู่แล้ว — เปลี่ยน Slug ใหม่' : 'บันทึกไม่สำเร็จ: ' + error.message;
     flash(form.id ? 'อัปเดตเนื้อหาเรียบร้อย' : 'สร้างเนื้อหาใหม่เรียบร้อย');
+    void settleUploads(mediaPathsIn(editing));   // files this save stopped using + unsaved uploads
     setEditing(false);
     load();
     return null;
@@ -419,6 +414,7 @@ export default function Articles() {
     if (!confirm(`ลบ "${row.title}"? ถ้าแค่ต้องการซ่อน ให้ใช้ "ฉบับร่าง" แทน`)) return;
     const { error } = await supabase.from('i365_articles').delete().eq('id', row.id);
     if (error) flash('ลบไม่สำเร็จ: ' + error.message, false);
+    else void releaseMedia(mediaPathsIn(row));   // its uploaded cover / audio go with it
     load();
   };
 
@@ -487,7 +483,7 @@ export default function Articles() {
           </div>
         )}
       </AdminLayout>
-      {editing !== false && <ContentEditor initial={editing} onSave={handleSave} onClose={() => setEditing(false)} />}
+      {editing !== false && <ContentEditor initial={editing} onSave={handleSave} onClose={() => { setEditing(false); void settleUploads(); }} />}
     </>
   );
 }

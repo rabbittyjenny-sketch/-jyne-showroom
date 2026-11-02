@@ -4,11 +4,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { uploadMedia } from '@/lib/adminApi';
+import { UPLOAD_RULES, acceptFor, ruleForField, type UploadKind } from '@/lib/uploadRules';
 import { parseYouTubeId, youTubeThumb } from '@/lib/youtube';
 import type { FieldDef } from '@/lib/types';
 
-/** Paste a link, or upload a file (stored in i365-media). */
-export function UploadOrUrl({ value, onChange, accept, folder, preview }: { value: string; onChange: (v: string) => void; accept?: string; folder: string; preview?: boolean }) {
+/** Paste a link, or upload a file (stored in i365-media). `kind` decides which files and sizes are accepted. */
+export function UploadOrUrl({ value, onChange, kind, folder, preview }: { value: string; onChange: (v: string) => void; kind: UploadKind; folder: string; preview?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const pick = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +17,7 @@ export function UploadOrUrl({ value, onChange, accept, folder, preview }: { valu
     e.target.value = '';
     if (!file) return;
     setBusy(true); setErr(null);
-    try { onChange(await uploadMedia(file, folder)); } catch (x) { setErr(x instanceof Error ? x.message : 'อัปโหลดไม่สำเร็จ'); } finally { setBusy(false); }
+    try { onChange(await uploadMedia(file, folder, kind)); } catch (x) { setErr(x instanceof Error ? x.message : 'อัปโหลดไม่สำเร็จ'); } finally { setBusy(false); }
   };
   return (
     <div className="space-y-2">
@@ -24,9 +25,10 @@ export function UploadOrUrl({ value, onChange, accept, folder, preview }: { valu
         <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="วางลิงก์ หรือกดอัปโหลด" />
         <label className="shrink-0 inline-flex items-center rounded-md border px-3 text-sm cursor-pointer hover:bg-muted">
           {busy ? 'กำลังอัป…' : 'อัปโหลด'}
-          <input type="file" className="hidden" accept={accept} onChange={pick} disabled={busy} />
+          <input type="file" className="hidden" accept={acceptFor(kind)} onChange={pick} disabled={busy} />
         </label>
       </div>
+      <p className="text-xs text-muted-foreground">{UPLOAD_RULES[kind].hint}</p>
       {err && <p className="text-xs text-red-600">{err}</p>}
       {preview && value && <img src={value} alt="" className="h-24 rounded border object-contain bg-muted" onError={(e) => (e.currentTarget.style.display = 'none')} />}
     </div>
@@ -53,9 +55,9 @@ export function FieldInput({ field, value, onChange, error }: { field: FieldDef;
         </select>
       ); break;
     case 'image':
-      input = <UploadOrUrl value={v} onChange={onChange} accept="image/*" folder="images" preview />; break;
+      input = <UploadOrUrl value={v} onChange={onChange} kind={ruleForField(field)} folder="images" preview={ruleForField(field) === 'image'} />; break;
     case 'file':
-      input = <UploadOrUrl value={v} onChange={onChange} folder="files" />; break;
+      input = <UploadOrUrl value={v} onChange={onChange} kind={ruleForField(field)} folder="files" preview={ruleForField(field) === 'image'} />; break;
     case 'video': {
       const id = parseYouTubeId(v);
       input = (

@@ -89,9 +89,9 @@ export function Settings() {
     <AdminLayout title="ตั้งค่าเว็บ" actions={<Button onClick={save}>บันทึก</Button>}>
       <Notice msg={msg} />
       <section className="rounded-lg border bg-background p-4 space-y-4 max-w-2xl mt-2">
-        <div className="space-y-1"><Label>รูปแผนที่หลัก (หมู่เกาะ) · ชื่อไฟล์แนะนำ <code>maps/main-archipelago.webp</code></Label><UploadOrUrl value={s.main_map_image ?? ''} onChange={(v) => setS({ ...s, main_map_image: v })} accept="image/*,video/mp4" folder="maps" preview /></div>
+        <div className="space-y-1"><Label>รูปแผนที่หลัก (หมู่เกาะ) · ชื่อไฟล์แนะนำ <code>maps/main-archipelago.webp</code></Label><UploadOrUrl value={s.main_map_image ?? ''} onChange={(v) => setS({ ...s, main_map_image: v })} kind="image" folder="maps" preview /></div>
         <div className="space-y-1"><Label>สัดส่วนแผนที่หลัก (กว้าง/สูง)</Label><Input value={s.main_map_aspect ?? '16/9'} onChange={(e) => setS({ ...s, main_map_aspect: e.target.value })} /></div>
-        <div className="space-y-1"><Label>โลโก้</Label><UploadOrUrl value={s.logo ?? ''} onChange={(v) => setS({ ...s, logo: v })} accept="image/*" folder="brand" preview /></div>
+        <div className="space-y-1"><Label>โลโก้</Label><UploadOrUrl value={s.logo ?? ''} onChange={(v) => setS({ ...s, logo: v })} kind="image" folder="brand" preview /></div>
         <div className="space-y-1"><Label>อีเมลติดต่อ</Label><Input value={s.contact_email ?? ''} onChange={(e) => setS({ ...s, contact_email: e.target.value })} /></div>
         <div className="space-y-2">
           <Label>โซเชียล</Label>
@@ -105,8 +105,8 @@ export function Settings() {
           ))}
           <Button size="sm" variant="outline" onClick={() => setS({ ...s, socials: [...(s.socials ?? []), { label: '', handle: '', url: '' }] })}>+ เพิ่ม</Button>
         </div>
-        <div className="space-y-1"><Label>รูปปุ่มย้อนกลับ (มุมขวาล่างทุกหน้า)</Label><UploadOrUrl value={s.back_button ?? ''} onChange={(v) => setS({ ...s, back_button: v })} accept="image/*" folder="brand" preview /></div>
-        <div className="space-y-1"><Label>รูป QR LINE (เกาะติดต่อ)</Label><UploadOrUrl value={s.line_qr ?? ''} onChange={(v) => setS({ ...s, line_qr: v })} accept="image/*" folder="brand" preview /></div>
+        <div className="space-y-1"><Label>รูปปุ่มย้อนกลับ (มุมขวาล่างทุกหน้า)</Label><UploadOrUrl value={s.back_button ?? ''} onChange={(v) => setS({ ...s, back_button: v })} kind="image" folder="brand" preview /></div>
+        <div className="space-y-1"><Label>รูป QR LINE (เกาะติดต่อ)</Label><UploadOrUrl value={s.line_qr ?? ''} onChange={(v) => setS({ ...s, line_qr: v })} kind="image" folder="brand" preview /></div>
         <div className="space-y-1"><Label>ข้อความใต้ QR</Label><Input value={s.line_qr_caption ?? ''} onChange={(e) => setS({ ...s, line_qr_caption: e.target.value })} /></div>
         <div className="space-y-1"><Label>คำสัญญาข้างฟอร์มติดต่อ (บรรทัดละข้อ)</Label><Textarea rows={4} value={s.contact_promise_th ?? ''} onChange={(e) => setS({ ...s, contact_promise_th: e.target.value })} /></div>
       </section>
