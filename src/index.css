@@ -54,6 +54,61 @@
     --sidebar-ring: 217 89% 61%;
   }
 
+  /* dark console tokens — copied from the Creatr365 repo (src/index.css .dark); the back office runs with <html class="dark"> */
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 217 89% 61%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 98% 50%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 95%;
+    --destructive: 348 100% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 53% 46%;
+    --success-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 217 89% 61%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 43 63% 55%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 0 0% 13%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 14%;
+    --sidebar-ring: 43 63% 55%;
+  }
+
   * { @apply border-border; }
   body { @apply bg-background text-foreground; }
+}
+
+/* admin console: square corners — copied from the Creatr365 repo (src/index.css .admin-console-surface) */
+.admin-console-surface,
+.admin-console-surface *,
+.admin-modal-surface,
+.admin-modal-surface * {
+  --radius: 0.125rem;
+}
+.admin-console-surface button,
+.admin-console-surface input,
+.admin-console-surface textarea,
+.admin-console-surface select,
+.admin-console-surface [role="dialog"],
+.admin-console-surface [class*="rounded-"]:not(.animate-spin),
+.admin-modal-surface button,
+.admin-modal-surface input,
+.admin-modal-surface textarea,
+.admin-modal-surface select,
+.admin-modal-surface [role="dialog"],
+.admin-modal-surface [class*="rounded-"]:not(.animate-spin) {
+  border-radius: 2px !important;
 }

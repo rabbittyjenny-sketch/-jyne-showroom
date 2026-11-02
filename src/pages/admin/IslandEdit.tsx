@@ -7,12 +7,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { PositionInputs, UploadOrUrl } from '@/components/admin/FieldInputs';
 import { insert, list, slugify, update } from '@/lib/adminApi';
-import { THEME_FIELDS, THEME_PRESETS, resolveTheme, themeVars, type IslandTheme, type ThemePresetKey } from '@/lib/themes';
 import {
-  DISPLAY_LABELS, FEATURE_LABELS, PAGE_RENDERED_TYPES, SITE_PAGES, SOURCE_LABELS, pageUrl,
-  type DisplayStyle, type Features, type Island, type ItemType, type Section, type SourceType,
+  DISPLAY_LABELS, PAGE_RENDERED_TYPES, SITE_PAGES, SOURCE_LABELS, pageUrl,
+  type DisplayStyle, type Island, type ItemType, type Section, type SourceType,
 } from '@/lib/types';
 
 type Msg = { text: string; ok: boolean } | null;
@@ -42,12 +40,10 @@ export default function IslandEdit() {
 
   if (!island) return <AdminLayout title="เกาะ"><Notice msg={msg ?? { text: 'กำลังโหลด…', ok: true }} /></AdminLayout>;
   const set = (patch: Partial<Island>) => setIsland({ ...island, ...patch });
-  const features = island.features ?? {};
 
   const save = async () => {
     setMsg(null);
     if (!island.name_th.trim()) { setMsg({ text: 'ต้องมีชื่อเกาะ', ok: false }); return; }
-    if (features.is_redirect && !island.redirect_url) { setMsg({ text: 'เกาะพาไปเว็บอื่นต้องมีลิงก์ปลายทาง', ok: false }); return; }
     try {
       const { id: _id, deleted_at: _d, ...patch } = island;
       await update('i365_islands', { id: island.id }, patch);
@@ -96,50 +92,6 @@ export default function IslandEdit() {
         </section>
       </div>
 
-      <details className="mt-6 rounded-lg border bg-background p-4">
-        <summary className="cursor-pointer font-semibold">ตั้งค่าของหน้าเกาะแบบเดิม (/i/…) — ไม่ได้ใช้กับหน้าเว็บปัจจุบัน</summary>
-      <div className="grid gap-6 lg:grid-cols-2 mt-4">
-
-        <section className="rounded-lg border bg-background p-4 space-y-3">
-          <h2 className="font-semibold">ฟีเจอร์ของเกาะนี้</h2>
-          <p className="text-xs text-muted-foreground">ได้มาจากแม่แบบตอนสร้าง เปิด/ปิดเฉพาะเกาะนี้ได้ (แบบ EMS)</p>
-          {(Object.keys(FEATURE_LABELS) as (keyof Features)[]).map((k) => (
-            <div key={k} className="flex items-center justify-between">
-              <Label className="font-normal">{FEATURE_LABELS[k]}</Label>
-              <Switch checked={!!features[k]} onCheckedChange={(c) => set({ features: { ...features, [k]: c } })} />
-            </div>
-          ))}
-          {features.is_redirect && (
-            <div className="grid grid-cols-3 gap-3 pt-2">
-              <div className="col-span-2 space-y-1"><Label>ลิงก์ปลายทาง</Label><Input value={island.redirect_url ?? ''} onChange={(e) => set({ redirect_url: e.target.value })} /></div>
-              <div className="space-y-1"><Label>รอก่อนไป (มิลลิวินาที)</Label><Input type="number" value={island.redirect_delay_ms} onChange={(e) => set({ redirect_delay_ms: Number(e.target.value) })} /></div>
-            </div>
-          )}
-        </section>
-
-        <ThemeEditor theme={island.theme ?? {}} onChange={(theme) => set({ theme })} />
-
-        <section className="rounded-lg border bg-background p-4 space-y-3 lg:col-span-2">
-          <h2 className="font-semibold">รูปและตำแหน่ง</h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <Label>รูปเกาะบนแผนที่หลัก (ปุ่ม) · ชื่อไฟล์แนะนำ <code>islands/{island.slug}/map-button.png</code></Label>
-              <UploadOrUrl value={island.button_image ?? ''} onChange={(v) => set({ button_image: v || null })} accept="image/*" folder={`islands/${island.slug}`} preview />
-              <Label className="text-xs">ตำแหน่งบนแผนที่หลัก</Label>
-              <PositionInputs left={island.pos_left} top={island.pos_top} width={island.pos_width} onChange={(p) => set(p)} />
-            </div>
-            <div className="space-y-2">
-              <Label>พื้นเกาะด้านใน (รูป หรือ .mp4) · ชื่อไฟล์แนะนำ <code>islands/{island.slug}/land.webp</code></Label>
-              <UploadOrUrl value={island.land_image ?? ''} onChange={(v) => set({ land_image: v || null })} accept="image/*,video/mp4" folder={`islands/${island.slug}`} preview />
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1"><Label className="text-xs">สัดส่วนรูป (กว้าง/สูง)</Label><Input value={island.land_aspect} onChange={(e) => set({ land_aspect: e.target.value })} /></div>
-                <div className="space-y-1"><Label className="text-xs">จุดกึ่งกลางบนมือถือ (% แนวนอน)</Label><Input type="number" value={island.mobile_focus_x} onChange={(e) => set({ mobile_focus_x: Number(e.target.value) })} /></div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      </details>
 
       <section className="rounded-lg border bg-background p-4 mt-6">
         <div className="flex items-center justify-between mb-3">
@@ -152,7 +104,7 @@ export default function IslandEdit() {
             {pageGroups.map(({ page, label, list: secs }) => [
               <tr key={`h-${page ?? 'none'}`} className="border-t bg-muted/40">
                 <td colSpan={5} className="py-2 px-2 text-xs font-medium">
-                  {page ? <>หน้า: {label} · <a className="underline" href={pageUrl(page)!} target="_blank" rel="noreferrer">/{page}.html ↗</a></> : <span className="text-amber-700">ยังไม่ได้เลือกหน้า (ไม่แสดงบนหน้าเว็บ)</span>}
+                  {page ? <>หน้า: {label} · <a className="underline" href={pageUrl(page)!} target="_blank" rel="noreferrer">/{page}.html ↗</a></> : <span className="text-amber-400">ยังไม่ได้เลือกหน้า (ไม่แสดงบนหน้าเว็บ)</span>}
                 </td>
               </tr>,
               ...secs.map((s) => {
@@ -165,7 +117,7 @@ export default function IslandEdit() {
                     <td className="py-2 pr-2"><div className="font-medium">{s.name_th}</div><div className="text-xs text-muted-foreground">/{s.slug} · {SOURCE_LABELS[s.source_type]}{s.item_type_id ? ` · ${types.find((t) => t.id === s.item_type_id)?.name_th}` : ''} · ผลงาน {counts[s.id]?.all ?? 0} (เผยแพร่ {pub})</div></td>
                     <td className="py-2 pr-2 text-xs">
                       {s.item_type_id && !PAGE_RENDERED_TYPES.includes(typeSlug) ? <span className="text-muted-foreground">หน้าเว็บแสดงจากโค้ดเดิม (ระบบยังไม่ดึงประเภทนี้)</span>
-                        : fromDb ? <span className="text-emerald-700">หน้าเว็บแสดงจากหลังบ้าน</span>
+                        : fromDb ? <span className="text-emerald-400">หน้าเว็บแสดงจากหลังบ้าน</span>
                         : <span className="text-muted-foreground">หน้าเว็บแสดงเนื้อหาเดิม</span>}
                     </td>
                     <td className="py-2 pr-2 text-xs">{s.is_published ? 'เผยแพร่' : 'ร่าง'}</td>
@@ -287,15 +239,6 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
             </select>
             <p className="text-xs text-muted-foreground">มีผลงานที่เผยแพร่ → หน้านี้แสดงจากหลังบ้านแทนเนื้อหาเดิมของหัวข้อนี้ · ยังไม่มี → แสดงเนื้อหาเดิม</p>
           </div>
-          <details className="space-y-2">
-            <summary className="cursor-pointer text-sm">รูปปุ่ม / ตำแหน่งบนหน้าเกาะแบบเดิม (ไม่ได้ใช้กับหน้าเว็บปัจจุบัน)</summary>
-          <div className="space-y-2">
-            <Label>รูปปุ่มบนเกาะ · ชื่อไฟล์แนะนำ <code>islands/{islandSlug}/btn-{s.slug || slugify(s.name_en || s.name_th || '') || 'ชื่อ'}.png</code></Label>
-            <UploadOrUrl value={s.button_image ?? ''} onChange={(v) => set({ button_image: v || null })} accept="image/*" folder={`islands/${islandSlug}`} preview />
-            <Label className="text-xs">ตำแหน่งบนรูปเกาะ (ว่าง = แสดงเป็นปุ่มธรรมดาใต้แผนที่)</Label>
-            <PositionInputs left={s.pos_left ?? null} top={s.pos_top ?? null} width={s.pos_width ?? null} onChange={(p) => set(p)} />
-          </div>
-          </details>
           <div className="grid grid-cols-2 gap-3 items-end">
             <div className="space-y-1"><Label>ลำดับ</Label><Input type="number" value={s.sort_order ?? 0} onChange={(e) => set({ sort_order: Number(e.target.value) })} /></div>
             <div className="flex items-center justify-between h-10"><Label>เผยแพร่</Label><Switch checked={!!s.is_published} onCheckedChange={(c) => set({ is_published: c })} /></div>
@@ -312,51 +255,3 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
 }
 
 /** Island colours: pick one of the old site's colour sets, then adjust any colour. */
-function ThemeEditor({ theme, onChange }: { theme: IslandTheme; onChange: (t: IslandTheme) => void }) {
-  const resolved = resolveTheme(theme);
-  const isHex = (v: string) => /^#[0-9a-fA-F]{6}$/.test(v);
-  return (
-    <section className="rounded-lg border bg-background p-4 space-y-3 lg:col-span-2">
-      <div className="flex items-center justify-between">
-        <h2 className="font-semibold">สีของเกาะ</h2>
-        <button className="text-xs underline text-muted-foreground" onClick={() => onChange({ preset: resolved.preset })}>ล้างสีที่ปรับเอง</button>
-      </div>
-      <p className="text-xs text-muted-foreground">ชุดสียกมาจากหน้าเกาะเดิม เลือกชุดแล้วปรับสีทีละจุดได้ สีที่ปรับเองจะทับชุดสี</p>
-      <div className="flex flex-wrap gap-2">
-        {(Object.keys(THEME_PRESETS) as ThemePresetKey[]).map((k) => {
-          const p = THEME_PRESETS[k];
-          return (
-            <button key={k} type="button" onClick={() => onChange({ preset: k })}
-              className={`flex items-center gap-2 rounded-md border px-2 py-1 text-xs ${resolved.preset === k ? 'ring-2 ring-primary' : ''}`}>
-              <span className="inline-flex h-5 w-8 overflow-hidden rounded border">
-                <span className="h-full w-1/2" style={{ background: p.bg }} /><span className="h-full w-1/2" style={{ background: p.card }} />
-              </span>
-              {p.label} <span className="text-muted-foreground">({p.from})</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {THEME_FIELDS.map((f) => {
-          const v = resolved[f.key];
-          return (
-            <label key={f.key} className="flex items-center gap-2 text-xs">
-              {isHex(v)
-                ? <input type="color" value={v} onChange={(e) => onChange({ ...theme, [f.key]: e.target.value.toUpperCase() })} className="h-8 w-10 cursor-pointer rounded border" />
-                : <span className="h-8 w-10 rounded border" style={{ background: v }} title={v} />}
-              <span>{f.label}{theme[f.key] ? ' •' : ''}</span>
-            </label>
-          );
-        })}
-      </div>
-      <div className="rounded-lg p-4" style={{ ...themeVars(theme), background: resolved.bg, color: resolved.onBg }}>
-        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 28, textTransform: 'uppercase', textAlign: 'center' }}>ตัวอย่าง ISLAND</div>
-        <div className="mt-2 rounded-xl p-4" style={{ background: resolved.card, color: resolved.cardText }}>
-          <div style={{ fontFamily: 'Anton, sans-serif', fontSize: 20, color: resolved.accent, borderBottom: `2px solid ${resolved.accent}`, paddingBottom: 6 }}>หัวข้อในการ์ด</div>
-          <p className="mt-2 text-sm">ตัวหนังสือเนื้อหาในการ์ด</p>
-          <span className="inline-block rounded-full px-4 py-1 text-xs font-bold" style={{ background: resolved.accent, color: resolved.accentText }}>ปุ่ม</span>
-        </div>
-      </div>
-    </section>
-  );
-}

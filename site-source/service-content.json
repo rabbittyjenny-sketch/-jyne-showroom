@@ -1,0 +1,113 @@
+{
+  "_source": "Copied word for word from the iDEAS365-web repo: app/work/page.tsx (How I Work), lib/approach-data.ts (What to Expect), app/services/page.tsx and app/services/{strategy,systems,live-commerce}/page.tsx. Used by scripts/build-island-pages.py (the page's own content) and scripts/build-content-sql.py (back office items).",
+  "how_i_work": {
+    "title": "HOW I WORK · การทำงานของ iDEAS365", "subtitle": "My Approach & Methodology",
+    "items": [
+      ["Listen First", "Understand the real problem, not just symptoms", "เข้าใจปัญหาที่แท้จริง ไม่ใช่แค่อาการที่เห็น"],
+      ["Map the System", "Where's the friction? What works? What drains energy?", "จุดไหนติดขัด? อะไรดีอยู่แล้ว? อะไรกินพลังงาน?"],
+      ["Design with Constraints", "Real budget, real timeline, real people", "ออกแบบบนพื้นฐานความจริง งบจริง เวลาจริง คนทำจริง"],
+      ["Build Iteratively", "Start simple, test, refine, scale", "เริ่มจากเล็ก ทดสอบ ปรับปรุง แล้วค่อยขยาย"],
+      ["Transfer Ownership", "You should own the system, not depend on me forever", "ส่งมอบระบบให้คุณดูแลต่อได้ ไม่ต้องพึ่งพาเราตลอดไป"]
+    ]
+  },
+  "what_to_expect": {
+    "title": "WHAT TO EXPECT",
+    "items": [
+      ["Quick Response", "I typically respond within 24 hours", "ตอบกลับภายใน 24 ชั่วโมง"],
+      ["Clear Next Steps", "No vague \"let's chat\" — I'll outline what's possible", "บอกขั้นตอนชัดเจน ไม่คลุมเครือ"],
+      ["Honest Assessment", "If I'm not the right fit, I'll tell you", "ถ้าไม่เหมาะ จะบอกตรงๆ"],
+      ["No Pressure", "Consultation doesn't mean commitment", "ปรึกษาไม่ได้หมายความว่าต้องจ้าง"]
+    ]
+  },
+  "work_with": {
+    "title": "I WORK WITH",
+    "items": [
+      ["Early-stage businesses building first systems", "", "ธุรกิจช่วงเริ่มต้นที่กำลังวางระบบแรก"],
+      ["Growing brands hitting operational bottlenecks", "", "แบรนด์ที่กำลังโตแต่ติดขัดเรื่องการจัดการ"],
+      ["Teams needing clarity in structure and process", "", "ทีมที่ต้องการความชัดเจนในโครงสร้างและกระบวนการ"]
+    ]
+  },
+  "dont_work_with": {
+    "title": "I DON'T WORK WITH",
+    "items": [
+      ["People expecting overnight miracles", "", "คนที่คาดหวังปาฏิหาริย์ชั่วข้ามคืน"],
+      ["Brands wanting \"strategy\" without execution", "", "แบรนด์ที่อยากได้แค่ \"กลยุทธ์\" แต่ไม่ลงมือทำ"],
+      ["Anyone looking for cookie-cutter templates", "", "ใครก็ตามที่มองหาเทมเพลตสำเร็จรูปทั่วไป"]
+    ]
+  },
+  "services": {
+    "title": "SERVICES", "subtitle": "Three clear paths to work together · 3 แนวทางชัดเจนในการทำงานร่วมกัน",
+    "items": [
+      {
+        "label": "Strategy Consulting",
+        "title_en": "Problem Analysis & Solution", "title_th": "มองเห็นปัญหาและเสนอทางแก้",
+        "lead_en": "Business planning that accounts for operational reality", "lead_th": "วางแผนธุรกิจที่คำนึงถึงความเป็นจริงในการปฏิบัติงาน",
+        "points": [
+          ["Market strategy & positioning", "กลยุทธ์การตลาดและการวางตำแหน่ง"],
+          ["Financial modeling & Forecasting", "โมเดลการเงินและการคาดการณ์ที่เป็นจริง"],
+          ["Team structure & capacity planning", "โครงสร้างทีมและการวางแผนกำลังคน"],
+          ["Tech stack recommendations", "แนะนำเครื่องมือและเทคโนโลยีที่เหมาะสม"]
+        ],
+        "detail_title": ["Why Strategy Fails", "ทำไมกลยุทธ์ถึงล้มเหลว?"],
+        "detail_body": [
+          ["Most business strategies look great on a slide deck but fall apart on Monday morning. Why? Because they ignore the operational reality of the team delivering them.", "กลยุทธ์ส่วนใหญ่ดูดีบนสไลด์แต่พังไม่เป็นท่าเมื่อต้องทำจริง เพราะมองข้ามความจริงในการปฏิบัติงานและคนทำงาน"],
+          ["My approach bridges the gap between Vision and Execution.", "แนวทางของ iDEAS365 เชื่อมช่องว่างระหว่าง \"วิสัยทัศน์\" และ \"การลงมือทำ\" เข้าด้วยกัน"]
+        ],
+        "framework_title": ["What We Define Together", "สิ่งที่เราจะกำหนดร่วมกัน"],
+        "framework_points": [
+          ["Market Positioning", "Where you win vs. where you struggle.", "จุดยืนในตลาด: ตรงไหนที่คุณชนะ vs ตรงไหนที่เหนื่อยฟรี"],
+          ["Financial Modeling", "Real P&L scenarios, not hockey-stick fantasies.", "โมเดลการเงิน: สถานการณ์จริง กำไรขาดทุนจริง ไม่ใช่ตัวเลขเพ้อฝัน"],
+          ["Capacity Planning", "Do you actually have the people to do this?", "วางแผนกำลังคน: ทีมคุณมีศักยภาพพอที่จะทำสิ่งนี้จริงหรือ?"],
+          ["Tech Stack", "Tools that speed you up, not slow you down.", "เครื่องมือ: เทคโนโลยีที่ช่วยให้เร็วขึ้น ไม่ใช่ภาระเพิ่ม"]
+        ],
+        "cta_label": "Book a Consultation / จองเวลาปรึกษา"
+      },
+      {
+        "label": "Systems Design",
+        "title_en": "Systems Design", "title_th": "ออกแบบระบบงาน",
+        "lead_en": "Operational frameworks that scale without breaking", "lead_th": "วางระบบปฏิบัติงานที่ขยายได้โดยไม่สะดุด",
+        "points": [
+          ["Process mapping & workflow design", "แผนผังกระบวนการและออกแบบขั้นตอนการทำงาน"],
+          ["Practical Standard Operating Procedures (SOPs)", "คู่มือปฏิบัติงาน (SOP) ที่นำไปใช้งานได้จริง"],
+          ["Key Performance Metrics (KPIs)", "ตัวชี้วัดผลการดำเนินงานที่สำคัญ"],
+          ["Team training & documentation", "การสอนงานและการทำเอกสารระบบ"]
+        ],
+        "detail_title": ["Chaos is not \"Move Fast\"", "ความวุ่นวาย ไม่ใช่ \"การโตเร็ว\""],
+        "detail_body": [
+          ["Scaling a broken process just breaks it faster. You need systems that grow with you.", "การขยายธุรกิจบนระบบที่พัง มีแต่จะทำให้พังเร็วขึ้น คุณต้องการระบบที่โตไปพร้อมกับคุณ"]
+        ],
+        "framework_title": ["The Systems Framework", "กรอบแนวคิดการวางระบบ"],
+        "framework_points": [
+          ["Process Mapping", "Visualizing exactly how value flows (or leaks).", "แผนผังกระบวนการ: เห็นภาพชัดเจนว่างานไหลไปทางไหน (หรือรั่วไหลตรงไหน)"],
+          ["Standard Operating Procedures (SOPs)", "Actionable guides, not dusty manuals.", "SOPs: คู่มือที่เอาไปทำตามได้จริง ไม่ใช่เอกสารเก็บฝุ่น"],
+          ["Automation", "Using AI and tools to handle the repetitive 80%.", "ระบบอัตโนมัติ: ใช้ AI และเครื่องมือจัดการงานซ้ำซาก 80%"],
+          ["Feedback Loops", "Metrics that tell you when to pivot.", "วงจรสะท้อนผล: ตัวเลขที่บอกคุณว่าเมื่อไหร่ต้องปรับเปลี่ยน"]
+        ],
+        "cta_label": "Audit Your Systems / ตรวจสอบระบบงาน"
+      },
+      {
+        "label": "Live Commerce",
+        "title_en": "Live Commerce Setup", "title_th": "วางระบบ Live Commerce",
+        "lead_en": "Complete live selling systems from zero to revenue", "lead_th": "ระบบการขายผ่านไลฟ์ครบวงจร จากศูนย์สู่ยอดขาย",
+        "points": [
+          ["Strategy & product selection", "กลยุทธ์และการคัดเลือกสินค้า"],
+          ["Script frameworks & host training", "โครงสร้างสคริปต์และการฝึกอบรมพิธีกร"],
+          ["Technical setup & operations", "การติดตั้งระบบเทคนิคและการจัดการหลังบ้าน"],
+          ["Performance optimization", "การปรับปรุงประสิทธิภาพเพื่อเพิ่มยอดขาย"]
+        ],
+        "detail_title": ["Not Just \"Streaming\"", "ไม่ใช่แค่ \"ตั้งกล้องไลฟ์\""],
+        "detail_body": [
+          ["Live commerce is high-intensity retail. It requires performance, operations, and tech to work in perfect sync.", "Live Commerce คือการค้าปลีกที่มีความเข้มข้นสูง ต้องการการแสดง การจัดการ และเทคโนโลยีที่ทำงานประสานกันอย่างสมบูรณ์แบบ"]
+        ],
+        "framework_title": ["The 2-Hour 6-Figure System", "ระบบปั้นยอดขาย 6 หลักใน 2 ชั่วโมง"],
+        "framework_points": [
+          ["Product Curation", "Selecting items that translate well to video.", "คัดเลือกสินค้า: เลือกของที่ \"ขึ้นกล้อง\" และขายง่ายผ่านวิดีโอ"],
+          ["Script & Run of Show", "Minute-by-minute engagement planning.", "สคริปต์รายนาที: วางแผนการตรึงคนดูทุกช่วงเวลา"],
+          ["Technical Ops", "OBS, lighting, sound, and platform setup.", "ระบบเทคนิค: OBS, แสง, เสียง และการตั้งค่าแพลตฟอร์ม"],
+          ["Post-Live Analytics", "Optimizing retention and conversion.", "วิเคราะห์หลังบ้าน: ปรับปรุงยอดขายและการรักษาฐานลูกค้า"]
+        ],
+        "cta_label": "Start Selling Live / เริ่มต้นขายไลฟ์"
+      }
+    ]
+  }
+}

@@ -50,7 +50,7 @@ export default function Islands() {
               <div className="font-medium truncate">{i.name_th}</div>
               <div className="text-xs text-muted-foreground">/{i.slug} · {templates.find((t) => t.id === i.template_id)?.name_th ?? 'ไม่มีแม่แบบ'}</div>
               <div className="text-xs mt-1">
-                {i.deleted_at ? <span className="text-red-600">ลบแล้ว (ซ่อน)</span> : i.is_published ? <span className="text-emerald-700">เผยแพร่</span> : <span className="text-amber-700">ฉบับร่าง</span>}
+                {i.deleted_at ? <span className="text-red-600">ลบแล้ว (ซ่อน)</span> : i.is_published ? <span className="text-emerald-400">เผยแพร่</span> : <span className="text-amber-400">ฉบับร่าง</span>}
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 <Link to={`/backoffice/islands/${i.id}`} className="text-sm underline">เปิดเกาะ</Link>

@@ -9,8 +9,8 @@ import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { FieldInput, UploadOrUrl, missingRequired } from '@/components/admin/FieldInputs';
 import { insert, list, remove, slugify, update, uploadMedia } from '@/lib/adminApi';
-import { itemPicture } from '@/legacy/Legacy';
-import { SafeImg } from '@/components/site/SafeImg';
+import { itemPicture } from '@/lib/itemPicture';
+import { SafeImg } from '@/components/admin/SafeImg';
 import { PAGE_RENDERED_TYPES, SITE_PAGES, pageUrl } from '@/lib/types';
 import type { Category, Island, Item, ItemType, Route, Section, Tag, TagGroup } from '@/lib/types';
 
@@ -100,7 +100,7 @@ export default function SectionItems() {
                     <button onClick={() => setEditing(it)} className="font-medium truncate block max-w-full text-left hover:underline">{it.title_th}</button>
                     <div className="text-xs text-muted-foreground truncate">ลำดับ {it.sort_order} · {catName(it.category_id)}{it.batch_id && ' · อัปเป็นชุด'}</div>
                     <div className="text-xs mt-1 flex flex-wrap gap-x-3 gap-y-1 whitespace-nowrap">
-                      <span className={it.is_published ? 'text-emerald-700' : 'text-amber-700'}>{it.is_published ? '● เผยแพร่อยู่' : '○ ซ่อนอยู่'}</span>
+                      <span className={it.is_published ? 'text-emerald-400' : 'text-amber-400'}>{it.is_published ? '● เผยแพร่อยู่' : '○ ซ่อนอยู่'}</span>
                       <button className="underline" onClick={() => quick(() => update('i365_items', { id: it.id }, { is_published: !it.is_published }), it.is_published ? 'ซ่อนผลงานแล้ว' : 'เผยแพร่ผลงานแล้ว')}>{it.is_published ? 'ซ่อน' : 'เผยแพร่'}</button>
                       <button className="underline" onClick={() => setEditing(it)}>แก้ไข</button>
                       <button className="underline text-red-600" onClick={() => { if (confirm(`ลบผลงาน "${it.title_th}" ถาวร?`)) quick(() => remove('i365_items', { id: it.id }), 'ลบผลงานแล้ว'); }}>ลบ</button>
@@ -411,5 +411,5 @@ function PageSourceNote({ section, type, island, published }: { section: Section
   else if (!section.is_published || !island?.is_published) { text = `เมนูย่อยหรือเกาะยังเป็นฉบับร่าง — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด`; warn = true; }
   else if (published === 0) text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด / Google Sheet`;
   else text = `หน้า "${page.label}" แสดงผลงานที่เผยแพร่ ${published} ชิ้นจากหลังบ้าน (แทนเนื้อหาเดิมของหัวข้อนี้) ตามลำดับ`;
-  return <p className={`text-sm mb-4 ${warn ? 'text-amber-700' : 'text-emerald-700'}`}>{text}</p>;
+  return <p className={`text-sm mb-4 ${warn ? 'text-amber-400' : 'text-emerald-400'}`}>{text}</p>;
 }

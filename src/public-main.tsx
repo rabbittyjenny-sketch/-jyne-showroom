@@ -1,9 +1,7 @@
-// Public pages of the new islands. Only the original pages' CSS is loaded here
-// (no Tailwind reset), so they render exactly like the original island pages.
+// In-site React pages (COMMUNITY HARBOR). Tailwind base for the copied components + the original blog page design.
 import { createRoot } from 'react-dom/client';
 import PublicApp from './PublicApp';
-import './legacy/legacy.css';
-import './legacy/extra.css';
-import './site.css';
+import './index.css';
+import './community/community.css';
 
 createRoot(document.getElementById('root')!).render(<PublicApp />);
