@@ -497,35 +497,18 @@
             text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
         .main-menu-link:hover { background: rgba(0,0,0,0.38); }
     </style>
+    <script src="i365-content.js" data-page="service" data-card="content"></script>
 
     <style>
-        /* added: info sheet + leave-site pop-up (square, no white frame) */
-        .nav-header .main-menu-link { margin-left: auto; }
-        .doc-sheet { display: block !important; max-width: 820px; min-height: 60vh; padding: 56px 64px; border-radius: 0; }
-        @media (max-width: 640px) { .doc-sheet { padding: 36px 24px; } }
-        .doc-meta { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 28px; }
-        .doc-empty { color: #aaa; font-size: 0.95rem; margin-top: 24px; }
-        .leave-wrap { width: 100%; display: flex; justify-content: center; padding: 40px 20px 50px; }
-        .leave-btn { display: inline-block; background: #1A1A1A; color: #fff; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
-            font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px; border-radius: 0; text-decoration: none; }
-        .leave-btn::after { content: ' →'; }
-        .leave-btn:hover { background: #000; }
-        .academy-btn { border-radius: 0 !important; }
-        .leave-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); display: none;
-            align-items: center; justify-content: center; padding: 20px; }
-        .leave-overlay.open { display: flex; }
-        .leave-box { background: #1A1A1A; color: #fff; max-width: 440px; width: 100%; padding: 32px 30px 26px; border-radius: 0;
-            font-family: 'Noto Sans Thai', sans-serif; }
-        .leave-box h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.5rem; letter-spacing: 1px; margin: 0 0 12px; }
-        .leave-box p { font-size: 0.95rem; line-height: 1.7; margin: 0 0 8px; opacity: 0.9; }
-        .leave-box .leave-host { font-size: 0.8rem; opacity: 0.6; word-break: break-all; }
-        .leave-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
-        .leave-actions button { flex: 1; min-width: 140px; border: 0; border-radius: 0; padding: 13px 16px; cursor: pointer;
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.95rem; letter-spacing: 1px; }
-        .leave-ok { background: var(--accent); color: #fff; }
-        .leave-ok:hover { filter: brightness(0.9); }
-        .leave-cancel { background: rgba(255,255,255,0.12); color: #fff; }
-        .leave-cancel:hover { background: rgba(255,255,255,0.2); }
+        /* added: service page (square buttons, no white frames) */
+        .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+        .svc-th { display: block; font-size: 0.8rem; color: #888; font-weight: 300; }
+        .svc-h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.25rem; color: var(--text-dark); margin: 26px 0 6px; letter-spacing: 0.3px; }
+        .svc-h3 .svc-th { font-family: 'Noto Sans Thai', sans-serif; font-size: 0.85rem; margin-top: 2px; }
+        .svc-btn { display: inline-block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 0;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; letter-spacing: 1.5px; font-size: 0.95rem; margin-top: 22px; }
+        .svc-btn:hover { background: var(--accent); }
+        @media (max-width: 768px) { .svc-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 
@@ -540,15 +523,120 @@
     <main class="main-content">
         <h1 class="page-title">A SERVICE<br>MANIA</h1>
         <p class="page-subtitle">มีบริการอะไรบ้าง</p>
-        <!-- INFO SHEET (content to come) -->
-        <div class="content-card doc-sheet in-view">
-            <div class="doc-meta">iDEAS365 · A SERVICE MANIA · ข้อมูลเบื้องต้น</div>
-            <h2 class="col-title">SERVICES · บริการ</h2>
-            <p class="doc-empty">เนื้อหาจะเพิ่มภายหลัง</p>
+        <!-- HOW I WORK (iDEAS365-web /work) -->
+        <div class="content-card single">
+            <h2 class="col-title">HOW I WORK · การทำงานของ iDEAS365</h2>
+            <p class="col-desc" style="margin-bottom:6px">My Approach &amp; Methodology</p>
+            <div class="" data-i365="how-i-work">
+                <div class="tl-item"><div class="tl-year">01</div><div class="tl-role">Listen First</div><div class="tl-desc">Understand the real problem, not just symptoms</div><div class="tl-desc">เข้าใจปัญหาที่แท้จริง ไม่ใช่แค่อาการที่เห็น</div></div>
+                <div class="tl-item"><div class="tl-year">02</div><div class="tl-role">Map the System</div><div class="tl-desc">Where&#x27;s the friction? What works? What drains energy?</div><div class="tl-desc">จุดไหนติดขัด? อะไรดีอยู่แล้ว? อะไรกินพลังงาน?</div></div>
+                <div class="tl-item"><div class="tl-year">03</div><div class="tl-role">Design with Constraints</div><div class="tl-desc">Real budget, real timeline, real people</div><div class="tl-desc">ออกแบบบนพื้นฐานความจริง งบจริง เวลาจริง คนทำจริง</div></div>
+                <div class="tl-item"><div class="tl-year">04</div><div class="tl-role">Build Iteratively</div><div class="tl-desc">Start simple, test, refine, scale</div><div class="tl-desc">เริ่มจากเล็ก ทดสอบ ปรับปรุง แล้วค่อยขยาย</div></div>
+                <div class="tl-item"><div class="tl-year">05</div><div class="tl-role">Transfer Ownership</div><div class="tl-desc">You should own the system, not depend on me forever</div><div class="tl-desc">ส่งมอบระบบให้คุณดูแลต่อได้ ไม่ต้องพึ่งพาเราตลอดไป</div></div>
+            </div>
         </div>
 
-        <div class="leave-wrap">
-            <a href="https://i-deas-365-web.vercel.app/services" class="leave-btn" data-leave="iDEAS365-web">ดูบริการทั้งหมด</a>
+        <!-- WHAT TO EXPECT (iDEAS365-web /approach) -->
+        <div class="content-card single">
+            <h2 class="col-title">WHAT TO EXPECT</h2>
+            <div class="svc-grid" data-i365="what-to-expect">
+                <div class="tl-item"><div class="tl-role">Quick Response</div><div class="tl-desc">I typically respond within 24 hours</div><div class="tl-desc">ตอบกลับภายใน 24 ชั่วโมง</div></div>
+                <div class="tl-item"><div class="tl-role">Clear Next Steps</div><div class="tl-desc">No vague &quot;let&#x27;s chat&quot; — I&#x27;ll outline what&#x27;s possible</div><div class="tl-desc">บอกขั้นตอนชัดเจน ไม่คลุมเครือ</div></div>
+                <div class="tl-item"><div class="tl-role">Honest Assessment</div><div class="tl-desc">If I&#x27;m not the right fit, I&#x27;ll tell you</div><div class="tl-desc">ถ้าไม่เหมาะ จะบอกตรงๆ</div></div>
+                <div class="tl-item"><div class="tl-role">No Pressure</div><div class="tl-desc">Consultation doesn&#x27;t mean commitment</div><div class="tl-desc">ปรึกษาไม่ได้หมายความว่าต้องจ้าง</div></div>
+            </div>
+        </div>
+
+        <!-- I WORK WITH / I DON'T WORK WITH (iDEAS365-web /work) -->
+        <div class="content-card">
+            <div>
+            <h2 class="col-title">I WORK WITH</h2>
+            <ul class="hl" data-i365="work-with">
+                <li>Early-stage businesses building first systems<span class="svc-th">ธุรกิจช่วงเริ่มต้นที่กำลังวางระบบแรก</span></li>
+                <li>Growing brands hitting operational bottlenecks<span class="svc-th">แบรนด์ที่กำลังโตแต่ติดขัดเรื่องการจัดการ</span></li>
+                <li>Teams needing clarity in structure and process<span class="svc-th">ทีมที่ต้องการความชัดเจนในโครงสร้างและกระบวนการ</span></li>
+            </ul>
+            </div>
+            <div>
+            <h2 class="col-title">I DON&#x27;T WORK WITH</h2>
+            <ul class="hl" data-i365="dont-work-with">
+                <li>People expecting overnight miracles<span class="svc-th">คนที่คาดหวังปาฏิหาริย์ชั่วข้ามคืน</span></li>
+                <li>Brands wanting &quot;strategy&quot; without execution<span class="svc-th">แบรนด์ที่อยากได้แค่ &quot;กลยุทธ์&quot; แต่ไม่ลงมือทำ</span></li>
+                <li>Anyone looking for cookie-cutter templates<span class="svc-th">ใครก็ตามที่มองหาเทมเพลตสำเร็จรูปทั่วไป</span></li>
+            </ul>
+            </div>
+        </div>
+
+        <!-- SERVICES (iDEAS365-web /services + /services/strategy, /systems, /live-commerce) -->
+        <div class="content-card single">
+            <h2 class="col-title">SERVICES</h2>
+            <p class="col-desc">Three clear paths to work together · 3 แนวทางชัดเจนในการทำงานร่วมกัน</p>
+        </div>
+        <div style="display:contents" data-i365="services">
+            <div class="content-card single"><div>
+                <div class="tl-year">Strategy Consulting</div>
+                <h2 class="col-title">Problem Analysis &amp; Solution<span class="svc-th" style="font-size:1rem">มองเห็นปัญหาและเสนอทางแก้</span></h2>
+                <p class="col-desc">Business planning that accounts for operational reality<span class="svc-th">วางแผนธุรกิจที่คำนึงถึงความเป็นจริงในการปฏิบัติงาน</span></p>
+                <ul class="hl">
+                    <li>Market strategy &amp; positioning<span class="svc-th">กลยุทธ์การตลาดและการวางตำแหน่ง</span></li>
+                    <li>Financial modeling &amp; Forecasting<span class="svc-th">โมเดลการเงินและการคาดการณ์ที่เป็นจริง</span></li>
+                    <li>Team structure &amp; capacity planning<span class="svc-th">โครงสร้างทีมและการวางแผนกำลังคน</span></li>
+                    <li>Tech stack recommendations<span class="svc-th">แนะนำเครื่องมือและเทคโนโลยีที่เหมาะสม</span></li>
+                </ul>
+                <h3 class="svc-h3">Why Strategy Fails<span class="svc-th">ทำไมกลยุทธ์ถึงล้มเหลว?</span></h3>
+                <p class="col-desc">Most business strategies look great on a slide deck but fall apart on Monday morning. Why? Because they ignore the operational reality of the team delivering them.<span class="svc-th">กลยุทธ์ส่วนใหญ่ดูดีบนสไลด์แต่พังไม่เป็นท่าเมื่อต้องทำจริง เพราะมองข้ามความจริงในการปฏิบัติงานและคนทำงาน</span></p>
+                <p class="col-desc">My approach bridges the gap between Vision and Execution.<span class="svc-th">แนวทางของ iDEAS365 เชื่อมช่องว่างระหว่าง &quot;วิสัยทัศน์&quot; และ &quot;การลงมือทำ&quot; เข้าด้วยกัน</span></p>
+                <h3 class="svc-h3">What We Define Together<span class="svc-th">สิ่งที่เราจะกำหนดร่วมกัน</span></h3>
+                <ul class="hl">
+                    <li><strong>Market Positioning:</strong> Where you win vs. where you struggle.<span class="svc-th">จุดยืนในตลาด: ตรงไหนที่คุณชนะ vs ตรงไหนที่เหนื่อยฟรี</span></li>
+                    <li><strong>Financial Modeling:</strong> Real P&amp;L scenarios, not hockey-stick fantasies.<span class="svc-th">โมเดลการเงิน: สถานการณ์จริง กำไรขาดทุนจริง ไม่ใช่ตัวเลขเพ้อฝัน</span></li>
+                    <li><strong>Capacity Planning:</strong> Do you actually have the people to do this?<span class="svc-th">วางแผนกำลังคน: ทีมคุณมีศักยภาพพอที่จะทำสิ่งนี้จริงหรือ?</span></li>
+                    <li><strong>Tech Stack:</strong> Tools that speed you up, not slow you down.<span class="svc-th">เครื่องมือ: เทคโนโลยีที่ช่วยให้เร็วขึ้น ไม่ใช่ภาระเพิ่ม</span></li>
+                </ul>
+                <a class="svc-btn" href="contact_port.html">Book a Consultation / จองเวลาปรึกษา</a>
+            </div></div>
+            <div class="content-card single"><div>
+                <div class="tl-year">Systems Design</div>
+                <h2 class="col-title">Systems Design<span class="svc-th" style="font-size:1rem">ออกแบบระบบงาน</span></h2>
+                <p class="col-desc">Operational frameworks that scale without breaking<span class="svc-th">วางระบบปฏิบัติงานที่ขยายได้โดยไม่สะดุด</span></p>
+                <ul class="hl">
+                    <li>Process mapping &amp; workflow design<span class="svc-th">แผนผังกระบวนการและออกแบบขั้นตอนการทำงาน</span></li>
+                    <li>Practical Standard Operating Procedures (SOPs)<span class="svc-th">คู่มือปฏิบัติงาน (SOP) ที่นำไปใช้งานได้จริง</span></li>
+                    <li>Key Performance Metrics (KPIs)<span class="svc-th">ตัวชี้วัดผลการดำเนินงานที่สำคัญ</span></li>
+                    <li>Team training &amp; documentation<span class="svc-th">การสอนงานและการทำเอกสารระบบ</span></li>
+                </ul>
+                <h3 class="svc-h3">Chaos is not &quot;Move Fast&quot;<span class="svc-th">ความวุ่นวาย ไม่ใช่ &quot;การโตเร็ว&quot;</span></h3>
+                <p class="col-desc">Scaling a broken process just breaks it faster. You need systems that grow with you.<span class="svc-th">การขยายธุรกิจบนระบบที่พัง มีแต่จะทำให้พังเร็วขึ้น คุณต้องการระบบที่โตไปพร้อมกับคุณ</span></p>
+                <h3 class="svc-h3">The Systems Framework<span class="svc-th">กรอบแนวคิดการวางระบบ</span></h3>
+                <ul class="hl">
+                    <li><strong>Process Mapping:</strong> Visualizing exactly how value flows (or leaks).<span class="svc-th">แผนผังกระบวนการ: เห็นภาพชัดเจนว่างานไหลไปทางไหน (หรือรั่วไหลตรงไหน)</span></li>
+                    <li><strong>Standard Operating Procedures (SOPs):</strong> Actionable guides, not dusty manuals.<span class="svc-th">SOPs: คู่มือที่เอาไปทำตามได้จริง ไม่ใช่เอกสารเก็บฝุ่น</span></li>
+                    <li><strong>Automation:</strong> Using AI and tools to handle the repetitive 80%.<span class="svc-th">ระบบอัตโนมัติ: ใช้ AI และเครื่องมือจัดการงานซ้ำซาก 80%</span></li>
+                    <li><strong>Feedback Loops:</strong> Metrics that tell you when to pivot.<span class="svc-th">วงจรสะท้อนผล: ตัวเลขที่บอกคุณว่าเมื่อไหร่ต้องปรับเปลี่ยน</span></li>
+                </ul>
+                <a class="svc-btn" href="contact_port.html">Audit Your Systems / ตรวจสอบระบบงาน</a>
+            </div></div>
+            <div class="content-card single"><div>
+                <div class="tl-year">Live Commerce</div>
+                <h2 class="col-title">Live Commerce Setup<span class="svc-th" style="font-size:1rem">วางระบบ Live Commerce</span></h2>
+                <p class="col-desc">Complete live selling systems from zero to revenue<span class="svc-th">ระบบการขายผ่านไลฟ์ครบวงจร จากศูนย์สู่ยอดขาย</span></p>
+                <ul class="hl">
+                    <li>Strategy &amp; product selection<span class="svc-th">กลยุทธ์และการคัดเลือกสินค้า</span></li>
+                    <li>Script frameworks &amp; host training<span class="svc-th">โครงสร้างสคริปต์และการฝึกอบรมพิธีกร</span></li>
+                    <li>Technical setup &amp; operations<span class="svc-th">การติดตั้งระบบเทคนิคและการจัดการหลังบ้าน</span></li>
+                    <li>Performance optimization<span class="svc-th">การปรับปรุงประสิทธิภาพเพื่อเพิ่มยอดขาย</span></li>
+                </ul>
+                <h3 class="svc-h3">Not Just &quot;Streaming&quot;<span class="svc-th">ไม่ใช่แค่ &quot;ตั้งกล้องไลฟ์&quot;</span></h3>
+                <p class="col-desc">Live commerce is high-intensity retail. It requires performance, operations, and tech to work in perfect sync.<span class="svc-th">Live Commerce คือการค้าปลีกที่มีความเข้มข้นสูง ต้องการการแสดง การจัดการ และเทคโนโลยีที่ทำงานประสานกันอย่างสมบูรณ์แบบ</span></p>
+                <h3 class="svc-h3">The 2-Hour 6-Figure System<span class="svc-th">ระบบปั้นยอดขาย 6 หลักใน 2 ชั่วโมง</span></h3>
+                <ul class="hl">
+                    <li><strong>Product Curation:</strong> Selecting items that translate well to video.<span class="svc-th">คัดเลือกสินค้า: เลือกของที่ &quot;ขึ้นกล้อง&quot; และขายง่ายผ่านวิดีโอ</span></li>
+                    <li><strong>Script &amp; Run of Show:</strong> Minute-by-minute engagement planning.<span class="svc-th">สคริปต์รายนาที: วางแผนการตรึงคนดูทุกช่วงเวลา</span></li>
+                    <li><strong>Technical Ops:</strong> OBS, lighting, sound, and platform setup.<span class="svc-th">ระบบเทคนิค: OBS, แสง, เสียง และการตั้งค่าแพลตฟอร์ม</span></li>
+                    <li><strong>Post-Live Analytics:</strong> Optimizing retention and conversion.<span class="svc-th">วิเคราะห์หลังบ้าน: ปรับปรุงยอดขายและการรักษาฐานลูกค้า</span></li>
+                </ul>
+                <a class="svc-btn" href="contact_port.html">Start Selling Live / เริ่มต้นขายไลฟ์</a>
+            </div></div>
         </div>
 </main>
 
@@ -570,39 +658,6 @@
         }, { threshold: 0.08 });
         document.querySelectorAll('.content-card').forEach(c => observer.observe(c));
     </script>
-
-<!-- added: pop-up before going to another website -->
-<div class="leave-overlay" id="leave-overlay" role="dialog" aria-modal="true" aria-labelledby="leave-title">
-    <div class="leave-box">
-        <h3 id="leave-title">ออกจาก iDEAS365</h3>
-        <p>ปุ่มนี้จะพาไปที่ <b id="leave-name"></b> ซึ่งเป็นเว็บไซต์แยกจากหน้านี้</p>
-        <p class="leave-host" id="leave-host"></p>
-        <p>ต้องการไปต่อหรือไม่?</p>
-        <div class="leave-actions">
-            <button type="button" class="leave-ok" id="leave-ok">ยอมรับ ไปต่อ</button>
-            <button type="button" class="leave-cancel" id="leave-cancel">ยกเลิก</button>
-        </div>
-    </div>
-</div>
-<script>
-    /* added: links with data-leave ask before leaving the site */
-    (function () {
-        var ov = document.getElementById('leave-overlay'), target = null;
-        function close() { ov.classList.remove('open'); target = null; }
-        document.querySelectorAll('a[data-leave]').forEach(function (a) {
-            a.addEventListener('click', function (e) {
-                e.preventDefault(); target = a.href;
-                document.getElementById('leave-name').textContent = a.getAttribute('data-leave');
-                document.getElementById('leave-host').textContent = new URL(a.href).host;
-                ov.classList.add('open'); document.getElementById('leave-ok').focus();
-            });
-        });
-        document.getElementById('leave-ok').addEventListener('click', function () { if (target) location.href = target; });
-        document.getElementById('leave-cancel').addEventListener('click', close);
-        ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-    })();
-</script>
 
 <script>
     /* added: BACK = previous page (or this island's map when opened directly) */

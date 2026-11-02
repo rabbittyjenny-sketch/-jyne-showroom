@@ -11,7 +11,8 @@ import pathlib, re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / 'public'
-src = lambda f: (ROOT / f).read_text(encoding='utf-8')
+ORIG = ROOT / 'site-source' / 'originals'          # her original hand-built pages (sources only, not served)
+src = lambda f: ((ROOT / 'public' / f) if f in ('index.html', 'contact_port.html') else (ORIG / f)).read_text(encoding='utf-8')
 
 MENU_CSS = """
     <style>
@@ -73,7 +74,7 @@ def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, c
     return head + pre + '\n'.join(blocks) + tl
 
 
-NO_DB_PAGES = {'academy.html', 'service.html', '404.html'}
+NO_DB_PAGES = {'academy.html', '404.html'}
 
 
 def write(name, html):
@@ -312,55 +313,145 @@ html = page('academy', 'system_district.html', 'ACADEMY BAY', 'ACADEMY<br>BAY', 
             [doc_sheet('iDEAS365 · ACADEMY BAY · ข้อมูลเบื้องต้น', 'CREATR365', 'section-heading')], 'index.html', academy_tail, loader=False)
 write('academy.html', html.replace('</head>', LEAVE_CSS + '</head>', 1))
 
-leave_btn = """        <div class="leave-wrap">
-            <a href="https://i-deas-365-web.vercel.app/services" class="leave-btn" data-leave="iDEAS365-web">ดูบริการทั้งหมด</a>
-        </div>
+# ── A SERVICE MANIA: work explanation + services, content from iDEAS365-web (site-source/service-content.json) ──
+# Same card classes as the original pages (work_marina.html). Each block is a back-office topic (data-i365):
+# items published there replace the block; with none published the page shows this content.
+import html as _h, json as _json
+SVC = _json.loads((ROOT / 'site-source' / 'service-content.json').read_text(encoding='utf-8'))
+e = lambda s: _h.escape(s, quote=True)
+SVC_CSS = """
+    <style>
+        /* added: service page (square buttons, no white frames) */
+        .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+        .svc-th { display: block; font-size: 0.8rem; color: #888; font-weight: 300; }
+        .svc-h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.25rem; color: var(--text-dark); margin: 26px 0 6px; letter-spacing: 0.3px; }
+        .svc-h3 .svc-th { font-family: 'Noto Sans Thai', sans-serif; font-size: 0.85rem; margin-top: 2px; }
+        .svc-btn { display: inline-block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 0;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; letter-spacing: 1.5px; font-size: 0.95rem; margin-top: 22px; }
+        .svc-btn:hover { background: var(--accent); }
+        @media (max-width: 768px) { .svc-grid { grid-template-columns: 1fr; } }
+    </style>
 """
-html = page('service', 'work_marina.html', 'A SERVICE MANIA', 'A SERVICE<br>MANIA', 'มีบริการอะไรบ้าง',
-            [doc_sheet('iDEAS365 · A SERVICE MANIA · ข้อมูลเบื้องต้น', 'SERVICES · บริการ', 'col-title'), leave_btn], 'index.html', with_leave, loader=False)
-write('service.html', html.replace('</head>', LEAVE_CSS + '</head>', 1))
 
-# ── island sub-maps (same look as the main map: index.html CSS) ─────────
+
+def svc_point(no, title, en, th, kind):
+    if kind == 'list':
+        en_line = '<span class="svc-th">' + e(en) + '</span>' if en else ''
+        return f'                <li>{e(title)}{en_line}<span class="svc-th">{e(th)}</span></li>\n'
+    year = f'<div class="tl-year">{no:02d}</div>' if kind == 'timeline' else ''
+    return (f'                <div class="tl-item">{year}<div class="tl-role">{e(title)}</div>'
+            + (f'<div class="tl-desc">{e(en)}</div>' if en else '') + (f'<div class="tl-desc">{e(th)}</div>' if th else '') + '</div>\n')
+
+
+def svc_card(s):
+    li = ''.join(f'                    <li>{e(en)}<span class="svc-th">{e(th)}</span></li>\n' for en, th in s['points'])
+    body = ''.join(f'                <p class="col-desc">{e(en)}<span class="svc-th">{e(th)}</span></p>\n' for en, th in s['detail_body'])
+    fw = ''.join(f'                    <li><strong>{e(lab)}:</strong> {e(en)}<span class="svc-th">{e(th)}</span></li>\n'
+                 for lab, en, th in s['framework_points'])
+    return f"""            <div class="content-card single"><div>
+                <div class="tl-year">{e(s['label'])}</div>
+                <h2 class="col-title">{e(s['title_en'])}<span class="svc-th" style="font-size:1rem">{e(s['title_th'])}</span></h2>
+                <p class="col-desc">{e(s['lead_en'])}<span class="svc-th">{e(s['lead_th'])}</span></p>
+                <ul class="hl">
+{li}                </ul>
+                <h3 class="svc-h3">{e(s['detail_title'][0])}<span class="svc-th">{e(s['detail_title'][1])}</span></h3>
+{body}                <h3 class="svc-h3">{e(s['framework_title'][0])}<span class="svc-th">{e(s['framework_title'][1])}</span></h3>
+                <ul class="hl">
+{fw}                </ul>
+                <a class="svc-btn" href="contact_port.html">{e(s['cta_label'])}</a>
+            </div></div>
+"""
+
+
+def svc_block(key, slug, kind, extra=''):
+    b = SVC[key]
+    items = ''.join(svc_point(i, *row, kind) for i, row in enumerate(b['items'], 1))
+    sub = f'\n            <p class="col-desc" style="margin-bottom:6px">{e(b["subtitle"])}</p>' if b.get('subtitle') else ''
+    inner = (f'            <ul class="hl" data-i365="{slug}">\n{items}            </ul>' if kind == 'list'
+             else f'            <div class="{extra}" data-i365="{slug}">\n{items}            </div>')
+    return f'            <h2 class="col-title">{e(b["title"])}</h2>{sub}\n{inner}\n'
+
+
+svc_blocks = [
+    '        <!-- HOW I WORK (iDEAS365-web /work) -->\n        <div class="content-card single">\n' + svc_block('how_i_work', 'how-i-work', 'timeline') + '        </div>\n',
+    '        <!-- WHAT TO EXPECT (iDEAS365-web /approach) -->\n        <div class="content-card single">\n' + svc_block('what_to_expect', 'what-to-expect', 'cards', 'svc-grid') + '        </div>\n',
+    '        <!-- I WORK WITH / I DON\'T WORK WITH (iDEAS365-web /work) -->\n        <div class="content-card">\n            <div>\n'
+    + svc_block('work_with', 'work-with', 'list') + '            </div>\n            <div>\n' + svc_block('dont_work_with', 'dont-work-with', 'list') + '            </div>\n        </div>\n',
+    f"""        <!-- SERVICES (iDEAS365-web /services + /services/strategy, /systems, /live-commerce) -->
+        <div class="content-card single">
+            <h2 class="col-title">{e(SVC['services']['title'])}</h2>
+            <p class="col-desc">{e(SVC['services']['subtitle'])}</p>
+        </div>
+        <div style="display:contents" data-i365="services">
+""" + ''.join(svc_card(s) for s in SVC['services']['items']) + '        </div>\n',
+]
+html = page('service', 'work_marina.html', 'A SERVICE MANIA', 'A SERVICE<br>MANIA', 'มีบริการอะไรบ้าง', svc_blocks, 'index.html')
+write('service.html', html.replace('</head>', SVC_CSS + '</head>', 1))
+
+# ── island sub-maps: the island's illustrated map + one floating pin (her polaroid picture) per menu ──
+# Map pictures are her ImageKit links; pin pictures are public/islands/*.jpg. Pin = the % point on the map
+# where the pin's tip touches the building (same %-of-frame idea as Creatr365 Explore's hotspots).
 IDX = src('index.html')
 idx_css = IDX[IDX.index('<style>'):IDX.index('</style>') + len('</style>')]
+MAP_URL = 'https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/'
 SUB_CSS = """
     <style>
-        /* sub-map: same .island / .island-badge as the main map */
+        /* sub-map: the island picture with floating pins (square boxes, no white frames) */
         .submap-title { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 101;
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #000;
-            background: rgba(255,255,255,0.95); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #fff;
+            background: rgba(0,0,0,0.55); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
         .main-menu-link { position: fixed; top: 28px; right: 40px; z-index: 101; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
             font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: #fff; background: rgba(0,0,0,0.55); padding: 9px 16px; }
-        .sub-island { animation: individualFloat 8s ease-in-out infinite; }
-        .sub-island:nth-of-type(2) { animation-duration: 9s; animation-delay: -0.6s; }
-        .sub-island:nth-of-type(3) { animation-duration: 7.5s; animation-delay: -1.2s; }
-        /* until the button picture exists: a box like the owner's diagram */
-        .sub-box { display: none; background: #1A1A1A; color: #fff; padding: 16px 18px; width: 100%; box-sizing: border-box; text-align: left; }
-        .sub-box b { display: block; font-size: 1.05rem; margin-bottom: 6px; }
-        .sub-box span { display: block; font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; }
+        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+        .pin { position: absolute; width: 8.5%; min-width: 46px; transform: translate(-50%, -100%); text-decoration: none; z-index: 5; }
+        .pin-float { display: block; animation: pinFloat 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+        .pin:nth-of-type(2) .pin-float { animation-delay: -1.1s; }
+        .pin:nth-of-type(3) .pin-float { animation-delay: -2.2s; }
+        @keyframes pinFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); transition: transform 0.25s; }
+        .pin-stem { display: block; width: 3px; height: 18px; margin: 0 auto; background: #1A1A1A; }
+        .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
+        .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
+        .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
+        .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -6px); min-width: 200px; max-width: 260px;
+            background: #1A1A1A; color: #fff; padding: 12px 14px; text-align: left; opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s; z-index: 10; font-family: 'Noto Sans Thai', sans-serif; }
+        .pin-pop b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .pin-pop span { display: block; font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
+        .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translate(-50%, -12px); }
+        .sub-list { display: none; }
         .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
         .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
         .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
-            .map-wrapper { height: calc(var(--n) * 320px + 120px) !important; }
-            .sub-island { width: 72% !important; left: 14% !important; right: auto !important; animation: none !important; }
             .main-menu-link { top: 12px; right: 16px; }
             .submap-title { top: 60px; font-size: 1rem; }
+            .sub-wrap { position: static; display: block; padding: 104px 0 110px; }
+            .sub-stage { width: 100%; }
+            .pin-stem { height: 8px; } .pin-dot { width: 8px; height: 8px; }
+            .pin-pop { display: none; }
+            /* phones: a plain menu under the map */
+            .sub-list { display: block; margin: 18px 16px 0; }
+            .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px; }
+            .sub-list b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; margin-bottom: 4px; }
+            .sub-list span { display: block; font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
         }
     </style>
 """
 BACK_IMG = 'https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277'
 
 
-def submap(name, title, group, buttons):
-    isl = []
-    for i, (href, label, slug, pos, items) in enumerate(buttons):
-        l, t, w = pos
-        isl.append(f"""            <a href="{href}" class="island sub-island" data-tooltip="{label}" style="left:{l}%;top:{t}%;width:{w}%;--m-top:{120 + i * 320}px">
-                <div class="island-badge">{label}</div>
-                <img src="islands/{group}/btn-{slug}.png" alt="{label}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                <div class="sub-box"><b>{label}</b>{''.join(f'<span>{x}</span>' for x in items)}</div>
+def submap(name, title, map_file, ratio, pins):
+    pin_html, list_html = [], []
+    for href, label, pin_img, (x, y), items in pins:
+        lines = ''.join(f'<span>{i}</span>' for i in items)
+        pin_html.append(f"""            <a href="{href}" class="pin" style="left:{x}%;top:{y}%" aria-label="{label}">
+                <span class="pin-pop"><b>{label}</b>{lines}</span>
+                <span class="pin-float"><img class="pin-img" src="islands/{pin_img}" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
             </a>""")
+        list_html.append(f'            <a href="{href}"><b>{label}</b>{lines}</a>')
     html = f"""<!DOCTYPE html>
 <html lang="th">
 
@@ -372,7 +463,6 @@ def submap(name, title, group, buttons):
         rel="stylesheet">
     {idx_css}
 {SUB_CSS}
-    <style>@media (max-width: 768px) {{ .sub-island {{ top: var(--m-top) !important; }} }}</style>
 </head>
 
 <body>
@@ -383,11 +473,15 @@ def submap(name, title, group, buttons):
     <div class="submap-title">{title}</div>
     {MENU_LINK}
 
-    <div id="view-map">
-        <div class="map-wrapper" style="--n:{len(buttons)}">
-{chr(10).join(isl)}
+    <main class="sub-wrap">
+        <div class="sub-stage" style="--ar:{ratio}">
+            <img class="sub-map" src="{MAP_URL}{map_file}" alt="{title}">
+{chr(10).join(pin_html)}
         </div>
-    </div>
+        <nav class="sub-list" aria-label="{title}">
+{chr(10).join(list_html)}
+        </nav>
+    </main>
 
     <a href="index.html" class="back-fixed"><img src="{BACK_IMG}" alt="Back"></a>
 </body>
@@ -397,19 +491,20 @@ def submap(name, title, group, buttons):
     write(name, html)
 
 
-submap('island_about.html', 'ABOUT ISLAND', 'about', [
-    ('about_profile.html', 'โปรไฟล์', 'profile', (58, 14, 24), ['ตัวฉัน · สรุปสั้น', 'จุดแข็ง', 'เลือกเส้นทางตามงาน']),
-    ('about_experience.html', 'ประวัติการทำงาน', 'experience', (58, 54, 24), ['ไทม์ไลน์งานที่ผ่านมา', 'ใบประกาศ · ทักษะอื่น', 'เรซูเม่ (ดาวน์โหลด)']),
-    ('about_live.html', 'e-commerce Live Streaming', 'live', (14, 36, 24), ['Case study', 'ผลไลฟ์ 2 ชั่วโมง']),
+#        page                       menu                         pin picture   tip on the map (x%, y%)   pop-up lines
+submap('island_about.html', 'ABOUT ISLAND', 'sub-about-me.jpg', '2048 / 1152', [
+    ('about_profile.html', 'โปรไฟล์', 'A1.jpg', (58, 54), ['ตัวฉัน · สรุปสั้น', 'จุดแข็ง', 'เลือกเส้นทางตามงาน']),             # church cluster
+    ('about_experience.html', 'ประวัติการทำงาน', 'A2.jpg', (92, 30), ['ไทม์ไลน์งานที่ผ่านมา', 'ใบประกาศ · ทักษะอื่น', 'เรซูเม่ (ดาวน์โหลด)']),  # planetarium
+    ('about_live.html', 'e-commerce Live Streaming', 'A3.jpg', (28, 26), ['Case study', 'ผลไลฟ์ 2 ชั่วโมง']),                 # round parking tower
 ])
-submap('island_works.html', 'PIC&amp;CLIP WAREHOUSE', 'works', [
-    ('works_clips.html', 'คลิปวิดีโอ', 'clips', (14, 36, 26), ['ไลฟ์ขายของ', 'ไลฟ์คอนเทนต์', 'รับทำคอนเทนต์', 'สร้างจาก AI', 'อีเวนต์ · โปรโมท F&amp;B', 'AI Voice · Avatar']),
-    ('works_photos.html', 'รูปผลงาน', 'photos', (58, 22, 26), ['แต่งหน้า · ทำผม', 'อาหาร', 'ออกบูธ · อีเวนต์', 'ผลไลฟ์ 6 หลัก']),
+submap('island_works.html', 'PIC&amp;CLIP WAREHOUSE', 'sub-pic-clip.jpg', '2048 / 1152', [
+    ('works_clips.html', 'คลิปวิดีโอ', 'P1.jpg', (65, 50), ['ไลฟ์ขายของ', 'ไลฟ์คอนเทนต์', 'รับทำคอนเทนต์', 'สร้างจาก AI', 'อีเวนต์ · โปรโมท F&amp;B', 'AI Voice · Avatar']),  # Film Studio Warehouse
+    ('works_photos.html', 'รูปผลงาน', 'P2.jpg', (50, 50), ['แต่งหน้า · ทำผม', 'อาหาร', 'ออกบูธ · อีเวนต์', 'ผลไลฟ์ 6 หลัก']),  # Dragon Theatre
 ])
-submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'learning', [
-    ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'tools', (12, 30, 24), ['เครื่องมือและระบบที่ทำงานร่วมกับ AI', 'สร้างเองทั้งระบบ']),
-    ('learning_docs.html', 'เอกสาร · ความรู้', 'docs', (58, 14, 26), ['เอกสารฟรี · หนังสือ', 'เทมเพลต · ตารางช่วยงาน']),
-    ('learning_design.html', 'งานออกแบบ', 'design', (56, 54, 26), ['หน้าเว็บ (Wix)', 'Creative · กราฟิก', 'แผนคอนเทนต์การตลาด']),
+submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'sub-ai.webp', '1920 / 1280', [
+    ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'ai1.jpg', (43, 36), ['เครื่องมือและระบบที่ทำงานร่วมกับ AI', 'สร้างเองทั้งระบบ']),  # LAB 01
+    ('learning_docs.html', 'เอกสาร · ความรู้', 'ai2.jpg', (27, 17), ['เอกสารฟรี · หนังสือ', 'เทมเพลต · ตารางช่วยงาน']),            # observatory
+    ('learning_design.html', 'งานออกแบบ', 'ai3.jpg', (75, 37), ['หน้าเว็บ (Wix)', 'Creative · กราฟิก', 'แผนคอนเทนต์การตลาด']),     # Data & Signal
 ])
 
 # ── 404 (COMMUNITY HARBOR for now, and any address that does not exist) ─────────────────────────

@@ -1,1 +1,5 @@
-วางรูปเกาะที่นี่ตามชื่อใน docs/IMAGE_NAMES.md
+รูปหมุดบนแผนที่ย่อย (1 รูป = 1 เมนู)
+A1-A3 = ABOUT ISLAND (โปรไฟล์, ประวัติการทำงาน, e-commerce Live Streaming)
+P1-P2 = PIC&CLIP WAREHOUSE (คลิปวิดีโอ, รูปผลงาน)
+ai1-ai3 = AI&TECH CREATION BRIDGE (เครื่องมือ/ระบบ AI, เอกสาร·ความรู้, งานออกแบบ)
+เปลี่ยนรูป = อัปโหลดทับชื่อเดิม · ตำแหน่งหมุดอยู่ใน scripts/build-island-pages.py (ส่วน submap)

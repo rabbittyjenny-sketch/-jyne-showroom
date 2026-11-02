@@ -330,31 +330,50 @@
     </style>
 
     <style>
-        /* sub-map: same .island / .island-badge as the main map */
+        /* sub-map: the island picture with floating pins (square boxes, no white frames) */
         .submap-title { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 101;
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #000;
-            background: rgba(255,255,255,0.95); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #fff;
+            background: rgba(0,0,0,0.55); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
         .main-menu-link { position: fixed; top: 28px; right: 40px; z-index: 101; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
             font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: #fff; background: rgba(0,0,0,0.55); padding: 9px 16px; }
-        .sub-island { animation: individualFloat 8s ease-in-out infinite; }
-        .sub-island:nth-of-type(2) { animation-duration: 9s; animation-delay: -0.6s; }
-        .sub-island:nth-of-type(3) { animation-duration: 7.5s; animation-delay: -1.2s; }
-        /* until the button picture exists: a box like the owner's diagram */
-        .sub-box { display: none; background: #1A1A1A; color: #fff; padding: 16px 18px; width: 100%; box-sizing: border-box; text-align: left; }
-        .sub-box b { display: block; font-size: 1.05rem; margin-bottom: 6px; }
-        .sub-box span { display: block; font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; }
+        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+        .pin { position: absolute; width: 8.5%; min-width: 46px; transform: translate(-50%, -100%); text-decoration: none; z-index: 5; }
+        .pin-float { display: block; animation: pinFloat 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+        .pin:nth-of-type(2) .pin-float { animation-delay: -1.1s; }
+        .pin:nth-of-type(3) .pin-float { animation-delay: -2.2s; }
+        @keyframes pinFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); transition: transform 0.25s; }
+        .pin-stem { display: block; width: 3px; height: 18px; margin: 0 auto; background: #1A1A1A; }
+        .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
+        .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
+        .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
+        .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -6px); min-width: 200px; max-width: 260px;
+            background: #1A1A1A; color: #fff; padding: 12px 14px; text-align: left; opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s; z-index: 10; font-family: 'Noto Sans Thai', sans-serif; }
+        .pin-pop b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .pin-pop span { display: block; font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
+        .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translate(-50%, -12px); }
+        .sub-list { display: none; }
         .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
         .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
         .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
-            .map-wrapper { height: calc(var(--n) * 320px + 120px) !important; }
-            .sub-island { width: 72% !important; left: 14% !important; right: auto !important; animation: none !important; }
             .main-menu-link { top: 12px; right: 16px; }
             .submap-title { top: 60px; font-size: 1rem; }
+            .sub-wrap { position: static; display: block; padding: 104px 0 110px; }
+            .sub-stage { width: 100%; }
+            .pin-stem { height: 8px; } .pin-dot { width: 8px; height: 8px; }
+            .pin-pop { display: none; }
+            /* phones: a plain menu under the map */
+            .sub-list { display: block; margin: 18px 16px 0; }
+            .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px; }
+            .sub-list b { display: block; font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.05rem; margin-bottom: 4px; }
+            .sub-list span { display: block; font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
         }
     </style>
 
-    <style>@media (max-width: 768px) { .sub-island { top: var(--m-top) !important; } }</style>
 </head>
 
 <body>
@@ -365,25 +384,28 @@
     <div class="submap-title">AI&amp;TECH CREATION BRIDGE</div>
     <a href="index.html" class="main-menu-link">MAIN MENU</a>
 
-    <div id="view-map">
-        <div class="map-wrapper" style="--n:3">
-            <a href="learning_tools.html" class="island sub-island" data-tooltip="รวมเครื่องมือ / ระบบ AI" style="left:12%;top:30%;width:24%;--m-top:120px">
-                <div class="island-badge">รวมเครื่องมือ / ระบบ AI</div>
-                <img src="islands/learning/btn-tools.png" alt="รวมเครื่องมือ / ระบบ AI" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                <div class="sub-box"><b>รวมเครื่องมือ / ระบบ AI</b><span>เครื่องมือและระบบที่ทำงานร่วมกับ AI</span><span>สร้างเองทั้งระบบ</span></div>
+    <main class="sub-wrap">
+        <div class="sub-stage" style="--ar:1920 / 1280">
+            <img class="sub-map" src="https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/sub-ai.webp" alt="AI&amp;TECH CREATION BRIDGE">
+            <a href="learning_tools.html" class="pin" style="left:43%;top:36%" aria-label="รวมเครื่องมือ / ระบบ AI">
+                <span class="pin-pop"><b>รวมเครื่องมือ / ระบบ AI</b><span>เครื่องมือและระบบที่ทำงานร่วมกับ AI</span><span>สร้างเองทั้งระบบ</span></span>
+                <span class="pin-float"><img class="pin-img" src="islands/ai1.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
             </a>
-            <a href="learning_docs.html" class="island sub-island" data-tooltip="เอกสาร · ความรู้" style="left:58%;top:14%;width:26%;--m-top:440px">
-                <div class="island-badge">เอกสาร · ความรู้</div>
-                <img src="islands/learning/btn-docs.png" alt="เอกสาร · ความรู้" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                <div class="sub-box"><b>เอกสาร · ความรู้</b><span>เอกสารฟรี · หนังสือ</span><span>เทมเพลต · ตารางช่วยงาน</span></div>
+            <a href="learning_docs.html" class="pin" style="left:27%;top:17%" aria-label="เอกสาร · ความรู้">
+                <span class="pin-pop"><b>เอกสาร · ความรู้</b><span>เอกสารฟรี · หนังสือ</span><span>เทมเพลต · ตารางช่วยงาน</span></span>
+                <span class="pin-float"><img class="pin-img" src="islands/ai2.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
             </a>
-            <a href="learning_design.html" class="island sub-island" data-tooltip="งานออกแบบ" style="left:56%;top:54%;width:26%;--m-top:760px">
-                <div class="island-badge">งานออกแบบ</div>
-                <img src="islands/learning/btn-design.png" alt="งานออกแบบ" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                <div class="sub-box"><b>งานออกแบบ</b><span>หน้าเว็บ (Wix)</span><span>Creative · กราฟิก</span><span>แผนคอนเทนต์การตลาด</span></div>
+            <a href="learning_design.html" class="pin" style="left:75%;top:37%" aria-label="งานออกแบบ">
+                <span class="pin-pop"><b>งานออกแบบ</b><span>หน้าเว็บ (Wix)</span><span>Creative · กราฟิก</span><span>แผนคอนเทนต์การตลาด</span></span>
+                <span class="pin-float"><img class="pin-img" src="islands/ai3.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
             </a>
         </div>
-    </div>
+        <nav class="sub-list" aria-label="AI&amp;TECH CREATION BRIDGE">
+            <a href="learning_tools.html"><b>รวมเครื่องมือ / ระบบ AI</b><span>เครื่องมือและระบบที่ทำงานร่วมกับ AI</span><span>สร้างเองทั้งระบบ</span></a>
+            <a href="learning_docs.html"><b>เอกสาร · ความรู้</b><span>เอกสารฟรี · หนังสือ</span><span>เทมเพลต · ตารางช่วยงาน</span></a>
+            <a href="learning_design.html"><b>งานออกแบบ</b><span>หน้าเว็บ (Wix)</span><span>Creative · กราฟิก</span><span>แผนคอนเทนต์การตลาด</span></a>
+        </nav>
+    </main>
 
     <a href="index.html" class="back-fixed"><img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="Back"></a>
 </body>

@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/copy-original-site.mjs",
+    "build": "vite build",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "preview": "vite preview",
-    "seed:sql": "node scripts/build-seed-sql.mjs",
-    "legacy:css": "python3 scripts/build-legacy-css.py ."
+    "pages": "python3 scripts/build-island-pages.py"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

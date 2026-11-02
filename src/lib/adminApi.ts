@@ -1,8 +1,6 @@
 // Back-office data access: every write the admin does goes through here.
-// Reads fall back to mock data when no database is connected, so the screens can
-// be previewed; writes in mock mode are refused with a clear message.
+// Without a database connection (no VITE_SUPABASE_* env) the screens open empty and writes are refused.
 import { supabase, IS_MOCK } from '@/integrations/supabase/client';
-import { mock } from './mock';
 import { sanitizeFileName, resolveContentType } from './uploadFile';
 
 export type Table =
@@ -10,25 +8,12 @@ export type Table =
   | 'i365_categories' | 'i365_tag_groups' | 'i365_tags' | 'i365_item_tags'
   | 'i365_routes' | 'i365_route_variants' | 'i365_route_items' | 'i365_inquiries' | 'i365_site_settings' | 'i365_media';
 
-const MOCK_TABLES: Partial<Record<Table, unknown[]>> = {
-  i365_island_templates: mock.templates, i365_islands: mock.islands, i365_sections: mock.sections,
-  i365_item_types: mock.itemTypes, i365_items: mock.items, i365_categories: mock.categories,
-  i365_tag_groups: mock.tagGroups, i365_tags: mock.tags, i365_item_tags: mock.itemTags,
-  i365_routes: mock.routes, i365_route_variants: mock.routeVariants, i365_route_items: mock.routeItems,
-  i365_inquiries: [], i365_site_settings: Object.entries(mock.settings).map(([key, value]) => ({ key, value })), i365_media: [],
-};
-
 export const MOCK_WRITE_MSG = 'โหมดจำลอง: ยังไม่ได้เชื่อมฐานข้อมูล จึงบันทึกไม่ได้';
 
 type Filter = [column: string, value: string | number | boolean | null];
 
 export async function list<T>(table: Table, filters: Filter[] = [], order: string | null = 'sort_order'): Promise<T[]> {
-  if (IS_MOCK) {
-    let rows = [...((MOCK_TABLES[table] ?? []) as Record<string, unknown>[])];
-    for (const [c, v] of filters) rows = rows.filter((r) => r[c] === v);
-    if (order) rows.sort((a, b) => Number(a[order] ?? 0) - Number(b[order] ?? 0));
-    return rows as T[];
-  }
+  if (IS_MOCK) return [];
   let q = supabase.from(table).select('*');
   for (const [c, v] of filters) q = v === null ? q.is(c, null) : q.eq(c, v);
   if (order) q = q.order(order);

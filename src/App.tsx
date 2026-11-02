@@ -5,6 +5,7 @@ import Islands from './pages/admin/Islands';
 import IslandEdit from './pages/admin/IslandEdit';
 import SectionItems from './pages/admin/SectionItems';
 import ItemTypes from './pages/admin/ItemTypes';
+import Articles from './pages/admin/Articles';
 import Tags from './pages/admin/Tags';
 import RoutesAdmin from './pages/admin/Routes';
 import { Inquiries, Settings, Templates } from './pages/admin/Misc';
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/backoffice/islands" element={admin(<Islands />)} />
         <Route path="/backoffice/islands/:id" element={admin(<IslandEdit />)} />
         <Route path="/backoffice/sections/:id" element={admin(<SectionItems />)} />
+        <Route path="/backoffice/articles" element={admin(<Articles />)} />
         <Route path="/backoffice/item-types" element={admin(<ItemTypes />)} />
         <Route path="/backoffice/tags" element={admin(<Tags />)} />
         <Route path="/backoffice/routes" element={admin(<RoutesAdmin />)} />

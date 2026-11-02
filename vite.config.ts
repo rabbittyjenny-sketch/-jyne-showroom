@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => ({
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      // two entries: app.html = new-island pages (original page CSS only), admin.html = back office.
-      // The original site (index.html map + every original page) is copied in unchanged by scripts/copy-original-site.mjs.
+      // two React entries: app.html = COMMUNITY HARBOR (/community), admin.html = back office (/backoffice).
+      // Every other page is a static file in public/ (map, island sub-maps, topic pages) copied to dist/ as-is.
       input: { app: path.resolve(__dirname, 'app.html'), admin: path.resolve(__dirname, 'admin.html') },
       output: {
         manualChunks: {

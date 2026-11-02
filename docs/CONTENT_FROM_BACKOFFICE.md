@@ -22,22 +22,26 @@
 | learning_tools | tools-ai, tools-commerce, tools-creative (แทน Google Sheet ทีละตาราง) | – |
 | learning_docs | free-resources (แทน Google Sheet; ปุ่มดาวน์โหลด + ฟอร์มอีเมลเดิม) | LIBRARY / COMING SOON |
 | learning_design | web-design, creative, marketing-plans | – |
+| service | how-i-work, what-to-expect, work-with, dont-work-with, services | – (ข้อความตั้งต้นมาจาก `site-source/service-content.json`) |
 
-ประเภทผลงานที่หน้าเว็บดึงได้: clip, photo, certificate, tool, document, design_work, resume
+ประเภทผลงานที่หน้าเว็บดึงได้: clip, photo, certificate, tool, document, design_work, resume, point, service
+(point / service: ช่องข้อความเขียนแบบ `English | ไทย` บรรทัดละข้อ)
 (text_block, experience, case_study ยังแสดงจากโค้ดเดิม หัวข้อพวกนี้ตั้งเป็นฉบับร่างไว้)
 
 ## ไฟล์
 
 - `public/i365-content.js` ตัวดึงข้อมูล (ใส่ใน `<head>` ของหน้าเนื้อหาทุกหน้า โดย `scripts/build-island-pages.py`)
 - `scripts/build-island-pages.py` ใส่จุดวาง `data-i365="<หัวข้อ>"` ในหน้า (markup อื่นไม่เปลี่ยน)
-- `supabase/migrations/20261102090000_i365_match_site_pages.sql` โครงสร้างเกาะ/หัวข้อตามหน้าเว็บ (รันแล้ว)
+- `supabase/migrations/20261102090000_i365_match_site_pages.sql` โครงสร้างเกาะ/หัวข้อตามหน้าเว็บ
+- `supabase/migrations/20261103090000_i365_articles_service.sql` ตาราง COMMUNITY (`i365_articles`, `i365_podcast_plays`) + หัวข้อหน้า SERVICE
 - `supabase/data/i365_current_page_content.sql` เนื้อหาที่หน้าเว็บแสดงวันนี้ → ผลงานในหลังบ้าน (รันใน SQL Editor; รันซ้ำได้)
   สร้างใหม่ได้ด้วย `python3 scripts/build-content-sql.py`
 
-## เกาะที่พาไปเว็บอื่น / ยังไม่เปิด
+## หน้าที่ไม่ได้ใช้ i365-content.js
 
-- ACADEMY BAY → `academy.html` (แผ่นข้อมูลแบบ PDF เนื้อหาใส่ภายหลัง) ปุ่ม Go to Academy → ป๊อปอัปยืนยัน → c365.ideas365.space
-- A SERVICE MANIA → `service.html` แบบเดียวกัน ปุ่ม ดูบริการทั้งหมด → ป๊อปอัปยืนยัน → iDEAS365-web /services
+- COMMUNITY HARBOR → `/community` เป็นหน้า React (`src/community/`) อ่านตาราง `i365_articles` โดยตรง
+  จัดการที่หลังบ้าน เมนู "COMMUNITY · บทความ" — ประเภท: บทความ/บล็อก/เครื่องมือ → กลุ่มบทความ, คลิป → คลิปกิจกรรม, ข่าว/อัปเดต/ชุมชน → ข่าวกิจกรรม
+  ใส่ลิงก์ภายนอก = การ์ดพาออกไปลิงก์นั้น, ใส่ไฟล์เสียง = ปุ่มฟังเป็น Podcast ในหน้าบทความ
+- ACADEMY BAY → `academy.html` เกาะเดียวที่พาไปเว็บอื่น (c365.ideas365.space) ผ่านป๊อปอัปยืนยัน
   ลิงก์ไหนใส่ `data-leave="ชื่อเว็บ"` จะถามก่อนออกเสมอ (สร้างโดย `scripts/build-island-pages.py`)
-- COMMUNITY HARBOR → `community.html` ซึ่งยังไม่มี → Vercel แสดง `404.html` (หน้า 404 ของเว็บ ใช้กับลิงก์ที่ไม่มีทุกลิงก์)
-  ทำหน้าชุมชนเสร็จเมื่อไหร่ แค่เพิ่มไฟล์ community.html
+- `404.html` หน้าสำหรับลิงก์ที่ไม่มี

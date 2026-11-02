@@ -1,4 +1,3 @@
-import type { IslandTheme } from './themes';
 // Shapes of the i365_ tables (see supabase/migrations/20261030120000_i365_schema.sql).
 
 export type FieldType =
@@ -46,8 +45,8 @@ export interface Island {
   button_image: string | null; land_image: string | null; land_aspect: string; mobile_focus_x: number;
   pos_left: number | null; pos_top: number | null; pos_width: number | null;
   redirect_url: string | null; redirect_delay_ms: number;
-  /** colour theme: { preset, ...colour overrides } — see src/lib/themes.ts */
-  theme: IslandTheme;
+  /** colour theme of the earlier /i/ island pages (kept in the database, not used by the live pages) */
+  theme: Record<string, unknown>;
   is_published: boolean; sort_order: number; deleted_at: string | null;
   /** page opened from the main map, without .html (island_about, contact_port, ...) */
   page_slug: string | null;

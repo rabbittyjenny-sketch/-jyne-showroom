@@ -4,9 +4,21 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/i/:path*", "destination": "/app.html" },
-    { "source": "/r/:path*", "destination": "/app.html" },
-    { "source": "/backoffice", "destination": "/admin.html" },
-    { "source": "/backoffice/:path*", "destination": "/admin.html" }
+    {
+      "source": "/community",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/community/:path*",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/backoffice",
+      "destination": "/admin.html"
+    },
+    {
+      "source": "/backoffice/:path*",
+      "destination": "/admin.html"
+    }
   ]
 }
