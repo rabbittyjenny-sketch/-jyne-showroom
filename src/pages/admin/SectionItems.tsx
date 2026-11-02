@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { FieldInput, UploadOrUrl, missingRequired } from '@/components/admin/FieldInputs';
-import { insert, list, remove, slugify, update, uploadMedia } from '@/lib/adminApi';
+import { insert, list, mediaPathsIn, releaseMedia, remove, settleUploads, slugify, update, uploadMedia } from '@/lib/adminApi';
+import { UPLOAD_RULES, acceptFor, checkFile, ruleForField } from '@/lib/uploadRules';
 import { itemPicture } from '@/lib/itemPicture';
 import { SafeImg } from '@/components/admin/SafeImg';
 import { PAGE_RENDERED_TYPES, SITE_PAGES, pageUrl } from '@/lib/types';
@@ -103,7 +104,7 @@ export default function SectionItems() {
                       <span className={it.is_published ? 'text-emerald-400' : 'text-amber-400'}>{it.is_published ? '● เผยแพร่อยู่' : '○ ซ่อนอยู่'}</span>
                       <button className="underline" onClick={() => quick(() => update('i365_items', { id: it.id }, { is_published: !it.is_published }), it.is_published ? 'ซ่อนผลงานแล้ว' : 'เผยแพร่ผลงานแล้ว')}>{it.is_published ? 'ซ่อน' : 'เผยแพร่'}</button>
                       <button className="underline" onClick={() => setEditing(it)}>แก้ไข</button>
-                      <button className="underline text-red-600" onClick={() => { if (confirm(`ลบผลงาน "${it.title_th}" ถาวร?`)) quick(() => remove('i365_items', { id: it.id }), 'ลบผลงานแล้ว'); }}>ลบ</button>
+                      <button className="underline text-red-600" onClick={() => { if (confirm(`ลบผลงาน "${it.title_th}" ถาวร?`)) quick(async () => { await remove('i365_items', { id: it.id }); await releaseMedia(mediaPathsIn(it)); }, 'ลบผลงานแล้ว'); }}>ลบ</button>
                     </div>
                   </div>
                 </div>
@@ -115,11 +116,13 @@ export default function SectionItems() {
 
       {editing && (
         <ItemDialog item={editing} type={type} cats={cats} catName={catName} groups={groups} tags={tags} routes={routes}
-          onClose={() => setEditing(null)} onSaved={async (t) => { setEditing(null); setMsg({ text: t, ok: true }); await load(); }} />
+          onClose={() => { setEditing(null); void settleUploads(); }}
+          onSaved={async (t) => { const before = mediaPathsIn(editing); setEditing(null); setMsg({ text: t, ok: true }); await load(); void settleUploads(before); }} />
       )}
       {bulk && (
         <BulkDialog section={section} type={type} cats={cats} catName={catName}
-          onClose={() => setBulk(false)} onSaved={async (t) => { setBulk(false); setMsg({ text: t, ok: true }); await load(); }} />
+          onClose={() => { setBulk(false); void settleUploads(); }}
+          onSaved={async (t) => { setBulk(false); setMsg({ text: t, ok: true }); await load(); void settleUploads(); }} />
       )}
     </AdminLayout>
   );
@@ -278,7 +281,7 @@ function ItemDialog({ item, type, cats, catName, groups, tags, routes, onClose, 
             {errors.__title && <p className="text-xs text-red-600">{errors.__title}</p>}</div>
           <div className="space-y-1"><Label>ชื่อ (อังกฤษ)</Label><Input value={it.title_en ?? ''} onChange={(e) => setIt({ ...it, title_en: e.target.value })} /></div>
           <div className="space-y-1"><Label>สรุปสั้น</Label><Textarea rows={2} value={it.summary_th ?? ''} onChange={(e) => setIt({ ...it, summary_th: e.target.value })} /></div>
-          {type.features?.has_cover && <div className="space-y-1"><Label>รูปปก</Label><UploadOrUrl value={it.cover_image ?? ''} onChange={(v) => setIt({ ...it, cover_image: v })} accept="image/*" folder="covers" preview /></div>}
+          {type.features?.has_cover && <div className="space-y-1"><Label>รูปปก</Label><UploadOrUrl value={it.cover_image ?? ''} onChange={(v) => setIt({ ...it, cover_image: v })} kind="image" folder="covers" preview /></div>}
           <div className="rounded-md border p-3 space-y-3">
             <div className="text-sm font-medium">ข้อมูลของ{type.name_th}</div>
             {type.fields.map((f) => <FieldInput key={f.key} field={f} value={it.data?.[f.key]} onChange={(v) => setData(f.key, v)} error={errors[f.key]} />)}
@@ -338,6 +341,7 @@ function BulkDialog({ section, type, cats, catName, onClose, onSaved }: {
 }) {
   const field = type.fields.find((f) => f.key === type.features?.bulk_field)!;
   const isFile = field.type === 'image' || field.type === 'file';
+  const kind = ruleForField(field);
   const [category, setCategory] = useState('');
   const [chosen, setChosen] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -353,13 +357,14 @@ function BulkDialog({ section, type, cats, catName, onClose, onSaved }: {
     if (cats.length > 0 && !chosen) { setErr('เลือกหมวดของชุดนี้ก่อน'); return; }
     if (count === 0) { setErr(isFile ? 'เลือกไฟล์ก่อน' : 'วางลิงก์อย่างน้อย 1 ลิงก์'); return; }
     if (count > MAX_BATCH) { setErr(`ครั้งละไม่เกิน ${MAX_BATCH} ชิ้น (ตอนนี้ ${count})`); return; }
+    if (isFile) { const bad = files.map((f) => checkFile(f, kind)).find(Boolean); if (bad) { setErr(bad); return; } }
     const batch_id = crypto.randomUUID();
     try {
       const values: { value: string; title: string }[] = [];
       if (isFile) {
         for (let i = 0; i < files.length; i++) {
           setProgress(`กำลังอัป ${i + 1}/${files.length}…`);
-          values.push({ value: await uploadMedia(files[i], `sections/${section.slug}`), title: files[i].name.replace(/\.[^.]+$/, '') });
+          values.push({ value: await uploadMedia(files[i], `sections/${section.slug}`, kind), title: files[i].name.replace(/\.[^.]+$/, '') });
         }
       } else {
         linkList.forEach((l, i) => values.push({ value: l, title: `${section.name_th} #${i + 1}` }));
@@ -386,12 +391,13 @@ function BulkDialog({ section, type, cats, catName, onClose, onSaved }: {
           <div className="space-y-1">
             <Label>2. {isFile ? `เลือกไฟล์ (สูงสุด ${MAX_BATCH})` : `วางลิงก์ บรรทัดละ 1 ลิงก์ (สูงสุด ${MAX_BATCH})`}</Label>
             {isFile ? (
-              <Input type="file" multiple accept={field.type === 'image' ? 'image/*' : undefined}
+              <Input type="file" multiple accept={acceptFor(kind)}
                 onChange={(e) => { setFiles(Array.from(e.target.files ?? [])); setErr(null); }} />
             ) : (
               <Textarea rows={6} value={links} onChange={(e) => { setLinks(e.target.value); setErr(null); }} placeholder={'https://www.youtube.com/watch?v=...\nhttps://youtu.be/...'} />
             )}
             <p className={`text-xs ${count > MAX_BATCH ? 'text-red-600' : 'text-muted-foreground'}`}>{count} / {MAX_BATCH} ชิ้น</p>
+            {isFile && <p className="text-xs text-muted-foreground">{UPLOAD_RULES[kind].hint.replace(' · หรือวางลิงก์รูป', '').replace(' · หรือวางลิงก์', '')}</p>}
           </div>
           {err && <p className="text-sm text-red-600">{err}</p>}
           {progress && <p className="text-sm">{progress}</p>}
@@ -409,7 +415,8 @@ function PageSourceNote({ section, type, island, published }: { section: Section
   if (!page) { text = 'เมนูย่อยนี้ยังไม่ได้เลือกหน้าที่จะแสดง (ตั้งได้ที่ปุ่ม "แก้ไข" ในหน้าเกาะ)'; warn = true; }
   else if (!PAGE_RENDERED_TYPES.includes(type.slug)) { text = `หน้า "${page.label}" ยังแสดงหัวข้อนี้จากโค้ดเดิม (ระบบยังไม่ดึงผลงานประเภท "${type.name_th}")`; warn = true; }
   else if (!section.is_published || !island?.is_published) { text = `เมนูย่อยหรือเกาะยังเป็นฉบับร่าง — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด`; warn = true; }
-  else if (published === 0) text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด / Google Sheet`;
+  else if (published === 0 && section.from_backoffice) { text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงการ์ดหัวข้อนี้พร้อมข้อความ COMING SOON · เร็วๆ นี้`; warn = true; }
+  else if (published === 0) text = `ยังไม่เคยเผยแพร่ผลงานในหัวข้อนี้ — หน้า "${page.label}" ยังแสดงเนื้อหาเดิมจากโค้ด / Google Sheet (เผยแพร่ชิ้นแรกเมื่อไหร่ หน้าเว็บจะแสดงจากหลังบ้านแทนทั้งหัวข้อ)`;
   else text = `หน้า "${page.label}" แสดงผลงานที่เผยแพร่ ${published} ชิ้นจากหลังบ้าน (แทนเนื้อหาเดิมของหัวข้อนี้) ตามลำดับ`;
   return <p className={`text-sm mb-4 ${warn ? 'text-amber-400' : 'text-emerald-400'}`}>{text}</p>;
 }

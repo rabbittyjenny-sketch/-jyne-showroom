@@ -54,7 +54,7 @@ export default function Routes() {
               <div className="space-y-1"><Label>ชื่อตำแหน่ง</Label><Input value={sel.title_th} onChange={(e) => setSel({ ...sel, title_th: e.target.value })} /></div>
               <div className="space-y-1"><Label>ประโยคเปิด</Label><Input value={sel.headline_th ?? ''} onChange={(e) => setSel({ ...sel, headline_th: e.target.value })} /></div>
               <div className="space-y-1"><Label>สรุปสำหรับตำแหน่งนี้</Label><Textarea rows={3} value={sel.summary_th ?? ''} onChange={(e) => setSel({ ...sel, summary_th: e.target.value })} /></div>
-              <div className="space-y-1"><Label>ไฟล์เรซูเม่ของเส้นทางนี้</Label><UploadOrUrl value={sel.resume_url ?? ''} onChange={(v) => setSel({ ...sel, resume_url: v })} folder="resumes" /></div>
+              <div className="space-y-1"><Label>ไฟล์เรซูเม่ของเส้นทางนี้</Label><UploadOrUrl value={sel.resume_url ?? ''} onChange={(v) => setSel({ ...sel, resume_url: v })} kind="pdf" folder="resumes" /></div>
               <Button onClick={() => act(async () => {
                 const { id, ...patch } = sel; await update('i365_routes', { id }, patch); await loadRoutes();
               }, 'บันทึกเส้นทางแล้ว')}>บันทึก</Button>

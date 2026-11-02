@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { insert, list, update } from '@/lib/adminApi';
+import { UPLOAD_KINDS, UPLOAD_RULES, ruleForField } from '@/lib/uploadRules';
 import { DISPLAY_LABELS, type DisplayStyle, type FieldDef, type FieldType, type ItemType } from '@/lib/types';
 
 const FIELD_TYPES: Record<FieldType, string> = {
@@ -105,6 +106,15 @@ function TypeDialog({ type, onClose, onSaved }: { type: Partial<ItemType>; onClo
                   <button className="px-1" onClick={() => move(i, 1)} aria-label="ลง">↓</button>
                   {!originalKeys.has(f.key) && <button className="px-1 text-red-600" onClick={() => setT({ ...t, fields: fields.filter((_, k) => k !== i) })}>ลบ</button>}
                 </div>
+                {(f.type === 'image' || f.type === 'file') && (
+                  <label className="col-span-4 flex items-center gap-2 text-xs text-muted-foreground">ไฟล์ที่ช่องนี้รับ
+                    <select className="h-8 rounded-md border bg-background px-2 text-sm text-foreground" value={ruleForField(f)}
+                      onChange={(e) => setField(i, { upload: e.target.value as FieldDef['upload'] })}>
+                      {UPLOAD_KINDS.map((k) => <option key={k} value={k}>{UPLOAD_RULES[k].label}</option>)}
+                    </select>
+                    <span>{UPLOAD_RULES[ruleForField(f)].hint}</span>
+                  </label>
+                )}
                 {f.type === 'select' && (
                   <Input className="col-span-4" placeholder="ตัวเลือก คั่นด้วย , เช่น free:ฟรี, pro:ระบบใหญ่"
                     defaultValue={(f.options ?? []).map((o) => `${o.value}:${o.label}`).join(', ')}

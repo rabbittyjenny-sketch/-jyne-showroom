@@ -87,7 +87,8 @@ export default function IslandEdit() {
           <h2 className="font-semibold">หน้าเว็บดึงข้อมูลยังไง</h2>
           <p>แต่ละเมนูย่อยด้านล่างผูกกับ <b>หน้าเนื้อหา</b> หนึ่งหน้า (คอลัมน์ "หน้า")</p>
           <p>· เมนูย่อยที่ <b>เผยแพร่</b> และมีผลงานที่ <b>เผยแพร่</b> อย่างน้อย 1 ชิ้น → หน้าเว็บแสดงผลงานจากหลังบ้าน แทนเนื้อหาเดิมในหัวข้อนั้น</p>
-          <p>· ยังไม่มีผลงานที่เผยแพร่ → หน้าเว็บแสดงเนื้อหาเดิมจากโค้ด / Google Sheet เหมือนเดิม</p>
+          <p>· เคยเผยแพร่ผลงานแล้ว แต่ตอนนี้ไม่เหลือที่เผยแพร่ → หน้าเว็บแสดงการ์ดหัวข้อนั้นพร้อมข้อความ COMING SOON · เร็วๆ นี้ (ของเดิมในโค้ดไม่กลับมา)</p>
+          <p>· ยังไม่เคยเผยแพร่ผลงานเลย → หน้าเว็บแสดงเนื้อหาเดิมจากโค้ด / Google Sheet เหมือนเดิม</p>
           <p>· เมนูย่อยใหม่ที่ไม่มีที่วางในหน้า → ขึ้นเป็นการ์ดใหม่ต่อท้ายหน้า (ก่อน COMING SOON) ในแบบการ์ดของหน้านั้น</p>
         </section>
       </div>
@@ -118,6 +119,7 @@ export default function IslandEdit() {
                     <td className="py-2 pr-2 text-xs">
                       {s.item_type_id && !PAGE_RENDERED_TYPES.includes(typeSlug) ? <span className="text-muted-foreground">หน้าเว็บแสดงจากโค้ดเดิม (ระบบยังไม่ดึงประเภทนี้)</span>
                         : fromDb ? <span className="text-emerald-400">หน้าเว็บแสดงจากหลังบ้าน</span>
+                        : !!page && s.from_backoffice && s.is_published && island.is_published && PAGE_RENDERED_TYPES.includes(typeSlug) ? <span className="text-amber-400">หน้าเว็บแสดง COMING SOON</span>
                         : <span className="text-muted-foreground">หน้าเว็บแสดงเนื้อหาเดิม</span>}
                     </td>
                     <td className="py-2 pr-2 text-xs">{s.is_published ? 'เผยแพร่' : 'ร่าง'}</td>

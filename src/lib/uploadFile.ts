@@ -1,5 +1,7 @@
 // Shared helpers for every Supabase Storage upload in the app.
 //
+// Copied from Creatr365. The content-type half of the fix now lives in
+// src/lib/uploadRules.ts (contentTypeOf), which also decides which files each box accepts.
 // Two real bugs these fix (found while investigating "PDF/zip won't upload
 // to Toolbox"):
 //
@@ -11,14 +13,8 @@
 //    contain. `sanitizeFileName` strips it down to a safe key; the original
 //    name is kept separately (`file_name` column) for display.
 // 2. storage-js does NOT read `File.type` — when `contentType` isn't passed
-//    explicitly it defaults to `text/plain;charset=UTF-8` for every upload,
-//    regardless of the real file. `resolveContentType` passes the browser's
-//    detected MIME type (or a safe binary fallback) so files are stored with
-//    the correct type instead of all being tagged as plain text.
+//    explicitly it defaults to `text/plain;charset=UTF-8` for every upload.
+//    uploadMedia passes contentTypeOf(file) (from the extension) instead.
 export function sanitizeFileName(name: string): string {
   return name.replace(/[^a-zA-Z0-9._-]/g, '_');
-}
-
-export function resolveContentType(file: File): string {
-  return file.type || 'application/octet-stream';
 }
