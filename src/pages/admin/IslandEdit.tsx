@@ -24,6 +24,7 @@ export default function IslandEdit() {
   const [types, setTypes] = useState<ItemType[]>([]);
   const [msg, setMsg] = useState<Msg>(null);
   const [editing, setEditing] = useState<Partial<Section> | null>(null);
+  const [counts, setCounts] = useState<Record<string, { all: number; pub: number }>>({});
 
   const load = async () => {
     try {
@@ -31,6 +32,10 @@ export default function IslandEdit() {
         list<Island>('i365_islands', [['id', id]]), list<Section>('i365_sections', [['island_id', id]]), list<ItemType>('i365_item_types'),
       ]);
       setIsland(isl[0] ?? null); setSections(secs); setTypes(t);
+      const its = await list<{ section_id: string; is_published: boolean }>('i365_items', [], null);
+      const c: Record<string, { all: number; pub: number }> = {};
+      its.forEach((i) => { c[i.section_id] ??= { all: 0, pub: 0 }; c[i.section_id].all++; if (i.is_published) c[i.section_id].pub++; });
+      setCounts(c);
     } catch (e) { setMsg({ text: e instanceof Error ? e.message : String(e), ok: false }); }
   };
   useEffect(() => { load(); }, [id]);
@@ -51,6 +56,14 @@ export default function IslandEdit() {
   };
 
   const visibleSections = sections.filter((s) => !s.deleted_at);
+  // group the topics by the page that shows them, in the order of the site's pages
+  const pageOrder = (slug: string | null) => { const i = SITE_PAGES.findIndex((p) => p.slug === slug); return i < 0 ? 999 : i; };
+  const pageGroups = [...new Set(visibleSections.map((s) => s.page_slug ?? null))]
+    .sort((a, b) => pageOrder(a) - pageOrder(b))
+    .map((page) => ({
+      page, label: SITE_PAGES.find((p) => p.slug === page)?.label ?? page ?? '',
+      list: visibleSections.filter((s) => (s.page_slug ?? null) === page).sort((a, b) => a.sort_order - b.sort_order),
+    }));
 
   return (
     <AdminLayout title={`เกาะ: ${island.name_th}`} actions={<>
@@ -136,21 +149,34 @@ export default function IslandEdit() {
         {visibleSections.length === 0 && <p className="text-sm text-muted-foreground">ยังไม่มีเมนูย่อย</p>}
         <table className="w-full text-sm">
           <tbody>
-            {visibleSections.map((s) => (
-              <tr key={s.id} className="border-t">
-                <td className="py-2 pr-2 w-8 text-muted-foreground">{s.sort_order}</td>
-                <td className="py-2 pr-2"><div className="font-medium">{s.name_th}</div><div className="text-xs text-muted-foreground">/{s.slug} · {SOURCE_LABELS[s.source_type]}{s.item_type_id ? ` · ${types.find((t) => t.id === s.item_type_id)?.name_th}` : ''}</div></td>
-                <td className="py-2 pr-2 text-xs">
-                  {s.page_slug ? <a className="underline" href={pageUrl(s.page_slug)!} target="_blank" rel="noreferrer">{SITE_PAGES.find((p) => p.slug === s.page_slug)?.label ?? s.page_slug} ↗</a> : <span className="text-amber-700">ยังไม่ได้เลือกหน้า</span>}
-                  {s.item_type_id && !PAGE_RENDERED_TYPES.includes(types.find((t) => t.id === s.item_type_id)?.slug ?? '') && <div className="text-muted-foreground">หน้าเว็บยังแสดงจากโค้ดเดิม</div>}
+            {pageGroups.map(({ page, label, list: secs }) => [
+              <tr key={`h-${page ?? 'none'}`} className="border-t bg-muted/40">
+                <td colSpan={5} className="py-2 px-2 text-xs font-medium">
+                  {page ? <>หน้า: {label} · <a className="underline" href={pageUrl(page)!} target="_blank" rel="noreferrer">/{page}.html ↗</a></> : <span className="text-amber-700">ยังไม่ได้เลือกหน้า (ไม่แสดงบนหน้าเว็บ)</span>}
                 </td>
-                <td className="py-2 pr-2 text-xs">{s.is_published ? 'เผยแพร่' : 'ร่าง'}</td>
-                <td className="py-2 text-right whitespace-nowrap">
-                  {s.source_type === 'items' && <Link className="underline mr-3" to={`/backoffice/sections/${s.id}`}>ผลงาน →</Link>}
-                  <button className="underline" onClick={() => setEditing(s)}>แก้ไข</button>
-                </td>
-              </tr>
-            ))}
+              </tr>,
+              ...secs.map((s) => {
+                const typeSlug = types.find((t) => t.id === s.item_type_id)?.slug ?? '';
+                const pub = counts[s.id]?.pub ?? 0;
+                const fromDb = !!page && s.is_published && island.is_published && PAGE_RENDERED_TYPES.includes(typeSlug) && pub > 0;
+                return (
+                  <tr key={s.id} className="border-t">
+                    <td className="py-2 pr-2 pl-2 w-8 text-muted-foreground">{s.sort_order}</td>
+                    <td className="py-2 pr-2"><div className="font-medium">{s.name_th}</div><div className="text-xs text-muted-foreground">/{s.slug} · {SOURCE_LABELS[s.source_type]}{s.item_type_id ? ` · ${types.find((t) => t.id === s.item_type_id)?.name_th}` : ''} · ผลงาน {counts[s.id]?.all ?? 0} (เผยแพร่ {pub})</div></td>
+                    <td className="py-2 pr-2 text-xs">
+                      {s.item_type_id && !PAGE_RENDERED_TYPES.includes(typeSlug) ? <span className="text-muted-foreground">หน้าเว็บแสดงจากโค้ดเดิม (ระบบยังไม่ดึงประเภทนี้)</span>
+                        : fromDb ? <span className="text-emerald-700">หน้าเว็บแสดงจากหลังบ้าน</span>
+                        : <span className="text-muted-foreground">หน้าเว็บแสดงเนื้อหาเดิม</span>}
+                    </td>
+                    <td className="py-2 pr-2 text-xs">{s.is_published ? 'เผยแพร่' : 'ร่าง'}</td>
+                    <td className="py-2 text-right whitespace-nowrap">
+                      {s.source_type === 'items' && <Link className="underline mr-3" to={`/backoffice/sections/${s.id}`}>ผลงาน →</Link>}
+                      <button className="underline" onClick={() => setEditing(s)}>แก้ไข</button>
+                    </td>
+                  </tr>
+                );
+              }),
+            ])}
           </tbody>
         </table>
       </section>

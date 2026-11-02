@@ -4,12 +4,15 @@ import { supabase, IS_MOCK } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
 const NAV = [
-  { to: '/backoffice/islands', label: 'จัดการเกาะ' },
+  { to: '/backoffice/islands', label: 'จัดการเกาะ · เนื้อหา' },
   { to: '/backoffice/item-types', label: 'ประเภทผลงาน' },
+  { to: '/backoffice/templates', label: 'แม่แบบเกาะ' },
+];
+/** parts made for the earlier island pages (/i/…, /r/…); the live pages do not read them yet */
+const NAV_OLD = [
   { to: '/backoffice/tags', label: 'แท็ก' },
   { to: '/backoffice/routes', label: 'เส้นทางสมัครงาน' },
   { to: '/backoffice/inquiries', label: 'ข้อความติดต่อ' },
-  { to: '/backoffice/templates', label: 'แม่แบบเกาะ' },
   { to: '/backoffice/settings', label: 'ตั้งค่าเว็บ' },
 ];
 
@@ -21,6 +24,12 @@ export function AdminLayout({ title, actions, children }: { title: string; actio
         <div className="font-semibold mb-4">iDEAS365 · หลังบ้าน</div>
         {NAV.map((n) => (
           <NavLink key={n.to} to={n.to} className={({ isActive }) => cn('rounded-md px-3 py-2 text-sm hover:bg-muted', isActive && 'bg-muted font-medium')}>
+            {n.label}
+          </NavLink>
+        ))}
+        <div className="mt-4 px-3 text-[11px] leading-snug text-muted-foreground">ยังไม่ได้ใช้กับหน้าเว็บตอนนี้<br />(ฟอร์มติดต่อส่งเข้า Google Sheet)</div>
+        {NAV_OLD.map((n) => (
+          <NavLink key={n.to} to={n.to} className={({ isActive }) => cn('rounded-md px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted', isActive && 'bg-muted font-medium')}>
             {n.label}
           </NavLink>
         ))}
