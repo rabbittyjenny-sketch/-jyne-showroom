@@ -33,3 +33,11 @@
 - `supabase/migrations/20261102090000_i365_match_site_pages.sql` โครงสร้างเกาะ/หัวข้อตามหน้าเว็บ (รันแล้ว)
 - `supabase/data/i365_current_page_content.sql` เนื้อหาที่หน้าเว็บแสดงวันนี้ → ผลงานในหลังบ้าน (รันใน SQL Editor; รันซ้ำได้)
   สร้างใหม่ได้ด้วย `python3 scripts/build-content-sql.py`
+
+## เกาะที่พาไปเว็บอื่น / ยังไม่เปิด
+
+- ACADEMY BAY → `academy.html` (แผ่นข้อมูลแบบ PDF เนื้อหาใส่ภายหลัง) ปุ่ม Go to Academy → ป๊อปอัปยืนยัน → c365.ideas365.space
+- A SERVICE MANIA → `service.html` แบบเดียวกัน ปุ่ม ดูบริการทั้งหมด → ป๊อปอัปยืนยัน → iDEAS365-web /services
+  ลิงก์ไหนใส่ `data-leave="ชื่อเว็บ"` จะถามก่อนออกเสมอ (สร้างโดย `scripts/build-island-pages.py`)
+- COMMUNITY HARBOR → `community.html` ซึ่งยังไม่มี → Vercel แสดง `404.html` (หน้า 404 ของเว็บ ใช้กับลิงก์ที่ไม่มีทุกลิงก์)
+  ทำหน้าชุมชนเสร็จเมื่อไหร่ แค่เพิ่มไฟล์ community.html

@@ -49,11 +49,11 @@ def cut(text, start, end):
     return text[a:b]
 
 
-def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content'):
+def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True):
     t = src(file)
     head_end = t.index('</head>')
     head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + MENU_CSS
-    head += LOADER.format(page=pg, card=card)
+    if loader: head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
     else:
@@ -73,8 +73,11 @@ def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, c
     return head + pre + '\n'.join(blocks) + tl
 
 
+NO_DB_PAGES = {'academy.html', 'service.html', '404.html'}
+
+
 def write(name, html):
-    assert ('data-page="' + name[:-5] + '"') in html or name.startswith('island_'), name
+    assert ('data-page="' + name[:-5] + '"') in html or name.startswith('island_') or name in NO_DB_PAGES, name
     (OUT / name).write_text(html, encoding='utf-8')
     print('wrote', name, len(html))
 
@@ -215,6 +218,108 @@ write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESI
 """,
 ], 'island_learning.html', tail=l_tail))
 
+# ── ACADEMY BAY / A SERVICE MANIA: info page (like a plain PDF sheet) + button to the other site ──────
+# The button asks first (pop-up) — the visitor accepts, then goes. Content of the sheet comes later.
+LEAVE_CSS = """
+    <style>
+        /* added: info sheet + leave-site pop-up (square, no white frame) */
+        .nav-header .main-menu-link { margin-left: auto; }
+        .doc-sheet { display: block !important; max-width: 820px; min-height: 60vh; padding: 56px 64px; border-radius: 0; }
+        @media (max-width: 640px) { .doc-sheet { padding: 36px 24px; } }
+        .doc-meta { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 28px; }
+        .doc-empty { color: #aaa; font-size: 0.95rem; margin-top: 24px; }
+        .leave-wrap { width: 100%; display: flex; justify-content: center; padding: 40px 20px 50px; }
+        .leave-btn { display: inline-block; background: #1A1A1A; color: #fff; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px; border-radius: 0; text-decoration: none; }
+        .leave-btn::after { content: ' →'; }
+        .leave-btn:hover { background: #000; }
+        .academy-btn { border-radius: 0 !important; }
+        .leave-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); display: none;
+            align-items: center; justify-content: center; padding: 20px; }
+        .leave-overlay.open { display: flex; }
+        .leave-box { background: #1A1A1A; color: #fff; max-width: 440px; width: 100%; padding: 32px 30px 26px; border-radius: 0;
+            font-family: 'Noto Sans Thai', sans-serif; }
+        .leave-box h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.5rem; letter-spacing: 1px; margin: 0 0 12px; }
+        .leave-box p { font-size: 0.95rem; line-height: 1.7; margin: 0 0 8px; opacity: 0.9; }
+        .leave-box .leave-host { font-size: 0.8rem; opacity: 0.6; word-break: break-all; }
+        .leave-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+        .leave-actions button { flex: 1; min-width: 140px; border: 0; border-radius: 0; padding: 13px 16px; cursor: pointer;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.95rem; letter-spacing: 1px; }
+        .leave-ok { background: var(--accent); color: #fff; }
+        .leave-ok:hover { filter: brightness(0.9); }
+        .leave-cancel { background: rgba(255,255,255,0.12); color: #fff; }
+        .leave-cancel:hover { background: rgba(255,255,255,0.2); }
+    </style>
+"""
+LEAVE_HTML = """
+<!-- added: pop-up before going to another website -->
+<div class="leave-overlay" id="leave-overlay" role="dialog" aria-modal="true" aria-labelledby="leave-title">
+    <div class="leave-box">
+        <h3 id="leave-title">ออกจาก iDEAS365</h3>
+        <p>ปุ่มนี้จะพาไปที่ <b id="leave-name"></b> ซึ่งเป็นเว็บไซต์แยกจากหน้านี้</p>
+        <p class="leave-host" id="leave-host"></p>
+        <p>ต้องการไปต่อหรือไม่?</p>
+        <div class="leave-actions">
+            <button type="button" class="leave-ok" id="leave-ok">ยอมรับ ไปต่อ</button>
+            <button type="button" class="leave-cancel" id="leave-cancel">ยกเลิก</button>
+        </div>
+    </div>
+</div>
+<script>
+    /* added: links with data-leave ask before leaving the site */
+    (function () {
+        var ov = document.getElementById('leave-overlay'), target = null;
+        function close() { ov.classList.remove('open'); target = null; }
+        document.querySelectorAll('a[data-leave]').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                e.preventDefault(); target = a.href;
+                document.getElementById('leave-name').textContent = a.getAttribute('data-leave');
+                document.getElementById('leave-host').textContent = new URL(a.href).host;
+                ov.classList.add('open'); document.getElementById('leave-ok').focus();
+            });
+        });
+        document.getElementById('leave-ok').addEventListener('click', function () { if (target) location.href = target; });
+        document.getElementById('leave-cancel').addEventListener('click', close);
+        ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+</script>
+"""
+
+
+def doc_sheet(meta, heading, heading_cls):
+    return f"""        <!-- INFO SHEET (content to come) -->
+        <div class="content-card doc-sheet in-view">
+            <div class="doc-meta">{meta}</div>
+            <h2 class="{heading_cls}">{heading}</h2>
+            <p class="doc-empty">เนื้อหาจะเพิ่มภายหลัง</p>
+        </div>
+"""
+
+
+def with_leave(tl):
+    return tl.replace('</body>', LEAVE_HTML + '</body>', 1)
+
+
+def academy_tail(tl):
+    find = '<a href="#" class="academy-btn">Go to Academy</a>'
+    assert tl.count(find) == 1
+    tl = tl.replace(find, '<a href="https://c365.ideas365.space/" class="academy-btn" data-leave="Creatr365">Go to Academy</a>', 1)
+    return with_leave(tl)
+
+
+html = page('academy', 'system_district.html', 'ACADEMY BAY', 'ACADEMY<br>BAY', 'Creatr365 · ความสำเร็จอยู่ในหลักสูตร',
+            [doc_sheet('iDEAS365 · ACADEMY BAY · ข้อมูลเบื้องต้น', 'CREATR365', 'section-heading')], 'index.html', academy_tail, loader=False)
+write('academy.html', html.replace('</head>', LEAVE_CSS + '</head>', 1))
+
+leave_btn = """        <div class="leave-wrap">
+            <a href="https://i-deas-365-web.vercel.app/services" class="leave-btn" data-leave="iDEAS365-web">ดูบริการทั้งหมด</a>
+        </div>
+"""
+html = page('service', 'work_marina.html', 'A SERVICE MANIA', 'A SERVICE<br>MANIA', 'มีบริการอะไรบ้าง',
+            [doc_sheet('iDEAS365 · A SERVICE MANIA · ข้อมูลเบื้องต้น', 'SERVICES · บริการ', 'col-title'), leave_btn], 'index.html', with_leave, loader=False)
+write('service.html', html.replace('</head>', LEAVE_CSS + '</head>', 1))
+
 # ── island sub-maps (same look as the main map: index.html CSS) ─────────
 IDX = src('index.html')
 idx_css = IDX[IDX.index('<style>'):IDX.index('</style>') + len('</style>')]
@@ -306,3 +411,47 @@ submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'learning', [
     ('learning_docs.html', 'เอกสาร · ความรู้', 'docs', (58, 14, 26), ['เอกสารฟรี · หนังสือ', 'เทมเพลต · ตารางช่วยงาน']),
     ('learning_design.html', 'งานออกแบบ', 'design', (56, 54, 26), ['หน้าเว็บ (Wix)', 'Creative · กราฟิก', 'แผนคอนเทนต์การตลาด']),
 ])
+
+# ── 404 (COMMUNITY HARBOR for now, and any address that does not exist) ─────────────────────────
+# Vercel serves 404.html for unknown addresses; the map's COMMUNITY HARBOR links to community.html,
+# which does not exist yet -> this page. When the community page is built, add community.html.
+write('404.html', f"""<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - iDEAS365</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    {idx_css}
+    <style>
+        /* 404: same background / header as the map, square black box (no frame) */
+        .nf-wrap {{ position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }}
+        .nf-box {{ background: #1A1A1A; color: #fff; padding: 44px 48px 36px; max-width: 520px; width: 100%; text-align: center; border-radius: 0; }}
+        .nf-code {{ font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(5rem, 18vw, 8rem); line-height: 0.9; letter-spacing: 2px; margin: 0; }}
+        .nf-title {{ font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin: 14px 0 6px; }}
+        .nf-text {{ font-family: 'Noto Sans Thai', sans-serif; font-size: 0.95rem; opacity: 0.8; margin: 0 0 26px; }}
+        .nf-btn {{ display: inline-block; background: #fff; color: #1A1A1A; text-decoration: none; padding: 13px 30px; border-radius: 0;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; letter-spacing: 2px; font-size: 0.95rem; }}
+        .nf-btn:hover {{ background: #F5B800; }}
+    </style>
+</head>
+
+<body>
+    <header class="nav-header">
+        <a href="/index.html"><img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
+            class="logo-img"></a>
+    </header>
+    <div class="nf-wrap">
+        <div class="nf-box">
+            <p class="nf-code">404</p>
+            <p class="nf-title">PAGE NOT FOUND</p>
+            <p class="nf-text">หน้านี้ยังไม่เปิด หรือไม่มีอยู่</p>
+            <a href="/index.html" class="nf-btn">MAIN MENU</a>
+        </div>
+    </div>
+</body>
+
+</html>
+""")
