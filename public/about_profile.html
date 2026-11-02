@@ -213,10 +213,15 @@
     </style>
 
     <style>
-        /* added: link back to the main island map (square, no frame) */
-        .main-menu-link { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.85rem; letter-spacing: 2px;
-            text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
-        .main-menu-link:hover { background: rgba(0,0,0,0.38); }
+        /* added: link back to the main island map — same look as the island name badges on the main map
+           (index.html .island-badge: white pill, black text, colour-sweep text on hover). Keep in step with
+           HOME_PILL below and .cm-menu in src/community/community.css. */
+        .main-menu-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+            text-decoration: none; color: #000; background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
+        .main-menu-link:hover { color: #0000;
+            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
+            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
     </style>
     <script src="i365-content.js" data-page="about_profile" data-card="content"></script>
 </head>

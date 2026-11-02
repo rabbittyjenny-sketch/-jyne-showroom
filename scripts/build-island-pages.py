@@ -16,10 +16,15 @@ src = lambda f: ((ROOT / 'public' / f) if f in ('index.html', 'contact_port.html
 
 MENU_CSS = """
     <style>
-        /* added: link back to the main island map (square, no frame) */
-        .main-menu-link { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.85rem; letter-spacing: 2px;
-            text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
-        .main-menu-link:hover { background: rgba(0,0,0,0.38); }
+        /* added: link back to the main island map — same look as the island name badges on the main map
+           (index.html .island-badge: white pill, black text, colour-sweep text on hover). Keep in step with
+           HOME_PILL below and .cm-menu in src/community/community.css. */
+        .main-menu-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+            text-decoration: none; color: #000; background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
+        .main-menu-link:hover { color: #0000;
+            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
+            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
     </style>
 """
 BACK_JS = """
@@ -397,11 +402,16 @@ MAP_URL = 'https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/'
 SUB_CSS = """
     <style>
         /* sub-map: the island picture with floating pins (square boxes, no white frames) */
+        /* header: island name + MAIN MENU look like the island name badges on the main map (index.html .island-badge) */
         .submap-title { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 101;
-            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #fff;
-            background: rgba(0,0,0,0.55); padding: 6px 18px; border-radius: 0; white-space: nowrap; }
-        .main-menu-link { position: fixed; top: 28px; right: 40px; z-index: 101; font-family: 'Anton', 'Noto Sans Thai', sans-serif;
-            font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: #fff; background: rgba(0,0,0,0.55); padding: 9px 16px; }
+            font-family: 'Noto Sans Thai', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; color: #000;
+            background: rgba(255,255,255,0.95); padding: 7px 18px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; }
+        .main-menu-link { position: fixed; top: 30px; right: 40px; z-index: 101; font-family: 'Noto Sans Thai', sans-serif;
+            font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; color: #000; background: rgba(255,255,255,0.95);
+            padding: 7px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
+        .main-menu-link:hover { color: #0000;
+            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
+            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
         .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; overflow: hidden; }
         .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); }
         .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
@@ -469,7 +479,7 @@ SUB_CSS = """
         .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
             .main-menu-link { top: 12px; right: 16px; }
-            .submap-title { top: 60px; font-size: 1rem; }
+            .submap-title { top: 62px; font-size: 13px; }
             .sub-wrap { position: static; display: block; padding: 136px 0 110px; overflow: hidden; }
             .sub-intro { inset: 0; overflow: hidden; }                       /* phones: clouds stay over the map, not the menu below */
             .sub-stage { width: 100%; }

@@ -4,8 +4,11 @@
   font-family: 'Noto Sans Thai', sans-serif; background: #fff; color: var(--text-dark); min-height: 100vh; }
 .cm-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; z-index: 10; }
 .cm-header .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-.cm-menu { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: #fff; background: #1A1A1A; padding: 9px 16px; }
-.cm-menu:hover { background: #000; }
+/* MAIN MENU = the island name badge look of the main map (same as .main-menu-link in scripts/build-island-pages.py) */
+.cm-menu { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; color: #000;
+  background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
+.cm-menu:hover { color: #0000; background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
+  -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
 .cm-main { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
 .cm-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; }
 .cm-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px; text-align: center; }
