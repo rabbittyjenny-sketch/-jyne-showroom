@@ -11,6 +11,7 @@ import { FieldInput, UploadOrUrl, missingRequired } from '@/components/admin/Fie
 import { insert, list, remove, slugify, update, uploadMedia } from '@/lib/adminApi';
 import { itemPicture } from '@/legacy/Legacy';
 import { SafeImg } from '@/components/site/SafeImg';
+import { PAGE_RENDERED_TYPES, SITE_PAGES, pageUrl } from '@/lib/types';
 import type { Category, Island, Item, ItemType, Route, Section, Tag, TagGroup } from '@/lib/types';
 
 type Msg = { text: string; ok: boolean } | null;
@@ -47,6 +48,10 @@ export default function SectionItems() {
     } catch (e) { setMsg({ text: errText(e), ok: false }); }
   };
   useEffect(() => { load(); }, [id]);
+  const quick = async (fn: () => Promise<unknown>, ok: string) => {
+    setMsg(null);
+    try { await fn(); setMsg({ text: ok, ok: true }); await load(); } catch (e) { setMsg({ text: errText(e), ok: false }); }
+  };
 
   const catName = (cid: string | null) => {
     const c = cats.find((x) => x.id === cid);
@@ -64,12 +69,14 @@ export default function SectionItems() {
       title={`${island?.name_th ?? ''} › ${section.name_th}`}
       actions={<>
         {island && <Link to={`/backoffice/islands/${island.id}`} className="inline-flex items-center rounded-md border px-3 text-sm">← กลับเกาะ</Link>}
+        {pageUrl(section.page_slug) && <a href={pageUrl(section.page_slug)!} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-md border px-3 text-sm">ดูหน้าเว็บ ↗</a>}
         {canBulk && <Button variant="outline" onClick={() => setBulk(true)}>+ เพิ่มหลายชิ้น (สูงสุด {MAX_BATCH})</Button>}
         <Button onClick={() => setEditing({ section_id: section.id, item_type_id: type.id, data: {}, is_published: true, sort_order: items.length + 1 })}>+ เพิ่มผลงาน</Button>
       </>}
     >
       <Notice msg={msg} />
-      <p className="text-sm text-muted-foreground mb-4">ประเภทผลงาน: <b>{type.name_th}</b> · ทั้งหมด {items.length} ชิ้น</p>
+      <p className="text-sm text-muted-foreground mb-2">ประเภทผลงาน: <b>{type.name_th}</b> · ทั้งหมด {items.length} ชิ้น</p>
+      <PageSourceNote section={section} type={type} island={island} published={items.filter((i) => i.is_published).length} />
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
         <CategoryPanel section={section} cats={cats} items={items} onChanged={async (t) => { setMsg({ text: t, ok: true }); await load(); }} onError={(t) => setMsg({ text: t, ok: false })} />
@@ -87,14 +94,19 @@ export default function SectionItems() {
             {shown.map((it) => {
               const pic = itemPicture(it, type);
               return (
-                <button key={it.id} onClick={() => setEditing(it)} className="text-left rounded-md border p-2 hover:bg-muted flex gap-3">
-                  <div className="w-16 h-16 rounded bg-muted shrink-0 overflow-hidden"><SafeImg src={pic} className="w-full h-full object-cover" /></div>
-                  <div className="min-w-0">
-                    <div className="font-medium truncate">{it.title_th}</div>
-                    <div className="text-xs text-muted-foreground truncate">{catName(it.category_id)}</div>
-                    <div className="text-xs">{it.is_published ? 'เผยแพร่' : <span className="text-amber-700">ซ่อน</span>}{it.batch_id && ' · อัปเป็นชุด'}</div>
+                <div key={it.id} className={`rounded-md border p-2 flex gap-3 ${it.is_published ? '' : 'opacity-60'}`}>
+                  <button onClick={() => setEditing(it)} className="w-16 h-16 rounded bg-muted shrink-0 overflow-hidden" title="แก้ไข"><SafeImg src={pic} className="w-full h-full object-cover" /></button>
+                  <div className="min-w-0 flex-1">
+                    <button onClick={() => setEditing(it)} className="font-medium truncate block max-w-full text-left hover:underline">{it.title_th}</button>
+                    <div className="text-xs text-muted-foreground truncate">ลำดับ {it.sort_order} · {catName(it.category_id)}{it.batch_id && ' · อัปเป็นชุด'}</div>
+                    <div className="text-xs mt-1 flex flex-wrap gap-x-3 gap-y-1 whitespace-nowrap">
+                      <span className={it.is_published ? 'text-emerald-700' : 'text-amber-700'}>{it.is_published ? '● เผยแพร่อยู่' : '○ ซ่อนอยู่'}</span>
+                      <button className="underline" onClick={() => quick(() => update('i365_items', { id: it.id }, { is_published: !it.is_published }), it.is_published ? 'ซ่อนผลงานแล้ว' : 'เผยแพร่ผลงานแล้ว')}>{it.is_published ? 'ซ่อน' : 'เผยแพร่'}</button>
+                      <button className="underline" onClick={() => setEditing(it)}>แก้ไข</button>
+                      <button className="underline text-red-600" onClick={() => { if (confirm(`ลบผลงาน "${it.title_th}" ถาวร?`)) quick(() => remove('i365_items', { id: it.id }), 'ลบผลงานแล้ว'); }}>ลบ</button>
+                    </div>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
@@ -266,12 +278,19 @@ function ItemDialog({ item, type, cats, catName, groups, tags, routes, onClose, 
             {errors.__title && <p className="text-xs text-red-600">{errors.__title}</p>}</div>
           <div className="space-y-1"><Label>ชื่อ (อังกฤษ)</Label><Input value={it.title_en ?? ''} onChange={(e) => setIt({ ...it, title_en: e.target.value })} /></div>
           <div className="space-y-1"><Label>สรุปสั้น</Label><Textarea rows={2} value={it.summary_th ?? ''} onChange={(e) => setIt({ ...it, summary_th: e.target.value })} /></div>
-          <div className="space-y-1"><Label>หมวด</Label><CategorySelect cats={cats} catName={catName} value={it.category_id ?? ''} onChange={(v) => setIt({ ...it, category_id: v || null })} /></div>
           {type.features?.has_cover && <div className="space-y-1"><Label>รูปปก</Label><UploadOrUrl value={it.cover_image ?? ''} onChange={(v) => setIt({ ...it, cover_image: v })} accept="image/*" folder="covers" preview /></div>}
           <div className="rounded-md border p-3 space-y-3">
             <div className="text-sm font-medium">ข้อมูลของ{type.name_th}</div>
             {type.fields.map((f) => <FieldInput key={f.key} field={f} value={it.data?.[f.key]} onChange={(v) => setData(f.key, v)} error={errors[f.key]} />)}
           </div>
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <div className="space-y-1"><Label>ลำดับ (น้อย = ขึ้นก่อน)</Label><Input type="number" value={it.sort_order ?? 0} onChange={(e) => setIt({ ...it, sort_order: Number(e.target.value) })} /></div>
+            <div className="flex items-center gap-2 h-10"><Switch checked={it.is_published !== false} onCheckedChange={(c) => setIt({ ...it, is_published: c })} /><Label>เผยแพร่</Label></div>
+          </div>
+          <details className="rounded-md border p-3">
+            <summary className="cursor-pointer text-sm">ตัวเลือกเพิ่มเติม (หมวด · แท็ก · เส้นทาง · ผลงานเด่น) — หน้าเว็บตอนนี้ยังไม่ใช้</summary>
+            <div className="space-y-3 mt-3">
+          <div className="space-y-1"><Label>หมวด</Label><CategorySelect cats={cats} catName={catName} value={it.category_id ?? ''} onChange={(v) => setIt({ ...it, category_id: v || null })} /></div>
           {groups.map((g) => (
             <div key={g.id} className="space-y-1">
               <Label>{g.name_th}{!g.allow_multiple && ' (เลือกได้ 1)'}</Label>
@@ -295,11 +314,9 @@ function ItemDialog({ item, type, cats, catName, groups, tags, routes, onClose, 
               </div>
             </div>
           )}
-          <div className="grid grid-cols-3 gap-3 items-end">
-            <div className="space-y-1"><Label>ลำดับ</Label><Input type="number" value={it.sort_order ?? 0} onChange={(e) => setIt({ ...it, sort_order: Number(e.target.value) })} /></div>
-            <div className="flex items-center gap-2 h-10"><Switch checked={it.is_published !== false} onCheckedChange={(c) => setIt({ ...it, is_published: c })} /><Label>เผยแพร่</Label></div>
             <div className="flex items-center gap-2 h-10"><Switch checked={!!it.is_featured} onCheckedChange={(c) => setIt({ ...it, is_featured: c })} /><Label>ผลงานเด่น</Label></div>
-          </div>
+            </div>
+          </details>
           {err && <p className="text-sm text-red-600">{err}</p>}
           <div className="flex justify-between pt-2">
             {!isNew ? <Button variant="outline" className="text-red-600" onClick={del}>ลบ</Button> : <span />}
@@ -383,4 +400,16 @@ function BulkDialog({ section, type, cats, catName, onClose, onSaved }: {
       </DialogContent>
     </Dialog>
   );
+}
+
+/** tells where the live page takes this topic from right now */
+function PageSourceNote({ section, type, island, published }: { section: Section; type: ItemType; island: Island | null; published: number }) {
+  const page = SITE_PAGES.find((p) => p.slug === section.page_slug);
+  let text: string; let warn = false;
+  if (!page) { text = 'เมนูย่อยนี้ยังไม่ได้เลือกหน้าที่จะแสดง (ตั้งได้ที่ปุ่ม "แก้ไข" ในหน้าเกาะ)'; warn = true; }
+  else if (!PAGE_RENDERED_TYPES.includes(type.slug)) { text = `หน้า "${page.label}" ยังแสดงหัวข้อนี้จากโค้ดเดิม (ระบบยังไม่ดึงผลงานประเภท "${type.name_th}")`; warn = true; }
+  else if (!section.is_published || !island?.is_published) { text = `เมนูย่อยหรือเกาะยังเป็นฉบับร่าง — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด`; warn = true; }
+  else if (published === 0) text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด / Google Sheet`;
+  else text = `หน้า "${page.label}" แสดงผลงานที่เผยแพร่ ${published} ชิ้นจากหลังบ้าน (แทนเนื้อหาเดิมของหัวข้อนี้) ตามลำดับ`;
+  return <p className={`text-sm mb-4 ${warn ? 'text-amber-700' : 'text-emerald-700'}`}>{text}</p>;
 }

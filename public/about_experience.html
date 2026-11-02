@@ -218,6 +218,7 @@
             text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
         .main-menu-link:hover { background: rgba(0,0,0,0.38); }
     </style>
+    <script src="i365-content.js" data-page="about_experience" data-card="content"></script>
 </head>
 <body>
     <header class="nav-header">
@@ -369,7 +370,7 @@
         <!-- SALES FIGURES -->
         <div class="content-card single">
             <h2 class="col-title">PREVIOUS WORK EXPERIENCE · งานที่ผ่านมา </h2>
-                <div class="proof-grid-work">
+                <div class="proof-grid-work" data-i365="previous-work">
                     <img src="https://ik.imagekit.io/ideas365logo/ChefC1.jpg">
                     <img src="https://ik.imagekit.io/ideas365logo/RHAAN1.jpg">
                     <img src="https://ik.imagekit.io/ideas365logo/rhaan4.jpg">
@@ -388,11 +389,12 @@
         <!-- CERTIFICATES (added heading — content to come) -->
         <div class="content-card single">
             <h2 class="col-title">CERTIFICATES · ใบประกาศ · ทักษะอื่น</h2>
-            <p class="col-desc" style="color:#888">เร็วๆ นี้</p>
+            <p class="col-desc" style="color:#888" data-i365-soon="certificates">เร็วๆ นี้</p>
+            <div class="proof-grid-work" data-i365="certificates" style="display:none"></div>
         </div>
 
         <!-- RESUME -->
-        <div class="content-card single">
+        <div class="content-card single" data-i365="resume">
             <p style="font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:3px;color:var(--accent);margin:0 0 6px">iDEAS365</p>
             <h2 class="col-title" style="font-size:3.5rem;margin-bottom:16px">RESUME</h2>
             <img

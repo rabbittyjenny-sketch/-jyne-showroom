@@ -142,6 +142,7 @@
             text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
         .main-menu-link:hover { background: rgba(0,0,0,0.38); }
     </style>
+    <script src="i365-content.js" data-page="learning_docs" data-card="content"></script>
 </head>
 <body>
     <header class="nav-header">
@@ -155,7 +156,7 @@
         <div class="content-card">
             <h2 class="col-title">FREE RESOURCES · ดาวน์โหลดฟรี</h2>
             <p class="col-desc">เทมเพลตและคู่มือที่ iDEAS365 ใช้งานจริง กรอกข้อมูลสั้นๆ แล้วดาวน์โหลดได้เลย</p>
-            <div id="res-grid" class="res-grid">
+            <div id="res-grid" class="res-grid" data-i365="free-resources">
                 <p class="res-loading">กำลังโหลด…</p>
             </div>
         </div>
@@ -380,7 +381,7 @@
     }
 
     // ── INIT ─────────────────────────────────────────────────────
-    loadResources();
+    (window.I365 ? I365.ready : Promise.resolve()).then(function () { if (!(window.I365 && I365.filled['free-resources'])) loadResources(); });   /* added: back office first */
     </script>
     <footer class="site-footer">
         <p class="footer-brand">

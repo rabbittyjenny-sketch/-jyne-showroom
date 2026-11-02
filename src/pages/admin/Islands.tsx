@@ -38,6 +38,7 @@ export default function Islands() {
   return (
     <AdminLayout title="จัดการเกาะ" actions={<Button onClick={() => setCreating(true)}>+ สร้างเกาะใหม่</Button>}>
       <Notice msg={msg} />
+      <p className="text-sm text-muted-foreground mt-3">เกาะในหลังบ้าน = เกาะบนแผนที่หลัก (index.html) · เพิ่มเกาะใหม่ที่นี่ได้ แต่จะขึ้นบนแผนที่ก็ต่อเมื่อเพิ่มรูปเกาะลงในโค้ดแผนที่ด้วย</p>
       <label className="flex items-center gap-2 text-sm my-3"><input type="checkbox" checked={showDeleted} onChange={(e) => setShowDeleted(e.target.checked)} /> แสดงเกาะที่ลบ (ซ่อนไว้) ด้วย</label>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {visible.map((i) => (
@@ -53,6 +54,7 @@ export default function Islands() {
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
                 <Link to={`/backoffice/islands/${i.id}`} className="text-sm underline">เปิดเกาะ</Link>
+                {i.page_slug && !i.deleted_at && <a href={`/${i.page_slug}.html`} target="_blank" rel="noreferrer" className="text-sm underline">ดูหน้าเว็บ ↗</a>}
                 {!i.deleted_at && (
                   <button className="text-sm text-red-600 underline" onClick={() => {
                     if (confirm(`ลบเกาะ "${i.name_th}"? เกาะจะถูกซ่อนจากหน้าเว็บ ผลงานข้างในยังอยู่ กู้คืนได้`)) {

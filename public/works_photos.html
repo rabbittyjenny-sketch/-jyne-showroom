@@ -497,6 +497,7 @@
             text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
         .main-menu-link:hover { background: rgba(0,0,0,0.38); }
     </style>
+    <script src="i365-content.js" data-page="works_photos" data-card="content"></script>
 </head>
 
 <body>
@@ -513,7 +514,7 @@
         <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) -->
         <div class="content-card single">
             <h2 class="col-title">MAKEUP &amp; HAIR · แต่งหน้า · ทำผม</h2>
-            <div class="proof-grid-work">
+            <div class="proof-grid-work" data-i365="makeup-hair">
                 <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg">
             </div>
         </div>
@@ -521,7 +522,7 @@
         <!-- LIVE RESULTS (screenshots from the RESULT grid) -->
         <div class="content-card single">
             <h2 class="col-title">LIVE RESULTS · ผลไลฟ์ 6 หลัก</h2>
-            <div class="proof-grid-result">
+            <div class="proof-grid-result" data-i365="live-results">
                 <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095955.png?updatedAt=1772938871229">
                 <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20100329.png?updatedAt=1772939043965">
                 <img src="https://ik.imagekit.io/ideas365logo/Screenshot%202026-03-08%20095903.png?updatedAt=1772938871281">
@@ -530,11 +531,11 @@
         </div>
 
         <!-- COMING SOON (added headings — content to come) -->
-        <div class="content-card single">
+        <div class="content-card single" data-i365-soon-card>
             <h2 class="col-title">COMING SOON · เร็วๆ นี้</h2>
             <ul class="hl">
-                <li>อาหาร</li>
-                <li>ออกบูธ · อีเวนต์</li>
+                <li data-i365-soon="food">อาหาร</li>
+                <li data-i365-soon="booth-event">ออกบูธ · อีเวนต์</li>
             </ul>
         </div>
 </main>
