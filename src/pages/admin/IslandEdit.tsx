@@ -11,7 +11,7 @@ import { PositionInputs, UploadOrUrl } from '@/components/admin/FieldInputs';
 import { insert, list, slugify, update } from '@/lib/adminApi';
 import { THEME_FIELDS, THEME_PRESETS, resolveTheme, themeVars, type IslandTheme, type ThemePresetKey } from '@/lib/themes';
 import {
-  DISPLAY_LABELS, FEATURE_LABELS, SOURCE_LABELS,
+  DISPLAY_LABELS, FEATURE_LABELS, PAGE_RENDERED_TYPES, SITE_PAGES, SOURCE_LABELS, pageUrl,
   type DisplayStyle, type Features, type Island, type ItemType, type Section, type SourceType,
 } from '@/lib/types';
 
@@ -54,7 +54,7 @@ export default function IslandEdit() {
 
   return (
     <AdminLayout title={`เกาะ: ${island.name_th}`} actions={<>
-      <a className="inline-flex items-center rounded-md border px-3 text-sm" href={`/i/${island.slug}`} target="_blank" rel="noreferrer">ดูหน้าเกาะ ↗</a>
+      {pageUrl(island.page_slug) && <a className="inline-flex items-center rounded-md border px-3 text-sm" href={pageUrl(island.page_slug)!} target="_blank" rel="noreferrer">ดูหน้าเว็บ ↗</a>}
       <Button onClick={save}>บันทึกเกาะ</Button>
     </>}>
       <Notice msg={msg} />
@@ -68,8 +68,24 @@ export default function IslandEdit() {
           </div>
           <div className="space-y-1"><Label>ป้ายลอยเมื่อชี้</Label><Input value={island.tooltip_th ?? ''} onChange={(e) => set({ tooltip_th: e.target.value })} /></div>
           <div className="space-y-1"><Label>คำแนะนำสั้นบนหน้าเกาะ</Label><Textarea rows={3} value={island.intro_th ?? ''} onChange={(e) => set({ intro_th: e.target.value })} /></div>
-          <div className="space-y-1"><Label>ลำดับบนแผนที่</Label><Input type="number" value={island.sort_order} onChange={(e) => set({ sort_order: Number(e.target.value) })} /></div>
+          <div className="space-y-1"><Label>ลำดับในหลังบ้าน</Label><Input type="number" value={island.sort_order} onChange={(e) => set({ sort_order: Number(e.target.value) })} /></div>
+          <p className="text-xs text-muted-foreground">
+            หน้าเว็บของเกาะนี้: {island.page_slug ? <code>/{island.page_slug}.html</code> : 'ยังไม่มี'} · ชื่อ ป้าย และตำแหน่งบนแผนที่หลักเป็นหน้าเว็บเดิม (แก้ในโค้ด index.html) ชื่อในหลังบ้านใช้เรียกเกาะเท่านั้น
+          </p>
         </section>
+
+        <section className="rounded-lg border bg-background p-4 space-y-2 text-sm">
+          <h2 className="font-semibold">หน้าเว็บดึงข้อมูลยังไง</h2>
+          <p>แต่ละเมนูย่อยด้านล่างผูกกับ <b>หน้าเนื้อหา</b> หนึ่งหน้า (คอลัมน์ "หน้า")</p>
+          <p>· เมนูย่อยที่ <b>เผยแพร่</b> และมีผลงานที่ <b>เผยแพร่</b> อย่างน้อย 1 ชิ้น → หน้าเว็บแสดงผลงานจากหลังบ้าน แทนเนื้อหาเดิมในหัวข้อนั้น</p>
+          <p>· ยังไม่มีผลงานที่เผยแพร่ → หน้าเว็บแสดงเนื้อหาเดิมจากโค้ด / Google Sheet เหมือนเดิม</p>
+          <p>· เมนูย่อยใหม่ที่ไม่มีที่วางในหน้า → ขึ้นเป็นการ์ดใหม่ต่อท้ายหน้า (ก่อน COMING SOON) ในแบบการ์ดของหน้านั้น</p>
+        </section>
+      </div>
+
+      <details className="mt-6 rounded-lg border bg-background p-4">
+        <summary className="cursor-pointer font-semibold">ตั้งค่าของหน้าเกาะแบบเดิม (/i/…) — ไม่ได้ใช้กับหน้าเว็บปัจจุบัน</summary>
+      <div className="grid gap-6 lg:grid-cols-2 mt-4">
 
         <section className="rounded-lg border bg-background p-4 space-y-3">
           <h2 className="font-semibold">ฟีเจอร์ของเกาะนี้</h2>
@@ -110,11 +126,12 @@ export default function IslandEdit() {
           </div>
         </section>
       </div>
+      </details>
 
       <section className="rounded-lg border bg-background p-4 mt-6">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-semibold">เมนูย่อย (ปุ่มบนเกาะ)</h2>
-          <Button size="sm" onClick={() => setEditing({ island_id: island.id, source_type: 'items', display_style: 'cards', filter_mode: 'categories', is_published: false, sort_order: visibleSections.length + 1 })}>+ เพิ่มเมนูย่อย</Button>
+          <h2 className="font-semibold">เมนูย่อย (หัวข้อในหน้าเนื้อหา)</h2>
+          <Button size="sm" onClick={() => setEditing({ island_id: island.id, source_type: 'items', display_style: 'cards', filter_mode: 'categories', is_published: false, sort_order: visibleSections.length + 1, page_slug: SITE_PAGES.find((p) => p.island === island.slug)?.slug ?? null })}>+ เพิ่มเมนูย่อย</Button>
         </div>
         {visibleSections.length === 0 && <p className="text-sm text-muted-foreground">ยังไม่มีเมนูย่อย</p>}
         <table className="w-full text-sm">
@@ -123,7 +140,10 @@ export default function IslandEdit() {
               <tr key={s.id} className="border-t">
                 <td className="py-2 pr-2 w-8 text-muted-foreground">{s.sort_order}</td>
                 <td className="py-2 pr-2"><div className="font-medium">{s.name_th}</div><div className="text-xs text-muted-foreground">/{s.slug} · {SOURCE_LABELS[s.source_type]}{s.item_type_id ? ` · ${types.find((t) => t.id === s.item_type_id)?.name_th}` : ''}</div></td>
-                <td className="py-2 pr-2 text-xs">{s.pos_left === null ? <span className="text-amber-700">ยังไม่วางตำแหน่ง</span> : `${s.pos_left}% / ${s.pos_top}% · กว้าง ${s.pos_width}%`}</td>
+                <td className="py-2 pr-2 text-xs">
+                  {s.page_slug ? <a className="underline" href={pageUrl(s.page_slug)!} target="_blank" rel="noreferrer">{SITE_PAGES.find((p) => p.slug === s.page_slug)?.label ?? s.page_slug} ↗</a> : <span className="text-amber-700">ยังไม่ได้เลือกหน้า</span>}
+                  {s.item_type_id && !PAGE_RENDERED_TYPES.includes(types.find((t) => t.id === s.item_type_id)?.slug ?? '') && <div className="text-muted-foreground">หน้าเว็บยังแสดงจากโค้ดเดิม</div>}
+                </td>
                 <td className="py-2 pr-2 text-xs">{s.is_published ? 'เผยแพร่' : 'ร่าง'}</td>
                 <td className="py-2 text-right whitespace-nowrap">
                   {s.source_type === 'items' && <Link className="underline mr-3" to={`/backoffice/sections/${s.id}`}>ผลงาน →</Link>}
@@ -163,7 +183,7 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
       item_type_id: s.source_type === 'items' ? s.item_type_id : null, source_type: s.source_type, external_url: s.external_url ?? null,
       display_style: s.display_style, filter_mode: s.filter_mode, button_image: s.button_image ?? `/islands/${islandSlug}/btn-${slug}.png`,
       pos_left: s.pos_left ?? null, pos_top: s.pos_top ?? null, pos_width: s.pos_width ?? null,
-      is_published: !!s.is_published, sort_order: s.sort_order ?? 0,
+      is_published: !!s.is_published, sort_order: s.sort_order ?? 0, page_slug: s.page_slug || null,
     };
     try {
       if (isNew) await insert('i365_sections', row);
@@ -232,12 +252,24 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
               </div>
             </div>
           )}
+          <div className="space-y-1">
+            <Label>แสดงในหน้า</Label>
+            <select className="w-full h-10 rounded-md border bg-background px-3 text-sm" value={s.page_slug ?? ''} onChange={(e) => set({ page_slug: e.target.value || null })}>
+              <option value="">— ยังไม่แสดงบนหน้าเว็บ —</option>
+              {SITE_PAGES.filter((p) => p.island === islandSlug).map((p) => <option key={p.slug} value={p.slug}>{p.label} ({p.slug}.html)</option>)}
+              {SITE_PAGES.filter((p) => p.island !== islandSlug).map((p) => <option key={p.slug} value={p.slug}>{p.label} ({p.slug}.html) · เกาะอื่น</option>)}
+            </select>
+            <p className="text-xs text-muted-foreground">มีผลงานที่เผยแพร่ → หน้านี้แสดงจากหลังบ้านแทนเนื้อหาเดิมของหัวข้อนี้ · ยังไม่มี → แสดงเนื้อหาเดิม</p>
+          </div>
+          <details className="space-y-2">
+            <summary className="cursor-pointer text-sm">รูปปุ่ม / ตำแหน่งบนหน้าเกาะแบบเดิม (ไม่ได้ใช้กับหน้าเว็บปัจจุบัน)</summary>
           <div className="space-y-2">
             <Label>รูปปุ่มบนเกาะ · ชื่อไฟล์แนะนำ <code>islands/{islandSlug}/btn-{s.slug || slugify(s.name_en || s.name_th || '') || 'ชื่อ'}.png</code></Label>
             <UploadOrUrl value={s.button_image ?? ''} onChange={(v) => set({ button_image: v || null })} accept="image/*" folder={`islands/${islandSlug}`} preview />
             <Label className="text-xs">ตำแหน่งบนรูปเกาะ (ว่าง = แสดงเป็นปุ่มธรรมดาใต้แผนที่)</Label>
             <PositionInputs left={s.pos_left ?? null} top={s.pos_top ?? null} width={s.pos_width ?? null} onChange={(p) => set(p)} />
           </div>
+          </details>
           <div className="grid grid-cols-2 gap-3 items-end">
             <div className="space-y-1"><Label>ลำดับ</Label><Input type="number" value={s.sort_order ?? 0} onChange={(e) => set({ sort_order: Number(e.target.value) })} /></div>
             <div className="flex items-center justify-between h-10"><Label>เผยแพร่</Label><Switch checked={!!s.is_published} onCheckedChange={(c) => set({ is_published: c })} /></div>

@@ -49,10 +49,12 @@ export interface Island {
   /** colour theme: { preset, ...colour overrides } — see src/lib/themes.ts */
   theme: IslandTheme;
   is_published: boolean; sort_order: number; deleted_at: string | null;
+  /** page opened from the main map, without .html (island_about, contact_port, ...) */
+  page_slug: string | null;
 }
 
 export type SourceType = 'items' | 'c365_articles' | 'c365_toolbox' | 'external_link' | 'contact_form';
-export type DisplayStyle = 'cards' | 'video_grid' | 'gallery' | 'timeline' | 'list' | 'text' | 'feed' | 'detail';
+export type DisplayStyle = 'cards' | 'video_grid' | 'gallery' | 'gallery_wide' | 'timeline' | 'list' | 'text' | 'feed' | 'detail';
 
 export const SOURCE_LABELS: Record<SourceType, string> = {
   items: 'ผลงานในระบบ',
@@ -66,6 +68,7 @@ export const DISPLAY_LABELS: Record<DisplayStyle, string> = {
   cards: 'การ์ด',
   video_grid: 'ตารางคลิป',
   gallery: 'แกลเลอรีรูป',
+  gallery_wide: 'แกลเลอรีรูปแนวนอน (ภาพผลไลฟ์)',
   timeline: 'ไทม์ไลน์',
   list: 'รายการดาวน์โหลด',
   text: 'บทความ / ข้อความ',
@@ -81,6 +84,8 @@ export interface Section {
   button_image: string | null; cover_image: string | null;
   pos_left: number | null; pos_top: number | null; pos_width: number | null;
   is_published: boolean; sort_order: number; deleted_at: string | null;
+  /** topic page that shows this section, without .html (works_clips, ...) */
+  page_slug: string | null;
 }
 
 export interface ItemType {
@@ -125,3 +130,24 @@ export interface SiteSettings {
 }
 
 export interface FeedEntry { id: string; title: string; summary: string | null; image: string | null; href: string }
+
+/**
+ * The live site's topic pages (static pages built by scripts/build-island-pages.py).
+ * Each page asks Supabase for the published items of the sections whose page_slug is that page:
+ * a section with published items is shown from the database, otherwise the page keeps its original content.
+ */
+export const SITE_PAGES: { slug: string; island: string; label: string }[] = [
+  { slug: 'about_profile', island: 'about', label: 'โปรไฟล์' },
+  { slug: 'about_experience', island: 'about', label: 'ประวัติการทำงาน' },
+  { slug: 'about_live', island: 'about', label: 'e-commerce Live Streaming' },
+  { slug: 'works_clips', island: 'works', label: 'คลิปวิดีโอ' },
+  { slug: 'works_photos', island: 'works', label: 'รูปผลงาน' },
+  { slug: 'learning_tools', island: 'learning', label: 'รวมเครื่องมือ / ระบบ AI' },
+  { slug: 'learning_docs', island: 'learning', label: 'เอกสาร · ความรู้' },
+  { slug: 'learning_design', island: 'learning', label: 'งานออกแบบ' },
+];
+
+/** item types the static pages can show from the database (others stay as written in the page code) */
+export const PAGE_RENDERED_TYPES = ['clip', 'photo', 'certificate', 'tool', 'document', 'design_work', 'resume'];
+
+export const pageUrl = (slug: string | null | undefined) => (slug ? `/${slug}.html` : null);

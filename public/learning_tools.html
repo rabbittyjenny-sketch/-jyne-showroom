@@ -505,6 +505,7 @@
             text-decoration: none; color: inherit; background: rgba(0,0,0,0.22); padding: 9px 16px; border-radius: 0; }
         .main-menu-link:hover { background: rgba(0,0,0,0.38); }
     </style>
+    <script src="i365-content.js" data-page="learning_tools" data-card="section"></script>
 </head>
 <body>
 
@@ -532,7 +533,7 @@
             <div class="section-title">AI TOOLS &amp; ASTROLOGY</div>
             <div class="section-sub">เครื่องมือ AI และระบบดาราศาสตร์ที่ใช้งานได้จริง</div>
         </div>
-        <div class="ai-grid" id="grid-astrology">
+        <div class="ai-grid" id="grid-astrology" data-i365="tools-ai">
             <p class="loading-msg">กำลังโหลด…</p>
         </div>
     </div>
@@ -545,7 +546,7 @@
             <div class="section-title">COMMERCE &amp; BUSINESS SYSTEMS</div>
             <div class="section-sub">ระบบการขาย กลยุทธ์ และเครื่องมือธุรกิจ</div>
         </div>
-        <div class="ai-grid" id="grid-commerce">
+        <div class="ai-grid" id="grid-commerce" data-i365="tools-commerce">
             <p class="loading-msg">กำลังโหลด…</p>
         </div>
     </div>
@@ -558,7 +559,7 @@
             <div class="section-title">CREATIVE TOOLS &amp; ELEMENTS</div>
             <div class="section-sub">เครื่องมือสร้างสรรค์ คอนเทนต์ และ Design Elements</div>
         </div>
-        <div class="ai-grid" id="grid-creative">
+        <div class="ai-grid" id="grid-creative" data-i365="tools-creative">
             <p class="loading-msg">กำลังโหลด…</p>
         </div>
     </div>
@@ -675,6 +676,7 @@ async function loadWorks() {
     /* ── Unified render for all 3 sections ── */
     function renderSection(result, elementId) {
         const el = document.getElementById(elementId);
+        if (el.hasAttribute('data-i365-filled')) return;   /* added: shown from the back office */
         if (result.status === 'fulfilled' && result.value?.success && result.value.data?.length) {
             el.innerHTML = result.value.data.map(buildAICard).join('');
         } else {
@@ -688,7 +690,7 @@ async function loadWorks() {
     renderSection(r3, 'grid-creative');
 }
 
-loadWorks();
+(window.I365 ? I365.ready : Promise.resolve()).then(loadWorks);   /* added: after the back office data */
 </script>
 
 <script>

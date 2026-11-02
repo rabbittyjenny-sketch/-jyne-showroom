@@ -31,6 +31,15 @@ BACK_JS = """
 </script>
 """
 MENU_LINK = '<a href="index.html" class="main-menu-link">MAIN MENU</a>'
+# added: content from the back office (Supabase) first, original content when the DB has nothing for a topic
+LOADER = '    <script src="i365-content.js" data-page="{page}" data-card="{card}"></script>\n'
+I365_READY = '(window.I365 ? I365.ready : Promise.resolve())'
+
+
+def hook(block, find, slug, count=1):
+    """marks the element opened by `find` as the place for section `slug` (data-i365) — markup otherwise unchanged"""
+    assert block.count(find) == count, (find, block.count(find))
+    return block.replace(find, find[:-1] + f' data-i365="{slug}">', 1)
 
 
 def cut(text, start, end):
@@ -40,10 +49,11 @@ def cut(text, start, end):
     return text[a:b]
 
 
-def page(file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None):
+def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content'):
     t = src(file)
     head_end = t.index('</head>')
     head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + MENU_CSS
+    head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
     else:
@@ -64,18 +74,20 @@ def page(file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None):
 
 
 def write(name, html):
+    assert ('data-page="' + name[:-5] + '"') in html or name.startswith('island_'), name
     (OUT / name).write_text(html, encoding='utf-8')
     print('wrote', name, len(html))
 
 
 # ── ABOUT ISLAND group (about_island.html) ───────────────────────────────
+# data-i365="<section slug>" = the block that shows that section's items when the back office has published items
 A = src('about_island.html')
 A_LANG, A_EXP, A_CORE, A_CASE, A_SALES, A_RES, A_END = (
     '<!-- LANG TOGGLE', '<!-- EXPERIENCE + SKILLS -->', '<!-- CORE SKILLS + PHOTOS + BUTTONS -->',
     '<!-- CASE STUDY -->', '<!-- SALES FIGURES -->', '<!-- RESUME -->', '    </main>')
 guard_lang = lambda tl: tl.replace("setLang('en');", "if (document.getElementById('bio-en')) setLang('en');")
 
-write('about_profile.html', page('about_island.html', 'PROFILE', 'PROFILE', 'โปรไฟล์ · ตัวฉัน · จุดแข็ง', [
+write('about_profile.html', page('about_profile', 'about_island.html', 'PROFILE', 'PROFILE', 'โปรไฟล์ · ตัวฉัน · จุดแข็ง', [
     cut(A, A_LANG, A_EXP),          # EN/TH toggle + WHO IS JYNE + photo + 6-FIGURE / 20+ / 10Y+
     cut(A, A_CORE, A_CASE),         # CORE SKILLS list + photos + MORE EXPERIENCE / ANOTHER SKILL
 ], 'island_about.html'))
@@ -86,56 +98,58 @@ resume = cut(A, A_RES, A_END).replace(
     '                <a class="big-btn" href="https://ik.imagekit.io/ideas365logo/JYNEResume042025.jpg?updatedAt=1772818993797" '
     'download target="_blank" style="display:inline-block;padding:14px 40px;border-radius:0">DOWNLOAD RESUME ↓</a>\n'
     '            </div>\n        </div>', 1)
-write('about_experience.html', page('about_island.html', 'WORK HISTORY', 'WORK<br>HISTORY', 'ประวัติการทำงาน · ไทม์ไลน์ · ใบประกาศ · เรซูเม่', [
+resume = hook(resume, '<div class="content-card single">', 'resume')
+write('about_experience.html', page('about_experience', 'about_island.html', 'WORK HISTORY', 'WORK<br>HISTORY', 'ประวัติการทำงาน · ไทม์ไลน์ · ใบประกาศ · เรซูเม่', [
     cut(A, A_EXP, A_CORE),          # EXPERIENCE timeline + CORE SKILLS tags + photos
-    cut(A, A_SALES, A_RES),         # PREVIOUS WORK EXPERIENCE photos
+    hook(cut(A, A_SALES, A_RES), '<div class="proof-grid-work">', 'previous-work'),   # PREVIOUS WORK EXPERIENCE photos
     """        <!-- CERTIFICATES (added heading — content to come) -->
         <div class="content-card single">
             <h2 class="col-title">CERTIFICATES · ใบประกาศ · ทักษะอื่น</h2>
-            <p class="col-desc" style="color:#888">เร็วๆ นี้</p>
+            <p class="col-desc" style="color:#888" data-i365-soon="certificates">เร็วๆ นี้</p>
+            <div class="proof-grid-work" data-i365="certificates" style="display:none"></div>
         </div>
 """,
     resume,                         # RESUME (+ download)
 ], 'island_about.html', guard_lang))
 
 WT = src('work_town.html')
-wt_case = cut(WT, 'class="case-grid"', '</main>')
 proofs = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/proof\d\.jpg)" alt="([^"]*)"', WT)
 proof_card = """        <!-- RESULT · 2 HRS/LIVE (images from work_town.html) -->
         <div class="content-card single">
             <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
-            <div class="proof-grid-result">
+            <div class="proof-grid-result" data-i365="live-proof">
 """ + ''.join(f'                <img src="{u}" alt="{a}">\n' for u, a in proofs) + """            </div>
             <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
         </div>
 """
-write('about_live.html', page('about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', 'e-commerce Live Streaming', [
+write('about_live.html', page('about_live', 'about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', 'e-commerce Live Streaming', [
     cut(A, A_CASE, A_SALES),        # JENNY JYNE · CASE STUDY + RESULT (about_island)
     proof_card,                     # RESULT images from Works Town
 ], 'island_about.html', guard_lang))
 
-# ── SOLO-PROJECT WAREHOUSE group (work_marina.html) ──────────────────────
+# ── PIC&CLIP WAREHOUSE group (work_marina.html) ──────────────────────────
 M = src('work_marina.html')
 M_MEDIA, M_VOICE, M_END = '<!-- 4. PORTFOLIO MEDIA -->', '<!-- 5. AI VOICE GENERATOR -->', '    </main>'
 soon = lambda items: """        <!-- COMING SOON (added headings — content to come) -->
-        <div class="content-card single">
+        <div class="content-card single" data-i365-soon-card>
             <h2 class="col-title">COMING SOON · เร็วๆ นี้</h2>
             <ul class="hl">
-""" + ''.join(f'                <li>{i}</li>\n' for i in items) + """            </ul>
+""" + ''.join(f'                <li data-i365-soon="{s}">{i}</li>\n' for i, s in items) + """            </ul>
         </div>
 """
-write('works_clips.html', page('work_marina.html', 'VIDEO CLIPS', 'VIDEO<br>CLIPS', 'คลิปวิดีโอ', [
-    cut(M, M_MEDIA, M_VOICE),       # PORTFOLIO MEDIA — live selling clips
-    cut(M, M_VOICE, M_END),         # AI VOICE GENERATOR — AI voice & avatar clips
-    soon(['ไลฟ์คอนเทนต์', 'รับทำคอนเทนต์', 'คลิปสร้างจาก AI', 'อีเวนต์ · โปรโมท F&amp;B']),
+write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS', 'VIDEO<br>CLIPS', 'คลิปวิดีโอ', [
+    hook(cut(M, M_MEDIA, M_VOICE), '<div class="video-grid">', 'live-selling'),   # PORTFOLIO MEDIA — live selling clips
+    hook(cut(M, M_VOICE, M_END), '<div class="video-grid">', 'ai-voice'),         # AI VOICE GENERATOR — AI voice & avatar clips
+    soon([('ไลฟ์คอนเทนต์', 'live-content'), ('รับทำคอนเทนต์', 'content-work'), ('คลิปสร้างจาก AI', 'ai-clips'),
+          ('อีเวนต์ · โปรโมท F&amp;B', 'event-promo')]),
 ], 'island_works.html'))
 
 results = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/Screenshot%202026[^"]+)"', A)
-write('works_photos.html', page('work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', 'รูปผลงาน', [
+write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', 'รูปผลงาน', [
     """        <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) -->
         <div class="content-card single">
             <h2 class="col-title">MAKEUP &amp; HAIR · แต่งหน้า · ทำผม</h2>
-            <div class="proof-grid-work">
+            <div class="proof-grid-work" data-i365="makeup-hair">
                 <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg">
             </div>
         </div>
@@ -143,36 +157,60 @@ write('works_photos.html', page('work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WOR
     """        <!-- LIVE RESULTS (screenshots from the RESULT grid) -->
         <div class="content-card single">
             <h2 class="col-title">LIVE RESULTS · ผลไลฟ์ 6 หลัก</h2>
-            <div class="proof-grid-result">
+            <div class="proof-grid-result" data-i365="live-results">
 """ + ''.join(f'                <img src="{u}">\n' for u in results) + """            </div>
         </div>
 """,
-    soon(['อาหาร', 'ออกบูธ · อีเวนต์']),
+    soon([('อาหาร', 'food'), ('ออกบูธ · อีเวนต์', 'booth-event')]),
 ], 'island_works.html'))
 
-# ── LEARNING BRIDGE group ────────────────────────────────────────────────
+# ── AI&TECH CREATION BRIDGE group ────────────────────────────────────────
 sec = [m.start() for m in re.finditer(r'    <!-- ═{10,}', WT)]
 tools_blocks = WT[sec[0]:sec[3]]    # AI TOOLS & ASTROLOGY / COMMERCE & BUSINESS / CREATIVE TOOLS (from the sheet)
-write('learning_tools.html', page('work_town.html', 'AI TOOLS', 'AI<br>TOOLS', 'รวมเครื่องมือ / ระบบ ที่ทำงานร่วมกับ AI ด้วยสร้างเองทั้งระบบ',
-    [tools_blocks], 'island_learning.html'))
+for gid, slug in (('grid-astrology', 'tools-ai'), ('grid-commerce', 'tools-commerce'), ('grid-creative', 'tools-creative')):
+    tools_blocks = hook(tools_blocks, f'<div class="ai-grid" id="{gid}">', slug)
+
+
+def tools_tail(tl):
+    # a grid the back office already filled is not overwritten by the sheet; the sheet loads after the DB answered
+    find = "        const el = document.getElementById(elementId);\n"
+    assert tl.count(find) == 1
+    tl = tl.replace(find, find + "        if (el.hasAttribute('data-i365-filled')) return;   /* added: shown from the back office */\n", 1)
+    assert tl.count('\nloadWorks();\n') == 1
+    return tl.replace('\nloadWorks();\n', f'\n{I365_READY}.then(loadWorks);   /* added: after the back office data */\n', 1)
+
+
+write('learning_tools.html', page('learning_tools', 'work_town.html', 'AI TOOLS', 'AI<br>TOOLS', 'รวมเครื่องมือ / ระบบ ที่ทำงานร่วมกับ AI ด้วยสร้างเองทั้งระบบ',
+    [tools_blocks], 'island_learning.html', tools_tail, card='section'))
 
 L = src('learning_bay.html')
-write('learning_docs.html', page('learning_bay.html', 'DOCUMENTS', 'DOCS &amp;<br>KNOWLEDGE', 'เอกสาร · ความรู้ · เอกสารฟรี · หนังสือ · เทมเพลต · ตารางช่วยงาน',
-    [cut(L, '<!-- FREE RESOURCES', '    </main>')], 'island_learning.html'))
+
+
+def docs_tail(tl):
+    find = '    loadResources();\n'
+    assert tl.count(find) == 1
+    return tl.replace(find, f"    {I365_READY}.then(function () {{ if (!(window.I365 && I365.filled['free-resources'])) loadResources(); }});   /* added: back office first */\n", 1)
+
+
+write('learning_docs.html', page('learning_docs', 'learning_bay.html', 'DOCUMENTS', 'DOCS &amp;<br>KNOWLEDGE', 'เอกสาร · ความรู้ · เอกสารฟรี · หนังสือ · เทมเพลต · ตารางช่วยงาน',
+    [hook(cut(L, '<!-- FREE RESOURCES', '    </main>'), '<div id="res-grid" class="res-grid">', 'free-resources')],
+    'island_learning.html', docs_tail))
 
 l_tail = '    </main>\n\n' + L[L.index('    <footer class="site-footer">'):]
-write('learning_design.html', page('learning_bay.html', 'DESIGN WORKS', 'DESIGN<br>WORKS', 'งานออกแบบ', [
+write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESIGN WORKS', 'DESIGN<br>WORKS', 'งานออกแบบ', [
     """        <!-- WEB DESIGN (link to the Wix site already used on About Island) -->
         <div class="content-card">
             <h2 class="col-title">WEB DESIGN · หน้าเว็บ (Wix)</h2>
+            <div data-i365="web-design">
             <p class="col-desc">เว็บไซต์ที่ออกแบบและทำเองบน Wix</p>
             <a class="res-dl-btn" style="border-radius:0" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank">เปิดเว็บไซต์ ↗</a>
+            </div>
         </div>
 """,
     """        <!-- COMING SOON (added headings — content to come) -->
-        <div class="content-card">
+        <div class="content-card" data-i365-soon-card>
             <h2 class="col-title">COMING SOON</h2>
-            <p class="col-desc">Creative · กราฟิก<br>แผนคอนเทนต์การตลาด</p>
+            <p class="col-desc"><span data-i365-soon="creative" style="display:block">Creative · กราฟิก</span><span data-i365-soon="marketing-plans" style="display:block">แผนคอนเทนต์การตลาด</span></p>
         </div>
 """,
 ], 'island_learning.html', tail=l_tail))

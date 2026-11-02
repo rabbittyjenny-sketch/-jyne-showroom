@@ -30,7 +30,7 @@ const sections: Section[] = [];
     tooltip_th: s.tooltip_th, intro_th: s.intro_th ?? null, intro_en: null, features: { ...tpl.default_features },
     button_image: s.button_image, land_image: s.land_image, land_aspect: '1344/768', mobile_focus_x: 50,
     pos_left: s.pos?.[0] ?? null, pos_top: s.pos?.[1] ?? null, pos_width: s.pos?.[2] ?? null, redirect_url: s.redirect_url ?? null,
-    redirect_delay_ms: 2500, theme: (s.theme ?? {}) as Island['theme'], is_published: s.is_published !== false, sort_order: s.sort_order, deleted_at: null,
+    redirect_delay_ms: 2500, theme: (s.theme ?? {}) as Island['theme'], is_published: s.is_published !== false, sort_order: s.sort_order, deleted_at: null, page_slug: null,
   });
   s.sections.forEach((sec, i) => {
     sections.push({
@@ -40,7 +40,7 @@ const sections: Section[] = [];
       display_style: sec.display as Section['display_style'], filter_mode: 'categories',
       button_image: `/islands/${s.slug}/btn-${sec.slug}.png`, cover_image: null,
       pos_left: sec.pos?.[0] ?? null, pos_top: sec.pos?.[1] ?? null, pos_width: sec.pos?.[2] ?? null,
-      is_published: true, sort_order: i + 1, deleted_at: null,
+      is_published: true, sort_order: i + 1, deleted_at: null, page_slug: null,
     });
   });
 });

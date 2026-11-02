@@ -11,6 +11,7 @@ import { FieldInput, UploadOrUrl, missingRequired } from '@/components/admin/Fie
 import { insert, list, remove, slugify, update, uploadMedia } from '@/lib/adminApi';
 import { itemPicture } from '@/legacy/Legacy';
 import { SafeImg } from '@/components/site/SafeImg';
+import { PAGE_RENDERED_TYPES, SITE_PAGES, pageUrl } from '@/lib/types';
 import type { Category, Island, Item, ItemType, Route, Section, Tag, TagGroup } from '@/lib/types';
 
 type Msg = { text: string; ok: boolean } | null;
@@ -64,12 +65,14 @@ export default function SectionItems() {
       title={`${island?.name_th ?? ''} › ${section.name_th}`}
       actions={<>
         {island && <Link to={`/backoffice/islands/${island.id}`} className="inline-flex items-center rounded-md border px-3 text-sm">← กลับเกาะ</Link>}
+        {pageUrl(section.page_slug) && <a href={pageUrl(section.page_slug)!} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-md border px-3 text-sm">ดูหน้าเว็บ ↗</a>}
         {canBulk && <Button variant="outline" onClick={() => setBulk(true)}>+ เพิ่มหลายชิ้น (สูงสุด {MAX_BATCH})</Button>}
         <Button onClick={() => setEditing({ section_id: section.id, item_type_id: type.id, data: {}, is_published: true, sort_order: items.length + 1 })}>+ เพิ่มผลงาน</Button>
       </>}
     >
       <Notice msg={msg} />
-      <p className="text-sm text-muted-foreground mb-4">ประเภทผลงาน: <b>{type.name_th}</b> · ทั้งหมด {items.length} ชิ้น</p>
+      <p className="text-sm text-muted-foreground mb-2">ประเภทผลงาน: <b>{type.name_th}</b> · ทั้งหมด {items.length} ชิ้น</p>
+      <PageSourceNote section={section} type={type} island={island} published={items.filter((i) => i.is_published).length} />
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
         <CategoryPanel section={section} cats={cats} items={items} onChanged={async (t) => { setMsg({ text: t, ok: true }); await load(); }} onError={(t) => setMsg({ text: t, ok: false })} />
@@ -383,4 +386,16 @@ function BulkDialog({ section, type, cats, catName, onClose, onSaved }: {
       </DialogContent>
     </Dialog>
   );
+}
+
+/** tells where the live page takes this topic from right now */
+function PageSourceNote({ section, type, island, published }: { section: Section; type: ItemType; island: Island | null; published: number }) {
+  const page = SITE_PAGES.find((p) => p.slug === section.page_slug);
+  let text: string; let warn = false;
+  if (!page) { text = 'เมนูย่อยนี้ยังไม่ได้เลือกหน้าที่จะแสดง (ตั้งได้ที่ปุ่ม "แก้ไข" ในหน้าเกาะ)'; warn = true; }
+  else if (!PAGE_RENDERED_TYPES.includes(type.slug)) { text = `หน้า "${page.label}" ยังแสดงหัวข้อนี้จากโค้ดเดิม (ระบบยังไม่ดึงผลงานประเภท "${type.name_th}")`; warn = true; }
+  else if (!section.is_published || !island?.is_published) { text = `เมนูย่อยหรือเกาะยังเป็นฉบับร่าง — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด`; warn = true; }
+  else if (published === 0) text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด / Google Sheet`;
+  else text = `หน้า "${page.label}" แสดงผลงานที่เผยแพร่ ${published} ชิ้นจากหลังบ้าน (แทนเนื้อหาเดิมของหัวข้อนี้) ตามลำดับ`;
+  return <p className={`text-sm mb-4 ${warn ? 'text-amber-700' : 'text-emerald-700'}`}>{text}</p>;
 }

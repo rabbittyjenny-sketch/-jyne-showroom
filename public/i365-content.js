@@ -1,0 +1,183 @@
+/* iDEAS365 · content from the back office (Supabase), with the original page content as fallback.
+ *
+ * <script src="i365-content.js" data-page="works_clips"></script>   (in <head>, before the page's own scripts)
+ *
+ * For every published section of this page (i365_sections.page_slug = data-page):
+ *   - it has published items -> they replace the original content of its block  [data-i365="<section slug>"]
+ *                               using the same markup / classes as the original page
+ *   - it has none            -> nothing changes: the page keeps the content written in the code (or its Google Sheet)
+ * A section with no block on the page gets a new card in the page's own card style (data-card="content|section").
+ * Lines marked [data-i365-soon="<slug>"] (COMING SOON lists) are removed when that section gets items.
+ * window.I365.ready resolves when this is done (or after 4 s / on error) — the sheet loaders wait for it.
+ */
+(function () {
+    var SB_URL = 'https://exybvjqjdqxonhesydhk.supabase.co/rest/v1/';
+    var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV4eWJ2anFqZHF4b25oZXN5ZGhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MzI1MTQsImV4cCI6MjA5NDUwODUxNH0.GPOJYTdWw_YXQnJkd_2RGErHnEWDF7YBtu_MevdmCtE';
+    var me = document.currentScript;
+    var page = me && me.getAttribute('data-page');
+    var cardStyle = (me && me.getAttribute('data-card')) || 'content';
+
+    var finish, finished = false;
+    var I365 = window.I365 = { page: page, filled: {}, sections: [], ready: new Promise(function (r) { finish = r; }) };
+    function done() { if (!finished) { finished = true; finish(I365); } }
+    if (!page) { done(); return; }
+    var timer = setTimeout(done, 4000);           // DB slow / blocked -> the page carries on with its own content
+
+    var q = 'i365_sections?select=slug,name_th,name_en,description_th,display_style,sort_order,' +
+        'type:i365_item_types!i365_sections_item_type_id_fkey(slug),' +
+        'items:i365_items!i365_items_section_id_fkey(id,title_th,title_en,summary_th,cover_image,data,sort_order)' +
+        '&page_slug=eq.' + encodeURIComponent(page) + '&is_published=eq.true&deleted_at=is.null' +
+        '&items.is_published=eq.true&order=sort_order.asc&items.order=sort_order.asc';
+    var data = fetch(SB_URL + q, { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY } })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    var domReady = new Promise(function (r) {
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', r); else r();
+    });
+
+    Promise.all([data, domReady]).then(function (res) {
+        if (finished) return;                     // too late: the original content is already showing
+        I365.sections = res[0] || [];
+        I365.sections.forEach(function (s) {
+            if (!s.items || !s.items.length) return;
+            try { if (render(s)) I365.filled[s.slug] = true; } catch (e) { console.warn('[i365]', s.slug, e); }
+        });
+    }).catch(function (e) { console.warn('[i365] using the page content', e); })
+      .then(function () { clearTimeout(timer); done(); });
+
+    /* ── helpers ─────────────────────────────────────────────── */
+    function esc(v) {
+        return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+    function d(it, k) { return (it.data && it.data[k]) || ''; }
+    function ytId(u) {
+        var m = String(u || '').match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/);
+        return m ? m[1] : '';
+    }
+    var YT_PLAY = '<div class="yt-play"><svg viewBox="0 0 68 48"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.8 0 34 0 34 0S12.2 0 7.4 1.6c-2.9.8-5.1 3.1-5.9 6C0 12.5 0 24 0 24s0 11.5 1.5 16.3c.8 2.9 3 5.2 5.9 6C12.2 48 34 48 34 48s21.8 0 26.6-1.6c2.9-.8 5.1-3.1 5.9-6C68 35.5 68 24 68 24S68 12.5 66.5 7.7z" fill="#f00" /><path d="M45 24 27 14v20" fill="#fff" /></svg></div>';
+
+    var css = false;
+    function addCss() {                            // only for blocks the original pages have no class for
+        if (css) return; css = true;
+        var st = document.createElement('style');
+        st.textContent = '.i365-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:12px}' +
+            '.i365-grid a,.i365-grid div{display:block;text-decoration:none;color:inherit}' +
+            '.i365-grid img{width:100%;display:block;border-radius:0}' +
+            '.i365-grid span{display:block;font-size:.85rem;margin-top:6px}' +
+            '.i365-links a{display:inline-block;margin:6px 8px 0 0}' +
+            '.i365-noimg{aspect-ratio:16/9;background:#1A1A1A;color:#fff;display:flex !important;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none}';
+        document.head.appendChild(st);
+    }
+
+    /* ── item → markup (same classes as the original pages) ─────── */
+    function clipHtml(it, i) {
+        var url = d(it, 'video_url'), id = ytId(url);
+        var pic = it.cover_image || (id ? 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg' : '');
+        if (!pic) addCss();
+        var img = pic ? '<img src="' + esc(pic) + '" loading="lazy" alt="' + esc(it.title_th) + '">'
+            : '<img alt="" style="visibility:hidden"><span class="i365-noimg" style="position:absolute;inset:0">▶ ' + esc(it.title_th || d(it, 'platform')) + '</span>';
+        return '<a href="' + esc(url) + '" target="_blank" class="video-wrap">' + img + (id || pic ? YT_PLAY : '') + '</a>';
+    }
+    function imgHtml(it, key) {
+        var src = d(it, key) || it.cover_image;
+        return src ? '<img src="' + esc(src) + '" alt="' + esc(d(it, 'caption_th') || it.title_th) + '">' : '';
+    }
+    function toolData(it) {                        // the shape buildAICard() reads from the Google Sheet
+        return {
+            title: it.title_en || it.title_th, titleTh: it.title_en ? it.title_th : '',
+            descriptionTh: it.summary_th || '', previewImage: it.cover_image || '', logo: d(it, 'logo'),
+            link: d(it, 'url'), status: d(it, 'status') === 'live' ? '' : d(it, 'status'), category: d(it, 'category') || 'ai'
+        };
+    }
+    function resourceData(it) {                    // the shape renderResources() reads from the Google Sheet
+        return { id: it.id, name: it.title_th, catagory: d(it, 'badge') || 'Resource', url: d(it, 'file_url'), update: d(it, 'updated') };
+    }
+    function linkTile(it, url, btn) {
+        addCss();
+        var pic = it.cover_image;
+        var inner = (pic ? '<img src="' + esc(pic) + '" loading="lazy" alt="">' : '<div class="i365-noimg">' + esc(it.title_th) + '</div>') +
+            '<span>' + esc(it.title_th) + '</span>';
+        return url ? '<a href="' + esc(url) + '" target="_blank">' + inner + '</a>' : '<div>' + inner + '</div>';
+    }
+
+    /* fills `el` with the section's items; returns false when this item type is not shown by the static pages */
+    function fill(el, s) {
+        var t = s.type && s.type.slug, items = s.items;
+        if (t === 'clip') {
+            el.innerHTML = items.map(clipHtml).join('');
+        } else if (t === 'photo' || t === 'certificate') {
+            el.innerHTML = items.map(function (it) { return imgHtml(it, t === 'photo' ? 'image' : 'certificate_image'); }).join('');
+        } else if (t === 'tool') {
+            if (typeof window.buildAICard === 'function') el.innerHTML = items.map(toolData).map(window.buildAICard).join('');
+            else { el.classList.add('i365-grid'); el.innerHTML = items.map(function (it) { return linkTile(it, d(it, 'url')); }).join(''); }
+        } else if (t === 'document') {
+            if (el.id === 'res-grid' && typeof window.renderResources === 'function') window.renderResources(items.map(resourceData));
+            else { addCss(); el.classList.add('i365-links'); el.innerHTML = items.map(function (it) {
+                return '<a class="res-dl-btn" style="border-radius:0" href="' + esc(d(it, 'file_url')) + '" target="_blank">' + esc(it.title_th) + ' ↓</a>'; }).join(''); }
+        } else if (t === 'design_work') {
+            if (items.some(function (it) { return it.cover_image; })) {
+                el.classList.add('i365-grid'); el.innerHTML = items.map(function (it) { return linkTile(it, d(it, 'url') || d(it, 'file_url')); }).join('');
+            } else {
+                el.innerHTML = items.map(function (it) {
+                    return '<p class="col-desc">' + esc(it.summary_th || it.title_th) + '</p>' +
+                        '<a class="res-dl-btn" style="border-radius:0" href="' + esc(d(it, 'url') || d(it, 'file_url')) + '" target="_blank">เปิดเว็บไซต์ ↗</a>';
+                }).join('');
+            }
+        } else if (t === 'resume') {
+            var f = d(items[0], 'file_url'), img = el.querySelector('img'), a = el.querySelector('a[download]');
+            if (!f) return false;
+            if (img) img.src = f;
+            if (a) a.href = f;
+        } else {
+            return false;                          // text / timeline / case study: the pages keep the text in the code
+        }
+        return true;
+    }
+
+    function newCard(s) {
+        var t = s.type && s.type.slug;
+        if (!/^(clip|photo|certificate|tool|document|design_work)$/.test(t)) return null;
+        var gridCls = t === 'clip' ? 'video-grid' : (t === 'photo' || t === 'certificate')
+            ? (s.display_style === 'gallery_wide' ? 'proof-grid-result' : 'proof-grid-work') : t === 'tool' ? 'ai-grid' : '';
+        var title = esc(s.name_th), sub = s.description_th ? esc(s.description_th) : '';
+        var card = document.createElement('div');
+        if (cardStyle === 'section') {
+            card.className = 'section-card';
+            card.innerHTML = '<div class="section-head"><div class="section-title">' + title + '</div>' +
+                (sub ? '<div class="section-sub">' + sub + '</div>' : '') + '</div><div class="' + gridCls + '"></div>';
+        } else {
+            card.className = 'content-card single';
+            card.innerHTML = '<h2 class="col-title">' + title + '</h2>' +
+                (sub ? '<p class="col-desc" style="margin-bottom:16px">' + sub + '</p>' : '') + '<div class="' + gridCls + '"></div>';
+        }
+        var before = document.querySelector('[data-i365-soon-card]');
+        var main = document.querySelector('main');
+        if (before) before.parentNode.insertBefore(card, before);
+        else if (main) main.appendChild(card);
+        else return null;
+        reveal(card);
+        return card.lastElementChild;
+    }
+
+    /* the pages fade cards in with .in-view when they scroll into view; a card added later needs the same */
+    function reveal(card) {
+        if (!('IntersectionObserver' in window)) { card.classList.add('in-view'); return; }
+        var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        io.observe(card);
+    }
+
+    function render(s) {
+        var el = document.querySelector('[data-i365="' + s.slug + '"]') || newCard(s);
+        if (!el || !fill(el, s)) return false;
+        el.hidden = false; if (el.style.display === 'none') el.style.display = '';
+        el.setAttribute('data-i365-filled', '1');
+        document.querySelectorAll('[data-i365-soon="' + s.slug + '"]').forEach(function (n) { n.parentNode.removeChild(n); });
+        document.querySelectorAll('[data-i365-soon-card]').forEach(function (c) {
+            if (!c.querySelector('[data-i365-soon]')) c.style.display = 'none';
+        });
+        return true;
+    }
+})();
