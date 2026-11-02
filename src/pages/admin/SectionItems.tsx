@@ -415,7 +415,8 @@ function PageSourceNote({ section, type, island, published }: { section: Section
   if (!page) { text = 'เมนูย่อยนี้ยังไม่ได้เลือกหน้าที่จะแสดง (ตั้งได้ที่ปุ่ม "แก้ไข" ในหน้าเกาะ)'; warn = true; }
   else if (!PAGE_RENDERED_TYPES.includes(type.slug)) { text = `หน้า "${page.label}" ยังแสดงหัวข้อนี้จากโค้ดเดิม (ระบบยังไม่ดึงผลงานประเภท "${type.name_th}")`; warn = true; }
   else if (!section.is_published || !island?.is_published) { text = `เมนูย่อยหรือเกาะยังเป็นฉบับร่าง — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด`; warn = true; }
-  else if (published === 0) text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงเนื้อหาเดิมจากโค้ด / Google Sheet`;
+  else if (published === 0 && section.from_backoffice) { text = `ยังไม่มีผลงานที่เผยแพร่ — หน้า "${page.label}" แสดงการ์ดหัวข้อนี้พร้อมข้อความ COMING SOON · เร็วๆ นี้`; warn = true; }
+  else if (published === 0) text = `ยังไม่เคยเผยแพร่ผลงานในหัวข้อนี้ — หน้า "${page.label}" ยังแสดงเนื้อหาเดิมจากโค้ด / Google Sheet (เผยแพร่ชิ้นแรกเมื่อไหร่ หน้าเว็บจะแสดงจากหลังบ้านแทนทั้งหัวข้อ)`;
   else text = `หน้า "${page.label}" แสดงผลงานที่เผยแพร่ ${published} ชิ้นจากหลังบ้าน (แทนเนื้อหาเดิมของหัวข้อนี้) ตามลำดับ`;
   return <p className={`text-sm mb-4 ${warn ? 'text-amber-400' : 'text-emerald-400'}`}>{text}</p>;
 }

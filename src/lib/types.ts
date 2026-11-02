@@ -87,6 +87,8 @@ export interface Section {
   is_published: boolean; sort_order: number; deleted_at: string | null;
   /** topic page that shows this section, without .html (works_clips, ...) */
   page_slug: string | null;
+  /** true once an item was published: the page then shows only back-office items (COMING SOON when none) */
+  from_backoffice?: boolean;
 }
 
 export interface ItemType {

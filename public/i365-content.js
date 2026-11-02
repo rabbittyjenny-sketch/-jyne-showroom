@@ -5,7 +5,9 @@
  * For every published section of this page (i365_sections.page_slug = data-page):
  *   - it has published items -> they replace the original content of its block  [data-i365="<section slug>"]
  *                               using the same markup / classes as the original page
- *   - it has none            -> nothing changes: the page keeps the content written in the code (or its Google Sheet)
+ *   - it has none            -> if the section was ever shown from the back office (from_backoffice):
+ *                               its card stays and says "COMING SOON · เร็วๆ นี้" (deleted items never come back)
+ *                               otherwise nothing changes: the page keeps its own content (or its Google Sheet)
  * A section with no block on the page gets a new card in the page's own card style (data-card="content|section").
  * Lines marked [data-i365-soon="<slug>"] (COMING SOON lists) are removed when that section gets items.
  * window.I365.ready resolves when this is done (or after 4 s / on error) — the sheet loaders wait for it.
@@ -23,7 +25,7 @@
     if (!page) { done(); return; }
     var timer = setTimeout(done, 4000);           // DB slow / blocked -> the page carries on with its own content
 
-    var q = 'i365_sections?select=slug,name_th,name_en,description_th,display_style,sort_order,' +
+    var q = 'i365_sections?select=slug,name_th,name_en,description_th,display_style,sort_order,from_backoffice,' +
         'type:i365_item_types!i365_sections_item_type_id_fkey(slug),' +
         'items:i365_items!i365_items_section_id_fkey(id,title_th,title_en,summary_th,summary_en,cover_image,data,sort_order)' +
         '&page_slug=eq.' + encodeURIComponent(page) + '&is_published=eq.true&deleted_at=is.null' +
@@ -38,8 +40,10 @@
         if (finished) return;                     // too late: the original content is already showing
         I365.sections = res[0] || [];
         I365.sections.forEach(function (s) {
-            if (!s.items || !s.items.length) return;
-            try { if (render(s)) I365.filled[s.slug] = true; } catch (e) { console.warn('[i365]', s.slug, e); }
+            try {
+                if (s.items && s.items.length) { if (render(s)) I365.filled[s.slug] = true; }
+                else if (s.from_backoffice && renderSoon(s)) I365.filled[s.slug] = true;   // sheet loaders skip it too
+            } catch (e) { console.warn('[i365]', s.slug, e); }
         });
     }).catch(function (e) { console.warn('[i365] using the page content', e); })
       .then(function () { clearTimeout(timer); done(); });
@@ -99,6 +103,7 @@
             ':where(.svc-h3){font-size:1.2rem;margin:24px 0 6px}:where(.svc-grid){display:grid;grid-template-columns:1fr 1fr;gap:0 32px}' +
             ':where(.svc-btn){display:inline-block;background:#1A1A1A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:0;margin-top:22px}' +
             '@media(max-width:768px){:where(.svc-grid){grid-template-columns:1fr}}' +
+            '.i365-soon-msg{grid-column:1/-1;list-style:none;margin:8px 0 0;padding:28px 0;text-align:center;letter-spacing:2px;color:#888;font-size:.95rem}' +
             '.i365-noimg{aspect-ratio:16/9;background:#1A1A1A;color:#fff;display:flex !important;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none}';
         document.head.appendChild(st);
     }
@@ -215,6 +220,29 @@
             es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
         }, { threshold: 0.08 });
         io.observe(card);
+    }
+
+    /* a back-office section with nothing published: keep its card, say COMING SOON (never the old code content) */
+    function renderSoon(s) {
+        var t = s.type && s.type.slug;             // only types the pages render (text / timeline / case study stay in the code)
+        if (!/^(clip|photo|certificate|tool|document|design_work|point|service|resume)$/.test(t)) return false;
+        var listed = document.querySelector('[data-i365-soon="' + s.slug + '"]');
+        var el = document.querySelector('[data-i365="' + s.slug + '"]');
+        if (!el && listed) return false;           // already listed in the page's COMING SOON card
+        if (!el) el = newCard(s);
+        if (!el) return false;
+        addCss();
+        if (t === 'resume') {                      // the block is the whole résumé card: keep its heading
+            el.querySelectorAll('img, a[download]').forEach(function (n) { n.style.display = 'none'; });
+            if (!el.querySelector('.i365-soon-msg')) el.insertAdjacentHTML('beforeend', '<p class="i365-soon-msg">COMING SOON · เร็วๆ นี้</p>');
+            el.setAttribute('data-i365-filled', '1');
+            return true;
+        }
+        var tag = el.tagName === 'UL' || el.tagName === 'OL' ? 'li' : 'p';
+        el.innerHTML = '<' + tag + ' class="i365-soon-msg">COMING SOON · เร็วๆ นี้</' + tag + '>';
+        el.hidden = false; if (el.style.display === 'none') el.style.display = '';
+        el.setAttribute('data-i365-filled', '1'); // the Google Sheet loaders skip blocks marked filled
+        return true;
     }
 
     function render(s) {
