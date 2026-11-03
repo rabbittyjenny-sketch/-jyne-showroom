@@ -28,8 +28,8 @@
   - BACK = **ย้อนกลับทีละหน้า** ใช้ `onclick="return goBack(this.href)"`: `history.back()` เมื่อหน้าก่อนหน้าอยู่ในเว็บเดียวกัน ถ้าเปิดตรง ๆ ไปที่ `href` (หน้าแม่) ห้ามเปลี่ยนกลับเป็นลิงก์ตรง (รวม `/community` ใน `src/community/Chrome.tsx`)
 - **หัวข้อหน้า (h1)** ใช้ฟอนต์ ขนาด สี และ hover ของหน้าต้นฉบับที่หน้านั้นสร้างจาก (CSS เดิม ห้ามแก้ ห้ามบังคับ font-weight)
 - **สีหน้าเมนูย่อย = สีของเกาะหลักที่มันอยู่ใต้** (สีเกาะ = หน้าต้นฉบับตามตำแหน่งบนแผนที่, ไฟล์ 19 เม.ย. 2026 commit `efeb6bf`): ABOUT = ส้ม about_island, PIC&CLIP = เหลือง work_town, AI&TECH = ฟ้า learning_bay — หน้าย่อยที่ยืมโครงหน้าอื่นเปลี่ยน**เฉพาะค่าสี** (`colours=YELLOW_SET/BLUE_SET` ใน `scripts/build-island-pages.py`) ห้ามใช้ `i365_islands.theme` (ข้อมูลจากเว็บ React 30 ต.ค. ที่ถูกย้อนทิ้ง)
-- **หน้าขาว (COMMUNITY) = blog.html**: สีการ์ด/ป้ายตามหัวข้อ (COLOUR_MAP ของ blog.html → `TOPIC_COLOR` ใน `src/community/shared.ts`, ใส่หัวข้อเป็น tag ในหลังบ้าน) ไม่มีหัวข้อ = สีของกลุ่ม; หน้าอ่านบทความ ป้ายหมวดสี #4285F4 เสมอ (blog_post.html)
-- ข้อความ PROFILE / WORK HISTORY / LIVE COMMERCE = ไฟล์ของเจ้าของ อยู่ใน `scripts/profile_content.py` (EN/TH สลับด้วยปุ่ม EN/TH เดิมของ about_island, `data-lang`) ห้ามแต่งเพิ่ม
+- **หน้าขาว (COMMUNITY) = blog.html**: **1 สีต่อ 1 หมวด** (คลิปกิจกรรม ฟ้า · บทความ เหลือง · ข่าวกิจกรรม เขียว — `GROUPS` ใน `src/community/shared.ts`) ห้ามให้การ์ดในหมวดเดียวกันสลับสี
+- ข้อความ PROFILE / WORK HISTORY / LIVE COMMERCE = ไฟล์ของเจ้าของ อยู่ใน `scripts/profile_content.py` (EN/TH สลับด้วยปุ่ม EN/TH เดิมของ about_island, `data-lang`) ห้ามแต่งเพิ่ม · ภาษาอังกฤษเขียนบุรุษที่ 3 (Jyne / she) · ลิงก์หน้ารายชื่อแบรนด์ = `BRANDS_URL` (ยังว่าง)
   - หน้าระดับเกาะ (A SERVICE MANIA, ACADEMY BAY, COMMUNITY HARBOR) = ชื่อเกาะ + **คำโปรยภาษาอังกฤษเดิม**ของหน้าต้นฉบับ (`page(..., sub=None)`)
   - หน้าเมนูย่อย (PROFILE, VIDEO CLIPS …) = ชื่อหน้าย่อย **ไม่มีคำโปรย** (`sub=''`) **ห้ามใส่ข้อความภาษาไทยใต้หัวข้อ**
 - **หน้าเกาะ (ABOUT ISLAND, PIC&CLIP WAREHOUSE, AI&TECH CREATION BRIDGE) = หน้าต้นฉบับของเกาะนั้นทั้งหน้า** (สีพื้น หัวข้อ Anton ขนาด/สี/hover เดิม คำโปรยภาษาอังกฤษเดิม header/BACK/footer เดิม) แทนการ์ดด้วยแผนที่+หมุด — ห้ามใช้พื้นฟ้าของหน้าแรกหรือกล่องชื่อแบบอื่น
@@ -88,7 +88,9 @@ PIC&CLIP WAREHOUSE (`island-work`) → `work_town.html` (เหลือง, ป
 - หมุด = รูป polaroid + ก้าน + จุดแดง ปลายจุดแดงแตะอาคาร ตำแหน่งเป็น % ของรูป (ตาราง `island(...)` ท้ายส่วนนี้ในสคริปต์)
   - ABOUT: โปรไฟล์ → กลุ่มโบสถ์ · ประวัติการทำงาน → ท้องฟ้าจำลอง · Live → อาคารจอดรถทรงกลม
   - PIC&CLIP: คลิปวิดีโอ → Film Studio · รูปผลงาน → Dragon Theatre
-  - AI&TECH: เครื่องมือ → LAB 01 · เอกสาร → หอดูดาว · งานออกแบบ → Data & Signal
+  - AI&TECH: เครื่องมือ → LAB 01 · เอกสาร → อาคาร SERVER ซ้ายล่าง · งานออกแบบ → Data & Signal
+- หมุดทั้งตัว (รวมรูปบน) ต้องอยู่ในรูปแผนที่ ห้ามเลยขอบ กระจายใช้พื้นที่ทั้งรูป ไม่กองกันด้านบน
+- **hover หมุด = hover เกาะในแผนที่หลัก** (index.html `.island:hover`): ยกขึ้น 8px, ขยาย 1.05, สว่างขึ้น + เงาขาวเรือง, 0.4s ease-out — ห้ามขยายเฉยๆ ไม่มีทิศทาง
 
 **ป้ายชื่อหมุด**: **ชื่ออย่างเดียว** (ห้ามใส่รายการย่อย) ป้ายดำเล็ก `rgba(0,0,0,.85)` ตัวอักษรขาว Anton 13px มุมเหลี่ยม ไม่มีกรอบ
 - เด้งขึ้นตอน hover / โฟกัส ด้วยท่าเดียวกับ tooltip ของแผนที่หลัก: `scale(.3) → scale(1)` ขยับขึ้น 10px, 0.4s `cubic-bezier(0.68,-0.55,0.265,1.55)`

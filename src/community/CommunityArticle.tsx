@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Chrome } from './Chrome';
 import { ArticleBody, isDocumentHtml } from './components/ArticleBody';
 import { PodcastButton } from './components/PodcastButton';
-import { KIND_LABEL, topicOf, type ArticleRow } from './shared';
+import { COLOR_HEX, KIND_LABEL, colorOfKind, type ArticleRow } from './shared';
 
 export default function CommunityArticle() {
   const { slug } = useParams<{ slug: string }>();
@@ -56,14 +56,14 @@ export default function CommunityArticle() {
     </Chrome>
   );
 
+  const color = COLOR_HEX[colorOfKind(article.kind)];
   const date = new Date(article.updated_at || article.created_at).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
   return (
     <Chrome back="/community">
       <main className="cm-post">
         {article.cover_image_url && <img className="cm-post-hero" src={article.cover_image_url} alt={article.title} />}
         <div className="cm-post-meta">
-          {/* blog_post.html: the category pill is always the accent #4285F4 with white text */}
-          <span className="cm-post-cat" style={{ background: '#4285F4', color: '#fff' }}>{topicOf(article) || KIND_LABEL[article.kind] || article.kind}</span>
+          <span className="cm-post-cat" style={{ background: color, color: color === COLOR_HEX.yellow ? '#1A1A1A' : '#fff' }}>{KIND_LABEL[article.kind] || article.kind}</span>
           <span className="cm-post-date">{date}</span>
           {article.author && <span className="cm-post-date">· {article.author}</span>}
         </div>

@@ -153,11 +153,13 @@
         .pin:nth-of-type(2) .pin-float { animation-delay: -1.1s; }
         .pin:nth-of-type(3) .pin-float { animation-delay: -2.2s; }
         @keyframes pinFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); transition: transform 0.25s; }
+        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); }
         .pin-stem { display: block; width: 3px; height: 18px; margin: 0 auto; background: #1A1A1A; }
         .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
-        .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
-        .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
+        /* hover = the main map's island hover (index.html .island:hover): lifts up 8px, 1.05x, brighter, white glow */
+        .pin-float { transition: all 0.4s ease-out; }
+        .pin:hover .pin-float, .pin:focus-visible .pin-float { scale: 1.05; margin-top: -8px;
+            filter: brightness(1.1) drop-shadow(0 20px 25px rgba(255, 255, 255, 0.35)); }
         /* pin name: small square black label, name only, pops up with the main map tooltip's bounce */
         .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%) scale(0.3); transform-origin: bottom center;
             background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; border-radius: 0; white-space: nowrap;
@@ -240,7 +242,7 @@
                     <span class="pin-pop">รวมเครื่องมือ / ระบบ AI</span>
                     <span class="pin-float"><img class="pin-img" src="islands/ai1.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
                 </a>
-                <a href="learning_docs.html" class="pin" style="left:27%;top:17%" aria-label="เอกสาร · ความรู้">
+                <a href="learning_docs.html" class="pin" style="left:13.5%;top:59%" aria-label="เอกสาร · ความรู้">
                     <span class="pin-pop">เอกสาร · ความรู้</span>
                     <span class="pin-float"><img class="pin-img" src="islands/ai2.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
                 </a>

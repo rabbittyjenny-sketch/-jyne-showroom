@@ -3,12 +3,15 @@
 Text is hers word for word; only these spelling slips were corrected:
   TH  กฌตั้งแต่→ก็ตั้งแต่, ที่้ต้อง→ที่ต้อง, มาจรฐาน→มาตรฐาน, ปฎิเสธ→ปฏิเสธ, พอๆกับกับ→พอๆ กับ, สังเกตุ→สังเกต,
       คววามเข้าใจสิ่งต่างๆไรอบตัว→ความเข้าใจสิ่งต่างๆ รอบตัว, สินค้ที่→สินค้าที่
-  EN  June→Jyne
+  EN  June→Jyne; written in the third person (Jyne / she) with grammar fixed, as the owner asked (4 Nov 2026)
+  MUN Forward (was Mon Forward) in both languages, owner's correction
 Markup = the original about_island.html elements (col-desc, quote box, tl-*, stats-row, big-btn-row)."""
 
 P = '                    <p class="col-desc">{}</p>\n'
 paras = lambda items: ''.join(P.format(t) for t in items)
 LINK = '<a href="{}" style="color:var(--accent);font-weight:700">{}</a>'
+BRANDS_URL = ''   # ← ลิงก์หน้ารายชื่อแบรนด์ (ใส่ทีหลัง) — used by "See all brands" / "แบรนด์ที่ร่วมงานด้วย"
+brands_link = lambda text: LINK.format(BRANDS_URL or '#', text)
 
 # ── PROFILE ──────────────────────────────────────────────────────────────
 BIO_EN = '''<div id="bio-en" data-lang="en">
@@ -16,13 +19,13 @@ BIO_EN = '''<div id="bio-en" data-lang="en">
                     <span style="font-size:0.82rem;color:#888;letter-spacing:1px;">FREELANCE LIVE COMMERCE HOST · SYSTEMS &amp; CURRICULUM BUILDER<br>SELF-STARTER · STANDARDS-DRIVEN · QUIETLY CONFIDENT</span></p>
 
 ''' + paras([
-    "Jyne did not set out with a fixed career plan. I have always followed a more practical instinct: understand how something works, see what it could become, and build what is needed to make it work.",
-    "Her foundation began with technology. I started learning in junior high, in the floppy-disk era, and continued through a degree in Industrial Computer Technology. At a time before ready-made tools, drag-and-drop builders and AI, I learned programming and hands-on hardware: wiring, circuit-board etching, computer assembly and repair. In high school, I represented her school in a provincial search-engine competition and placed second. Those early experiences shaped the way I'm approaching work today: understand the structure, test it, and make it function.",
-    "Her professional path then moved through sales, hospitality, media and business operations. Across different environments, I've learned to read people, earn trust and manage relationships — from front-line teams to senior executives and international VIP/VVIP guests. The setting changed; the importance of preparation, communication and follow-through did not.",
+    "Jyne did not set out with a fixed career plan. She has always followed a more practical instinct: understand how something works, see what it could become, and build what is needed to make it work.",
+    "Her foundation began with technology. She started learning in junior high, in the floppy-disk era, and continued through a degree in Industrial Computer Technology. At a time before ready-made tools, drag-and-drop builders and AI, she learned programming and hands-on hardware: wiring, circuit-board etching, computer assembly and repair. In high school, she represented her school in a provincial search-engine competition and placed second. Those early experiences shaped the way she approaches work today: understand the structure, test it, and make it function.",
+    "Her professional path then moved through sales, hospitality, media and business operations. Across different environments, she has learned to read people, earn trust and manage relationships — from front-line teams to senior executives and international VIP/VVIP guests. The setting changed; the importance of preparation, communication and follow-through did not.",
     "For close to a decade, Jyne worked in high-standard fine-dining and hospitality operations, supporting the work of Chef Chumpol Jangprai at R-HAAN and Chef Andy Yang at Table 38 Bangkok. Her responsibilities reached beyond service: executive coordination, guest experience, supplier relationships, event operations and the operational details that keep a demanding business running. Working in environments shaped by Michelin-level standards taught her what consistency looks like when every detail matters.",
-    "In 2022, I'm moving into freelance Live Commerce. What began as an opportunity became a field I chose to build for herself. Working across TikTok LIVE, Facebook Live and Shopee Live, I've developed her own approach to product research, product curation, scripting, hooks, run-downs, technical setup and post-live review. I have worked with more than 20 brands and delivered six-figure GMV in regular two-hour live sessions.",
-    "The experience also led her to create CREATR365, a Live Commerce Host training curriculum built from practical work. I designed its learning structure, assessments and evaluation criteria to turn on-the-job lessons into a framework that other aspiring hosts can learn and apply.",
-    "Jyne values outcomes over noise. I believe that a well-prepared live session should feel natural to the audience — not because the work is effortless, but because the thinking and preparation behind it have been done properly.",
+    "In 2022, she moved into freelance Live Commerce. What began as an opportunity became a field she chose to build for herself. Working across TikTok LIVE, Facebook Live and Shopee Live, she has developed her own approach to product research, product curation, scripting, hooks, run-downs, technical setup and post-live review. She has worked with more than 20 brands and delivered six-figure GMV in regular two-hour live sessions.",
+    "The experience also led her to create CREATR365, a Live Commerce Host training curriculum built from practical work. She designed its learning structure, assessments and evaluation criteria to turn on-the-job lessons into a framework that other aspiring hosts can learn and apply.",
+    "Jyne values outcomes over noise. She believes that a well-prepared live session should feel natural to the audience — not because the work is effortless, but because the thinking and preparation behind it have been done properly.",
 ]) + '''
                     <p class="col-desc" style="background:#f9f0ec;border-left:3px solid #B03A00;padding:12px 16px;border-radius:0 8px 8px 0;font-style:italic;">“Anyone can use AI. But using it and knowing how to use it produce very different results.”</p>
 
@@ -82,7 +85,7 @@ JOBS = [  # (role, place, year EN, year TH, desc EN, desc TH, extra EN, extra TH
     ("Executive Secretary to MD", "Chef Chumpol Jangprai – R-HAAN", "2018–2023", "2018–2023",
      "Provided administrative and operational support to the Managing Director. Coordinated schedules, high-level logistics, team communication and international VIP/VVIP guest experiences from reservation through on-site arrangements and follow-up. Coordinated with local farming communities nationwide to match ingredients with menu concepts, with an interest in supporting sustainable income for producers. Also supported the MD’s work connected with his roles as UN Sustainable Food Ambassador and Thai Food Ambassador. R-HAAN received two MICHELIN Stars; Chef Chumpol is also known as Iron Chef Thailand.",
      "ให้การสนับสนุนด้านธุรการและการปฏิบัติงานแก่กรรมการผู้จัดการ ดูแลการประสานงานตารางงาน ภารกิจสำคัญ การสื่อสารระหว่างทีม และประสบการณ์ของลูกค้า VIP/VVIP ชาวต่างชาติ ตั้งแต่การจอง การต้อนรับหน้างาน ไปจนถึงการติดตามผล ประสานงานกับเครือข่ายเกษตรกรท้องถิ่นทั่วประเทศเพื่อคัดเลือกวัตถุดิบให้สอดคล้องกับแนวคิดของเมนู โดยให้ความสำคัญกับการสร้างรายได้ที่ยั่งยืนแก่ผู้ผลิตในชุมชน รวมถึงสนับสนุนภารกิจของ MD ที่เกี่ยวข้องกับบทบาท UN Sustainable Food Ambassador และ Thai Food Ambassador ร้าน R-HAAN ได้รับ 2 Michelin Stars และ Chef Chumpol เป็นที่รู้จักในฐานะ Iron Chef Thailand", None, None),
-    ("Account Executive", "Mon Forward Radio Program at CNX", None, None,
+    ("Account Executive", "MUN Forward Radio Program at CNX", None, None,
      "Worked across on-air hosting and client management, combining communication skills with commercial coordination.",
      "ทำงานด้านการจัดรายการและดำเนินรายการออกอากาศ ควบคู่กับการดูแลลูกค้าและประสานงานเชิงพาณิชย์", None, None),
     ("Make Up Artist &amp; Hair Stylist", "Freelance", None, None,
@@ -127,14 +130,14 @@ def experience_html():
 # ── LIVE COMMERCE ────────────────────────────────────────────────────────
 LIVE_EN = [
     "Anyone can go live. Turning a live session into a clear, engaging and measurable brand experience takes preparation well before the camera turns on. It takes an understanding of the product, a reason for the audience to stay, a structure that supports the story, and the ability to adjust in real time.",
-    "Since 2022, Jyne has worked as an independent Live Commerce Host across TikTok LIVE, Facebook Live and Shopee Live. I have collaborated with more than 20 brands and built her working system through direct experience: researching each brand and product using credible sources, identifying meaningful product benefits, developing hooks and scripts, planning the run-down, preparing the technical setup, hosting the session and reviewing results afterwards.",
-    "I do not assume I already know a product category. When personal experience is limited, I research more deeply, check information against credible sources and translate product knowledge into clear, useful points for viewers. This preparation supports a more confident presentation and helps keep product communication relevant to the audience.",
+    "Since 2022, Jyne has worked as an independent Live Commerce Host across TikTok LIVE, Facebook Live and Shopee Live. She has collaborated with more than 20 brands and built her working system through direct experience: researching each brand and product using credible sources, identifying meaningful product benefits, developing hooks and scripts, planning the run-down, preparing the technical setup, hosting the session and reviewing results afterwards.",
+    "She does not assume she already knows a product category. When her personal experience is limited, she researches more deeply, checks information against credible sources and translates product knowledge into clear, useful points for viewers. This preparation supports a more confident presentation and helps keep product communication relevant to the audience.",
     "The approach combines operational discipline with audience awareness. The objective is not simply to keep talking for two hours. It is to guide attention, communicate value, respond to viewers and give each product its proper context — while keeping the session natural and commercially focused.",
-    "Across 20+ brands, Jyne has delivered six-figure GMV in regular two-hour live sessions. Selected GMV examples are shown below. These are individual result snapshots, not a published average across all sessions.",
+    "Across 20+ brands, Jyne has delivered six-figure GMV in regular two-hour live sessions. Selected GMV examples are shown below. These are individual result snapshots, not a published average across all sessions.  " + brands_link('See all brands'),
 ]
 LIVE_TH = [
     "ใคร ๆ ก็เปิดไลฟ์ได้ แต่การทำให้ไลฟ์เป็นประสบการณ์ของแบรนด์ที่น่าสนใจ สื่อสารได้ชัดเจน และวัดผลทางธุรกิจได้ ต้องเริ่มเตรียมงานตั้งแต่ก่อนเปิดกล้อง ทั้งความเข้าใจในสินค้า เหตุผลที่ทำให้ผู้ชมอยากอยู่ต่อ โครงสร้างการนำเสนอ และความสามารถในการปรับเนื้อหาให้เข้ากับสถานการณ์จริง",
-    "ตั้งแต่ปี 2022 เจนทำงาน Freelance Live Commerce Host บน TikTok LIVE, Facebook Live และ Shopee Live ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ และพัฒนาระบบการทำงานจากประสบการณ์ตรงด้วยตัวเอง ตั้งแต่ศึกษาข้อมูลแบรนด์และสินค้าจากแหล่งที่น่าเชื่อถือ วิเคราะห์จุดเด่นที่มีคุณค่าต่อผู้บริโภคไปจนถึงทบทวนผลหลังจบไลฟ์",
+    "ตั้งแต่ปี 2022 เจนทำงาน Freelance Live Commerce Host บน TikTok LIVE, Facebook Live และ Shopee Live ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ และพัฒนาระบบการทำงานจากประสบการณ์ตรงด้วยตัวเอง ตั้งแต่ศึกษาข้อมูลแบรนด์และสินค้าจากแหล่งที่น่าเชื่อถือ วิเคราะห์จุดเด่นที่มีคุณค่าต่อผู้บริโภคไปจนถึงทบทวนผลหลังจบไลฟ์ " + brands_link('แบรนด์ที่ร่วมงานด้วย'),
     "เจนไม่มองว่าตัวเองรู้จักสินค้าทุกประเภทอยู่แล้ว มันเพราะความไม่รู้ เลยจำเป็นต้องรู้ และต้องเข้าใจ ให้ได้มากที่สุด ค้นคว้าหาข้อมูลและรายละเอียดต่างๆ ที่ต้องมีแหล่งที่มาของข้อมูลที่เชื่อถือได้และอ้างอิงได้ วางแผนและเรียบเรียง  และจับประเด็นในแต่ละคำที่จะพูดในไลฟ์นั้น  ให้ผู้ชมเข้าใจและนำไปใช้ประกอบการตัดสินใจได้ การเตรียมข้อมูลจึงเป็นส่วนสำคัญของเจน",
     "ด้วยประสบการณ์การทำงานก่อนหน้า ความเข้าใจสิ่งต่างๆ รอบตัว การค้นคว้าหาข้อมูลอย่างหนัก เพื่อสื่อสารคุณค่าของสินค้า ตอบสนองต่อผู้ชม และอธิบายสินค้าที่เหมาะสม ด้วยความเป็นธรรมชาติภายใต้ภาพลักษณ์ของแบรนด์นั้นๆ",
     "จากวันแรก จนถึงตอนนี้ มีโอกาสได้ไลฟ์ ให้แบรนด์มากกว่า 20 แบรนด์ และก็หลายครั้งที่ทำยอดขายใน2 ชั่วโมง ได้ถึง 6 หลัก",
