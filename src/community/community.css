@@ -5,7 +5,7 @@
 .cm-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; z-index: 10; }
 .cm-header .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 .cm-main { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
-.cm-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px; text-transform: uppercase; letter-spacing: 1px; }
+.cm-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.86; margin: 0 0 15px; text-transform: uppercase; letter-spacing: -0.015em; }
 .cm-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px; text-align: center; }
 .cm-status { text-align: center; font-size: 1rem; color: #888; padding: 40px; width: 100%; }
 .cm-groups { width: 100%; display: flex; flex-direction: column; gap: 56px; }

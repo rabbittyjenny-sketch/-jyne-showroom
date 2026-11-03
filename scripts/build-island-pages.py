@@ -16,6 +16,14 @@ src = lambda f: ((ROOT / 'public' / f) if f in ('index.html', 'contact_port.html
 
 # (no MAIN MENU button: the original pages have only the logo, top-left = main map, and BACK)
 
+# the owner's title setting (4 Nov 2026, from her reference "MORE COMING"): letters touching, lines close.
+# Font, size, colour, weight and hover stay the original page's own CSS — only spacing is set here.
+TITLE_CSS = """
+    <style>
+        /* added: page title letters set tight (owner's reference) */
+        .page-title { letter-spacing: -0.015em; line-height: 0.86; }
+    </style>
+"""
 BACK_JS = """
 <script>
     /* added: BACK = previous page (or this island's map when opened directly) */
@@ -46,7 +54,7 @@ def cut(text, start, end):
 def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True):
     t = src(file)
     head_end = t.index('</head>')
-    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S)
+    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS
     if loader: head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
