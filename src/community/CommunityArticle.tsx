@@ -42,7 +42,6 @@ export default function CommunityArticle() {
   const footer = (
     <div className="cm-post-footer">
       <Link to="/community" className="cm-link">← บทความทั้งหมด</Link>
-      <a href="/index.html" className="cm-link">MAIN MENU →</a>
     </div>
   );
 

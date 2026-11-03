@@ -54,7 +54,7 @@ export default function CommunityList() {
     <Chrome back="/index.html">
       <main className="cm-main">
         <h1 className="cm-title">COMMUNITY<br />HARBOR</h1>
-        <p className="cm-subtitle">ชุมชน บทความ ข่าวสาร</p>
+        <p className="cm-subtitle">Thoughts, experiments, and frameworks.</p>
         {loading ? <p className="cm-status">กำลังโหลด…</p> : failed ? <p className="cm-status">โหลดเนื้อหาไม่สำเร็จ ลองใหม่อีกครั้ง</p> : (
           <div className="cm-groups">
             {GROUPS.map((group) => {

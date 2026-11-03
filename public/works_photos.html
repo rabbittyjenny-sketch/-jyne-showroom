@@ -492,15 +492,25 @@
     </style>
 
     <style>
-        /* added: link back to the main island map — same look as the island name badges on the main map
-           (index.html .island-badge: white pill, black text, colour-sweep text on hover). Keep in step with
-           HOME_PILL below and .cm-menu in src/community/community.css. */
-        .main-menu-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
-            text-decoration: none; color: #000; background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-        .main-menu-link:hover { color: #0000;
-            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
+        /* added: page title letters set tight (owner's reference) */
+        .page-title { letter-spacing: -0.015em; line-height: 0.86; }
+    </style>
+
+    <style>
+        /* colours of the main island: work_town.html (yellow) — :root 12-17, .page-title 53, .section-card 76,
+           .col-title 375, .col-desc 382, .hl 389-404, .cs-pill 412, .proof-grid img 425, .site-footer 449 */
+        :root { --bg-color: #F5B800; --accent: #F5B800; --text-dark: #ffffff; }
+        body, html { background-color: #F5B800; }
+        .page-title { color: #1A1A1A; }
+        .content-card { background: #1A1A1A; color: #fff; }
+        .col-title { color: #F5B800; border-bottom-color: rgba(255,255,255,0.1); }
+        .col-desc { color: rgba(255,255,255,0.72); }
+        .col-desc strong { color: #fff; }
+        .hl li { color: rgba(255,255,255,0.76); border-bottom-color: rgba(255,255,255,0.08); }
+        .hl li::before { color: #F5B800; }
+        .cs-pill, .big-btn { background: #F5B800; color: #1A1A1A; }
+        .photo-slot, .proof-grid-result img, .proof-grid-work img { background: #2a2a2a; }
+        .site-footer { background: #1A1A1A; }
     </style>
     <script src="i365-content.js" data-page="works_photos" data-card="content"></script>
 </head>
@@ -511,11 +521,10 @@
         <a href="index.html"><img
                 src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
                 class="logo-img"></a>
-        <a href="index.html" class="main-menu-link">MAIN MENU</a>
     </header>
     <main class="main-content">
         <h1 class="page-title">PHOTO<br>WORKS</h1>
-        <p class="page-subtitle">รูปผลงาน</p>
+        <p class="page-subtitle"></p>
         <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) -->
         <div class="content-card single">
             <h2 class="col-title">MAKEUP &amp; HAIR · แต่งหน้า · ทำผม</h2>

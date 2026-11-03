@@ -500,15 +500,27 @@
     </style>
 
     <style>
-        /* added: link back to the main island map — same look as the island name badges on the main map
-           (index.html .island-badge: white pill, black text, colour-sweep text on hover). Keep in step with
-           HOME_PILL below and .cm-menu in src/community/community.css. */
-        .main-menu-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
-            text-decoration: none; color: #000; background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-        .main-menu-link:hover { color: #0000;
-            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
+        /* added: page title letters set tight (owner's reference) */
+        .page-title { letter-spacing: -0.015em; line-height: 0.86; }
+    </style>
+
+    <style>
+        /* colours of the main island: learning_bay.html (blue) — :root 10, body 11, .content-card 18, .col-title 20,
+           .col-desc 21, .res-card 28, .res-name 39, .res-updated 40, .res-dl-btn 41, .hover 122-134 */
+        body, html { background: #1A6BCC; }
+        .page-title { color: #0000; background: linear-gradient(90deg, #4285F4 50%, #ffffff 0) var(--_p, 100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text; transition: .4s; cursor: pointer; }
+        .page-title:hover { --_p: 0%; }
+        .section-card { background: #ffffff; color: #1A1A1A; }
+        .section-title { color: #1155AA; border-bottom-color: #1155AA; }
+        .section-sub, .loading-msg { color: #888; }
+        .ai-card, .proj-card { background: #f5f5f0; border-color: #1A1A1A; color: #1A1A1A; }
+        .ai-title-en, .proj-name-en { color: #1A1A1A; }
+        .ai-title-th, .proj-name-th { color: #999; }
+        .ai-desc, .proj-desc { color: #444; }
+        .ai-cta, .proj-cta { background: #1A1A1A; color: #ffffff; border-color: #1A1A1A; }
+        .col-title { color: #1155AA; }
+        .col-desc { color: #444; }
     </style>
     <script src="i365-content.js" data-page="learning_tools" data-card="section"></script>
 </head>
@@ -518,7 +530,7 @@
     <a href="index.html">
         <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
     </a>
-    <span style="justify-self:end;margin-right:16px"><a href="index.html" class="main-menu-link">MAIN MENU</a></span>
+    <span></span>
     <a href="island_learning.html" class="back-btn" onclick="return goBack(this.href)">
         <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map">
     </a>
@@ -526,7 +538,7 @@
 
 <div class="hero">
     <h1 class="page-title">AI<br>TOOLS</h1>
-    <p class="page-subtitle">รวมเครื่องมือ / ระบบ ที่ทำงานร่วมกับ AI ด้วยสร้างเองทั้งระบบ</p>
+    <p class="page-subtitle"></p>
 </div>
 
 <main class="main-content">

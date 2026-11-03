@@ -14,17 +14,14 @@ OUT = ROOT / 'public'
 ORIG = ROOT / 'site-source' / 'originals'          # her original hand-built pages (sources only, not served)
 src = lambda f: ((ROOT / 'public' / f) if f in ('index.html', 'contact_port.html') else (ORIG / f)).read_text(encoding='utf-8')
 
-MENU_CSS = """
+# (no MAIN MENU button: the original pages have only the logo, top-left = main map, and BACK)
+
+# the owner's title setting (4 Nov 2026, from her reference "MORE COMING"): letters touching, lines close.
+# Font, size, colour, weight and hover stay the original page's own CSS — only spacing is set here.
+TITLE_CSS = """
     <style>
-        /* added: link back to the main island map — same look as the island name badges on the main map
-           (index.html .island-badge: white pill, black text, colour-sweep text on hover). Keep in step with
-           HOME_PILL below and .cm-menu in src/community/community.css. */
-        .main-menu-link { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
-            text-decoration: none; color: #000; background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-        .main-menu-link:hover { color: #0000;
-            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
+        /* added: page title letters set tight (owner's reference) */
+        .page-title { letter-spacing: -0.015em; line-height: 0.86; }
     </style>
 """
 BACK_JS = """
@@ -36,7 +33,6 @@ BACK_JS = """
     }
 </script>
 """
-MENU_LINK = '<a href="index.html" class="main-menu-link">MAIN MENU</a>'
 # added: content from the back office (Supabase) first, original content when the DB has nothing for a topic
 LOADER = '    <script src="i365-content.js" data-page="{page}" data-card="{card}"></script>\n'
 I365_READY = '(window.I365 ? I365.ready : Promise.resolve())'
@@ -55,10 +51,10 @@ def cut(text, start, end):
     return text[a:b]
 
 
-def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True):
+def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True, colours=''):
     t = src(file)
     head_end = t.index('</head>')
-    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + MENU_CSS
+    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS + colours
     if loader: head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
@@ -66,11 +62,8 @@ def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, c
         sub_at = t.index('page-subtitle'); pre_end = t.index('</p>', sub_at) + len('</p>') + 1
     pre = t[head_end:pre_end]
     pre = re.sub(r'(<h1 class="page-title[^"]*">).*?(</h1>)', lambda m: m.group(1) + h1 + m.group(2), pre, count=1, flags=re.S)
-    pre = re.sub(r'(<p class="page-subtitle[^"]*">).*?(</p>)', lambda m: m.group(1) + sub + m.group(2), pre, count=1, flags=re.S)
-    if '<span></span>' in pre:                                 # Works Town header: logo | span | back
-        pre = pre.replace('<span></span>', f'<span style="justify-self:end;margin-right:16px">{MENU_LINK}</span>', 1)
-    else:
-        pre = pre.replace('</header>', f'    {MENU_LINK}\n    </header>', 1)
+    if sub is not None:                                       # None = keep the original tagline (island pages)
+        pre = re.sub(r'(<p class="page-subtitle[^"]*">).*?(</p>)', lambda m: m.group(1) + sub + m.group(2), pre, count=1, flags=re.S)
     pre = re.sub(r'<a href="index.html" class="(back-btn)">', rf'<a href="{back}" class="\1" onclick="return goBack(this.href)">', pre)
     tl = tail if tail is not None else t[t.index('</main>'):]
     tl = re.sub(r'<a href="index.html" class="(back-fixed|back-btn-fixed)">', rf'<a href="{back}" class="\1" onclick="return goBack(this.href)">', tl)
@@ -88,18 +81,76 @@ def write(name, html):
     print('wrote', name, len(html))
 
 
+# Sub-pages use the colours of their main island (owner's rule, 4 Nov 2026), values copied from her
+# original pages (19 Apr 2026, commit efeb6bf). When a sub-page borrows the markup of another page,
+# only colour values are changed here; fonts, sizes, markup and text stay those of the source page.
+# PIC&CLIP WAREHOUSE (map position island-work = work_town.html) -> VIDEO CLIPS, PHOTO WORKS
+YELLOW_SET = """
+    <style>
+        /* colours of the main island: work_town.html (yellow) — :root 12-17, .page-title 53, .section-card 76,
+           .col-title 375, .col-desc 382, .hl 389-404, .cs-pill 412, .proof-grid img 425, .site-footer 449 */
+        :root { --bg-color: #F5B800; --accent: #F5B800; --text-dark: #ffffff; }
+        body, html { background-color: #F5B800; }
+        .page-title { color: #1A1A1A; }
+        .content-card { background: #1A1A1A; color: #fff; }
+        .col-title { color: #F5B800; border-bottom-color: rgba(255,255,255,0.1); }
+        .col-desc { color: rgba(255,255,255,0.72); }
+        .col-desc strong { color: #fff; }
+        .hl li { color: rgba(255,255,255,0.76); border-bottom-color: rgba(255,255,255,0.08); }
+        .hl li::before { color: #F5B800; }
+        .cs-pill, .big-btn { background: #F5B800; color: #1A1A1A; }
+        .photo-slot, .proof-grid-result img, .proof-grid-work img { background: #2a2a2a; }
+        .site-footer { background: #1A1A1A; }
+    </style>
+"""
+# AI&TECH CREATION BRIDGE (map position island-library = learning_bay.html) -> AI TOOLS
+BLUE_SET = """
+    <style>
+        /* colours of the main island: learning_bay.html (blue) — :root 10, body 11, .content-card 18, .col-title 20,
+           .col-desc 21, .res-card 28, .res-name 39, .res-updated 40, .res-dl-btn 41, .hover 122-134 */
+        body, html { background: #1A6BCC; }
+        .page-title { color: #0000; background: linear-gradient(90deg, #4285F4 50%, #ffffff 0) var(--_p, 100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text; transition: .4s; cursor: pointer; }
+        .page-title:hover { --_p: 0%; }
+        .section-card { background: #ffffff; color: #1A1A1A; }
+        .section-title { color: #1155AA; border-bottom-color: #1155AA; }
+        .section-sub, .loading-msg { color: #888; }
+        .ai-card, .proj-card { background: #f5f5f0; border-color: #1A1A1A; color: #1A1A1A; }
+        .ai-title-en, .proj-name-en { color: #1A1A1A; }
+        .ai-title-th, .proj-name-th { color: #999; }
+        .ai-desc, .proj-desc { color: #444; }
+        .ai-cta, .proj-cta { background: #1A1A1A; color: #ffffff; border-color: #1A1A1A; }
+        .col-title { color: #1155AA; }
+        .col-desc { color: #444; }
+    </style>
+"""
+
+
 # ── ABOUT ISLAND group (about_island.html) ───────────────────────────────
 # data-i365="<section slug>" = the block that shows that section's items when the back office has published items
 A = src('about_island.html')
+import profile_content as PC   # owner's text for PROFILE / WORK HISTORY / LIVE COMMERCE (scripts/profile_content.py)
+LANG_TOGGLE = cut(A, '<!-- LANG TOGGLE', '<!-- PROFILE + PHOTO')
+
+
+def set_lang(tl):
+    assert tl.count(PC.SETLANG_OLD) == 1
+    return tl.replace(PC.SETLANG_OLD, PC.SETLANG_NEW, 1)
+
+
+def between(block, start, end, new):
+    a = block.index(start); b = block.index(end, a)
+    return block[:a] + new + block[b:]
+
 A_LANG, A_EXP, A_CORE, A_CASE, A_SALES, A_RES, A_END = (
     '<!-- LANG TOGGLE', '<!-- EXPERIENCE + SKILLS -->', '<!-- CORE SKILLS + PHOTOS + BUTTONS -->',
     '<!-- CASE STUDY -->', '<!-- SALES FIGURES -->', '<!-- RESUME -->', '    </main>')
-guard_lang = lambda tl: tl.replace("setLang('en');", "if (document.getElementById('bio-en')) setLang('en');")
 
-write('about_profile.html', page('about_profile', 'about_island.html', 'PROFILE', 'PROFILE', 'โปรไฟล์ · ตัวฉัน · จุดแข็ง', [
-    cut(A, A_LANG, A_EXP),          # EN/TH toggle + WHO IS JYNE + photo + 6-FIGURE / 20+ / 10Y+
+profile_block = between(cut(A, A_LANG, A_EXP), '<div id="bio-en">', '<!-- PHOTO —', PC.BIO_EN + PC.BIO_TH)
+write('about_profile.html', page('about_profile', 'about_island.html', 'PROFILE', 'PROFILE', '', [
+    profile_block,                  # EN/TH toggle + WHO IS JYNE (owner's text) + photo + 6-FIGURE / 20+ / 10Y+
     cut(A, A_CORE, A_CASE),         # CORE SKILLS list + photos + MORE EXPERIENCE / ANOTHER SKILL
-], 'island_about.html'))
+], 'island_about.html', set_lang))
 
 resume = cut(A, A_RES, A_END).replace(
     '            >\n        </div>',
@@ -108,8 +159,11 @@ resume = cut(A, A_RES, A_END).replace(
     'download target="_blank" style="display:inline-block;padding:14px 40px;border-radius:0">DOWNLOAD RESUME ↓</a>\n'
     '            </div>\n        </div>', 1)
 resume = hook(resume, '<div class="content-card single">', 'resume')
-write('about_experience.html', page('about_experience', 'about_island.html', 'WORK HISTORY', 'WORK<br>HISTORY', 'ประวัติการทำงาน · ไทม์ไลน์ · ใบประกาศ · เรซูเม่', [
-    cut(A, A_EXP, A_CORE),          # EXPERIENCE timeline + CORE SKILLS tags + photos
+write('about_experience.html', page('about_experience', 'about_island.html', 'WORK HISTORY', 'WORK<br>HISTORY', '', [
+    LANG_TOGGLE,                    # EN/TH toggle of about_island.html
+    between(cut(A, A_EXP, A_CORE), '                <div class="tl-item">',
+            '            </div>\n            <div>\n                <h2 class="col-title">CORE SKILLS', PC.experience_html()),
+                                    # EXPERIENCE (owner's text, EN/TH) + EDUCATION + CORE SKILLS tags + photos
     hook(cut(A, A_SALES, A_RES), '<div class="proof-grid-work">', 'previous-work'),   # PREVIOUS WORK EXPERIENCE photos
     """        <!-- CERTIFICATES (added heading — content to come) -->
         <div class="content-card single">
@@ -119,7 +173,7 @@ write('about_experience.html', page('about_experience', 'about_island.html', 'WO
         </div>
 """,
     resume,                         # RESUME (+ download)
-], 'island_about.html', guard_lang))
+], 'island_about.html', set_lang))
 
 WT = src('work_town.html')
 proofs = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/proof\d\.jpg)" alt="([^"]*)"', WT)
@@ -131,10 +185,14 @@ proof_card = """        <!-- RESULT · 2 HRS/LIVE (images from work_town.html) -
             <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
         </div>
 """
-write('about_live.html', page('about_live', 'about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', 'e-commerce Live Streaming', [
-    cut(A, A_CASE, A_SALES),        # JENNY JYNE · CASE STUDY + RESULT (about_island)
+write('about_live.html', page('about_live', 'about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', '', [
+    LANG_TOGGLE,                    # EN/TH toggle of about_island.html
+    between(cut(A, A_CASE, A_SALES), '            <div>\n                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>',
+            '            <div>\n                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>', PC.live_text_html()),
+                                    # LIVE COMMERCE text (owner's, EN/TH) + RESULT screenshots (about_island)
+    PC.RESULTS_CARD,                # SELECTED LIVE RESULTS · GMV + Gallery / Video + Contact (owner's file)
     proof_card,                     # RESULT images from Works Town
-], 'island_about.html', guard_lang))
+], 'island_about.html', set_lang))
 
 # ── PIC&CLIP WAREHOUSE group (work_marina.html) ──────────────────────────
 M = src('work_marina.html')
@@ -146,15 +204,15 @@ soon = lambda items: """        <!-- COMING SOON (added headings — content to 
 """ + ''.join(f'                <li data-i365-soon="{s}">{i}</li>\n' for i, s in items) + """            </ul>
         </div>
 """
-write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS', 'VIDEO<br>CLIPS', 'คลิปวิดีโอ', [
+write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS', 'VIDEO<br>CLIPS', '', [
     hook(cut(M, M_MEDIA, M_VOICE), '<div class="video-grid">', 'live-selling'),   # PORTFOLIO MEDIA — live selling clips
     hook(cut(M, M_VOICE, M_END), '<div class="video-grid">', 'ai-voice'),         # AI VOICE GENERATOR — AI voice & avatar clips
     soon([('ไลฟ์คอนเทนต์', 'live-content'), ('รับทำคอนเทนต์', 'content-work'), ('คลิปสร้างจาก AI', 'ai-clips'),
           ('อีเวนต์ · โปรโมท F&amp;B', 'event-promo')]),
-], 'island_works.html'))
+], 'island_works.html', colours=YELLOW_SET))
 
 results = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/Screenshot%202026[^"]+)"', A)
-write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', 'รูปผลงาน', [
+write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', '', [
     """        <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) -->
         <div class="content-card single">
             <h2 class="col-title">MAKEUP &amp; HAIR · แต่งหน้า · ทำผม</h2>
@@ -171,7 +229,7 @@ write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS
         </div>
 """,
     soon([('อาหาร', 'food'), ('ออกบูธ · อีเวนต์', 'booth-event')]),
-], 'island_works.html'))
+], 'island_works.html', colours=YELLOW_SET))
 
 # ── AI&TECH CREATION BRIDGE group ────────────────────────────────────────
 sec = [m.start() for m in re.finditer(r'    <!-- ═{10,}', WT)]
@@ -189,8 +247,8 @@ def tools_tail(tl):
     return tl.replace('\nloadWorks();\n', f'\n{I365_READY}.then(loadWorks);   /* added: after the back office data */\n', 1)
 
 
-write('learning_tools.html', page('learning_tools', 'work_town.html', 'AI TOOLS', 'AI<br>TOOLS', 'รวมเครื่องมือ / ระบบ ที่ทำงานร่วมกับ AI ด้วยสร้างเองทั้งระบบ',
-    [tools_blocks], 'island_learning.html', tools_tail, card='section'))
+write('learning_tools.html', page('learning_tools', 'work_town.html', 'AI TOOLS', 'AI<br>TOOLS', '',
+    [tools_blocks], 'island_learning.html', tools_tail, card='section', colours=BLUE_SET))
 
 L = src('learning_bay.html')
 
@@ -201,12 +259,12 @@ def docs_tail(tl):
     return tl.replace(find, f"    {I365_READY}.then(function () {{ if (!(window.I365 && I365.filled['free-resources'])) loadResources(); }});   /* added: back office first */\n", 1)
 
 
-write('learning_docs.html', page('learning_docs', 'learning_bay.html', 'DOCUMENTS', 'DOCS &amp;<br>KNOWLEDGE', 'เอกสาร · ความรู้ · เอกสารฟรี · หนังสือ · เทมเพลต · ตารางช่วยงาน',
+write('learning_docs.html', page('learning_docs', 'learning_bay.html', 'DOCUMENTS', 'DOCS &amp;<br>KNOWLEDGE', '',
     [hook(cut(L, '<!-- FREE RESOURCES', '    </main>'), '<div id="res-grid" class="res-grid">', 'free-resources')],
     'island_learning.html', docs_tail))
 
 l_tail = '    </main>\n\n' + L[L.index('    <footer class="site-footer">'):]
-write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESIGN WORKS', 'DESIGN<br>WORKS', 'งานออกแบบ', [
+write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESIGN WORKS', 'DESIGN<br>WORKS', '', [
     """        <!-- WEB DESIGN (link to the Wix site already used on About Island) -->
         <div class="content-card">
             <h2 class="col-title">WEB DESIGN · หน้าเว็บ (Wix)</h2>
@@ -229,7 +287,6 @@ write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESI
 LEAVE_CSS = """
     <style>
         /* added: info sheet + leave-site pop-up (square, no white frame) */
-        .nav-header .main-menu-link { margin-left: auto; }
         .doc-sheet { display: block !important; max-width: 820px; min-height: 60vh; padding: 56px 64px; border-radius: 0; }
         @media (max-width: 640px) { .doc-sheet { padding: 36px 24px; } }
         .doc-meta { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 28px; }
@@ -314,7 +371,7 @@ def academy_tail(tl):
     return with_leave(tl)
 
 
-html = page('academy', 'system_district.html', 'ACADEMY BAY', 'ACADEMY<br>BAY', 'Creatr365 · ความสำเร็จอยู่ในหลักสูตร',
+html = page('academy', 'system_district.html', 'ACADEMY BAY', 'ACADEMY<br>BAY', None,
             [doc_sheet('iDEAS365 · ACADEMY BAY · ข้อมูลเบื้องต้น', 'CREATR365', 'section-heading')], 'index.html', academy_tail, loader=False)
 write('academy.html', html.replace('</head>', LEAVE_CSS + '</head>', 1))
 
@@ -390,31 +447,22 @@ svc_blocks = [
         <div style="display:contents" data-i365="services">
 """ + ''.join(svc_card(s) for s in SVC['services']['items']) + '        </div>\n',
 ]
-html = page('service', 'work_marina.html', 'A SERVICE MANIA', 'A SERVICE<br>MANIA', 'มีบริการอะไรบ้าง', svc_blocks, 'index.html')
+html = page('service', 'work_marina.html', 'A SERVICE MANIA', 'A SERVICE<br>MANIA', None, svc_blocks, 'index.html')
 write('service.html', html.replace('</head>', SVC_CSS + '</head>', 1))
 
-# ── island sub-maps: the island's illustrated map + one floating pin (her polaroid picture) per menu ──
-# Map pictures are her ImageKit links; pin pictures are public/islands/*.jpg. Pin = the % point on the map
-# where the pin's tip touches the building (same %-of-frame idea as Creatr365 Explore's hotspots).
-IDX = src('index.html')
-idx_css = IDX[IDX.index('<style>'):IDX.index('</style>') + len('</style>')]
+# ── island pages (ABOUT ISLAND, PIC&CLIP WAREHOUSE, AI&TECH CREATION BRIDGE) ──────────────────────────
+# Each island page IS that island's original page (site-source/originals): same head CSS, header, logo, page
+# title (font, size, colour, hover sweep), the original English tagline and background colour, and the
+# original BACK. Only the cards are replaced by the island's illustrated map with one pin per menu.
+# Island → original page (from the original index.html): ABOUT ISLAND → about_island.html (orange),
+# PIC&CLIP WAREHOUSE = island-work → work_town.html (yellow), AI&TECH CREATION BRIDGE = island-library → learning_bay.html (blue).
 MAP_URL = 'https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/'
 SUB_CSS = """
     <style>
-        /* sub-map: the island picture with floating pins (square boxes, no white frames) */
-        /* header: island name + MAIN MENU look like the island name badges on the main map (index.html .island-badge) */
-        .submap-title { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 101;
-            font-family: 'Noto Sans Thai', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; color: #000;
-            background: rgba(255,255,255,0.95); padding: 7px 18px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; }
-        .main-menu-link { position: fixed; top: 30px; right: 40px; z-index: 101; font-family: 'Noto Sans Thai', sans-serif;
-            font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; color: #000; background: rgba(255,255,255,0.95);
-            padding: 7px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-        .main-menu-link:hover { color: #0000;
-            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
-        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; overflow: hidden; }
-        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); }
-        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+        /* added: the island map with floating pins, under the page title (square boxes, no white frames) */
+        .sub-wrap { width: 100%; max-width: 1000px; margin: 0 auto; }
+        .sub-stage { position: relative; width: 100%; aspect-ratio: var(--ar); }
+        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
 
         /* pins: polaroid picture on a stem; the tip touches the building */
         .pin { position: absolute; width: 8.5%; min-width: 46px; transform: translate(-50%, -100%); text-decoration: none; z-index: 5; }
@@ -422,24 +470,26 @@ SUB_CSS = """
         .pin:nth-of-type(2) .pin-float { animation-delay: -1.1s; }
         .pin:nth-of-type(3) .pin-float { animation-delay: -2.2s; }
         @keyframes pinFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); transition: transform 0.25s; }
+        .pin-img { display: block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.35)); }
         .pin-stem { display: block; width: 3px; height: 18px; margin: 0 auto; background: #1A1A1A; }
         .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
-        .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
-        .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
-        /* pin name: pops up like the island tooltip on the main map (same size, timing and bounce), small square black label */
+        /* hover = the main map's island hover (index.html .island:hover): lifts up 8px, 1.05x, brighter, white glow */
+        .pin-float { transition: all 0.4s ease-out; }
+        .pin:hover .pin-float, .pin:focus-visible .pin-float { scale: 1.05; margin-top: -8px;
+            filter: brightness(1.1) drop-shadow(0 20px 25px rgba(255, 255, 255, 0.35)); }
+        /* pin name: small square black label, name only, pops up with the main map tooltip's bounce */
         .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%) scale(0.3); transform-origin: bottom center;
             background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; border-radius: 0; white-space: nowrap;
-            font-family: 'Noto Sans Thai', sans-serif; font-size: 12px; font-weight: 600; line-height: 1.3;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0.5px; line-height: 1.3;
             opacity: 0; visibility: hidden; pointer-events: none; z-index: 10;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-10px) scale(1); }
         .sub-list { display: none; }
 
-        /* arrival: cotton clouds part to the left and right, the island comes into focus, then the pins pop in.
+        /* arrival: cotton clouds over the map part left and right, the map comes into focus, then the pins pop in.
            Full version once per visit (sessionStorage); coming back to the page only fades in. */
-        .sub-intro { position: absolute; inset: -8% -4%; z-index: 20; pointer-events: none; }
-        .sub-haze { position: absolute; inset: 8% 4%; background: linear-gradient(180deg, #cfe9f8 0%, #eef8fe 100%); transition: opacity 1.1s ease 0.35s; }
+        .sub-intro { position: absolute; inset: 0; overflow: hidden; z-index: 20; pointer-events: none; }
+        .sub-haze { position: absolute; inset: 0; background: linear-gradient(180deg, #cfe9f8 0%, #eef8fe 100%); transition: opacity 1.1s ease 0.35s; }
         .cloud-pack { position: absolute; top: 0; bottom: 0; width: 60%; transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1) 0.15s, opacity 0.9s ease 1.3s; }
         .cloud-pack.left { left: 0; } .cloud-pack.right { right: 0; }
         .cloud { position: absolute; display: block; height: auto; filter: drop-shadow(0 10px 14px rgba(70, 120, 170, 0.22)); animation: cloudBob 6s ease-in-out infinite; }
@@ -451,7 +501,6 @@ SUB_CSS = """
         .sub-loading i:nth-child(3) { background: #F5B800; animation-delay: 0.24s; } .sub-loading i:nth-child(4) { background: #34A853; animation-delay: 0.36s; }
         @keyframes dotHop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } }
         .sub-stage.is-loading .sub-loading { opacity: 1; }
-
         .sub-stage .sub-map { opacity: 0; filter: blur(14px) saturate(0.7); transform: scale(1.05);
             transition: opacity 1.3s ease 0.45s, filter 1.7s ease 0.45s, transform 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
         .sub-stage .pin { opacity: 0; transform: translate(-50%, -100%) scale(0.6);
@@ -463,37 +512,25 @@ SUB_CSS = """
         .sub-stage.is-ready .cloud-pack.left { transform: translateX(-118%); opacity: 0; }
         .sub-stage.is-ready .cloud-pack.right { transform: translateX(118%); opacity: 0; }
         .sub-stage.is-ready .sub-loading { opacity: 0; }
-        /* coming back to the page in the same visit: no clouds, short fade */
         .sub-stage.quick .sub-intro { display: none; }
         .sub-stage.quick .sub-map { filter: none; transform: none; transition: opacity 0.45s ease; }
         .sub-stage.quick .pin { transition: opacity 0.35s ease 0.2s, transform 0.45s ease 0.2s; }
         @media (prefers-reduced-motion: reduce) {
             .sub-intro { display: none; }
-            .sub-stage .sub-map, .sub-stage .pin { filter: none; transform: translate(0, 0); transition: opacity 0.3s ease; }
-            .sub-stage .pin, .sub-stage.is-ready .pin { transform: translate(-50%, -100%); }
+            .sub-stage .sub-map { filter: none; transform: none; transition: opacity 0.3s ease; }
+            .sub-stage .pin, .sub-stage.is-ready .pin { transform: translate(-50%, -100%); transition: opacity 0.3s ease; }
             .pin-float, .cloud { animation: none; }
         }
-
-        .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
-        .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
-        .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
-            .main-menu-link { top: 12px; right: 16px; }
-            .submap-title { top: 62px; font-size: 13px; }
-            .sub-wrap { position: static; display: block; padding: 136px 0 110px; overflow: hidden; }
-            .sub-intro { inset: 0; overflow: hidden; }                       /* phones: clouds stay over the map, not the menu below */
-            .sub-stage { width: 100%; }
             .pin-stem { height: 8px; } .pin-dot { width: 8px; height: 8px; }
             .pin-pop { display: none; }
             /* phones: a plain menu under the map (names only, like the pins) */
-            .sub-list { display: block; margin: 18px 16px 0; }
+            .sub-list { display: block; margin: 18px 0 0; }
             .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px;
                 font-family: 'Noto Sans Thai', sans-serif; font-size: 1rem; font-weight: 600; }
         }
     </style>
 """
-BACK_IMG = 'https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277'
-
 # one puffy cotton cloud (own drawing: overlapping round puffs, each shaded white → pale blue at its edge)
 CLOUD_SVG = ('<svg class="cloud" viewBox="0 0 240 150" style="{pos}" aria-hidden="true">'
              '<use href="#i365-cloud"/></svg>')
@@ -540,76 +577,60 @@ SUB_JS = """
 """
 
 
-def submap(name, title, map_file, ratio, pins):
+
+
+def island(name, file, title_tag, h1, map_file, ratio, pins):
     pin_html, list_html = [], []
     for href, label, pin_img, (x, y) in pins:
-        pin_html.append(f"""            <a href="{href}" class="pin" style="left:{x}%;top:{y}%" aria-label="{label}">
-                <span class="pin-pop">{label}</span>
-                <span class="pin-float"><img class="pin-img" src="islands/{pin_img}" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
-            </a>""")
-        list_html.append(f'            <a href="{href}">{label}</a>')
+        pin_html.append(f"""                <a href="{href}" class="pin" style="left:{x}%;top:{y}%" aria-label="{label}">
+                    <span class="pin-pop">{label}</span>
+                    <span class="pin-float"><img class="pin-img" src="islands/{pin_img}" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
+                </a>""")
+        list_html.append(f'                <a href="{href}">{label}</a>')
     clouds_l = ''.join(CLOUD_SVG.format(pos=p) for p in CLOUDS_LEFT)
     clouds_r = ''.join(CLOUD_SVG.format(pos=p) for p in CLOUDS_RIGHT)
-    html = f"""<!DOCTYPE html>
-<html lang="th">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{title.replace('&amp;', '&')} - iDEAS365</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap"
-        rel="stylesheet">
-    {idx_css}
-{SUB_CSS}
-</head>
-
-<body>
-{CLOUD_DEFS}    <header class="nav-header">
-        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
-            class="logo-img"></a>
-    </header>
-    <div class="submap-title">{title}</div>
-    {MENU_LINK}
-
-    <main class="sub-wrap">
-        <div class="sub-stage" style="--ar:{ratio}">
-            <img class="sub-map" src="{MAP_URL}{map_file}" alt="{title}">
+    block = f"""        <!-- added: the island map (one pin per menu) -->
+{CLOUD_DEFS}        <div class="sub-wrap">
+            <div class="sub-stage" style="--ar:{ratio}">
+                <img class="sub-map" src="{MAP_URL}{map_file}" alt="{title_tag}">
 {chr(10).join(pin_html)}
-            <div class="sub-intro" aria-hidden="true">
-                <div class="sub-haze"></div>
-                <div class="cloud-pack left">{clouds_l}</div>
-                <div class="cloud-pack right">{clouds_r}</div>
-                <div class="sub-loading"><i></i><i></i><i></i><i></i></div>
+                <div class="sub-intro" aria-hidden="true">
+                    <div class="sub-haze"></div>
+                    <div class="cloud-pack left">{clouds_l}</div>
+                    <div class="cloud-pack right">{clouds_r}</div>
+                    <div class="sub-loading"><i></i><i></i><i></i><i></i></div>
+                </div>
             </div>
-        </div>
-        <nav class="sub-list" aria-label="{title}">
+            <nav class="sub-list" aria-label="{title_tag}">
 {chr(10).join(list_html)}
-        </nav>
-    </main>
-
-    <a href="index.html" class="back-fixed" onclick="return goBack(this.href)"><img src="{BACK_IMG}" alt="Back"></a>
-{BACK_JS}{SUB_JS}</body>
-
-</html>
+            </nav>
+        </div>
 """
+    t = src(file)
+    tail = re.sub(r'\s*<script\b.*?</script>', '', t[t.index('</main>'):], flags=re.S)   # the page's own scripts (sheet loaders …) are not needed here
+    html = page(None, file, title_tag, h1, None, [block], 'index.html', tail=tail, loader=False)   # sub=None: the original tagline
+    html = html.replace('</head>', SUB_CSS + '</head>', 1).replace('</body>', SUB_JS + '</body>', 1)
     write(name, html)
 
 
-#        page                       pin name (the only text on the pin)   pin picture   tip on the map (x%, y%)
-submap('island_about.html', 'ABOUT ISLAND', 'sub-about-me.jpg', '2048 / 1152', [
+#      page                  original page (colours, title, tagline)  title on the page                map picture          ratio
+island('island_about.html', 'about_island.html', 'ABOUT ISLAND', 'ABOUT<br>ISLAND', 'sub-about-me.jpg', '2048 / 1152', [
     ('about_profile.html', 'โปรไฟล์', 'A1.jpg', (58, 54)),                        # church cluster
     ('about_experience.html', 'ประวัติการทำงาน', 'A2.jpg', (92, 30)),             # planetarium
     ('about_live.html', 'e-commerce Live Streaming', 'A3.jpg', (28, 26)),          # round parking tower
 ])
-submap('island_works.html', 'PIC&amp;CLIP WAREHOUSE', 'sub-pic-clip.jpg', '2048 / 1152', [
+island('island_works.html', 'work_town.html', 'PIC&CLIP WAREHOUSE', 'PIC&amp;CLIP<br>WAREHOUSE', 'sub-pic-clip.jpg', '2048 / 1152', [
     ('works_clips.html', 'คลิปวิดีโอ', 'P1.jpg', (65, 50)),                        # Film Studio Warehouse
     ('works_photos.html', 'รูปผลงาน', 'P2.jpg', (50, 50)),                         # Dragon Theatre
 ])
-submap('island_learning.html', 'AI&amp;TECH CREATION BRIDGE', 'sub-ai.webp', '1920 / 1280', [
+island('island_learning.html', 'learning_bay.html', 'AI&TECH CREATION BRIDGE', 'AI&amp;TECH<br>CREATION BRIDGE', 'sub-ai.webp', '1920 / 1280', [
     ('learning_tools.html', 'รวมเครื่องมือ / ระบบ AI', 'ai1.jpg', (43, 36)),       # LAB 01
-    ('learning_docs.html', 'เอกสาร · ความรู้', 'ai2.jpg', (27, 17)),               # observatory
+    ('learning_docs.html', 'เอกสาร · ความรู้', 'ai2.jpg', (13.5, 59)),             # SERVER building (lower left)
     ('learning_design.html', 'งานออกแบบ', 'ai3.jpg', (75, 37)),                     # Data & Signal
 ])
+
+IDX = src('index.html')
+idx_css = IDX[IDX.index('<style>'):IDX.index('</style>') + len('</style>')]
 
 # ── 404 (COMMUNITY HARBOR for now, and any address that does not exist) ─────────────────────────
 # Vercel serves 404.html for unknown addresses; the map's COMMUNITY HARBOR links to community.html,
