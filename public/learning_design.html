@@ -140,6 +140,21 @@
         /* added: page title letters set tight (owner's reference) */
         .page-title { letter-spacing: -0.015em; line-height: 0.86; }
     </style>
+
+    <style>
+        /* colours: DESIGN WORKS = white page set (blog.html) */
+        :root { --blog-blue: #4285F4; --blog-yellow: #F5B800; --blog-green: #34A853; --blog-red: #EA4335; }
+        body, html { background-color: #ffffff; color: #1A1A1A; }
+        .page-title.hover { background-image: linear-gradient(90deg, #4285F4 50%, #1A1A1A 0); }
+        main > .content-card { background-color: #ffffff; border: 3px solid; border-radius: 16px; padding: 30px;
+            box-shadow: 6px 6px 0px var(--c); border-color: var(--c); transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; }
+        main > .content-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px var(--c); }
+        main > .content-card:nth-of-type(4n+1) { --c: var(--blog-blue); }
+        main > .content-card:nth-of-type(4n+2) { --c: var(--blog-yellow); }
+        main > .content-card:nth-of-type(4n+3) { --c: var(--blog-green); }
+        main > .content-card:nth-of-type(4n+4) { --c: var(--blog-red); }
+        main > .content-card .col-title { color: #1A1A1A; border-bottom-color: var(--c); }
+    </style>
     <script src="i365-content.js" data-page="learning_design" data-card="content"></script>
 </head>
 <body>

@@ -51,10 +51,10 @@ def cut(text, start, end):
     return text[a:b]
 
 
-def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True):
+def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True, colours=''):
     t = src(file)
     head_end = t.index('</head>')
-    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS
+    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS + colours
     if loader: head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
@@ -79,6 +79,35 @@ def write(name, html):
     assert ('data-page="' + name[:-5] + '"') in html or name.startswith('island_') or name in NO_DB_PAGES, name
     (OUT / name).write_text(html, encoding='utf-8')
     print('wrote', name, len(html))
+
+
+# Page colours where the page's colour set differs from the page its markup comes from.
+# The colour set of each page is the one stored for it in the back office (i365_islands.theme,
+# presets ported from the original pages): photos = district (green), design = blog (white).
+# Only colour values change here; markup, fonts and sizes stay those of the source page.
+GREEN_COLOURS = """
+    <style>
+        /* colours: PHOTO WORKS = green set (system_district.html) */
+        :root { --bg-color: #1E7A3E; --accent: #1E7A3E; }
+        .cs-pill, .big-btn { background: #1E7A3E; }
+    </style>
+"""
+WHITE_COLOURS = """
+    <style>
+        /* colours: DESIGN WORKS = white page set (blog.html) */
+        :root { --blog-blue: #4285F4; --blog-yellow: #F5B800; --blog-green: #34A853; --blog-red: #EA4335; }
+        body, html { background-color: #ffffff; color: #1A1A1A; }
+        .page-title.hover { background-image: linear-gradient(90deg, #4285F4 50%, #1A1A1A 0); }
+        main > .content-card { background-color: #ffffff; border: 3px solid; border-radius: 16px; padding: 30px;
+            box-shadow: 6px 6px 0px var(--c); border-color: var(--c); transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; }
+        main > .content-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px var(--c); }
+        main > .content-card:nth-of-type(4n+1) { --c: var(--blog-blue); }
+        main > .content-card:nth-of-type(4n+2) { --c: var(--blog-yellow); }
+        main > .content-card:nth-of-type(4n+3) { --c: var(--blog-green); }
+        main > .content-card:nth-of-type(4n+4) { --c: var(--blog-red); }
+        main > .content-card .col-title { color: #1A1A1A; border-bottom-color: var(--c); }
+    </style>
+"""
 
 
 # ── ABOUT ISLAND group (about_island.html) ───────────────────────────────
@@ -164,7 +193,7 @@ write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS
         </div>
 """,
     soon([('อาหาร', 'food'), ('ออกบูธ · อีเวนต์', 'booth-event')]),
-], 'island_works.html'))
+], 'island_works.html', colours=GREEN_COLOURS))
 
 # ── AI&TECH CREATION BRIDGE group ────────────────────────────────────────
 sec = [m.start() for m in re.finditer(r'    <!-- ═{10,}', WT)]
@@ -215,7 +244,7 @@ write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESI
             <p class="col-desc"><span data-i365-soon="creative" style="display:block">Creative · กราฟิก</span><span data-i365-soon="marketing-plans" style="display:block">แผนคอนเทนต์การตลาด</span></p>
         </div>
 """,
-], 'island_learning.html', tail=l_tail))
+], 'island_learning.html', tail=l_tail, colours=WHITE_COLOURS))
 
 # ── ACADEMY BAY / A SERVICE MANIA: info page (like a plain PDF sheet) + button to the other site ──────
 # The button asks first (pop-up) — the visitor accepts, then goes. Content of the sheet comes later.
