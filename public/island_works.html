@@ -1,349 +1,509 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PIC&CLIP WAREHOUSE - iDEAS365</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         :root {
-            --island-shadow: drop-shadow(0 12px 15px rgba(0, 0, 0, 0.35));
-            --transition-smooth: all 0.4s ease-out;
+            --yellow:   #F5B800;
+            --dark:     #1A1A1A;
+            --card-bg:  #222222;
+            --inner-bg: #2c2c2c;
+            --border:   rgba(255,255,255,0.1);
+            --muted:    rgba(255,255,255,0.5);
         }
 
-        body,
-        html {
-            margin: 0;
-            padding: 0;
+        body, html {
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             font-family: 'Noto Sans Thai', sans-serif;
-            background-image: url('https://ik.imagekit.io/ideas365logo/background_mix.png?updatedAt=1772818424869');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: #6FB3D2;
-            overflow: hidden;
-            /* desktop: no scroll */
+            background: var(--yellow);
+            color: #fff;
+            overflow-x: hidden;
         }
+        * { font-family: inherit; }
 
-        * {
-            font-family: inherit;
-        }
-
-        /* LOGO — มุมบนซ้าย */
+        /* ═══════════════ NAV ═══════════════ */
         .nav-header {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 40%;
-            padding: 25px 40px;
-            display: flex;
-            justify-content: flex-start;
+            top: 0; left: 0; width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
-            z-index: 100;
-            pointer-events: none;
+            padding: 16px 36px;
+            z-index: 200;
+        }
+        .logo-img { height: 40px; display: block; }
+        .back-btn img { height: 44px; width: auto; display: block; }
+
+        /* ═══════════════ HERO ═══════════════ */
+        .hero {
+            padding: 130px 24px 56px;
+            text-align: center;
+        }
+        .page-title {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: clamp(5rem, 13vw, 9rem);
+            line-height: 0.87;
+            text-transform: uppercase;
+            color: var(--dark);
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--dark);
+            opacity: 0.65;
+            font-weight: 400;
         }
 
-        .logo-img {
-            height: 45px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-            pointer-events: auto;
-        }
-
-        #view-map {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .map-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1400px;
-            height: 100vh;
+        /* ═══════════════ MAIN CONTAINER ═══════════════ */
+        .main-content {
+            max-width: 1160px;
             margin: 0 auto;
-        }
-
-        .island {
-            position: absolute;
-            cursor: pointer;
+            padding: 0 24px 80px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            filter: var(--island-shadow);
-            transform-origin: center bottom;
-            text-decoration: none;
-            transition: var(--transition-smooth);
+            gap: 26px;
         }
 
-        @keyframes individualFloat {
-
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-8px) rotate(0.4deg);
-            }
-        }
-
-        /* 🏝️ Desktop positions — ไม่แตะเลย */
-        #island-system {
-            top: 20%;
-            left: 42%;
-            width: 17%;
-            animation: individualFloat 7s ease-in-out infinite;
-        }
-
-        #island-profile {
-            top: 26%;
-            left: 16%;
-            width: 20%;
-            animation: individualFloat 8s ease-in-out infinite;
-        }
-
-        #island-work {
-            top: 28%;
-            right: 16%;
-            width: 20%;
-            animation: individualFloat 9s ease-in-out infinite;
-            animation-delay: -0.5s;
-        }
-
-        #island-library {
-            top: 56%;
-            left: 10%;
-            width: 20%;
-            animation: individualFloat 7.5s ease-in-out infinite;
-            animation-delay: 0.8s;
-        }
-
-        #island-blog {
-            bottom: 8%;
-            left: 43%;
-            width: 20%;
-            animation: individualFloat 8.5s ease-in-out infinite;
-            animation-delay: -1.2s;
-        }
-
-        #island-contact {
-            bottom: 0;
-            right: 5%;
-            width: 27%;
-            animation: none;
-            filter: drop-shadow(0 -8px 12px rgba(0, 0, 0, 0.2));
-        }
-
-        #island-marina {
-            top: 48%;
-            right: 0%;
-            width: 16%;
-            animation: individualFloat 8.2s ease-in-out infinite;
-            animation-delay: -2s;
-        }
-
-        .island:hover {
-            scale: 1.05;
-            margin-top: -8px;
-            filter: brightness(1.1) drop-shadow(0 20px 25px rgba(255, 255, 255, 0.35));
-            z-index: 100;
-        }
-
-        .island img {
+        /* ═══════════════ SECTION CARD ═══════════════ */
+        .section-card {
+            background: var(--dark);
+            border-radius: 22px;
+            padding: 42px 42px 48px;
             width: 100%;
-            height: auto;
+        }
+        .section-head {
+            margin-bottom: 28px;
+        }
+        .section-title {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1.75rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            padding-bottom: 12px;
+            border-bottom: 1.5px solid rgba(255,255,255,0.1);
+            margin-bottom: 6px;
+        }
+        .section-sub {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 300;
+            padding-top: 4px;
+        }
+
+        /* ═══════════════ BADGE ═══════════════ */
+        .badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+        .badge-ai       { background: rgba(251,188,5,0.18);   color: #FBBC05; }
+        .badge-live     { background: rgba(234,67,53,0.18);   color: #ff6b6b; }
+        .badge-biz      { background: rgba(52,168,83,0.18);   color: #5bdb8a; }
+        .badge-sys      { background: rgba(100,180,255,0.15); color: #7ec8ff; }
+        .badge-soon     { background: rgba(255,255,255,0.08); color: #888; }
+        .badge-creative { background: rgba(180,130,255,0.18); color: #c9a0ff; }
+        .badge-sold     { background: rgba(255,80,80,0.15);   color: #ff7070; }
+
+        /* ═══════════════════════════════════════════════════
+           SECTION 1 — AI CARDS  3-col · portrait · no shadow
+        ═══════════════════════════════════════════════════ */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .ai-card {
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover transition */
+        }
+        .ai-card.coming  { opacity: 0.45; pointer-events: none; }
+        .ai-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Portrait cover 3:4 */
+        .ai-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            position: relative;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
+        }
+        .ai-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .ai-cover-placeholder {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(160deg, #303030 0%, #262626 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            opacity: 0.18;
+            flex-shrink: 0;
+        }
+        /* Logo chip — overlaid top-left on cover */
+        .ai-logo-chip {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.55);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-logo-chip img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        /* Badge chip — overlaid top-right */
+        .ai-badge-chip {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Card body */
+        .ai-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ai-title-en {
+            font-weight: 700;
+            font-size: 0.97rem;
+            line-height: 1.25;
+            color: #fff;
+        }
+        .ai-title-th {
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .ai-desc {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.58);
+            font-weight: 300;
+            margin-top: 8px;
+            flex: 1;
+        }
+
+        /* CTA button — no hover */
+        .ai-footer {
+            padding: 10px 18px 18px;
+        }
+        .ai-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 9px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.28);
+            font-size: 0.67rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           SECTIONS 2 & 3 — PROJECT CARDS  3-col · no shadow
+        ═══════════════════════════════════════════════════ */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .proj-card {
+            background: var(--inner-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: #fff;
+            /* NO box-shadow · NO hover */
+        }
+        .proj-card.coming  { opacity: 0.45; pointer-events: none; }
+        .proj-card.soldout { opacity: 0.45; pointer-events: none; }
+
+        /* Optional 16:9 cover */
+        .proj-cover {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #333;
+            flex-shrink: 0;
+        }
+        .proj-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
-        /* Badge */
-        .island-badge {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            color: #000;
-            padding: 4px 6px;
-            border-radius: 16px;
-            font-size: 10px;
-            font-weight: 600;
-            top: -28px;
-            white-space: nowrap;
-            transition: var(--transition-smooth);
-            z-index: 10;
+        .proj-body {
+            padding: 16px 18px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
-        /* Gradient text sweep on badge hover */
-        .island:hover .island-badge {
-            color: #0000;
-            background:
-                linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%)
-                var(--_p, 100%) / 200% no-repeat,
-                rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box;
-            background-clip: text, padding-box;
-            --_p: 0%;
+        .proj-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
         }
-
-        /* 💬 Tooltip ::after — desktop hover */
-        .island::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.3);
-            transform-origin: bottom center;
-            background: #ffffff;
-            color: #000;
-            padding: 8px 10px;
+        .proj-logo {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            border-radius: 7px;
+        }
+        .proj-name-en {
+            font-weight: 700;
+            font-size: 0.93rem;
+            line-height: 1.28;
+        }
+        .proj-name-th {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+        .proj-desc {
+            font-size: 0.77rem;
+            line-height: 1.58;
+            color: rgba(255,255,255,0.57);
+            font-weight: 300;
+            margin-top: 6px;
+            flex: 1;
+        }
+        .proj-footer {
+            padding: 10px 18px 18px;
+        }
+        .proj-cta {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 8px 14px;
             border-radius: 30px;
-            font-size: 9px;
-            font-weight: 650;
-            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            background: transparent;
+        }
+
+        /* ═══════════════ VIDEO GRID ═══════════════ */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .video-wrap {
+            display: block;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            position: relative;
+            text-decoration: none;
+        }
+        .video-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .yt-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             pointer-events: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 200;
-            border: 1px solid #000;
-            box-shadow: 2px 2px 0 #000;
+        }
+        .yt-play svg { width: 56px; height: 40px; }
+
+        /* ═══════════════ CASE STUDY ═══════════════ */
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .col-title {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1.65rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .col-desc {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .hl { list-style: none; padding: 0; }
+        .hl li {
+            font-size: 0.84rem;
+            line-height: 1.65;
+            padding: 8px 0 8px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            color: rgba(255,255,255,0.76);
+            font-weight: 300;
+        }
+        .hl li:last-child { border-bottom: none; }
+        .hl li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--yellow);
+            font-weight: 700;
+        }
+        .cs-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .cs-pill {
+            background: var(--yellow);
+            color: var(--dark);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .proof-grid img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            background: #2a2a2a;
+            min-height: 80px;
+        }
+        .proof-caption {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 10px;
         }
 
-        .island:hover::after {
-            opacity: 1;
-            visibility: visible;
-            top: -55px;
-            /* สูงกว่า badge → ไม่ทับ */
-            transform: translateX(-50%) scale(1);
+        /* ═══════════════ LOADING ═══════════════ */
+        .loading-msg {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.84rem;
+            text-align: center;
+            padding: 32px 0;
+            grid-column: 1 / -1;
         }
 
-        /* ============================================================
-           📱 MOBILE FIXES — แก้เฉพาะส่วนนี้ ไม่ยุ่ง desktop เลย
-           ============================================================ */
-        @media (max-width: 768px) {
+        /* ═══════════════ FOOTER ═══════════════ */
+        .site-footer {
+            background: var(--dark);
+            color: #fff;
+            text-align: center;
+            padding: 48px 20px 24px;
+            margin-top: 10px;
+        }
+        .footer-brand {
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .dot-r { color: #EA4335; }
+        .dot-g { color: #34A853; }
+        .dot-b { color: #4285F4; }
+        .dot-y { color: #FBBC05; }
+        .footer-tagline {
+            font-size: 0.73rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 26px;
+        }
+        .footer-copy {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.25);
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 18px;
+        }
 
-            /* 1. เปิด scroll — แก้ contact หาย */
-            body,
-            html {
-                overflow: auto !important;
-                height: auto !important;
-            }
-
-            #view-map {
-                position: relative !important;
-                height: auto !important;
-                display: block !important;
-            }
-
-            .map-wrapper {
-                height: 1580px !important;
-                width: 100% !important;
-            }
-
-            /* 2. ซ่อน tooltip บนมือถือ (touch ทำให้ค้าง) */
-            .island::after,
-            .island:hover::after {
-                display: none !important;
-            }
-
-            /* 3. Logo */
-            .nav-header {
-                padding: 10px 16px;
-                width: 60%;
-            }
-
-            .logo-img {
-                height: 32px;
-            }
-
-            /* 4. เกาะ — ปิด float, ขยายขนาด */
-            .island {
-                animation: none !important;
-                width: 55% !important;
-            }
-
-            /* zigzag: About(ซ้าย) → Works(ขวา) → Academe(ซ้าย) → Learning(ขวา) → Blog(กลาง-ซ้าย) → Contact(ขวา) */
-            #island-profile {
-                top: 3% !important;
-                left: 3% !important;
-                right: auto !important;
-                bottom: auto !important;
-            }
-
-            #island-work {
-                top: 16% !important;
-                right: 3% !important;
-                left: auto !important;
-                bottom: auto !important;
-            }
-
-            #island-system {
-                top: 30% !important;
-                left: 3% !important;
-                right: auto !important;
-                bottom: auto !important;
-            }
-
-            #island-library {
-                top: 44% !important;
-                right: 3% !important;
-                left: auto !important;
-                bottom: auto !important;
-            }
-
-            #island-blog {
-                top: 58% !important;
-                left: 10% !important;
-                right: auto !important;
-                bottom: auto !important;
-            }
-
-            #island-contact {
-                top: 86% !important;
-                left: 10% !important;
-                right: auto !important;
-                bottom: auto !important;
-                filter: var(--island-shadow) !important;
-            }
-
-            #island-marina {
-                top: 73% !important;
-                right: 3% !important;
-                left: auto !important;
-                bottom: auto !important;
-            }
-
-            /* 5. Badge */
-            .island-badge {
-                font-size: 10px !important;
-                padding: 4px 10px !important;
-                top: -28px !important;
-            }
+        /* ═══════════════ RESPONSIVE ═══════════════ */
+        @media (max-width: 1024px) {
+            .ai-grid  { grid-template-columns: repeat(2, 1fr); }
+            .proj-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .nav-header { padding: 12px 18px; }
+            .logo-img   { height: 32px; }
+            .back-btn img { height: 36px; }
+            .hero { padding: 95px 20px 36px; }
+            .page-title { font-size: clamp(3.5rem, 15vw, 5.5rem); }
+            .main-content { padding: 0 14px 56px; gap: 18px; }
+            .section-card { padding: 26px 20px 32px; border-radius: 18px; }
+            .section-title { font-size: 1.35rem; }
+            .ai-grid,
+            .proj-grid,
+            .video-grid,
+            .case-grid,
+            .proof-grid { grid-template-columns: 1fr; }
         }
     </style>
 
     <style>
-        /* sub-map: the island picture with floating pins (square boxes, no white frames) */
-        /* header: island name + MAIN MENU look like the island name badges on the main map (index.html .island-badge) */
-        .submap-title { position: fixed; top: 28px; left: 50%; transform: translateX(-50%); z-index: 101;
-            font-family: 'Noto Sans Thai', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.5px; color: #000;
-            background: rgba(255,255,255,0.95); padding: 7px 18px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; }
-        .main-menu-link { position: fixed; top: 30px; right: 40px; z-index: 101; font-family: 'Noto Sans Thai', sans-serif;
-            font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; color: #000; background: rgba(255,255,255,0.95);
-            padding: 7px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-        .main-menu-link:hover { color: #0000;
-            background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-            -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
-        .sub-wrap { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; padding: 84px 16px 24px; box-sizing: border-box; overflow: hidden; }
-        .sub-stage { position: relative; width: min(100%, calc((100vh - 108px) * var(--ar))); aspect-ratio: var(--ar); }
-        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+        /* added: the island map with floating pins, under the page title (square boxes, no white frames) */
+        .sub-wrap { width: 100%; max-width: 1000px; margin: 0 auto; }
+        .sub-stage { position: relative; width: 100%; aspect-ratio: var(--ar); }
+        .sub-map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
 
         /* pins: polaroid picture on a stem; the tip touches the building */
         .pin { position: absolute; width: 8.5%; min-width: 46px; transform: translate(-50%, -100%); text-decoration: none; z-index: 5; }
@@ -356,19 +516,19 @@
         .pin-dot { display: block; width: 12px; height: 12px; margin: -2px auto 0; background: #CC0033; border: 2px solid #1A1A1A; border-radius: 50%; }
         .pin:hover .pin-float, .pin:focus-visible .pin-float { animation-play-state: paused; }
         .pin:hover .pin-img, .pin:focus-visible .pin-img { transform: scale(1.1); }
-        /* pin name: pops up like the island tooltip on the main map (same size, timing and bounce), small square black label */
+        /* pin name: small square black label, name only, pops up with the main map tooltip's bounce */
         .pin-pop { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%) scale(0.3); transform-origin: bottom center;
             background: rgba(0,0,0,0.85); color: #fff; padding: 6px 10px; border-radius: 0; white-space: nowrap;
-            font-family: 'Noto Sans Thai', sans-serif; font-size: 12px; font-weight: 600; line-height: 1.3;
+            font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 400; letter-spacing: 0.5px; line-height: 1.3;
             opacity: 0; visibility: hidden; pointer-events: none; z-index: 10;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         .pin:hover .pin-pop, .pin:focus-visible .pin-pop { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-10px) scale(1); }
         .sub-list { display: none; }
 
-        /* arrival: cotton clouds part to the left and right, the island comes into focus, then the pins pop in.
+        /* arrival: cotton clouds over the map part left and right, the map comes into focus, then the pins pop in.
            Full version once per visit (sessionStorage); coming back to the page only fades in. */
-        .sub-intro { position: absolute; inset: -8% -4%; z-index: 20; pointer-events: none; }
-        .sub-haze { position: absolute; inset: 8% 4%; background: linear-gradient(180deg, #cfe9f8 0%, #eef8fe 100%); transition: opacity 1.1s ease 0.35s; }
+        .sub-intro { position: absolute; inset: 0; overflow: hidden; z-index: 20; pointer-events: none; }
+        .sub-haze { position: absolute; inset: 0; background: linear-gradient(180deg, #cfe9f8 0%, #eef8fe 100%); transition: opacity 1.1s ease 0.35s; }
         .cloud-pack { position: absolute; top: 0; bottom: 0; width: 60%; transition: transform 2s cubic-bezier(0.65, 0, 0.35, 1) 0.15s, opacity 0.9s ease 1.3s; }
         .cloud-pack.left { left: 0; } .cloud-pack.right { right: 0; }
         .cloud { position: absolute; display: block; height: auto; filter: drop-shadow(0 10px 14px rgba(70, 120, 170, 0.22)); animation: cloudBob 6s ease-in-out infinite; }
@@ -380,7 +540,6 @@
         .sub-loading i:nth-child(3) { background: #F5B800; animation-delay: 0.24s; } .sub-loading i:nth-child(4) { background: #34A853; animation-delay: 0.36s; }
         @keyframes dotHop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-9px); } }
         .sub-stage.is-loading .sub-loading { opacity: 1; }
-
         .sub-stage .sub-map { opacity: 0; filter: blur(14px) saturate(0.7); transform: scale(1.05);
             transition: opacity 1.3s ease 0.45s, filter 1.7s ease 0.45s, transform 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s; }
         .sub-stage .pin { opacity: 0; transform: translate(-50%, -100%) scale(0.6);
@@ -392,38 +551,44 @@
         .sub-stage.is-ready .cloud-pack.left { transform: translateX(-118%); opacity: 0; }
         .sub-stage.is-ready .cloud-pack.right { transform: translateX(118%); opacity: 0; }
         .sub-stage.is-ready .sub-loading { opacity: 0; }
-        /* coming back to the page in the same visit: no clouds, short fade */
         .sub-stage.quick .sub-intro { display: none; }
         .sub-stage.quick .sub-map { filter: none; transform: none; transition: opacity 0.45s ease; }
         .sub-stage.quick .pin { transition: opacity 0.35s ease 0.2s, transform 0.45s ease 0.2s; }
         @media (prefers-reduced-motion: reduce) {
             .sub-intro { display: none; }
-            .sub-stage .sub-map, .sub-stage .pin { filter: none; transform: translate(0, 0); transition: opacity 0.3s ease; }
-            .sub-stage .pin, .sub-stage.is-ready .pin { transform: translate(-50%, -100%); }
+            .sub-stage .sub-map { filter: none; transform: none; transition: opacity 0.3s ease; }
+            .sub-stage .pin, .sub-stage.is-ready .pin { transform: translate(-50%, -100%); transition: opacity 0.3s ease; }
             .pin-float, .cloud { animation: none; }
         }
-
-        .back-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: block; }
-        .back-fixed img { height: 68px; display: block; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25)); transition: transform 0.2s; }
-        .back-fixed:hover img { transform: scale(1.08); }
         @media (max-width: 768px) {
-            .main-menu-link { top: 12px; right: 16px; }
-            .submap-title { top: 62px; font-size: 13px; }
-            .sub-wrap { position: static; display: block; padding: 136px 0 110px; overflow: hidden; }
-            .sub-intro { inset: 0; overflow: hidden; }                       /* phones: clouds stay over the map, not the menu below */
-            .sub-stage { width: 100%; }
             .pin-stem { height: 8px; } .pin-dot { width: 8px; height: 8px; }
             .pin-pop { display: none; }
             /* phones: a plain menu under the map (names only, like the pins) */
-            .sub-list { display: block; margin: 18px 16px 0; }
+            .sub-list { display: block; margin: 18px 0 0; }
             .sub-list a { display: block; background: #1A1A1A; color: #fff; text-decoration: none; padding: 14px 16px; margin-bottom: 10px;
                 font-family: 'Noto Sans Thai', sans-serif; font-size: 1rem; font-weight: 600; }
         }
     </style>
-
 </head>
-
 <body>
+
+<header class="nav-header">
+    <a href="index.html">
+        <img src="https://ik.imagekit.io/ideas365logo/ideas365-logo.png?updatedAt=1771192801056" alt="iDEAS365" class="logo-img">
+    </a>
+    <span></span>
+    <a href="index.html" class="back-btn" onclick="return goBack(this.href)">
+        <img src="https://ik.imagekit.io/ideas365logo/back_button.png?updatedAt=1772818424448" alt="Back to Map">
+    </a>
+</header>
+
+<div class="hero">
+    <h1 class="page-title">PIC&amp;CLIP<br>WAREHOUSE</h1>
+    <p class="page-subtitle">Ideas Pioneering, We Engineering.</p>
+</div>
+
+<main class="main-content">
+        <!-- added: the island map (one pin per menu) -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
         <defs>
             <radialGradient id="i365-puff" cx="0.38" cy="0.32" r="0.75">
@@ -437,38 +602,39 @@
             </g>
         </defs>
     </svg>
-    <header class="nav-header">
-        <a href="index.html"><img src="https://ik.imagekit.io/ideas365logo/LOGO_iDEAS365Black.png?updatedAt=1772818424343" alt="iDEAS365"
-            class="logo-img"></a>
-    </header>
-    <div class="submap-title">PIC&amp;CLIP WAREHOUSE</div>
-    <a href="index.html" class="main-menu-link">MAIN MENU</a>
-
-    <main class="sub-wrap">
-        <div class="sub-stage" style="--ar:2048 / 1152">
-            <img class="sub-map" src="https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/sub-pic-clip.jpg" alt="PIC&amp;CLIP WAREHOUSE">
-            <a href="works_clips.html" class="pin" style="left:65%;top:50%" aria-label="คลิปวิดีโอ">
-                <span class="pin-pop">คลิปวิดีโอ</span>
-                <span class="pin-float"><img class="pin-img" src="islands/P1.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
-            </a>
-            <a href="works_photos.html" class="pin" style="left:50%;top:50%" aria-label="รูปผลงาน">
-                <span class="pin-pop">รูปผลงาน</span>
-                <span class="pin-float"><img class="pin-img" src="islands/P2.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
-            </a>
-            <div class="sub-intro" aria-hidden="true">
-                <div class="sub-haze"></div>
-                <div class="cloud-pack left"><svg class="cloud" viewBox="0 0 240 150" style="left:-18%;top:-14%;width:112%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="left:4%;top:24%;width:118%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="left:-22%;top:56%;width:120%" aria-hidden="true"><use href="#i365-cloud"/></svg></div>
-                <div class="cloud-pack right"><svg class="cloud" viewBox="0 0 240 150" style="right:-16%;top:-10%;width:116%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="right:6%;top:28%;width:114%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="right:-20%;top:58%;width:118%" aria-hidden="true"><use href="#i365-cloud"/></svg></div>
-                <div class="sub-loading"><i></i><i></i><i></i><i></i></div>
+        <div class="sub-wrap">
+            <div class="sub-stage" style="--ar:2048 / 1152">
+                <img class="sub-map" src="https://ik.imagekit.io/ideas365logo/iDEAS365%20MAP%20pic/sub-pic-clip.jpg" alt="PIC&CLIP WAREHOUSE">
+                <a href="works_clips.html" class="pin" style="left:65%;top:50%" aria-label="คลิปวิดีโอ">
+                    <span class="pin-pop">คลิปวิดีโอ</span>
+                    <span class="pin-float"><img class="pin-img" src="islands/P1.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
+                </a>
+                <a href="works_photos.html" class="pin" style="left:50%;top:50%" aria-label="รูปผลงาน">
+                    <span class="pin-pop">รูปผลงาน</span>
+                    <span class="pin-float"><img class="pin-img" src="islands/P2.jpg" alt=""><span class="pin-stem"></span><span class="pin-dot"></span></span>
+                </a>
+                <div class="sub-intro" aria-hidden="true">
+                    <div class="sub-haze"></div>
+                    <div class="cloud-pack left"><svg class="cloud" viewBox="0 0 240 150" style="left:-18%;top:-14%;width:112%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="left:4%;top:24%;width:118%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="left:-22%;top:56%;width:120%" aria-hidden="true"><use href="#i365-cloud"/></svg></div>
+                    <div class="cloud-pack right"><svg class="cloud" viewBox="0 0 240 150" style="right:-16%;top:-10%;width:116%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="right:6%;top:28%;width:114%" aria-hidden="true"><use href="#i365-cloud"/></svg><svg class="cloud" viewBox="0 0 240 150" style="right:-20%;top:58%;width:118%" aria-hidden="true"><use href="#i365-cloud"/></svg></div>
+                    <div class="sub-loading"><i></i><i></i><i></i><i></i></div>
+                </div>
             </div>
+            <nav class="sub-list" aria-label="PIC&CLIP WAREHOUSE">
+                <a href="works_clips.html">คลิปวิดีโอ</a>
+                <a href="works_photos.html">รูปผลงาน</a>
+            </nav>
         </div>
-        <nav class="sub-list" aria-label="PIC&amp;CLIP WAREHOUSE">
-            <a href="works_clips.html">คลิปวิดีโอ</a>
-            <a href="works_photos.html">รูปผลงาน</a>
-        </nav>
-    </main>
+</main>
 
-    <a href="index.html" class="back-fixed" onclick="return goBack(this.href)"><img src="https://ik.imagekit.io/ideas365logo/BACK%20(1)%20(1).png?updatedAt=1773177420277" alt="Back"></a>
+<footer class="site-footer">
+    <p class="footer-brand">
+        <span class="dot-r">J</span><span class="dot-g">Y</span><span class="dot-b">N</span><span class="dot-y">E</span>
+        &nbsp;:&nbsp;iDEAS365
+    </p>
+    <p class="footer-tagline">Smart Lazy Style</p>
+    <p class="footer-copy">© 2026 All right reserved &nbsp;|&nbsp; Created by iDEAS365 x Generative AI</p>
+</footer>
 
 <script>
     /* added: BACK = previous page (or this island's map when opened directly) */
@@ -500,5 +666,4 @@
     })();
 </script>
 </body>
-
 </html>

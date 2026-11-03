@@ -13,13 +13,12 @@ function goBack(e: React.MouseEvent, fallback: string) {
   location.href = fallback;
 }
 
-/** Header (logo + MAIN MENU), footer and BACK button of the original island pages. */
+/** Header (logo = main map), footer and BACK button of the original island pages — no other way out (as the originals). */
 export function Chrome({ children, back }: { children: ReactNode; back: string }) {
   return (
     <div className="cm-page">
       <header className="cm-header">
         <a href="/index.html"><img src={LOGO} alt="iDEAS365" className="logo-img" /></a>
-        <a href="/index.html" className="cm-menu">MAIN MENU</a>
       </header>
       {children}
       <footer className="cm-footer">

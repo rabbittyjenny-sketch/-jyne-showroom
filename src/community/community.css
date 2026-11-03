@@ -4,18 +4,13 @@
   font-family: 'Noto Sans Thai', sans-serif; background: #fff; color: var(--text-dark); min-height: 100vh; }
 .cm-header { position: absolute; top: 0; left: 0; width: 100%; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; z-index: 10; }
 .cm-header .logo-img { height: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-/* MAIN MENU = the island name badge look of the main map (same as .main-menu-link in scripts/build-island-pages.py) */
-.cm-menu { font-family: 'Noto Sans Thai', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; color: #000;
-  background: rgba(255,255,255,0.95); padding: 7px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); white-space: nowrap; transition: all 0.4s ease-out; }
-.cm-menu:hover { color: #0000; background: linear-gradient(90deg, #B03A00 0%, #F5B800 50%, #1E7A3E 100%) 0% / 200% no-repeat, rgba(255,255,255,0.97);
-  -webkit-background-clip: text, padding-box; background-clip: text, padding-box; }
 .cm-main { display: flex; flex-direction: column; align-items: center; padding: 120px 20px 60px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
-.cm-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 400; }
+.cm-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(4rem, 10vw, 7.5rem); text-align: center; line-height: 0.9; margin: 0 0 15px; text-transform: uppercase; letter-spacing: 1px; }
 .cm-subtitle { font-size: 1.15rem; font-weight: 400; margin: 0 0 50px; text-align: center; }
 .cm-status { text-align: center; font-size: 1rem; color: #888; padding: 40px; width: 100%; }
 .cm-groups { width: 100%; display: flex; flex-direction: column; gap: 56px; }
 .cm-group-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
-.cm-group-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 2rem; letter-spacing: 1px; margin: 0; display: flex; align-items: center; gap: 12px; }
+.cm-group-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; letter-spacing: 1px; margin: 0; display: flex; align-items: center; gap: 12px; }
 .cm-group-title i { width: 14px; height: 14px; display: inline-block; }
 .cm-nav { display: flex; gap: 8px; }
 .cm-nav button { width: 40px; height: 40px; display: grid; place-items: center; border: 2px solid #1A1A1A; background: #fff; cursor: pointer; }
@@ -47,7 +42,7 @@
 .cm-card[data-color="green"] .cm-tag { background: var(--blog-green); }
 .cm-card[data-color="red"] .cm-tag { background: var(--blog-red); }
 .cm-card[data-color="dark"] .cm-tag { background: var(--text-dark); }
-.cm-card h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 10px; letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; }
+.cm-card h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.6rem; margin: 0 0 10px; letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; }
 .cm-card p { font-weight: 300; font-size: 0.92rem; line-height: 1.6; margin: 0 0 12px; color: #444; flex-grow: 1; }
 .cm-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; display: flex; justify-content: space-between; gap: 8px; }
 .cm-more { font-weight: 700; font-size: 0.8rem; color: var(--text-dark); margin-top: auto; }
@@ -57,10 +52,10 @@
 .cm-post-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
 .cm-post-cat { padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #fff; }
 .cm-post-date { font-size: 0.8rem; color: #999; }
-.cm-post-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.5rem); line-height: 1.1; margin: 0 0 30px; letter-spacing: 1px; text-transform: uppercase; }
+.cm-post-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: clamp(2.2rem, 6vw, 3.5rem); line-height: 1.1; margin: 0 0 30px; letter-spacing: 1px; text-transform: uppercase; }
 .cm-post-excerpt { font-size: 1.1rem; color: #555; font-weight: 300; line-height: 1.8; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid #eee; }
 .cm-post-content, .cm-post-content.article-body { font-size: 0.95rem; line-height: 1.85; color: #333; font-weight: 300; }
-.cm-post-content h1, .cm-post-content h2, .cm-post-content h3, .cm-post-content h4 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-weight: 400; letter-spacing: 0.5px; margin-top: 32px; color: var(--text-dark); }
+.cm-post-content h1, .cm-post-content h2, .cm-post-content h3, .cm-post-content h4 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; letter-spacing: 0.5px; margin-top: 32px; color: var(--text-dark); }
 /* Tailwind preflight resets heading sizes; restore the browser defaults the original blog_post.html relied on */
 .cm-post-content h1 { font-size: 2em; } .cm-post-content h2 { font-size: 1.5em; } .cm-post-content h3 { font-size: 1.17em; } .cm-post-content h4 { font-size: 1em; }
 .cm-post-content p { margin: 0 0 1rem; }
