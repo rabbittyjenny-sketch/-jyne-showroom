@@ -75,8 +75,16 @@ def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, c
 NO_DB_PAGES = {'academy.html', '404.html'}
 
 
+# menu pages with pages of items (2, 3 …), the picture viewer and the section menu on the left (public/i365-ui.js)
+UI_PAGES = {'about_profile.html', 'about_experience.html', 'about_live.html', 'works_clips.html', 'works_photos.html',
+            'learning_tools.html', 'learning_docs.html', 'learning_design.html'}
+
+
 def write(name, html):
     assert ('data-page="' + name[:-5] + '"') in html or name.startswith('island_') or name in NO_DB_PAGES, name
+    if name in UI_PAGES:
+        assert html.count('</head>') == 1
+        html = html.replace('</head>', '    <script src="i365-ui.js" defer></script>\n</head>', 1)
     (OUT / name).write_text(html, encoding='utf-8')
     print('wrote', name, len(html))
 
@@ -101,6 +109,15 @@ YELLOW_SET = """
         .cs-pill, .big-btn { background: #F5B800; color: #1A1A1A; }
         .photo-slot, .proof-grid-result img, .proof-grid-work img { background: #2a2a2a; }
         .site-footer { background: #1A1A1A; }
+        /* hover of the main island: work_town.html has none ("NO hover" lines 138, 223, 261) — the borrowed
+           work_marina hovers (card lift, picture zoom, clip fade, tag fill, button lift, logo, BACK) are switched off */
+        .content-card.in-view:hover { transform: translateY(0); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+        .photo-slot:hover { transform: none; box-shadow: none; }
+        .video-wrap:hover img { opacity: 1; }
+        .tag:hover { background: transparent; border-color: #ddd; color: #444; }
+        .big-btn:hover { transform: none; box-shadow: none; opacity: 1; }
+        .logo-img:hover { transform: none; }
+        .back-fixed:hover img { transform: none; }
     </style>
 """
 # AI&TECH CREATION BRIDGE (map position island-library = learning_bay.html) -> AI TOOLS
@@ -122,6 +139,15 @@ BLUE_SET = """
         .ai-cta, .proj-cta { background: #1A1A1A; color: #ffffff; border-color: #1A1A1A; }
         .col-title { color: #1155AA; }
         .col-desc { color: #444; }
+        :root { --accent: #1155AA; }
+        /* hover of the main island (learning_bay.html): logo 1.05 in 0.3s (13-14), buttons fade to 0.85 in 0.2s (44-47),
+           BACK 1.06 + 0.9 in 0.2s (118-120); cards have no hover */
+        .logo-img { transition: transform 0.3s; }
+        .logo-img:hover { transform: scale(1.05); }
+        .ai-cta, .proj-cta { transition: opacity 0.2s; }
+        .ai-card:hover .ai-cta, .proj-card:hover .proj-cta { opacity: 0.85; }
+        .back-btn { display: block; transition: transform 0.2s, opacity 0.2s; }
+        .back-btn:hover { transform: scale(1.06); opacity: 0.9; }
     </style>
 """
 
@@ -265,13 +291,10 @@ write('learning_docs.html', page('learning_docs', 'learning_bay.html', 'DOCUMENT
 
 l_tail = '    </main>\n\n' + L[L.index('    <footer class="site-footer">'):]
 write('learning_design.html', page('learning_design', 'learning_bay.html', 'DESIGN WORKS', 'DESIGN<br>WORKS', '', [
-    """        <!-- WEB DESIGN (link to the Wix site already used on About Island) -->
+    """        <!-- WEB DESIGN — pictures from the back office (no button; a link shows only when one is attached) -->
         <div class="content-card">
             <h2 class="col-title">WEB DESIGN · หน้าเว็บ (Wix)</h2>
-            <div data-i365="web-design">
-            <p class="col-desc">เว็บไซต์ที่ออกแบบและทำเองบน Wix</p>
-            <a class="res-dl-btn" style="border-radius:0" href="https://adminccl.wixsite.com/a-little-bit-idea-2/home" target="_blank">เปิดเว็บไซต์ ↗</a>
-            </div>
+            <div class="i365-grid" data-i365="web-design"></div>
         </div>
 """,
     """        <!-- COMING SOON (added headings — content to come) -->

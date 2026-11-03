@@ -511,8 +511,18 @@
         .cs-pill, .big-btn { background: #F5B800; color: #1A1A1A; }
         .photo-slot, .proof-grid-result img, .proof-grid-work img { background: #2a2a2a; }
         .site-footer { background: #1A1A1A; }
+        /* hover of the main island: work_town.html has none ("NO hover" lines 138, 223, 261) — the borrowed
+           work_marina hovers (card lift, picture zoom, clip fade, tag fill, button lift, logo, BACK) are switched off */
+        .content-card.in-view:hover { transform: translateY(0); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+        .photo-slot:hover { transform: none; box-shadow: none; }
+        .video-wrap:hover img { opacity: 1; }
+        .tag:hover { background: transparent; border-color: #ddd; color: #444; }
+        .big-btn:hover { transform: none; box-shadow: none; opacity: 1; }
+        .logo-img:hover { transform: none; }
+        .back-fixed:hover img { transform: none; }
     </style>
     <script src="i365-content.js" data-page="works_photos" data-card="content"></script>
+    <script src="i365-ui.js" defer></script>
 </head>
 
 <body>

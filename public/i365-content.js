@@ -98,6 +98,7 @@
             '.i365-grid a,.i365-grid div{display:block;text-decoration:none;color:inherit}' +
             '.i365-grid img{width:100%;display:block;border-radius:0}' +
             '.i365-grid span{display:block;font-size:.85rem;margin-top:6px}' +
+            '.i365-pic a{display:inline-block !important;font-size:.85rem;margin-top:6px;text-decoration:underline}' +
             '.i365-links a{display:inline-block;margin:6px 8px 0 0}' +
             ':where(.svc-th){display:block;font-size:.8rem;color:#888;font-weight:300}' +
             ':where(.svc-h3){font-size:1.2rem;margin:24px 0 6px}:where(.svc-grid){display:grid;grid-template-columns:1fr 1fr;gap:0 32px}' +
@@ -153,15 +154,16 @@
             if (el.id === 'res-grid' && typeof window.renderResources === 'function') window.renderResources(items.map(resourceData));
             else { addCss(); el.classList.add('i365-links'); el.innerHTML = items.map(function (it) {
                 return '<a class="res-dl-btn" style="border-radius:0" href="' + esc(d(it, 'file_url')) + '" target="_blank">' + esc(it.title_th) + ' ↓</a>'; }).join(''); }
-        } else if (t === 'design_work') {
-            if (items.some(function (it) { return it.cover_image; })) {
-                el.classList.add('i365-grid'); el.innerHTML = items.map(function (it) { return linkTile(it, d(it, 'url') || d(it, 'file_url')); }).join('');
-            } else {
-                el.innerHTML = items.map(function (it) {
-                    return '<p class="col-desc">' + esc(it.summary_th || it.title_th) + '</p>' +
-                        '<a class="res-dl-btn" style="border-radius:0" href="' + esc(d(it, 'url') || d(it, 'file_url')) + '" target="_blank">เปิดเว็บไซต์ ↗</a>';
-                }).join('');
-            }
+        } else if (t === 'design_work') {          // artwork: pictures only (click = viewer, i365-ui.js); a link shows only when one is attached
+            var pics = items.filter(function (it) { return it.cover_image; });
+            if (!pics.length) return renderSoon(s);
+            addCss(); el.classList.add('i365-grid');
+            el.innerHTML = pics.map(function (it) {
+                var url = d(it, 'url') || d(it, 'file_url');
+                return '<div class="i365-pic"' + (url ? ' data-link="' + esc(url) + '"' : '') + '>' +
+                    '<img src="' + esc(it.cover_image) + '" loading="lazy" alt="' + esc(it.title_th) + '">' +
+                    (url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(it.title_th || url) + ' ↗</a>' : '') + '</div>';
+            }).join('');
         } else if (t === 'point') {
             addCss();
             el.innerHTML = items.map(function (it, i) { return pointHtml(it, i, s.display_style); }).join('');
