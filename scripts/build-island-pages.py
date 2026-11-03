@@ -51,10 +51,10 @@ def cut(text, start, end):
     return text[a:b]
 
 
-def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True):
+def page(pg, file, title_tag, h1, sub, blocks, back, tail_fix=None, tail=None, card='content', loader=True, colours=''):
     t = src(file)
     head_end = t.index('</head>')
-    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS
+    head = re.sub(r'<title>.*?</title>', f'<title>{title_tag} - iDEAS365</title>', t[:head_end], count=1, flags=re.S) + TITLE_CSS + colours
     if loader: head += LOADER.format(page=pg, card=card)
     if 'class="hero"' in t:                                    # Works Town layout: title in .hero before <main>
         pre_end = t.index('<main class="main-content">') + len('<main class="main-content">') + 1
@@ -81,18 +81,76 @@ def write(name, html):
     print('wrote', name, len(html))
 
 
+# Sub-pages use the colours of their main island (owner's rule, 4 Nov 2026), values copied from her
+# original pages (19 Apr 2026, commit efeb6bf). When a sub-page borrows the markup of another page,
+# only colour values are changed here; fonts, sizes, markup and text stay those of the source page.
+# PIC&CLIP WAREHOUSE (map position island-work = work_town.html) -> VIDEO CLIPS, PHOTO WORKS
+YELLOW_SET = """
+    <style>
+        /* colours of the main island: work_town.html (yellow) — :root 12-17, .page-title 53, .section-card 76,
+           .col-title 375, .col-desc 382, .hl 389-404, .cs-pill 412, .proof-grid img 425, .site-footer 449 */
+        :root { --bg-color: #F5B800; --accent: #F5B800; --text-dark: #ffffff; }
+        body, html { background-color: #F5B800; }
+        .page-title { color: #1A1A1A; }
+        .content-card { background: #1A1A1A; color: #fff; }
+        .col-title { color: #F5B800; border-bottom-color: rgba(255,255,255,0.1); }
+        .col-desc { color: rgba(255,255,255,0.72); }
+        .col-desc strong { color: #fff; }
+        .hl li { color: rgba(255,255,255,0.76); border-bottom-color: rgba(255,255,255,0.08); }
+        .hl li::before { color: #F5B800; }
+        .cs-pill, .big-btn { background: #F5B800; color: #1A1A1A; }
+        .photo-slot, .proof-grid-result img, .proof-grid-work img { background: #2a2a2a; }
+        .site-footer { background: #1A1A1A; }
+    </style>
+"""
+# AI&TECH CREATION BRIDGE (map position island-library = learning_bay.html) -> AI TOOLS
+BLUE_SET = """
+    <style>
+        /* colours of the main island: learning_bay.html (blue) — :root 10, body 11, .content-card 18, .col-title 20,
+           .col-desc 21, .res-card 28, .res-name 39, .res-updated 40, .res-dl-btn 41, .hover 122-134 */
+        body, html { background: #1A6BCC; }
+        .page-title { color: #0000; background: linear-gradient(90deg, #4285F4 50%, #ffffff 0) var(--_p, 100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text; transition: .4s; cursor: pointer; }
+        .page-title:hover { --_p: 0%; }
+        .section-card { background: #ffffff; color: #1A1A1A; }
+        .section-title { color: #1155AA; border-bottom-color: #1155AA; }
+        .section-sub, .loading-msg { color: #888; }
+        .ai-card, .proj-card { background: #f5f5f0; border-color: #1A1A1A; color: #1A1A1A; }
+        .ai-title-en, .proj-name-en { color: #1A1A1A; }
+        .ai-title-th, .proj-name-th { color: #999; }
+        .ai-desc, .proj-desc { color: #444; }
+        .ai-cta, .proj-cta { background: #1A1A1A; color: #ffffff; border-color: #1A1A1A; }
+        .col-title { color: #1155AA; }
+        .col-desc { color: #444; }
+    </style>
+"""
+
+
 # ── ABOUT ISLAND group (about_island.html) ───────────────────────────────
 # data-i365="<section slug>" = the block that shows that section's items when the back office has published items
 A = src('about_island.html')
+import profile_content as PC   # owner's text for PROFILE / WORK HISTORY / LIVE COMMERCE (scripts/profile_content.py)
+LANG_TOGGLE = cut(A, '<!-- LANG TOGGLE', '<!-- PROFILE + PHOTO')
+
+
+def set_lang(tl):
+    assert tl.count(PC.SETLANG_OLD) == 1
+    return tl.replace(PC.SETLANG_OLD, PC.SETLANG_NEW, 1)
+
+
+def between(block, start, end, new):
+    a = block.index(start); b = block.index(end, a)
+    return block[:a] + new + block[b:]
+
 A_LANG, A_EXP, A_CORE, A_CASE, A_SALES, A_RES, A_END = (
     '<!-- LANG TOGGLE', '<!-- EXPERIENCE + SKILLS -->', '<!-- CORE SKILLS + PHOTOS + BUTTONS -->',
     '<!-- CASE STUDY -->', '<!-- SALES FIGURES -->', '<!-- RESUME -->', '    </main>')
-guard_lang = lambda tl: tl.replace("setLang('en');", "if (document.getElementById('bio-en')) setLang('en');")
 
+profile_block = between(cut(A, A_LANG, A_EXP), '<div id="bio-en">', '<!-- PHOTO —', PC.BIO_EN + PC.BIO_TH)
 write('about_profile.html', page('about_profile', 'about_island.html', 'PROFILE', 'PROFILE', '', [
-    cut(A, A_LANG, A_EXP),          # EN/TH toggle + WHO IS JYNE + photo + 6-FIGURE / 20+ / 10Y+
+    profile_block,                  # EN/TH toggle + WHO IS JYNE (owner's text) + photo + 6-FIGURE / 20+ / 10Y+
     cut(A, A_CORE, A_CASE),         # CORE SKILLS list + photos + MORE EXPERIENCE / ANOTHER SKILL
-], 'island_about.html'))
+], 'island_about.html', set_lang))
 
 resume = cut(A, A_RES, A_END).replace(
     '            >\n        </div>',
@@ -102,7 +160,10 @@ resume = cut(A, A_RES, A_END).replace(
     '            </div>\n        </div>', 1)
 resume = hook(resume, '<div class="content-card single">', 'resume')
 write('about_experience.html', page('about_experience', 'about_island.html', 'WORK HISTORY', 'WORK<br>HISTORY', '', [
-    cut(A, A_EXP, A_CORE),          # EXPERIENCE timeline + CORE SKILLS tags + photos
+    LANG_TOGGLE,                    # EN/TH toggle of about_island.html
+    between(cut(A, A_EXP, A_CORE), '                <div class="tl-item">',
+            '            </div>\n            <div>\n                <h2 class="col-title">CORE SKILLS', PC.experience_html()),
+                                    # EXPERIENCE (owner's text, EN/TH) + EDUCATION + CORE SKILLS tags + photos
     hook(cut(A, A_SALES, A_RES), '<div class="proof-grid-work">', 'previous-work'),   # PREVIOUS WORK EXPERIENCE photos
     """        <!-- CERTIFICATES (added heading — content to come) -->
         <div class="content-card single">
@@ -112,7 +173,7 @@ write('about_experience.html', page('about_experience', 'about_island.html', 'WO
         </div>
 """,
     resume,                         # RESUME (+ download)
-], 'island_about.html', guard_lang))
+], 'island_about.html', set_lang))
 
 WT = src('work_town.html')
 proofs = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/proof\d\.jpg)" alt="([^"]*)"', WT)
@@ -125,9 +186,13 @@ proof_card = """        <!-- RESULT · 2 HRS/LIVE (images from work_town.html) -
         </div>
 """
 write('about_live.html', page('about_live', 'about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', '', [
-    cut(A, A_CASE, A_SALES),        # JENNY JYNE · CASE STUDY + RESULT (about_island)
+    LANG_TOGGLE,                    # EN/TH toggle of about_island.html
+    between(cut(A, A_CASE, A_SALES), '            <div>\n                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>',
+            '            <div>\n                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>', PC.live_text_html()),
+                                    # LIVE COMMERCE text (owner's, EN/TH) + RESULT screenshots (about_island)
+    PC.RESULTS_CARD,                # SELECTED LIVE RESULTS · GMV + Gallery / Video + Contact (owner's file)
     proof_card,                     # RESULT images from Works Town
-], 'island_about.html', guard_lang))
+], 'island_about.html', set_lang))
 
 # ── PIC&CLIP WAREHOUSE group (work_marina.html) ──────────────────────────
 M = src('work_marina.html')
@@ -144,7 +209,7 @@ write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS',
     hook(cut(M, M_VOICE, M_END), '<div class="video-grid">', 'ai-voice'),         # AI VOICE GENERATOR — AI voice & avatar clips
     soon([('ไลฟ์คอนเทนต์', 'live-content'), ('รับทำคอนเทนต์', 'content-work'), ('คลิปสร้างจาก AI', 'ai-clips'),
           ('อีเวนต์ · โปรโมท F&amp;B', 'event-promo')]),
-], 'island_works.html'))
+], 'island_works.html', colours=YELLOW_SET))
 
 results = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/Screenshot%202026[^"]+)"', A)
 write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', '', [
@@ -164,7 +229,7 @@ write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS
         </div>
 """,
     soon([('อาหาร', 'food'), ('ออกบูธ · อีเวนต์', 'booth-event')]),
-], 'island_works.html'))
+], 'island_works.html', colours=YELLOW_SET))
 
 # ── AI&TECH CREATION BRIDGE group ────────────────────────────────────────
 sec = [m.start() for m in re.finditer(r'    <!-- ═{10,}', WT)]
@@ -183,7 +248,7 @@ def tools_tail(tl):
 
 
 write('learning_tools.html', page('learning_tools', 'work_town.html', 'AI TOOLS', 'AI<br>TOOLS', '',
-    [tools_blocks], 'island_learning.html', tools_tail, card='section'))
+    [tools_blocks], 'island_learning.html', tools_tail, card='section', colours=BLUE_SET))
 
 L = src('learning_bay.html')
 

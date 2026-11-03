@@ -225,40 +225,136 @@
     <main class="main-content">
         <h1 class="page-title hover-white">WORK<br>HISTORY</h1>
         <p class="page-subtitle hover-white"></p>
+        <!-- LANG TOGGLE — sits just above the WHO IS JYNE card -->
+        <div style="display:flex; justify-content:flex-end; width:100%; margin-bottom:-18px; position:relative; z-index:10;">
+            <div style="display:flex; gap:0; background:rgba(255,255,255,0.15); border-radius:30px; overflow:hidden; border:1.5px solid rgba(255,255,255,0.3); backdrop-filter:blur(6px);">
+                <button id="btn-en" onclick="setLang('en')"
+                    style="background:rgba(255,255,255,0.9); border:none; color:#B03A00; font-family:'Anton',sans-serif; font-size:0.82rem; letter-spacing:2px; padding:7px 22px; cursor:pointer; transition:all 0.2s;">EN</button>
+                <button id="btn-th" onclick="setLang('th')"
+                    style="background:transparent; border:none; color:rgba(255,255,255,0.75); font-family:'Anton',sans-serif; font-size:0.82rem; letter-spacing:2px; padding:7px 22px; cursor:pointer; transition:all 0.2s;">TH</button>
+            </div>
+        </div>
+
+
         <!-- EXPERIENCE + SKILLS -->
         <div class="content-card" style="grid-template-columns: 1fr 1fr 1fr;">
             <div>
                 <h2 class="col-title">EXPERIENCE</h2>
+                <div data-lang="en">
                 <div class="tl-item">
-                    <div class="tl-year">2022 — ปัจจุบัน</div>
-                    <div class="tl-role">Freelance Live Stream Host &amp; Brand Presenter</div>
-                    <div class="tl-place">TikTok LIVE · Facebook Live · Shopee Live</div>
-                    <div class="tl-desc">- Multi-Platform Management</div>
-                     <div class="tl-desc">- Client-Facing Experience</div>
-                     <div class="tl-desc">- Content Strategy Background </div>
+                    <div class="tl-role">Assistant to Founder</div>
+                    <div class="tl-place">TCAITHAI Cuisine Academy</div>
+                    <div class="tl-desc">Supported the founder’s executive image management and strategic social media marketing. Analyzed market trends to develop content strategies and executed targeted campaigns.</div>
                 </div>
                 <div class="tl-item">
-                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-year">2022–Present</div>
+                    <div class="tl-role">Live Streamer – Freelance</div>
+                    <div class="tl-desc">Works independently across TikTok LIVE, Facebook Live and Shopee Live. Applies structured preparation to each project, including brand and product research, product curation, scripting, technical setup, live execution and post-session review. Has worked with 20+ brands and delivered six-figure GMV in regular two-hour sessions.</div>
+                </div>
+                <div class="tl-item">
                     <div class="tl-role">Assistant Restaurant Manager</div>
                     <div class="tl-place">MUU Bangkok Hotel</div>
-                    <div class="tl-desc">High-end service standards</div>
-                    <div class="tl-desc">Complex operations management </div>
+                    <div class="tl-desc">Supported daily operations across five restaurants, including purchasing, F&amp;B coordination and service standards. Designed team training programs and managed night shifts.</div>
                 </div>
                 <div class="tl-item">
-                    <div class="tl-year">ก่อนหน้า</div>
                     <div class="tl-role">Director of Operations</div>
-                    <div class="tl-place">Chef Andy Yangeksakul — Table 38 Bangkok (Michelin Star · formerly Rhong Tiam, New York — 1st Thai-operated Michelin Star in the US)</div>
-                    <div class="tl-desc">- Full Operations Management</div>
-                    <div class="tl-desc">- Content Creation & Marketing</div>
-                    <div class="tl-desc">- Event Coordination</div>
+                    <div class="tl-place">Chef Andy Yang – Table 38 Bangkok</div>
+                    <div class="tl-desc">Managed restaurant operations and team performance under Michelin-level standards. Handled VIP/VVIP customers and worked to improve team efficiency. Oversaw off-site catering and food-booth operations for large events across Bangkok, including advance procurement, supplier relationships, logistics, staffing, booth setup and raw-material quality control.</div>
+                    <div class="tl-desc" style="margin-top:6px">Additional context: Chef Andy Yang’s former New York restaurant, Rhong Tiam, received a Michelin star in 2010; Table 38 Bangkok was also recognized by the MICHELIN Guide.</div>
                 </div>
                 <div class="tl-item">
-                    <div class="tl-year">ก่อนหน้า</div>
+                    <div class="tl-role">Sales Manager</div>
+                    <div class="tl-place">Cafe &amp; Kantary Hotels</div>
+                    <div class="tl-desc">Held a sales management position within the hotel and hospitality sector.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2018–2023</div>
                     <div class="tl-role">Executive Secretary to MD</div>
-                    <div class="tl-place">Chef Chumpol Jangprai — R-HAAN (2 Michelin Stars · Iron Chef Thailand)</div>
-                    <div class="tl-desc">- World-class Fine Dining Operations</div>
-                    <div class="tl-desc">- VIP & VVIP Client Handling</div>
-                    <div class="tl-desc">- Michelin-standard Service Excellence</div>
+                    <div class="tl-place">Chef Chumpol Jangprai – R-HAAN</div>
+                    <div class="tl-desc">Provided administrative and operational support to the Managing Director. Coordinated schedules, high-level logistics, team communication and international VIP/VVIP guest experiences from reservation through on-site arrangements and follow-up. Coordinated with local farming communities nationwide to match ingredients with menu concepts, with an interest in supporting sustainable income for producers. Also supported the MD’s work connected with his roles as UN Sustainable Food Ambassador and Thai Food Ambassador. R-HAAN received two MICHELIN Stars; Chef Chumpol is also known as Iron Chef Thailand.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Account Executive</div>
+                    <div class="tl-place">Mon Forward Radio Program at CNX</div>
+                    <div class="tl-desc">Worked across on-air hosting and client management, combining communication skills with commercial coordination.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Make Up Artist &amp; Hair Stylist</div>
+                    <div class="tl-place">Freelance</div>
+                    <div class="tl-desc">Provided freelance make-up and hairstyling services.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">General Manager and Sales</div>
+                    <div class="tl-place">Asia Diamond (Family Business)</div>
+                    <div class="tl-desc">Worked in general management and sales within the family business.</div>
+                </div>
+                <h2 class="col-title" style="margin-top:28px">EDUCATION / การศึกษา</h2>
+                <div class="tl-item">
+                    <div class="tl-role">Bachelor of Science, Major in Industrial Computer Technology</div>
+                    <div class="tl-place">Ubon Ratchathani Rajabhat University | GPA 3.05</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Thai Cookery Certificate</div>
+                    <div class="tl-place">MSC Thai Culinary School</div>
+                </div>
+                </div>
+                <div data-lang="th" style="display:none;">
+                <div class="tl-item">
+                    <div class="tl-role">Assistant to Founder</div>
+                    <div class="tl-place">TCAITHAI Cuisine Academy</div>
+                    <div class="tl-desc">สนับสนุนการจัดการภาพลักษณ์ของผู้ก่อตั้งและการตลาดโซเชียลมีเดียเชิงกลยุทธ์ วิเคราะห์แนวโน้มตลาดเพื่อนำมาพัฒนากลยุทธ์คอนเทนต์ และดำเนินแคมเปญให้ตรงกับกลุ่มเป้าหมาย</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2022–ปัจจุบัน</div>
+                    <div class="tl-role">Live Streamer – Freelance</div>
+                    <div class="tl-desc">ทำงานอิสระบน TikTok LIVE, Facebook Live และ Shopee Live โดยใช้กระบวนการเตรียมงานอย่างเป็นระบบในแต่ละโปรเจกต์ ตั้งแต่การศึกษาข้อมูลแบรนด์และสินค้า การคัดเลือกสินค้า การเขียนสคริปต์ การจัดระบบเทคนิค การดำเนินไลฟ์ ไปจนถึงการทบทวนผลหลังจบงาน มีประสบการณ์ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ และสร้างยอด GMV ระดับ 6 หลักในไลฟ์รูปแบบปกติ 2 ชั่วโมง</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Assistant Restaurant Manager</div>
+                    <div class="tl-place">MUU Bangkok Hotel</div>
+                    <div class="tl-desc">สนับสนุนการดำเนินงานประจำวันของร้านอาหาร 5 ร้าน ครอบคลุมการจัดซื้อ การประสานงานด้าน F&amp;B และการรักษามาตรฐานการบริการ ออกแบบโปรแกรมฝึกอบรมทีมงานและดูแลการทำงานกะกลางคืน</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Director of Operations</div>
+                    <div class="tl-place">Chef Andy Yang – Table 38 Bangkok</div>
+                    <div class="tl-desc">บริหารการดำเนินงานของร้านอาหารและทีมงานภายใต้มาตรฐานระดับ Michelin ดูแลลูกค้า VIP/VVIP และปรับปรุงประสิทธิภาพการทำงานของทีม รับผิดชอบงานจัดเลี้ยงนอกสถานที่และบูธอาหารในอีเวนต์ขนาดใหญ่ทั่วกรุงเทพฯ ตั้งแต่การจัดซื้อและประสานงานซัพพลายเออร์ การวางแผนโลจิสติกส์ การจัดทีมงาน การติดตั้งบูธ ไปจนถึงการควบคุมคุณภาพวัตถุดิบ</div>
+                    <div class="tl-desc" style="margin-top:6px">ข้อมูลประกอบ: Rhong Tiam ร้านอาหารเดิมของ Chef Andy Yang ในนิวยอร์กได้รับ Michelin Star ในปี 2010 และ Table 38 Bangkok ก็เคยได้รับการแนะนำใน MICHELIN Guide เช่นกัน</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Sales Manager</div>
+                    <div class="tl-place">Cafe &amp; Kantary Hotels</div>
+                    <div class="tl-desc">รับผิดชอบงานด้านการบริหารฝ่ายขายในธุรกิจโรงแรมและการบริการ</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2018–2023</div>
+                    <div class="tl-role">Executive Secretary to MD</div>
+                    <div class="tl-place">Chef Chumpol Jangprai – R-HAAN</div>
+                    <div class="tl-desc">ให้การสนับสนุนด้านธุรการและการปฏิบัติงานแก่กรรมการผู้จัดการ ดูแลการประสานงานตารางงาน ภารกิจสำคัญ การสื่อสารระหว่างทีม และประสบการณ์ของลูกค้า VIP/VVIP ชาวต่างชาติ ตั้งแต่การจอง การต้อนรับหน้างาน ไปจนถึงการติดตามผล ประสานงานกับเครือข่ายเกษตรกรท้องถิ่นทั่วประเทศเพื่อคัดเลือกวัตถุดิบให้สอดคล้องกับแนวคิดของเมนู โดยให้ความสำคัญกับการสร้างรายได้ที่ยั่งยืนแก่ผู้ผลิตในชุมชน รวมถึงสนับสนุนภารกิจของ MD ที่เกี่ยวข้องกับบทบาท UN Sustainable Food Ambassador และ Thai Food Ambassador ร้าน R-HAAN ได้รับ 2 Michelin Stars และ Chef Chumpol เป็นที่รู้จักในฐานะ Iron Chef Thailand</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Account Executive</div>
+                    <div class="tl-place">Mon Forward Radio Program at CNX</div>
+                    <div class="tl-desc">ทำงานด้านการจัดรายการและดำเนินรายการออกอากาศ ควบคู่กับการดูแลลูกค้าและประสานงานเชิงพาณิชย์</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">Make Up Artist &amp; Hair Stylist</div>
+                    <div class="tl-place">Freelance</div>
+                    <div class="tl-desc">ให้บริการแต่งหน้าและทำผมในรูปแบบฟรีแลนซ์</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">General Manager and Sales</div>
+                    <div class="tl-place">Asia Diamond (Family Business)</div>
+                    <div class="tl-desc">ปฏิบัติงานด้านการบริหารทั่วไปและการขายภายในธุรกิจครอบครัว</div>
+                </div>
+                <h2 class="col-title" style="margin-top:28px">EDUCATION / การศึกษา</h2>
+                <div class="tl-item">
+                    <div class="tl-role">ปริญญาตรี วิทยาศาสตรบัณฑิต สาขาคอมพิวเตอร์อุตสาหกรรม</div>
+                    <div class="tl-place">มหาวิทยาลัยราชภัฏอุบลราชธานี | GPA 3.05</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-role">ประกาศนียบัตรการทำอาหารไทย</div>
+                    <div class="tl-place">MSC Thai Culinary School</div>
+                </div>
                 </div>
             </div>
             <div>
@@ -409,8 +505,7 @@
     <script>
         // Language toggle
         function setLang(lang) {
-            document.getElementById('bio-en').style.display = lang === 'en' ? 'block' : 'none';
-            document.getElementById('bio-th').style.display = lang === 'th' ? 'block' : 'none';
+            document.querySelectorAll('[data-lang]').forEach(function (el) { el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none'; });   /* added: every EN/TH block of the page */
             const btnEn = document.getElementById('btn-en');
             const btnTh = document.getElementById('btn-th');
             btnEn.style.background = lang === 'en' ? 'rgba(255,255,255,0.9)' : 'transparent';
@@ -418,7 +513,7 @@
             btnTh.style.background = lang === 'th' ? 'rgba(255,255,255,0.9)' : 'transparent';
             btnTh.style.color      = lang === 'th' ? '#B03A00' : 'rgba(255,255,255,0.75)';
         }
-        if (document.getElementById('bio-en')) setLang('en');
+        setLang('en');
 
         // Scroll reveal
         const observer = new IntersectionObserver(entries => {

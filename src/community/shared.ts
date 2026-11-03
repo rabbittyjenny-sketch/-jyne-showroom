@@ -19,4 +19,15 @@ export const GROUPS: { label: string; color: string; kinds: string[] }[] = [
 
 export const COLOR_HEX: Record<string, string> = { blue: '#4285F4', yellow: '#F5B800', green: '#34A853', red: '#EA4335', dark: '#1A1A1A' };
 
+/** blog.html (19 Apr 2026) COLOUR_MAP: a card's topic decides its colour. */
+export const TOPIC_COLOR: Record<string, string> = {
+  'social media': 'blue', 'systems': 'green', 'system': 'green',
+  'live commerce': 'red', 'ai automation': 'dark', 'ai': 'dark',
+  'mindset': 'yellow', 'business': 'blue', 'tech': 'dark', 'marketing': 'yellow',
+};
+
+/** The card's topic: its first tag that blog.html gives a colour to (null when none does). */
+export const topicOf = (a: { tags: string[] | null }) =>
+  (a.tags || []).find((t) => TOPIC_COLOR[(t || '').trim().toLowerCase()]) ?? null;
+
 export const colorOfKind = (kind: string) => GROUPS.find((g) => g.kinds.includes(kind))?.color ?? 'dark';

@@ -503,6 +503,25 @@
         /* added: page title letters set tight (owner's reference) */
         .page-title { letter-spacing: -0.015em; line-height: 0.86; }
     </style>
+
+    <style>
+        /* colours of the main island: learning_bay.html (blue) — :root 10, body 11, .content-card 18, .col-title 20,
+           .col-desc 21, .res-card 28, .res-name 39, .res-updated 40, .res-dl-btn 41, .hover 122-134 */
+        body, html { background: #1A6BCC; }
+        .page-title { color: #0000; background: linear-gradient(90deg, #4285F4 50%, #ffffff 0) var(--_p, 100%) / 200% no-repeat;
+            -webkit-background-clip: text; background-clip: text; transition: .4s; cursor: pointer; }
+        .page-title:hover { --_p: 0%; }
+        .section-card { background: #ffffff; color: #1A1A1A; }
+        .section-title { color: #1155AA; border-bottom-color: #1155AA; }
+        .section-sub, .loading-msg { color: #888; }
+        .ai-card, .proj-card { background: #f5f5f0; border-color: #1A1A1A; color: #1A1A1A; }
+        .ai-title-en, .proj-name-en { color: #1A1A1A; }
+        .ai-title-th, .proj-name-th { color: #999; }
+        .ai-desc, .proj-desc { color: #444; }
+        .ai-cta, .proj-cta { background: #1A1A1A; color: #ffffff; border-color: #1A1A1A; }
+        .col-title { color: #1155AA; }
+        .col-desc { color: #444; }
+    </style>
     <script src="i365-content.js" data-page="learning_tools" data-card="section"></script>
 </head>
 <body>

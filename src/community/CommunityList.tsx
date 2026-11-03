@@ -7,7 +7,7 @@ import { parseYouTubeId, youTubeThumb } from '@/lib/youtube';
 import { Chrome } from './Chrome';
 import { ClipCarousel } from './components/ClipCarousel';
 import { ClipPlayerDialog, type PlayableClip } from './components/ClipPlayerDialog';
-import { COLOR_HEX, GROUPS, KIND_LABEL, type ArticleRow } from './shared';
+import { COLOR_HEX, GROUPS, KIND_LABEL, TOPIC_COLOR, topicOf, type ArticleRow } from './shared';
 
 export default function CommunityList() {
   const [items, setItems] = useState<ArticleRow[]>([]);
@@ -21,7 +21,10 @@ export default function CommunityList() {
       .then(({ data, error }) => { if (error) setFailed(true); setItems((data as unknown as ArticleRow[]) || []); setLoading(false); });
   }, []);
 
-  const renderCard = (a: ArticleRow, color: string) => {
+  const renderCard = (a: ArticleRow, groupColor: string) => {
+    // as blog.html: a card with a topic takes that topic's colour and shows the topic on its tag
+    const topic = topicOf(a);
+    const color = topic ? TOPIC_COLOR[topic.trim().toLowerCase()] : groupColor;
     // a YouTube link plays in-site, also when it was saved in "External URL"
     const videoId = parseYouTubeId(a.video_url) ?? parseYouTubeId(a.target_url);
     const isInternal = !!a.body || a.target_url.startsWith('/');
@@ -30,7 +33,7 @@ export default function CommunityList() {
       <>
         {cover && <span className="cm-cover"><img src={cover} alt={a.title} loading="lazy" /></span>}
         <span className="cm-card-body">
-          <span className="cm-tag">{KIND_LABEL[a.kind] || a.kind}</span>
+          <span className="cm-tag">{topic || KIND_LABEL[a.kind] || a.kind}</span>
           <h3>{a.title}</h3>
           <p>{a.summary}</p>
           <span className="cm-meta">
