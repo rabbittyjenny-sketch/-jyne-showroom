@@ -14,7 +14,8 @@
 .cm-group-title { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 2rem; letter-spacing: 1px; margin: 0; display: flex; align-items: center; gap: 12px; font-weight: 700; }
 .cm-group-title i { width: 14px; height: 14px; display: inline-block; }
 .cm-nav { display: flex; gap: 8px; }
-.cm-nav button { width: 40px; height: 40px; display: grid; place-items: center; border: 2px solid #1A1A1A; background: #fff; cursor: pointer; }
+.cm-nav button { width: 40px; height: 40px; display: grid; place-items: center; border: 2px solid #1A1A1A; background: #fff; cursor: pointer; font-size: 20px; line-height: 1; font-family: 'Anton', 'Noto Sans Thai', sans-serif; }
+.cm-nav button:hover:not(:disabled) { background: #1A1A1A; color: #fff; }
 .cm-nav button:disabled { opacity: 0.3; cursor: default; }
 .cm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; width: 100%; }
 .cm-empty { border: 2px dashed #ddd; padding: 32px; text-align: center; font-size: 0.9rem; color: #888; }
@@ -43,7 +44,9 @@
 .cm-card[data-color="green"] .cm-tag { background: var(--blog-green); }
 .cm-card[data-color="red"] .cm-tag { background: var(--blog-red); }
 .cm-card[data-color="dark"] .cm-tag { background: var(--text-dark); }
-.cm-card h3 { font-family: 'Anton', 'Noto Sans Thai', sans-serif; font-size: 1.8rem; margin: 0 0 10px; letter-spacing: 1px; line-height: 1.2; text-transform: uppercase; font-weight: 700; }
+/* card item title = the .ai-card convention on learning_tools.html (Noto Sans Thai bold, as typed,
+   no forced uppercase) — Anton stays for page/section headings (.cm-title, .cm-group-title, .cm-post-title) */
+.cm-card h3 { font-family: 'Noto Sans Thai', sans-serif; font-size: 1.3rem; margin: 0 0 10px; line-height: 1.3; font-weight: 700; }
 .cm-card p { font-weight: 300; font-size: 0.92rem; line-height: 1.6; margin: 0 0 12px; color: #444; flex-grow: 1; }
 .cm-meta { font-size: 0.72rem; color: #999; font-weight: 300; margin-top: auto; display: flex; justify-content: space-between; gap: 8px; }
 .cm-more { font-weight: 700; font-size: 0.8rem; color: var(--text-dark); margin-top: auto; }

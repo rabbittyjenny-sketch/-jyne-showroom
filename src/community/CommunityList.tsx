@@ -9,11 +9,17 @@ import { ClipCarousel } from './components/ClipCarousel';
 import { ClipPlayerDialog, type PlayableClip } from './components/ClipPlayerDialog';
 import { COLOR_HEX, GROUPS, KIND_LABEL, type ArticleRow } from './shared';
 
+// Cards per page, per group — so a group with many entries pages instead of
+// listing forever on one tall column (the .cm-nav button style already existed
+// in community.css, unused, for exactly this).
+const PAGE_SIZE = 6;
+
 export default function CommunityList() {
   const [items, setItems] = useState<ArticleRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState<{ clip: PlayableClip; color: string; label: string } | null>(null);
+  const [page, setPage] = useState<Record<string, number>>({});
 
   useEffect(() => {
     document.title = 'COMMUNITY HARBOR - iDEAS365';
@@ -63,16 +69,29 @@ export default function CommunityList() {
               const clipItems = isClips ? groupItems.filter((i) => parseYouTubeId(i.video_url)) : [];
               const gridItems = isClips ? groupItems.filter((i) => !parseYouTubeId(i.video_url)) : groupItems;
               const header = <h2 className="cm-group-title"><i style={{ background: COLOR_HEX[group.color] }} aria-hidden="true" />{group.label}</h2>;
+              const totalPages = Math.max(1, Math.ceil(gridItems.length / PAGE_SIZE));
+              const current = Math.min(page[group.label] ?? 0, totalPages - 1);
+              const pageItems = gridItems.slice(current * PAGE_SIZE, current * PAGE_SIZE + PAGE_SIZE);
+              const goToPage = (p: number) => setPage((prev) => ({ ...prev, [group.label]: p }));
+              const nav = totalPages > 1 && (
+                <div className="cm-nav">
+                  <button type="button" aria-label="หน้าก่อนหน้า" disabled={current === 0} onClick={() => goToPage(current - 1)}>‹</button>
+                  <button type="button" aria-label="หน้าถัดไป" disabled={current >= totalPages - 1} onClick={() => goToPage(current + 1)}>›</button>
+                </div>
+              );
               return (
                 <section key={group.label}>
                   {clipItems.length > 0 ? (
                     <ClipCarousel items={clipItems} color={group.color} ctaLabel="ดูคลิป" header={header}
                       onOpen={(a) => setPlaying({ clip: a, color: group.color, label: group.label })} />
-                  ) : <div className="cm-group-head">{header}</div>}
+                  ) : <div className="cm-group-head">{header}{nav}</div>}
                   {clipItems.length > 0 && gridItems.length === 0 ? null : groupItems.length === 0 ? (
                     <div className="cm-empty">ยังไม่มีเนื้อหาในหมวดนี้ — กลับมาดูใหม่เร็ว ๆ นี้</div>
                   ) : (
-                    <div className="cm-grid">{gridItems.map((a) => renderCard(a, group.color))}</div>
+                    <>
+                      {clipItems.length > 0 && nav && <div className="cm-group-head" style={{ marginTop: -8 }}>{nav}</div>}
+                      <div className="cm-grid">{pageItems.map((a) => renderCard(a, group.color))}</div>
+                    </>
                   )}
                 </section>
               );
