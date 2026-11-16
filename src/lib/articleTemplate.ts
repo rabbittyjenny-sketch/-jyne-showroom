@@ -66,7 +66,7 @@ export function parseStructuredArticle(body?: string | null): StructuredArticle 
 }
 
 /* ── known block types (anything else is skipped, and reported) ───────── */
-const KNOWN = ['chapter', 'h3', 'p', 'list', 'stats', 'timeline', 'table', 'compare', 'callout', 'image', 'source', 'note', 'summary', 'quote'];
+const KNOWN = ['chapter', 'h3', 'p', 'list', 'stats', 'timeline', 'table', 'compare', 'callout', 'image', 'source', 'note', 'summary', 'quote', 'cta'];
 
 /** Human-readable problems (Thai) to show the admin before saving. */
 export function validateStructuredArticle(a: StructuredArticle): string[] {
@@ -179,6 +179,10 @@ function renderBlock(b: ArticleBlock, chapterId: string): string {
       return `<blockquote style="margin:56px 0 0;padding:0;display:flex;flex-direction:column;gap:12px">`
         + `<div style="font-family:${THAI};font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.3;letter-spacing:-.01em;text-wrap:balance">${esc(b.text)}</div>`
         + `<div style="font:500 12px ${MONO};letter-spacing:.12em;color:#C1121F">${esc(b.cite)}</div></blockquote>`;
+    case 'cta':
+      return `<div style="margin:40px 0 0;padding:24px 26px;border:1.5px solid #C1121F;display:flex;flex-direction:column;gap:6px">`
+        + (text(b.label) ? `<div style="font:500 11px ${MONO};letter-spacing:.14em;color:#C1121F">${esc(b.label)}</div>` : '')
+        + `<div style="font-family:${THAI};font-weight:600;font-size:18px;line-height:1.6;text-wrap:pretty">${esc(b.text)}</div></div>`;
     default:
       return '';
   }
