@@ -89,17 +89,19 @@ export function validateStructuredArticle(a: StructuredArticle): string[] {
 
 /* ── renderer ────────────────────────────────────────────────────────── */
 
-const FONTS = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans+Thai:wght@400;500;600;700&amp;family=Overpass:wght@500;700;800&amp;family=Sarabun:wght@400;500;600&amp;display=swap';
-const THAI = "'IBM Plex Sans Thai',sans-serif";
-const MONO = "'IBM Plex Mono',monospace";
-const bullet = (mt: string) => `<span style="flex:0 0 6px;width:6px;height:6px;background:#C1121F;margin-top:${mt}"></span>`;
+// iDEAS365's own fonts (same pair loaded by admin.html/app.html), not Creatr365's — THAI is body
+// text, MONO (kept as the name every call site already uses) is Anton for short kicker/label text.
+const FONTS = 'https://fonts.googleapis.com/css2?family=Anton&amp;family=Noto+Sans+Thai:wght@300;400;500;600;700&amp;display=swap';
+const THAI = "'Noto Sans Thai',sans-serif";
+const MONO = "'Anton','Noto Sans Thai',sans-serif";
+const bullet = (mt: string) => `<span style="flex:0 0 6px;width:6px;height:6px;background:#EA4335;margin-top:${mt}"></span>`;
 
 function renderBlock(b: ArticleBlock, chapterId: string): string {
   const t = text(b?.type);
   switch (t) {
     case 'chapter':
-      return `<div id="${esc(chapterId)}" style="margin:76px 0 20px;border-top:1.5px solid #C1121F;padding-top:14px;scroll-margin-top:20px">`
-        + `<div style="font:500 12px ${MONO};letter-spacing:.14em;color:#C1121F">${esc(b.num)}</div>`
+      return `<div id="${esc(chapterId)}" style="margin:76px 0 20px;border-top:1.5px solid #EA4335;padding-top:14px;scroll-margin-top:20px">`
+        + `<div style="font:500 12px ${MONO};letter-spacing:.14em;color:#EA4335">${esc(b.num)}</div>`
         + `<h2 style="margin:8px 0 0;font-family:${THAI};font-weight:700;font-size:clamp(28px,4vw,40px);line-height:1.22;letter-spacing:-.01em;text-wrap:balance">${esc(b.title)}</h2></div>`;
     case 'h3':
       return `<h3 style="margin:36px 0 10px;font-family:${THAI};font-weight:600;font-size:22px;line-height:1.45;text-wrap:balance">${esc(b.text)}</h3>`;
@@ -112,7 +114,7 @@ function renderBlock(b: ArticleBlock, chapterId: string): string {
       return `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px;margin:20px 0 28px">${arr(b.items).map(s => {
         const o = (s || {}) as Record<string, unknown>;
         return `<div style="background:#0D0D0D;color:#F8F8F6;padding:20px 18px;display:flex;flex-direction:column;gap:6px">`
-          + `<div style="font-family:Overpass,${THAI};font-weight:800;font-size:30px;line-height:1.15;letter-spacing:-.01em">${esc(o.value)}</div>`
+          + `<div style="font-family:'Anton',${THAI};font-weight:800;font-size:30px;line-height:1.15;letter-spacing:-.01em">${esc(o.value)}</div>`
           + `<div style="font-size:15px;line-height:1.55">${esc(o.label)}</div>`
           + `<div style="font:11px/1.6 ${MONO};color:#B9B7B0;margin-top:auto">${esc(o.note)}</div></div>`;
       }).join('')}</div>`;
@@ -120,7 +122,7 @@ function renderBlock(b: ArticleBlock, chapterId: string): string {
       return `<div style="margin:12px 0 28px;border-bottom:1px solid #d8d6d0">${arr(b.items).map(x => {
         const o = (x || {}) as Record<string, unknown>;
         return `<div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;border-top:1px solid #d8d6d0;padding:14px 0">`
-          + `<div style="font-family:Overpass,sans-serif;font-weight:800;font-size:22px;line-height:1.5;color:#C1121F">${esc(o.year)}</div>`
+          + `<div style="font-family:'Anton',sans-serif;font-weight:800;font-size:22px;line-height:1.5;color:#EA4335">${esc(o.year)}</div>`
           + `<div style="text-wrap:pretty">${esc(o.text)}</div></div>`;
       }).join('')}</div>`;
     case 'table': {
@@ -154,7 +156,7 @@ function renderBlock(b: ArticleBlock, chapterId: string): string {
     case 'callout':
       return b.tone === 'light'
         ? `<div style="border:1.5px solid #0D0D0D;padding:20px 24px;margin:20px 0 28px;font-family:${THAI};font-weight:600;font-size:19px;line-height:1.7;text-wrap:pretty">${esc(b.text)}</div>`
-        : `<div style="background:#0D0D0D;color:#F8F8F6;border-top:3px solid #C1121F;padding:24px 26px;margin:24px 0 28px;font-size:18px;line-height:1.85;text-wrap:pretty">${esc(b.text)}</div>`;
+        : `<div style="background:#0D0D0D;color:#F8F8F6;border-top:3px solid #EA4335;padding:24px 26px;margin:24px 0 28px;font-size:18px;line-height:1.85;text-wrap:pretty">${esc(b.text)}</div>`;
     case 'source':
     case 'note': {
       const label = text(b.label) || (t === 'note' ? 'หมายเหตุ' : 'แหล่งอ้างอิง');
@@ -178,10 +180,10 @@ function renderBlock(b: ArticleBlock, chapterId: string): string {
     case 'quote':
       return `<blockquote style="margin:56px 0 0;padding:0;display:flex;flex-direction:column;gap:12px">`
         + `<div style="font-family:${THAI};font-weight:700;font-size:clamp(28px,4.4vw,44px);line-height:1.3;letter-spacing:-.01em;text-wrap:balance">${esc(b.text)}</div>`
-        + `<div style="font:500 12px ${MONO};letter-spacing:.12em;color:#C1121F">${esc(b.cite)}</div></blockquote>`;
+        + `<div style="font:500 12px ${MONO};letter-spacing:.12em;color:#EA4335">${esc(b.cite)}</div></blockquote>`;
     case 'cta':
-      return `<div style="margin:40px 0 0;padding:24px 26px;border:1.5px solid #C1121F;display:flex;flex-direction:column;gap:6px">`
-        + (text(b.label) ? `<div style="font:500 11px ${MONO};letter-spacing:.14em;color:#C1121F">${esc(b.label)}</div>` : '')
+      return `<div style="margin:40px 0 0;padding:24px 26px;border:1.5px solid #EA4335;display:flex;flex-direction:column;gap:6px">`
+        + (text(b.label) ? `<div style="font:500 11px ${MONO};letter-spacing:.14em;color:#EA4335">${esc(b.label)}</div>` : '')
         + `<div style="font-family:${THAI};font-weight:600;font-size:18px;line-height:1.6;text-wrap:pretty">${esc(b.text)}</div></div>`;
     default:
       return '';
@@ -208,7 +210,7 @@ export function renderArticleHtml(a: StructuredArticle): string {
     : '';
   const titleH1 = (size: string, lh: string) =>
     `<h1 style="margin:0;font-family:${THAI};font-weight:700;font-size:${size};line-height:${lh};letter-spacing:-.02em;text-wrap:balance">`
-    + `<span style="color:#E0303C">${esc(m.titleAccent)}</span><br>${esc(m.title)}</h1>`;
+    + `<span style="color:#EA4335">${esc(m.titleAccent)}</span><br>${esc(m.title)}</h1>`;
 
   const full = m.coverLayout === 'full-bleed';
   const cover = full
@@ -221,14 +223,14 @@ export function renderArticleHtml(a: StructuredArticle): string {
     : `<header style="background:#0D0D0D;color:#F8F8F6;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))">`
       + `<div style="padding:clamp(32px,6vw,72px) clamp(20px,5vw,64px);display:flex;flex-direction:column;justify-content:flex-end;gap:18px">`
       + `<div style="font:500 11px ${MONO};letter-spacing:.16em;color:#B9B7B0">${esc(m.kicker)}</div>${titleH1('clamp(36px,5.4vw,68px)', '1.12')}`
-      + `<div style="height:3px;width:56px;background:#C1121F"></div>`
+      + `<div style="height:3px;width:56px;background:#EA4335"></div>`
       + `<div style="display:flex;flex-wrap:wrap;gap:8px 20px;font:12px ${MONO};color:#B9B7B0;letter-spacing:.04em"><span style="width:459px;max-width:100%;min-height:52px">${esc(m.subtitle)}</span><span>${esc(m.updated)}</span></div></div>`
       + (hero ? `<div style="position:relative;min-height:clamp(300px,42vw,560px);background:#151515">${heroImg}</div>` : '')
       + `</header>`;
 
   const toc = m.showToc !== false && chapters.length
     ? `<nav class="c365-toc" style="border-top:2px solid #0D0D0D;border-bottom:1px solid #d8d6d0;padding:18px 0 20px;margin-bottom:48px">`
-      + `<div style="font:500 11px ${MONO};letter-spacing:.16em;color:#C1121F;margin-bottom:12px">สารบัญ</div>`
+      + `<div style="font:500 11px ${MONO};letter-spacing:.16em;color:#EA4335;margin-bottom:12px">สารบัญ</div>`
       + `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:6px 32px">${chapters.map(c =>
         `<a href="#${esc(c.id)}" style="display:flex;gap:14px;align-items:baseline;color:#111;text-decoration:none;font-size:16px;line-height:1.6;padding:4px 0">`
         + `<span style="font:500 12px ${MONO};color:#6b6962;flex:0 0 auto">${esc(c.num)}</span><span>${esc(c.title)}</span></a>`).join('')}</div></nav>`
@@ -238,10 +240,10 @@ export function renderArticleHtml(a: StructuredArticle): string {
   return `<!DOCTYPE html>\n<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">`
     + `<title>${esc(docTitle || 'iDEAS365')}</title>`
     + `<link href="${FONTS}" rel="stylesheet">`
-    + `<style>body{margin:0;background:#F8F8F6}a{color:#C1121F;text-decoration:underline;text-underline-offset:3px}a:hover{color:#0D0D0D}.c365-toc a:hover{color:#C1121F!important}</style></head><body>`
-    + `<div style="min-height:100vh;background:#F8F8F6;color:#111;font-family:'Sarabun','IBM Plex Sans Thai',sans-serif;font-size:18px;line-height:1.85">`
+    + `<style>body{margin:0;background:#F8F8F6}a{color:#EA4335;text-decoration:underline;text-underline-offset:3px}a:hover{color:#0D0D0D}.c365-toc a:hover{color:#EA4335!important}</style></head><body>`
+    + `<div style="min-height:100vh;background:#F8F8F6;color:#111;font-family:${THAI};font-size:18px;line-height:1.85">`
     + `<div style="background:#0D0D0D;color:#F8F8F6;padding:14px clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid #2a2a2a">`
-    + `<span style="font-family:Overpass,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.01em">${esc(m.brand || 'iDEAS365')}</span>`
+    + `<span style="font-family:'Anton',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.01em">${esc(m.brand || 'iDEAS365')}</span>`
     + `<span style="font:500 11px ${MONO};letter-spacing:.14em;color:#B9B7B0">ARTICLE</span></div>`
     + cover
     + `<main style="max-width:860px;margin:0 auto;padding:clamp(36px,6vw,72px) 20px 88px">${toc}${body}</main>`
