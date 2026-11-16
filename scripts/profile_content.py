@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Owner's text for PROFILE, WORK HISTORY and LIVE COMMERCE (her file "— PROFILE / ABOUT", 4 Nov 2026).
-Text is hers word for word; only these spelling slips were corrected:
-  TH  กฌตั้งแต่→ก็ตั้งแต่, ที่้ต้อง→ที่ต้อง, มาจรฐาน→มาตรฐาน, ปฎิเสธ→ปฏิเสธ, พอๆกับกับ→พอๆ กับ, สังเกตุ→สังเกต,
-      คววามเข้าใจสิ่งต่างๆไรอบตัว→ความเข้าใจสิ่งต่างๆ รอบตัว, สินค้ที่→สินค้าที่
-  EN  written in the first person (I / my) throughout with grammar fixed — the owner never calls herself "she" (4 Nov 2026)
-  MUN Forward (was Mon Forward) in both languages, owner's correction
+"""Owner's text for PROFILE and WORK HISTORY, replaced 16 Nov 2026 with her updated resume
+("Eng&THResume_TH.docx", TH+EN) and portfolio file ("portfolio.md", TH+EN) — both supplied by the
+owner for this update. Wording is theirs; only light connective labels (Role / Working process /
+Scope / Guest experience) were added to merge the resume's job list with the portfolio's fuller
+per-job write-up, as the owner asked ("ประสบการณ์ทำงาน...ใช้จากไฟล์ portfolio เช่นกัน").
+Text written in the first person (I / my) throughout — the owner never calls herself "she".
+LIVE COMMERCE (below) was not part of this update and is unchanged.
 Markup = the original about_island.html elements (col-desc, quote box, tl-*, stats-row, big-btn-row)."""
 
 P = '                    <p class="col-desc">{}</p>\n'
@@ -16,48 +17,30 @@ brands_link = lambda text: LINK.format(BRANDS_URL or '#', text)
 # ── PROFILE ──────────────────────────────────────────────────────────────
 BIO_EN = '''<div id="bio-en" data-lang="en">
                     <p class="col-desc"><strong style="font-size:1.05rem;">JYNE (JENJIRA JAISIN)</strong><br>
-                    <span style="font-size:0.82rem;color:#888;letter-spacing:1px;">FREELANCE LIVE COMMERCE HOST · SYSTEMS &amp; CURRICULUM BUILDER<br>SELF-STARTER · STANDARDS-DRIVEN · QUIETLY CONFIDENT</span></p>
+                    <span style="font-size:0.82rem;color:#888;letter-spacing:1px;">LIVE COMMERCE HOST / CONTENT &amp; OPERATIONS</span></p>
 
 ''' + paras([
-    "I did not set out with a fixed career plan. I have always followed a more practical instinct: understand how something works, see what it could become, and build what is needed to make it work.",
-    "My foundation began with technology. I started learning in junior high, in the floppy-disk era, and continued through a degree in Industrial Computer Technology. At a time before ready-made tools, drag-and-drop builders and AI, I learned programming and hands-on hardware: wiring, circuit-board etching, computer assembly and repair. In high school, I represented my school in a provincial search-engine competition and placed second. Those early experiences shaped the way I approach work today: understand the structure, test it, and make it function.",
-    "My professional path then moved through sales, hospitality, media and business operations. Across different environments, I have learned to read people, earn trust and manage relationships — from front-line teams to senior executives and international VIP/VVIP guests. The setting changed; the importance of preparation, communication and follow-through did not.",
-    "For close to a decade, I worked in high-standard fine-dining and hospitality operations, supporting the work of Chef Chumpol Jangprai at R-HAAN and Chef Andy Yang at Table 38 Bangkok. My responsibilities reached beyond service: executive coordination, guest experience, supplier relationships, event operations and the operational details that keep a demanding business running. Working in environments shaped by Michelin-level standards taught me what consistency looks like when every detail matters.",
-    "In 2022, I moved into freelance Live Commerce. What began as an opportunity became a field I chose to build for myself. Working across TikTok LIVE, Facebook Live and Shopee Live, I have developed my own approach to product research, product curation, scripting, hooks, run-downs, technical setup and post-live review. I have worked with more than 20 brands and delivered six-figure GMV in regular two-hour live sessions.",
-    "The experience also led me to create CREATR365, a Live Commerce Host training curriculum built from practical work. I designed its learning structure, assessments and evaluation criteria to turn on-the-job lessons into a framework that other aspiring hosts can learn and apply.",
-    "I value outcomes over noise. I believe that a well-prepared live session should feel natural to the audience — not because the work is effortless, but because the thinking and preparation behind it have been done properly.",
+    "Live commerce host with experience in <strong>live preparation, sales scripting, audience communication and post-session review</strong>. Background in restaurant operations, executive support, social media content coordination and VVIP guest experience.",
+    "My work has moved between <strong>front-of-camera communication and behind-the-scenes coordination</strong>. Live hosting requires preparation, clear communication and adjustment in real time. Operations and executive support require observation, follow-through, discretion and attention to the details that help other people do their work.",
+    "I use AI and digital tools as support for structure, research and production when I understand the subject well enough to direct and review the result. When I am learning something new, I use reliable sources first and <strong>treat AI as a tool for research rather than a replacement for understanding</strong>.",
+    "<strong>I work best when the overall goal and the connection between tasks are clear.</strong> I usually map the context, confirm the immediate outcome, work through the task in sequence and review feedback afterward. When I see a possible improvement, I note it first and raise it after confirming the current priority.",
 ]) + '''
-                    <p class="col-desc" style="background:#f9f0ec;border-left:3px solid #B03A00;padding:12px 16px;border-radius:0 8px 8px 0;font-style:italic;">“Anyone can use AI. But using it and knowing how to use it produce very different results.”</p>
-
-                    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
-                        <p class="col-desc" style="color:#888;font-size:0.82rem;font-style:italic;margin:0">“Don’t try to make it perfect. Make it work.”</p>
-                        <p class="col-desc" style="font-size:0.82rem;margin:8px 0 0"><strong>SMART LAZY · OPERATIONAL INTELLIGENCE · QUIETLY CONFIDENT</strong></p>
-                    </div>
+                    <p class="col-desc" style="background:#f9f0ec;border-left:3px solid #B03A00;padding:12px 16px;border-radius:0 8px 8px 0;font-style:italic;">“I learn from what happens around me and use feedback from the work itself to improve the next step.”</p>
                 </div>
 
                 '''
 
 BIO_TH = '''<div id="bio-th" data-lang="th" style="display:none;">
-                    <p class="col-desc"><strong>ยินดีที่ได้รู้จัก :)</strong></p>
                     <p class="col-desc"><strong style="font-size:1.05rem;">เจนจิรา จัยสิน (เจน)</strong><br>
-                    <span style="font-size:0.82rem;color:#888;letter-spacing:1px;"><em><strong>การทำงานให้สำเร็จ</strong> ง่ายกว่าการอธิบายว่าทำไมคุณถึงทำมันไม่ได้</em> – <em>มาร์ติน แวน บิวเรน</em></span></p>
+                    <span style="font-size:0.82rem;color:#888;letter-spacing:1px;">LIVE COMMERCE HOST / CONTENT &amp; OPERATIONS</span></p>
 
 ''' + paras([
-    "เจนไม่ได้เริ่มต้นจากการวางแผนเส้นทางอาชีพไว้อย่างตายตัว แต่มักจะใช้จังหวะ การสังเกต และการตั้งคำถามกับสิ่งต่างๆรอบตัว พร้อมที่จะเรียนรู้ในทุกๆวัน พร้อมที่จะทำในสิ่งที่ยังไม่เคยทำ แต่สิ่งที่จะใช้ในการทำงาน ก็คือ ทำความเข้าใจว่าสิ่งต่าง ๆ ทำงานอย่างไร มองเห็นโอกาส แล้วลงมือสร้างสิ่งที่จำเป็นเพื่อให้มันเกิดขึ้นจริง",
-    "เจนเริ่มต้นจากความอยากรู้ในเทคโนโลยี จึงเลือกเรียน(วิชาเลือกเสรี)ในรายวิชาด้านคอมพิวเตอร์ตั้งแต่ระดับมัธยมต้น ก็ตั้งแต่ยุคแผ่นฟล็อปปี้ดิสก์หลากหลายสี ต่อเนื่องมาจนถึงระดับมัธยมปลาย ในช่วงนั้นโลกเพิ่งรู้จัก Internet Explorer ก็มีโอกาสได้เป็นตัวแทนโรงเรียนเข้าแข่งขันด้าน Search Engine ในระดับจังหวัดและได้รับรางวัลรองชนะเลิศกลับมา   เมื่อเข้าสู่การเป็นนักศึกษาในมหาวิทยาลัย  ในยุคที่ยังไม่มีโปรแกรมสำเร็จรูป ไม่มีเครื่องมือลากวาง หรือ AI  ตอนนั้นคิดแค่ว่าอยากรู้จักคอมพิวเตอร์ให้มากขึ้น จึงเลือกใส่เสื้อช็อป เข้าเรียนในคณะเทคโนโลยีอุตสาหกรรม สาขา คอมพิวเตอร์อุตสาหกรรม ก็ตั้งแต่การถอด และ การประกอบคอมพ์พีซี การเรียนไฟฟ้าวงจร กัดลายแผ่นวงจร เลขฐานสอง  ไปจนถึงการเรียนเขียนโค้ดที่ทั้งสนุกทั้งโหด กับการเรียน MYSQL , C+และอื่นๆ  ก็เขียนโปรแกรมเหมือนเรียนพิมพ์ดีดที่ต้องจำโค้ดให้ได้ ยังไม่รวมการแก้บั๊ก และต้องเอาไปใช้ควบคุมฮาร์ดแวร์ที่เราก็ต้องเป็นคนสร้างเองด้วยเช่นกัน - การคิดแบบมีลอจิก คิดแบบเป็นโฟลวชาร์ต อาจจะเริ่มจากตรงนี้  " + LINK.format('learning_tools.html', 'ทางไปโชว์รูม'),
-    "เส้นทางการทำงานต่อจากนั้นครอบคลุมทั้งงานขาย ธุรกิจบริการ สื่อ และการบริหารจัดการองค์กร ในแต่ละสภาพแวดล้อมภายใต้แรงกดดันจากสถานการณ์ที่ต่างกัน  ซึ่งจากที่ผ่านมาทำให้ได้เรียนรู้และมีประสบการณ์ต่างๆมากมาย ผิดบ้างถูกบ้างแต่มันทำให้ได้เข้าใจอะไรมากขึ้นเช่นกัน เพราะแต่ละบทบาทหน้าที่ ก็จะมีส่วนผสมของ การเรียนรู้ ความเข้าใจ,เชื่อใจ การดูแลความสัมพันธ์ และการจัดการต่างๆ ตั้งแต่ระดับผู้บริหาร ทีมปฏิบัติการ และส่วนที่เกี่ยวข้อง ตลอดจนการบริการ/ดูแลลูกค้า VIP,VVIP จนถึงชาวต่างชาติ ก็เป็นหน้าที่ ที่ไม่เคยปฏิเสธที่จะทำก่อนที่จะบอกว่าทำไม่ได้ สถานที่ทำงานอาจเปลี่ยนไป แต่ความสำคัญของการเตรียมตัว การสื่อสาร และการติดตามงานยังคงเป็นมาตรฐานหลักส่วนตัวที่ยังคงทำเหมือนเดิม",
-    "เจนมีประสบการณ์เกือบสิบปีในงาน Fine Dining และธุรกิจบริการที่มีมาตรฐานสูง โดยทำงานสนับสนุนและดูแลการดำเนินงานร่วมกับ Chef Chumpol Jangprai และ Chef Andy Yang   และได้ร่วมงานกับผู้บริหารต่างชาติในธุรกิจโรงแรม ระดับ4-5ดาว   ซึ่งขอบเขตงานไม่ได้จำกัดอยู่แค่การบริการ แต่รวมถึงการประสานงานผู้บริหาร การดูแลแขก การจัดการคู่ค้า งานอีเวนต์ และรายละเอียดการปฏิบัติงานที่ทำให้ธุรกิจหรืองานนั้นๆเดินหน้าได้  และไม่เป็นไรเลยที่บางครั้ง เราก็ต้องทำหน้าที่เป็นพนักงานรับรถได้ด้วยเช่นเดียวกัน เพราะการทำงาน คือ ทีม และทีม คือส่วนที่ทำให้มันสำเร็จ  ภายใต้มาตรฐานที่เราจะต้องทำให้งานนั้นๆสำเร็จลุล่วงไปได้ด้วยดีและสมบูรณ์ที่สุด  การที่ได้มีโอกาสเรียนรู้งานต่างๆจากผู้ที่มีวิสัยทัศน์ มีแนวคิด มันคือประสบการณ์ที่ดีและมีค่า มันสอนให้เข้าใจว่าทุกๆรายละเอียด ทุกๆการกระทำ มันสำคัญพอๆ กับ การบริหารจัดการบนความคาดหวังของคน  ที่ต้องสังเกต และ ซัพพอร์ต และพร้อมแก้ปัญหาในเรื่องที่เราก็อาจจะไม่รู้ล่วงหน้า  การสื่อสารให้ถึง ซึ่งมันก็คือ การที่ต้องใส่ใจในทุกรายละเอียดอย่างรอบคอบจริงๆ",
-    "ในปี 2022 เจนเริ่มทำงาน  Live Host (MC) ในแพลตฟอร์ม Shopping Online ( Freelance) จากที่เห็นโอกาสและกล้าที่จะเปลี่ยน ก็ตัดสินใจลองทำมันเต็มที่ บวกกับความอยากรู้  จนกลายเป็นสายงานที่เจนสร้างแนวทางการทำงานขึ้นมาด้วยตัวเอง และเพราะความไม่รู้ มันเลยทำให้เรายิ่งต้องรู้ ทำการบ้านกับสินค้าต่างๆที่แบรนด์เค้าเลือกเรา การวางแผนวิธีการไลฟ์ การจดจำ สังเกต หลักๆก็คือ การเรียนรู้ ทำการบ้านอย่างหนักด้วยความที่เป็นคนจริงใจและรักษาคำที่ตัวเองพูด ดังนั้นการที่จะพูดอะไรออกไป มันต้องแน่ใจ100% ว่ามันคือข้อมูลที่ถูกต้องและมีแหล่งอ้างอิงได้เท่านั้น เรียนรู้การจัดระบบเทคนิคต่างๆ รวมถึงการทบทวนผลหลังไลฟ์ ปัจจุบันมีประสบการณ์ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ และสามารถสร้างยอด GMV ระดับ 6 หลักในไลฟ์รูปแบบปกติ 2 ชั่วโมง",
-    "ประสบการณ์จากการทำงานจริงยังต่อยอดไปสู่การสร้าง <strong>CREATR365 (ครีเอท365)</strong>  A Creative House for the Future of Live Commerce. เพราะอยากให้อาชีพนี้มีมาตรฐาน มีจรรยาบรรณ และความซื่อสัตย์  รวมไปถึงการให้คุณค่าตัวเองในอาชีพนี้ จึงได้ออกแบบโครงสร้างการเรียน แบบประเมิน และเกณฑ์การวัดผลจากประสบการณ์ของตัวเอง ผสมกับการใช้แนวคิดจากแพลตฟอร์มในระดับโกลบอล,จากอาชีพที่นำมาประยุกต์ใช้กับการทำอาชีพนี้ได้  เพื่อให้ผู้ที่สนใจอาชีพ ไลฟ์ โฮสต์ สามารถเรียนรู้และนำเอาไปใช้ได้จริงๆ",
-    "ส่วนตัวแล้วให้ความสำคัญกับผลลัพธ์หรือประโยชน์มากกว่าการสร้างภาพที่สวยหรู ดังนั้น",
+    "ผู้ดำเนินรายการ Live Commerce ที่มีประสบการณ์ด้าน<strong>การเตรียมข้อมูล การเขียนสคริปต์ การสื่อสารกับผู้ชม และการติดตามผลหลังไลฟ์</strong> มีพื้นฐานจากงานบริหารร้านอาหาร งานผู้ช่วยผู้บริหาร การประสานงานคอนเทนต์โซเชียล และการดูแลประสบการณ์แขก VVIP",
+    "ประสบการณ์ที่ผ่านมาอยู่ระหว่าง<strong>งานหน้ากล้องกับงานเบื้องหลัง</strong> การทำ Live ต้องเตรียมข้อมูล สื่อสารให้ชัด และปรับตัวตามสถานการณ์แบบเรียลไทม์ ส่วนงาน Operations และงานผู้ช่วยผู้บริหารต้องอาศัยการสังเกต การติดตามงาน ความรอบคอบ และการดูแลรายละเอียดที่ช่วยให้คนอื่นทำงานได้ต่อเนื่อง",
+    "การใช้ AI จะใช้เป็นเครื่องมือช่วยเรื่องโครงสร้าง การค้นคว้า และการทำงานในส่วนที่มีความรู้มากพอจะกำหนดทิศทางและตรวจสอบผลลัพธ์ได้ หากเป็นเรื่องใหม่ จะเริ่มจากการค้นคว้าจากแหล่งข้อมูลที่น่าเชื่อถือ และ<strong>ใช้ AI เป็นเครื่องมือช่วยเรียนรู้ ไม่ใช่แทนความเข้าใจ</strong>",
+    "<strong>ทำงานได้ดีที่สุดเมื่อเห็นเป้าหมายโดยรวมและเข้าใจว่างานแต่ละส่วนเชื่อมโยงกันอย่างไร</strong> โดยจะดูบริบทก่อน ยืนยันผลลัพธ์ที่ต้องทำในขั้นนั้น ทำงานตามลำดับ และทบทวนจาก Feedback หลังจบงาน หากเห็นแนวทางที่น่าจะช่วยให้งานดีขึ้น จะจดไว้ก่อนและนำเสนอหลังจากยืนยันลำดับความสำคัญของงานปัจจุบันแล้ว",
 ]) + '''
-                    <p class="col-desc" style="background:#f9f0ec;border-left:3px solid #B03A00;padding:12px 16px;border-radius:0 8px 8px 0;font-style:italic;">“ ไลฟ์ได้ กับ ไลฟ์เป็น”  หรือ “ใช้AI ได้”  กับการ “ใช้ AI เป็น”   มันคงไม่ใช่แค่การ กดปุ่ม แค่ปุ่มเดียว<br>แต่มันต้องใช้ความอดทนในการพัฒนาตัวเองในทุกๆวัน</p>
-
-                    <p class="col-desc" style="font-style:italic;color:#555;">เพราะยังมีคนที่เก่งกว่าเราอยู่อีกมาก  ….. แต่เค้า อาจแค่ขาดโอกาสที่จะมายืนอยู่ตรงนี้</p>
-
-                    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
-                        <p class="col-desc" style="font-size:0.82rem;margin:0"><strong>เพราะผลลัพธ์ที่ดี มันต้องมีความขยัน  เรียนรู้  เข้าใจ และ ให้เกียรติ</strong></p>
-                    </div>
+                    <p class="col-desc" style="background:#f9f0ec;border-left:3px solid #B03A00;padding:12px 16px;border-radius:0 8px 8px 0;font-style:italic;">“ในทุก ๆ วัน การได้เรียนรู้สิ่งต่าง ๆ จากรอบตัว และให้ความสำคัญกับ Feedback จากหน้างานและคนรอบข้าง เพราะมองว่าเป็นทางลัดที่ช่วยให้พัฒนาตัวเองได้เร็วขึ้น”</p>
                 </div>
             </div>
 
@@ -65,41 +48,37 @@ BIO_TH = '''<div id="bio-th" data-lang="th" style="display:none;">
 
 # ── WORK HISTORY ─────────────────────────────────────────────────────────
 JOBS = [  # (role, place, year EN, year TH, desc EN, desc TH, extra EN, extra TH)
-    ("Assistant to Founder", "TCAITHAI Cuisine Academy", None, None,
-     "Supported the founder’s executive image management and strategic social media marketing. Analyzed market trends to develop content strategies and executed targeted campaigns.",
-     "สนับสนุนการจัดการภาพลักษณ์ของผู้ก่อตั้งและการตลาดโซเชียลมีเดียเชิงกลยุทธ์ วิเคราะห์แนวโน้มตลาดเพื่อนำมาพัฒนากลยุทธ์คอนเทนต์ และดำเนินแคมเปญให้ตรงกับกลุ่มเป้าหมาย", None, None),
-    ("Live Streamer – Freelance", None, "2022–Present", "2022–ปัจจุบัน",
-     "Works independently across TikTok LIVE, Facebook Live and Shopee Live. Applies structured preparation to each project, including brand and product research, product curation, scripting, technical setup, live execution and post-session review. Has worked with 20+ brands and delivered six-figure GMV in regular two-hour sessions.",
-     "ทำงานอิสระบน TikTok LIVE, Facebook Live และ Shopee Live โดยใช้กระบวนการเตรียมงานอย่างเป็นระบบในแต่ละโปรเจกต์ ตั้งแต่การศึกษาข้อมูลแบรนด์และสินค้า การคัดเลือกสินค้า การเขียนสคริปต์ การจัดระบบเทคนิค การดำเนินไลฟ์ ไปจนถึงการทบทวนผลหลังจบงาน มีประสบการณ์ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ และสร้างยอด GMV ระดับ 6 หลักในไลฟ์รูปแบบปกติ 2 ชั่วโมง", None, None),
+    ("Freelance Live Stream Host", "TikTok LIVE · Facebook Live · Shopee Live", "2022–Present", "2022–ปัจจุบัน",
+     "Role: Prepared product and brand information, developed scripts and identified selling points for each live session. Working process: Researched the product, prepared the flow and adjusted content during the live according to the situation and audience response, then reviewed each session afterward to improve speaking and presentation.",
+     "บทบาท: เตรียมข้อมูลสินค้าและแบรนด์ เขียนสคริปต์ และวางแนวทางหาจุดขายสำหรับแต่ละไลฟ์ วิธีทำงาน: ค้นคว้าข้อมูล เตรียมลำดับการนำเสนอ และปรับเนื้อหาระหว่างไลฟ์ตามสถานการณ์และการตอบสนองของผู้ชม หลังไลฟ์จะติดตามผลเพื่อปรับการพูดและการนำเสนอในครั้งถัดไป",
+     "Scope: <strong>More than 20 brands</strong> across beauty, lifestyle, fashion, food, household products, and mother-and-baby products — <strong>six-figure sales</strong> achieved in a two-hour live session.",
+     "ขอบเขตงาน: ร่วมงานกับแบรนด์<strong>มากกว่า 20 แบรนด์</strong> ในกลุ่มความงาม ไลฟ์สไตล์ แฟชั่น ของกิน ของใช้ และแม่และเด็ก โดยทำยอดขายได้<strong>6 หลัก</strong>ในการไลฟ์ระยะเวลา 2 ชั่วโมง"),
+    ("Executive Assistant", "Thai Cuisine Academy · founded by Chef Chumpol Jangprai, <strong>Iron Chef Thailand Champion</strong> 2012–2018, and Sustainable Food Ambassador by FeedUp@UN", None, None,
+     "Role: Supported executive image management, content direction, trend analysis and social media campaign planning. Working process: Looked at the organization's context and audience, helped shape content directions, presented tools and supported execution, plus additional assistant support as assigned.",
+     "บทบาท: สนับสนุนการดูแลภาพลักษณ์ผู้บริหาร วางแนวทางคอนเทนต์ วิเคราะห์แนวโน้ม และช่วยวางแผนแคมเปญโซเชียลมีเดีย วิธีทำงาน: พิจารณาบริบทและกลุ่มผู้ชมขององค์กร ช่วยกำหนดแนวทางคอนเทนต์ นำเสนอเครื่องมือ และสนับสนุนการดำเนินงาน รวมถึงงานผู้ช่วยตามที่ได้รับมอบหมาย", None, None),
     ("Assistant Restaurant Manager", "MUU Bangkok Hotel", None, None,
-     "Supported daily operations across five restaurants, including purchasing, F&amp;B coordination and service standards. Designed team training programs and managed night shifts.",
-     "สนับสนุนการดำเนินงานประจำวันของร้านอาหาร 5 ร้าน ครอบคลุมการจัดซื้อ การประสานงานด้าน F&amp;B และการรักษามาตรฐานการบริการ ออกแบบโปรแกรมฝึกอบรมทีมงานและดูแลการทำงานกะกลางคืน", None, None),
-    ("Director of Operations", "Chef Andy Yang – Table 38 Bangkok", None, None,
-     "Managed restaurant operations and team performance under Michelin-level standards. Handled VIP/VVIP customers and worked to improve team efficiency. Oversaw off-site catering and food-booth operations for large events across Bangkok, including advance procurement, supplier relationships, logistics, staffing, booth setup and raw-material quality control.",
-     "บริหารการดำเนินงานของร้านอาหารและทีมงานภายใต้มาตรฐานระดับ Michelin ดูแลลูกค้า VIP/VVIP และปรับปรุงประสิทธิภาพการทำงานของทีม รับผิดชอบงานจัดเลี้ยงนอกสถานที่และบูธอาหารในอีเวนต์ขนาดใหญ่ทั่วกรุงเทพฯ ตั้งแต่การจัดซื้อและประสานงานซัพพลายเออร์ การวางแผนโลจิสติกส์ การจัดทีมงาน การติดตั้งบูธ ไปจนถึงการควบคุมคุณภาพวัตถุดิบ",
-     "Additional context: Chef Andy Yang’s former New York restaurant, Rhong Tiam, received a Michelin star in 2010; Table 38 Bangkok was also recognized by the MICHELIN Guide.",
-     "ข้อมูลประกอบ: Rhong Tiam ร้านอาหารเดิมของ Chef Andy Yang ในนิวยอร์กได้รับ Michelin Star ในปี 2010 และ Table 38 Bangkok ก็เคยได้รับการแนะนำใน MICHELIN Guide เช่นกัน"),
-    ("Sales Manager", "Cafe &amp; Kantary Hotels", None, None,
-     "Held a sales management position within the hotel and hospitality sector.",
-     "รับผิดชอบงานด้านการบริหารฝ่ายขายในธุรกิจโรงแรมและการบริการ", None, None),
-    ("Executive Secretary to MD", "Chef Chumpol Jangprai – R-HAAN", "2018–2023", "2018–2023",
-     "Provided administrative and operational support to the Managing Director. Coordinated schedules, high-level logistics, team communication and international VIP/VVIP guest experiences from reservation through on-site arrangements and follow-up. Coordinated with local farming communities nationwide to match ingredients with menu concepts, with an interest in supporting sustainable income for producers. Also supported the MD’s work connected with his roles as UN Sustainable Food Ambassador and Thai Food Ambassador. R-HAAN received two MICHELIN Stars; Chef Chumpol is also known as Iron Chef Thailand.",
-     "ให้การสนับสนุนด้านธุรการและการปฏิบัติงานแก่กรรมการผู้จัดการ ดูแลการประสานงานตารางงาน ภารกิจสำคัญ การสื่อสารระหว่างทีม และประสบการณ์ของลูกค้า VIP/VVIP ชาวต่างชาติ ตั้งแต่การจอง การต้อนรับหน้างาน ไปจนถึงการติดตามผล ประสานงานกับเครือข่ายเกษตรกรท้องถิ่นทั่วประเทศเพื่อคัดเลือกวัตถุดิบให้สอดคล้องกับแนวคิดของเมนู โดยให้ความสำคัญกับการสร้างรายได้ที่ยั่งยืนแก่ผู้ผลิตในชุมชน รวมถึงสนับสนุนภารกิจของ MD ที่เกี่ยวข้องกับบทบาท UN Sustainable Food Ambassador และ Thai Food Ambassador ร้าน R-HAAN ได้รับ 2 Michelin Stars และ Chef Chumpol เป็นที่รู้จักในฐานะ Iron Chef Thailand", None, None),
-    ("Account Executive", "MUN Forward Radio Program at CNX", None, None,
-     "Worked across on-air hosting and client management, combining communication skills with commercial coordination.",
-     "ทำงานด้านการจัดรายการและดำเนินรายการออกอากาศ ควบคู่กับการดูแลลูกค้าและประสานงานเชิงพาณิชย์", None, None),
-    ("Make Up Artist &amp; Hair Stylist", "Freelance", None, None,
-     "Provided freelance make-up and hairstyling services.",
-     "ให้บริการแต่งหน้าและทำผมในรูปแบบฟรีแลนซ์", None, None),
-    ("General Manager and Sales", "Asia Diamond (Family Business)", None, None,
-     "Worked in general management and sales within the family business.",
-     "ปฏิบัติงานด้านการบริหารทั่วไปและการขายภายในธุรกิจครอบครัว", None, None),
+     "Role: Acted on behalf of the Restaurant Manager when the position was vacant. Scope: <strong>Five dining operations</strong> — café, breakfast restaurant, Italian restaurant, outdoor bar area and room service. Working process: Coordinated F&amp;B staff, sales summaries, inventory, training, service quality, purchasing, suppliers, promotions and cross-functional work.",
+     "บทบาท: ผู้ช่วยผู้จัดการร้านอาหาร และทำหน้าที่แทนผู้จัดการในช่วงที่ไม่มีผู้จัดการ ขอบเขตงาน: ดูแล<strong>5 ห้องอาหาร</strong> ได้แก่ คาเฟ่ ห้องอาหารเช้า ห้องอาหารอิตาเลียน โซนบาร์เอาท์ดอร์ และรูมเซอร์วิส วิธีทำงาน: ประสานงานทีม F&amp;B สรุปยอดขาย ตรวจสอบสต็อก ออกแบบการฝึกอบรม ประเมินคุณภาพบริการ จัดซื้อ ติดต่อซัพพลายเออร์ วางแผนโปรโมชั่น และทำงานร่วมกับทีมอื่น ๆ", None, None),
+    ("Director of Operations for Chef Andy Yang", "Pad Thai Fai Ta Lu · <strong>Michelin Bib Gourmand</strong>", None, None,
+     "Role: Supported the overall restaurant system, SOP development, coordination and matters related to the chef. Working process: Managed event operations, purchasing, supplier coordination and the control and inspection of ingredient quality for off-site events.",
+     "บทบาท: ดูแลภาพรวมระบบของร้าน การวาง SOP การประสานงาน และงานที่เกี่ยวข้องกับเชฟ วิธีทำงาน: บริหารการจัด Event งานจัดซื้อ การประสานงานซัพพลายเออร์ รวมถึงการควบคุมและตรวจสอบคุณภาพวัตถุดิบสำหรับงานนอกสถานที่", None, None),
+    ("Executive Assistant", "R-HAAN · <strong>Two Michelin Stars for six consecutive years</strong> · co-founded by Chef Chumpol Jangprai", "2018–2023", "2018–2023",
+     "Role: Worked at a management level with reporting, summaries, issue communication and coordination. Working process: Coordinated with local farmers throughout Thailand to source region-specific Thai ingredients, supported daily operations and coordinated with internal and external parties.",
+     "บทบาท: ปฏิบัติงานในระดับบริหาร โดยมีหน้าที่รายงานและสรุปผล รวมถึงแจ้งปัญหาและแนวทางแก้ไข วิธีทำงาน: ประสานงานกับเกษตรกรท้องถิ่นทั่วประเทศไทยเพื่อจัดหาวัตถุดิบเฉพาะของไทยจากแต่ละภูมิภาค ดูแลภาพรวมการดำเนินงานในแต่ละวัน และประสานงานกับทั้งภายในและภายนอกองค์กร",
+     "Guest experience: Managed <strong>international VVIP guest experience</strong> from reservations through follow-up.",
+     "ประสบการณ์แขก: ดูแลประสบการณ์ของ<strong>แขก VVIP ระดับนานาชาติ</strong> ตั้งแต่การจองจนถึงการติดตามผล"),
+    ("Sales Manager", "Cape &amp; Kantary Hotels", None, None, None, None, None, None),
+    ("Account Executive", "MUN Forward Radio CNX", None, None, None, None, None, None),
+    ("Freelance Makeup Artist &amp; Hair Stylist", None, None, None, None, None, None, None),
+    ("General Manager &amp; Sales", "Asia Diamond (family business)", None, None, None, None, None, None),
 ]
 EDU = {  # (role, place)
     'en': [("Bachelor of Science, Major in Industrial Computer Technology", "Ubon Ratchathani Rajabhat University | GPA 3.05"),
-           ("Thai Cookery Certificate", "MSC Thai Culinary School")],
+           ("Thai Cookery Certificate", "MSC Thai Culinary School"),
+           ("International Copyright Protection Course", "Korean Copyright Commission")],
     'th': [("ปริญญาตรี วิทยาศาสตรบัณฑิต สาขาคอมพิวเตอร์อุตสาหกรรม", "มหาวิทยาลัยราชภัฏอุบลราชธานี | GPA 3.05"),
-           ("ประกาศนียบัตรการทำอาหารไทย", "MSC Thai Culinary School")],
+           ("ประกาศนียบัตรการทำอาหารไทย", "MSC Thai Culinary School"),
+           ("หลักสูตรผู้คุ้มครองลิขสิทธิ์ในต่างประเทศ", "สำนักงานคุ้มครองลิขสิทธิ์แห่งเกาหลี")],
 }
 
 

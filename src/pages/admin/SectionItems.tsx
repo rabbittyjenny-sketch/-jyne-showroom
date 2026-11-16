@@ -71,8 +71,8 @@ export default function SectionItems() {
       actions={<>
         {island && <Link to={`/backoffice/islands/${island.id}`} className="inline-flex items-center rounded-md border px-3 text-sm">← กลับเกาะ</Link>}
         {pageUrl(section.page_slug) && <a href={pageUrl(section.page_slug)!} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-md border px-3 text-sm">ดูหน้าเว็บ ↗</a>}
-        {canBulk && <Button variant="outline" onClick={() => setBulk(true)}>+ เพิ่มหลายชิ้น (สูงสุด {MAX_BATCH})</Button>}
-        <Button onClick={() => setEditing({ section_id: section.id, item_type_id: type.id, data: {}, is_published: true, sort_order: items.length + 1 })}>+ เพิ่มผลงาน</Button>
+        {canBulk && <Button onClick={() => setBulk(true)}>+ เพิ่มรูป/คลิปหลายไฟล์พร้อมกัน (สูงสุด {MAX_BATCH})</Button>}
+        <Button variant={canBulk ? 'outline' : 'default'} onClick={() => setEditing({ section_id: section.id, item_type_id: type.id, data: {}, is_published: true, sort_order: items.length + 1 })}>+ เพิ่มทีละชิ้น</Button>
       </>}
     >
       <Notice msg={msg} />
