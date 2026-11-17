@@ -205,8 +205,10 @@ WT = src('work_town.html')
 proofs = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/proof\d\.jpg)" alt="([^"]*)"', WT)
 proof_card = """        <!-- RESULT · 2 HRS/LIVE: owner's numbers (hover / tap = proof photo) + Gallery / Video (old proof1-4 removed 18 Nov 2026, owner) -->
         <div class="content-card single" style="grid-template-columns:1fr !important">
+            <div>   <!-- one wrapper = title-to-content spacing as in section 1 (no 50px card gap) -->
             <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
-""" + PC.RESULTS_STATS + PC.RESULTS_BUTTONS + """        </div>
+""" + PC.RESULTS_STATS + PC.RESULTS_BUTTONS.replace('<div class="big-btn-row">', '<div class="big-btn-row" style="margin-top:24px">', 1) + """            </div>
+        </div>
 """
 
 def live_card():
