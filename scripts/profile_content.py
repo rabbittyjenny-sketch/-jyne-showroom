@@ -156,6 +156,7 @@ STATS = [
     ('฿64,851', 'GMV · Shopee Live<br>223 orders', 'GMV · Shopee Live<br>223 คำสั่งซื้อ'),
     ('51.51%', 'Product CTR<br>TikTok LIVE', 'อัตราคลิกสินค้า (CTR)<br>TikTok LIVE'),
     ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok'),
+    ('200+', 'LIVE hours<br>since 2022', 'ชั่วโมงไลฟ์<br>ตั้งแต่ปี 2022'),   # owner's figure (18 Nov 2026); dashboard photos alone show 63 live days Nov 2023–Jan 2025
     ('20+', 'Brands', 'แบรนด์ที่ร่วมงาน'),
 ]
 CONTACT_URL = 'contact_port.html'   # CONTACT island page
@@ -163,7 +164,8 @@ RESULTS_CARD = ('''        <!-- SELECTED LIVE RESULTS (owner's file) — stats-r
         <div class="content-card single" style="grid-template-columns:1fr !important">   <!-- one column on phones too (the page's mobile rule turns every card into 2 columns) -->
             <h2 class="col-title"><span data-lang="en">SELECTED LIVE RESULTS · 2-HOUR SESSIONS</span><span data-lang="th" style="display:none;">ผลลัพธ์บางส่วนจากไลฟ์ · 2 ชั่วโมง</span></h2>
             <div>
-            <div class="stats-row">
+            <style>.stats-row.s3 { grid-template-columns: repeat(3, 1fr); } @media (max-width: 640px) { .stats-row.s3 { grid-template-columns: repeat(2, 1fr); } .stats-row.s3 > :last-child { grid-column: 1 / -1; } }</style>   <!-- 9 boxes = 3 x 3 -->
+            <div class="stats-row s3">
 ''' + ''.join(f'                <div class="stat-box"><div class="stat-num">{n}</div><div class="stat-label"><span data-lang="en">{en}</span><span data-lang="th" style="display:none;">{th}</span></div></div>\n'
               for n, en, th in STATS) + '''            </div>
             <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ</span></p>
