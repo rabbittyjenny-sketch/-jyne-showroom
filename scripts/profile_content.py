@@ -157,7 +157,7 @@ STATS = [
     ('฿83,224', 'GMV · TikTok LIVE<br>149 items sold', 'GMV · TikTok LIVE<br>ขายได้ 149 ชิ้น', PROOF + 'gmv-83224.jpg'),
     ('฿64,851', 'GMV · Shopee Live<br>223 orders', 'GMV · Shopee Live<br>223 คำสั่งซื้อ', PROOF + 'gmv-64851-shopee.jpg'),
     ('51.51%', 'Product CTR<br>TikTok LIVE', 'อัตราคลิกสินค้า (CTR)<br>TikTok LIVE', PROOF + 'ctr-5151.jpg'),
-    ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok', PROOF + 'live-97pct.jpg'),
+    ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok', None),   # no picture (owner, 18 Nov 2026)
     ('200+', 'LIVE hours<br>since 2022', 'ชั่วโมงไลฟ์<br>ตั้งแต่ปี 2022', None),   # owner's figure (18 Nov 2026)
     ('20+', 'Brands', 'แบรนด์ที่ร่วมงาน', BRANDS_IMG),
 ]
