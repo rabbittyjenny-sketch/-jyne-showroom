@@ -112,6 +112,8 @@
     }
     function close() { if (viewer && !viewer.hidden) { viewer.hidden = true; document.body.style.overflow = ''; } }
     document.addEventListener('click', function (e) {
+        var pic = e.target.closest && e.target.closest('a[data-i365-view]');   // a link that opens a picture (e.g. brand logo board)
+        if (pic) { e.preventDefault(); open(pic.getAttribute('data-i365-view'), pic.textContent.trim()); return; }
         var img = e.target.closest && e.target.closest(VIEW);
         if (!img || (viewer && viewer.contains(img))) return;
         e.preventDefault();
