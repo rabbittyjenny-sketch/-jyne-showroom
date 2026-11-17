@@ -208,8 +208,8 @@ LIVE_PHOTOS_HTML = (
     '            </div>\n'
 )
 
-# ── LIVE COMMERCE HOSTING (section 2) ── owner's text, 18 Nov 2026 (chat): intro + role + highlights, then the
-# competencies list and strengths kept from the owner's resume file. Thai page carries no English duplicate labels in
+# ── LIVE COMMERCE HOSTING (section 2) ── owner's text, 18 Nov 2026 (chat), in her order: intro, role, highlights
+# (her heading ตัวอย่างผลงานและสถิติไฮไลต์ที่ผ่านมา), then the strengths kept from the resume file. No skills list. Thai page carries no English duplicate labels in
 # brackets (owner). Changed from the owner's wording only where the back-office photos say otherwise: 184 = items sold
 # (not orders); 97% = LIVE length vs similar creators (not viewer retention / top 3%); 51.51% = product click-through
 # (not conversion). English = translation of the Thai, first person.
@@ -219,11 +219,7 @@ _P = lambda t: '                <p class="col-desc">' + t + '</p>\n'
 RESUME_TH = (
     _P('<strong>Freelance · 2022–ปัจจุบัน</strong> เข้าสู่ปีที่ 4 และมีชั่วโมงสะสมมากกว่า 200 ชั่วโมง บนแพลตฟอร์ม TikTok LIVE, Facebook Live, Shopee Live ได้ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ในหลากหลายกลุ่ม เช่น ความงาม ไลฟ์สไตล์ แฟชั่น ของกิน ของใช้ และแม่และเด็ก เป็นต้น') +
     _P('<strong>บทบาท:</strong> เตรียมข้อมูลสินค้าและแบรนด์ เขียนสคริปต์ วางแนวทางหาจุดขายสำหรับแต่ละไลฟ์ และให้ข้อมูลอย่างมีคุณธรรม-จริยธรรม ภายใต้กรอบของกฎหมายโดยไม่เอาเปรียบผู้บริโภค อย่างมีมาตรฐานและจริงใจ แก้ไขปัญหา/ปรับเนื้อหาในระหว่างไลฟ์ไปตามสถานการณ์หรือการตอบสนองของผู้ชม ช่วงจบไลฟ์จะติดตามผลเพื่อนำผลตัวเลขมาปรับทั้งการพูดหรือวิธีการนำเสนอ เพื่อผลลัพธ์ที่มีคุณภาพที่ดีขึ้นในครั้งต่อไป') +
-    _H.format('ทักษะความเชี่ยวชาญ') +
-    _L(['<strong>ทักษะหน้ากล้องและการนำเสนอ:</strong> Live Selling, Real-Time Interactive Q&amp;A, Product Storytelling, Flash Sale Pitching, การแก้ปัญหาเฉพาะหน้า',
-        '<strong>ระบบและเทคนิคหลังบ้าน:</strong> TikTok Shop Live Console, Shopee Live Analytics, OBS Studio, Real-Time Data Monitoring',
-        '<strong>กลุ่มสินค้าที่เชี่ยวชาญ:</strong> สินค้าแม่และเด็ก, ของใช้ส่วนตัวและความงาม (Sensodyne, WhiteLab, KATE Thailand), สินค้าอุปโภคบริโภค และสินค้าแฟชั่น']) +
-    _H.format('ประสบการณ์ทำงานและผลงาน') +
+    _H.format('ตัวอย่างผลงานและสถิติไฮไลต์ที่ผ่านมา') +
     _L(['<strong>ยอดขายสูงสุดต่อรอบ:</strong> ทำยอดขายได้ถึง ฿114,762 (ขายได้ 184 ชิ้น) ในไลฟ์ 2 ชั่วโมงบน TikTok Shop และรอบระดับ ฿109,857 รวมถึงยอดขาย ฿64,851 บน Shopee Live',
         '<strong>ความยาวไลฟ์:</strong> ไลฟ์ยาวกว่าครีเอเตอร์ 97% ที่มีผู้ติดตามใกล้เคียงกัน ตามสรุปผลหลังไลฟ์ของ TikTok LIVE',
         '<strong>การดึงความสนใจไปที่สินค้า:</strong> ทำอัตราคลิกชมสินค้า (CTR) สูงสุดถึง 51.51% ด้วยเทคนิค Real-Time Pitching และการตอบคำถามเฉพาะหน้า',
@@ -235,11 +231,7 @@ RESUME_TH = (
 RESUME_EN = (
     _P('<strong>Freelance · 2022–Present</strong> Now in my fourth year, with more than 200 hours live on TikTok LIVE, Facebook Live and Shopee Live. I have worked with more than 20 brands across a wide range of categories, including beauty, lifestyle, fashion, food, household products and mother &amp; baby.') +
     _P('<strong>My role:</strong> I prepare product and brand information, write scripts and define the selling points for each live. I present information ethically and within the law, never taking advantage of consumers, to a consistent standard and in good faith. During the live, I solve problems and adapt the content to the situation and the audience’s response. After each live, I review the numbers and refine my delivery and presentation so the next session performs better.') +
-    _H.format('CORE COMPETENCIES &amp; SKILLS') +
-    _L(['<strong>On-camera &amp; presentation:</strong> Live selling, real-time interactive Q&amp;A, product storytelling, flash sale pitching, on-the-spot problem solving',
-        '<strong>Back-office tools:</strong> TikTok Shop Live Console, Shopee Live Analytics, OBS Studio, real-time data monitoring',
-        '<strong>Product categories:</strong> Mother &amp; baby, personal care &amp; beauty (Sensodyne, WhiteLab, KATE Thailand), FMCG and fashion']) +
-    _H.format('WORK EXPERIENCE &amp; RESULTS') +
+    _H.format('SELECTED RESULTS &amp; HIGHLIGHTS') +
     _L(['<strong>Peak single-session sales:</strong> ฿114,762 GMV (184 items sold) in a 2-hour TikTok Shop live, a ฿109,857 session, and ฿64,851 GMV on Shopee Live',
         '<strong>LIVE length:</strong> One TikTok LIVE ran longer than 97% of creators with similar follower counts (TikTok LIVE post-session summary)',
         '<strong>Product click-through:</strong> Peak product click-through rate (CTR) of 51.51%, driven by real-time pitching and on-the-spot answers',
