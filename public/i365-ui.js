@@ -43,7 +43,14 @@
             '.i365-secnav a{font-family:"Anton","Noto Sans Thai",sans-serif;font-size:.85rem;letter-spacing:.5px;line-height:1.25;text-transform:uppercase;' +
             'color:inherit;text-decoration:none;opacity:.55;padding-left:10px;border-left:2px solid transparent}' +
             '.i365-secnav a.on{opacity:1;border-left-color:currentColor}' +
-            '@media(min-width:1330px){.i365-secnav.has{display:flex}}';
+            '@media(min-width:1330px){.i365-secnav.has{display:flex}}' +
+            /* hover peek: a[data-i365-peek] shows its picture above the box (same pop as the map tooltips) */
+            '.i365-peek{position:fixed;z-index:900;width:300px;max-width:80vw;padding:6px;background:#fff;border-radius:12px;' +
+            'box-shadow:0 18px 45px rgba(0,0,0,.35);pointer-events:none;opacity:0;transform:scale(.3);' +
+            'transition:opacity .25s ease,transform .4s cubic-bezier(0.68,-0.55,0.265,1.55)}' +
+            '.i365-peek.on{opacity:1;transform:scale(1)}' +
+            '.i365-peek img{display:block;width:100%;max-height:60vh;object-fit:contain;border-radius:8px}' +
+            '@media(prefers-reduced-motion:reduce){.i365-peek{transition:opacity .2s}}';
         document.head.appendChild(st);
     }
 
@@ -120,6 +127,37 @@
         var tile = img.closest('[data-link]');
         open(img.currentSrc || img.src, img.alt, tile && tile.getAttribute('data-link'));
     });
+
+    /* ── 2b. hover peek (mouse only; touch keeps tap = viewer) ── */
+    var peek, peekFor;
+    function peekShow(a) {
+        if (!peek) {
+            peek = document.createElement('div'); peek.className = 'i365-peek'; peek.setAttribute('aria-hidden', 'true');
+            peek.innerHTML = '<img alt="">'; document.body.appendChild(peek);
+            peek.querySelector('img').addEventListener('load', function () { if (peekFor) peekPlace(peekFor); });
+        }
+        peekFor = a;
+        var src = a.getAttribute('data-i365-view'), img = peek.querySelector('img');
+        if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+        peekPlace(a);
+        requestAnimationFrame(function () { if (peekFor === a) peek.classList.add('on'); });
+    }
+    function peekPlace(a) {
+        var r = a.getBoundingClientRect(), w = peek.offsetWidth, h = peek.offsetHeight, gap = 12;
+        var left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+        var top = r.top - h - gap >= 8 ? r.top - h - gap : Math.min(r.bottom + gap, window.innerHeight - h - 8);
+        peek.style.left = left + 'px'; peek.style.top = Math.max(8, top) + 'px';
+        peek.style.transformOrigin = (r.left + r.width / 2 - left) + 'px ' + (top < r.top ? '100%' : '0');
+    }
+    function peekHide() { peekFor = null; if (peek) peek.classList.remove('on'); }
+    if (window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.addEventListener('mouseover', function (e) {
+            var a = e.target.closest && e.target.closest('a[data-i365-peek][data-i365-view]');
+            if (a && a !== peekFor) peekShow(a); else if (!a && peekFor) peekHide();
+        });
+        window.addEventListener('scroll', peekHide, { passive: true });
+        document.addEventListener('click', peekHide, true);
+    }
 
     /* ── 3. section menu on the left ─────────────────────────── */
     function sectionNav() {

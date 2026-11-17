@@ -203,19 +203,24 @@ write('about_experience.html', page('about_experience', 'about_island.html', 'WO
 
 WT = src('work_town.html')
 proofs = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/proof\d\.jpg)" alt="([^"]*)"', WT)
-proof_card = """        <!-- RESULT · 2 HRS/LIVE: owner's numbers (each opens its proof photo) + images from work_town.html -->
+proof_card = """        <!-- RESULT · 2 HRS/LIVE: owner's numbers (hover / tap = proof photo) + Gallery / Video (old proof1-4 removed 18 Nov 2026, owner) -->
         <div class="content-card single" style="grid-template-columns:1fr !important">
             <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>
-""" + PC.RESULTS_STATS + """            <div class="proof-grid-result" data-i365="live-proof">
-""" + ''.join(f'                <img src="{u}" alt="{a}">\n' for u, a in proofs) + """            </div>
-            <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>
-""" + PC.RESULTS_BUTTONS + """        </div>
+""" + PC.RESULTS_STATS + PC.RESULTS_BUTTONS + """        </div>
 """
+
+def live_card():
+    """about_island CASE STUDY card: left = owner's LIVE COMMERCE text, right = owner's 6 live photos (no heading)"""
+    block = between(cut(A, A_CASE, A_SALES), '            <div>\n                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>',
+                    '            <div>\n                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>', PC.live_text_html())
+    start = block.index('            <div>\n                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>')
+    end = block.index('            </div>\n', block.index('Big C Thailand</p>', start)) + len('            </div>\n')
+    return block[:start] + PC.LIVE_PHOTOS_HTML + block[end:]
+
+
 write('about_live.html', page('about_live', 'about_island.html', 'LIVE COMMERCE', 'LIVE<br>COMMERCE', '', [
     LANG_TOGGLE,                    # EN/TH toggle of about_island.html
-    between(cut(A, A_CASE, A_SALES), '            <div>\n                <h2 class="col-title">JENNY JYNE · CASE STUDY</h2>',
-            '            <div>\n                <h2 class="col-title">RESULT · 2 HRS/LIVE</h2>', PC.live_text_html()),
-                                    # LIVE COMMERCE text (owner's, EN/TH) + RESULT screenshots (about_island)
+    live_card(),                    # LIVE COMMERCE text (owner's, EN/TH) + 6 live photos (right column)
     PC.RESUME_CARD,                 # RESUME · LIVE COMMERCE HOST (owner's file, EN/TH) + Get in touch
     proof_card,                     # RESULT: numbers with proof pop-ups + images from Works Town + Gallery / Video
 ], 'island_about.html', set_lang))

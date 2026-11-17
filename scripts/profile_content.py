@@ -170,7 +170,7 @@ def _stat(n, en, th, img):
     if not img:
         return '                <div class="stat-box">' + inner + '</div>\n'
     return ('                <a class="stat-box" href="' + img + '" data-i365-view="' + img + '" target="_blank" rel="noopener" '
-            'style="display:block;text-decoration:none;cursor:zoom-in">' + inner + '</a>\n')
+            'data-i365-peek style="display:block;text-decoration:none;cursor:zoom-in">' + inner + '</a>\n')
 
 
 # goes at the top of the RESULT · 2 HRS/LIVE card (scripts/build-island-pages.py, proof_card)
@@ -178,13 +178,36 @@ RESULTS_STATS = (
     '            <style>.stats-row.s3 { grid-template-columns: repeat(3, 1fr); } @media (max-width: 640px) { .stats-row.s3 { grid-template-columns: repeat(2, 1fr); } .stats-row.s3 > :last-child { grid-column: 1 / -1; } }</style>   <!-- 9 boxes = 3 x 3 -->\n'
     '            <div>   <!-- one grid item, so the card gap is not added between the numbers and the note -->\n'
     '            <div class="stats-row s3">\n' + ''.join(_stat(*x) for x in STATS) + '            </div>\n'
-    '            <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions. Tap a number to see its screenshot.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ · กดที่ตัวเลขเพื่อดูภาพหลักฐาน</span></p>\n'
+    '            <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions. Hover over or tap a number to see its screenshot.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ · ชี้หรือกดที่ตัวเลขเพื่อดูภาพหลักฐาน</span></p>\n'
     '            </div>\n'
 )
 RESULTS_BUTTONS = ('            <div class="big-btn-row">\n'
                    '                <a class="big-btn" href="works_photos.html#live-photos">Gallery งานไลฟ์</a>\n'
                    '                <a class="big-btn" href="works_clips.html#live-selling">Video งานไลฟ์</a>\n'
                    '            </div>\n')
+
+# ── LIVE PHOTOS (section 1, right column) ── owner's 6 live photos on ImageKit (18 Nov 2026), 2 per row x 3 rows,
+# no heading; proof-grid-work of about_island.html (portrait crop, picture viewer); starts level with the left text.
+LIVE_PHOTOS = [
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240713_143938752(1).jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240802_140501775(1).jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240711_232645820.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240718_231540108.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240813_233421772.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MTXX_MR20231223_041538833.jpg',
+]
+LIVE_PHOTOS_HTML = (
+    '            <div class="live-photos">\n'
+    '                <style>.live-photos .proof-grid-work { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; margin-top: 0; }'
+    ' .live-photos .proof-grid-work img { aspect-ratio: 3 / 5; } .live-photos .col-title { visibility: hidden; }'
+    ' @media (max-width: 640px) { .content-card:has(.live-photos) { grid-template-columns: 1fr !important; } .live-photos .col-title { display: none; } }</style>\n'
+    # invisible copy of the left heading = the photos start exactly level with the left text, in EN and TH
+    '                <h2 class="col-title" aria-hidden="true"><span data-lang="en">LIVE COMMERCE</span><span data-lang="th" style="display:none;">งานไลฟ์สตรีม</span></h2>\n'
+    '                <div class="proof-grid-work">\n' + ''.join('                    <img src="' + u + '" alt="" loading="lazy">\n' for u in LIVE_PHOTOS) +
+    '                </div>\n'
+    '                <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>\n'
+    '            </div>\n'
+)
 
 # ── RESUME (section 2) ── owner's file "Untitled document (13)": the Global Standard Format resume (EN) and the Thai
 # resume. Wording is theirs; changed only where the back-office photos show the file was wrong (owner's rule: no claim
