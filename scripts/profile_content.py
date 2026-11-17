@@ -205,58 +205,60 @@ LIVE_PHOTOS_HTML = (
     '                <h2 class="col-title" aria-hidden="true"><span data-lang="en">LIVE COMMERCE</span><span data-lang="th" style="display:none;">งานไลฟ์สตรีม</span></h2>\n'
     '                <div class="proof-grid-work">\n' + ''.join('                    <img src="' + u + '" alt="" loading="lazy">\n' for u in LIVE_PHOTOS) +
     '                </div>\n'
-    '                <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>\n'
     '            </div>\n'
 )
 
-# ── RESUME (section 2) ── owner's file "Untitled document (13)": the Global Standard Format resume (EN) and the Thai
-# resume. Wording is theirs; changed only where the back-office photos show the file was wrong (owner's rule: no claim
-# without a real source): 97% is LIVE length, not "viewer retention / consistently"; 184/200/141 are items sold, not
-# orders; "top-tier", "$3.2K" and the contact lines dropped (contact = button); "14+ years (8 + 8+)" did not add up, so
-# no year count until the owner gives it; Sensodyne is oral care, so the category reads personal care.
-_H = '                <p class="col-desc" style="margin:22px 0 8px"><strong>{}</strong></p>\n'
+# ── LIVE COMMERCE HOSTING (section 2) ── owner's text, 18 Nov 2026 (chat): intro + role + highlights, then the
+# competencies list and strengths kept from the owner's resume file. Thai page carries no English duplicate labels in
+# brackets (owner). Changed from the owner's wording only where the back-office photos say otherwise: 184 = items sold
+# (not orders); 97% = LIVE length vs similar creators (not viewer retention / top 3%); 51.51% = product click-through
+# (not conversion). English = translation of the Thai, first person.
+_H = '                <p class="col-desc" style="margin:24px 0 6px"><strong>{}</strong></p>\n'
 _L = lambda items: '                <ul class="hl">\n' + ''.join('                    <li>' + i + '</li>\n' for i in items) + '                </ul>\n'
 _P = lambda t: '                <p class="col-desc">' + t + '</p>\n'
-RESUME_EN = (
-    _H.format('PROFESSIONAL SUMMARY') +
-    _P('High-performance Live Commerce Host and Presenter with 4+ years of experience and 200+ cumulative live streaming hours across TikTok Shop and Shopee Live. Demonstrated expertise in driving real-time sales for 20+ brands across FMCG, Mom &amp; Baby, Beauty and Fashion. Proven track record of generating ฿114K+ in GMV during a single 2-hour session.') +
-    _H.format('CORE COMPETENCIES &amp; SKILLS') +
-    _L(['<strong>On-Camera &amp; Performance:</strong> Live selling pitching, product storytelling, audience retention, flash sale urgency, real-time interactive Q&amp;A, improvisation',
-        '<strong>Technical &amp; Analytical Tools:</strong> TikTok LIVE Console, Shopee Live Dashboard, real-time analytics monitoring, OBS Studio',
-        '<strong>Product Category Expertise:</strong> Mom &amp; Baby, personal care &amp; cosmetics (Sensodyne, WhiteLab, KATE Thailand), FMCG, Fashion &amp; Lifestyle']) +
-    _H.format('PROFESSIONAL EXPERIENCE · FREELANCE LIVE STREAM HOST &amp; LIVE COMMERCE SPECIALIST (2022 – PRESENT)') +
-    _L(['<strong>Revenue &amp; Conversion Performance:</strong> Achieved a single-session peak GMV of ฿114,762 (184 items sold) on TikTok Shop within a 2-hour window; generated ฿109,857 (200 items sold) and ฿91,664 (141 items sold) in other high-conversion sessions; delivered up to ฿64,851 GMV on Shopee Live with 223 orders and 1,256 add-to-carts in one session.',
-        '<strong>Audience &amp; Engagement:</strong> Reached a peak product click-through rate (CTR) of 51.51% through interactive demonstrations and real-time urgency pitching; one TikTok LIVE ran longer than 97% of creators with similar follower counts.',
-        '<strong>Brand Representation:</strong> Trusted live presenter for 20+ brands including Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab and SC Johnson, managing sessions in line with brand CI, legal guidelines and campaign objectives.',
-        '<strong>Industry Versatility:</strong> Accumulated 200+ streaming hours over 4 years, maintaining high energy and professionalism in 2 to 2.5-hour continuous live broadcasts.']) +
-    _H.format('BACKGROUND &amp; KEY DIFFERENTIATORS') +
-    _L(['<strong>Premium service background:</strong> Luxury jewelry and Michelin-recognized restaurant management, bringing high-end service standards, structural discipline and premium customer care to live commerce.',
-        '<strong>Tech-savvy approach:</strong> Integrating AI productivity tools for script preparation, trend analysis and stream workflow optimization.'])
-)
 RESUME_TH = (
-    _H.format('บทสรุปประวัติ (Professional Summary)') +
-    _P('นักจัดรายการไลฟ์สดขายสินค้ามืออาชีพ (Live Commerce Host) ประสบการณ์ 4 ปี ไลฟ์ให้แบรนด์มากกว่า 20 แบรนด์ ทั้งกลุ่ม FMCG, Beauty, Mother &amp; Baby และแฟชั่น มีชั่วโมงไลฟ์สดสะสมมากกว่า 200 ชั่วโมง พร้อมสถิติยอดขายสูงสุดต่อรอบ ฿114,000+ บน TikTok Shop และ ฿64,000+ บน Shopee Live') +
-    _H.format('ทักษะความเชี่ยวชาญ (Core Competencies &amp; Skills)') +
+    _P('<strong>Freelance · 2022–ปัจจุบัน</strong> เข้าสู่ปีที่ 4 และมีชั่วโมงสะสมมากกว่า 200 ชั่วโมง บนแพลตฟอร์ม TikTok LIVE, Facebook Live, Shopee Live ได้ร่วมงานกับแบรนด์มากกว่า 20 แบรนด์ในหลากหลายกลุ่ม เช่น ความงาม ไลฟ์สไตล์ แฟชั่น ของกิน ของใช้ และแม่และเด็ก เป็นต้น') +
+    _P('<strong>บทบาท:</strong> เตรียมข้อมูลสินค้าและแบรนด์ เขียนสคริปต์ วางแนวทางหาจุดขายสำหรับแต่ละไลฟ์ และให้ข้อมูลอย่างมีคุณธรรม-จริยธรรม ภายใต้กรอบของกฎหมายโดยไม่เอาเปรียบผู้บริโภค อย่างมีมาตรฐานและจริงใจ แก้ไขปัญหา/ปรับเนื้อหาในระหว่างไลฟ์ไปตามสถานการณ์หรือการตอบสนองของผู้ชม ช่วงจบไลฟ์จะติดตามผลเพื่อนำผลตัวเลขมาปรับทั้งการพูดหรือวิธีการนำเสนอ เพื่อผลลัพธ์ที่มีคุณภาพที่ดีขึ้นในครั้งต่อไป') +
+    _H.format('ทักษะความเชี่ยวชาญ') +
     _L(['<strong>ทักษะหน้ากล้องและการนำเสนอ:</strong> Live Selling, Real-Time Interactive Q&amp;A, Product Storytelling, Flash Sale Pitching, การแก้ปัญหาเฉพาะหน้า',
         '<strong>ระบบและเทคนิคหลังบ้าน:</strong> TikTok Shop Live Console, Shopee Live Analytics, OBS Studio, Real-Time Data Monitoring',
-        '<strong>กลุ่มสินค้าที่เชี่ยวชาญ:</strong> สินค้าแม่และเด็ก (Mom &amp; Baby), ของใช้ส่วนตัวและความงาม (Sensodyne, WhiteLab, KATE Thailand), สินค้าอุปโภคบริโภค (FMCG) และสินค้าแฟชั่น']) +
-    _H.format('ประสบการณ์ทำงานและผลงาน · Freelance Live Stream Host / Live Commerce Consultant (2022 – ปัจจุบัน)') +
-    _L(['<strong>ยอดขายสูงสุดต่อรอบ:</strong> TikTok Shop ทำยอดขายสูงสุด ฿114,762 (ขายได้ 184 ชิ้น) ในไลฟ์ 2 ชั่วโมง และรอบ ฿109,857 (ขายได้ 200 ชิ้น), ฿91,664 (ขายได้ 141 ชิ้น) · Shopee Live ทำยอดขายสูงสุด ฿64,851 (223 คำสั่งซื้อ เพิ่มลงรถเข็น 1,256 ครั้ง)',
-        '<strong>การดึงความสนใจผู้ชม:</strong> อัตราคลิกชมสินค้า (CTR) สูงสุด 51.51% จากการเล่าเรื่องและกระตุ้นการตัดสินใจซื้อแบบ real-time · ไลฟ์ TikTok หนึ่งรอบยาวกว่าครีเอเตอร์ 97% ที่มีผู้ติดตามใกล้เคียงกัน',
-        '<strong>ชั่วโมงไลฟ์สะสม:</strong> มากกว่า 200 ชั่วโมง ไลฟ์ต่อเนื่องรอบละ 2 – 2 ชั่วโมงครึ่ง',
-        '<strong>ประสบการณ์ร่วมงานกับแบรนด์:</strong> 20+ แบรนด์ เช่น Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab, SC Johnson โดยปฏิบัติตาม Brand CI อย่างเคร่งครัด']) +
-    _H.format('จุดแข็งเสริม (Key Attributes)') +
+        '<strong>กลุ่มสินค้าที่เชี่ยวชาญ:</strong> สินค้าแม่และเด็ก, ของใช้ส่วนตัวและความงาม (Sensodyne, WhiteLab, KATE Thailand), สินค้าอุปโภคบริโภค และสินค้าแฟชั่น']) +
+    _H.format('ประสบการณ์ทำงานและผลงาน') +
+    _L(['<strong>ยอดขายสูงสุดต่อรอบ:</strong> ทำยอดขายได้ถึง ฿114,762 (ขายได้ 184 ชิ้น) ในไลฟ์ 2 ชั่วโมงบน TikTok Shop และรอบระดับ ฿109,857 รวมถึงยอดขาย ฿64,851 บน Shopee Live',
+        '<strong>ความยาวไลฟ์:</strong> ไลฟ์ยาวกว่าครีเอเตอร์ 97% ที่มีผู้ติดตามใกล้เคียงกัน ตามสรุปผลหลังไลฟ์ของ TikTok LIVE',
+        '<strong>การดึงความสนใจไปที่สินค้า:</strong> ทำอัตราคลิกชมสินค้า (CTR) สูงสุดถึง 51.51% ด้วยเทคนิค Real-Time Pitching และการตอบคำถามเฉพาะหน้า',
+        '<strong>ประสบการณ์ร่วมงานกับแบรนด์:</strong> ได้รับความไว้วางใจจาก 20+ แบรนด์ชั้นนำ เช่น Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab และ SC Johnson']) +
+    _H.format('จุดแข็งเสริม') +
     _L(['<strong>พื้นฐานงานบริการระดับพรีเมียม:</strong> ประสบการณ์ด้าน Jewelry และร้านอาหารระดับ Michelin หล่อหลอมมาตรฐานการบริการระดับ Luxury และระบบการทำงานที่เป็นเลิศ',
         '<strong>การใช้เทคโนโลยี AI:</strong> ประยุกต์ใช้ AI Tools ในการเตรียมสคริปต์ วิเคราะห์เทรนด์ และจัดการงานหลังบ้าน'])
 )
+RESUME_EN = (
+    _P('<strong>Freelance · 2022–Present</strong> Now in my fourth year, with more than 200 hours live on TikTok LIVE, Facebook Live and Shopee Live. I have worked with more than 20 brands across a wide range of categories, including beauty, lifestyle, fashion, food, household products and mother &amp; baby.') +
+    _P('<strong>My role:</strong> I prepare product and brand information, write scripts and define the selling points for each live. I present information ethically and within the law, never taking advantage of consumers, to a consistent standard and in good faith. During the live, I solve problems and adapt the content to the situation and the audience’s response. After each live, I review the numbers and refine my delivery and presentation so the next session performs better.') +
+    _H.format('CORE COMPETENCIES &amp; SKILLS') +
+    _L(['<strong>On-camera &amp; presentation:</strong> Live selling, real-time interactive Q&amp;A, product storytelling, flash sale pitching, on-the-spot problem solving',
+        '<strong>Back-office tools:</strong> TikTok Shop Live Console, Shopee Live Analytics, OBS Studio, real-time data monitoring',
+        '<strong>Product categories:</strong> Mother &amp; baby, personal care &amp; beauty (Sensodyne, WhiteLab, KATE Thailand), FMCG and fashion']) +
+    _H.format('WORK EXPERIENCE &amp; RESULTS') +
+    _L(['<strong>Peak single-session sales:</strong> ฿114,762 GMV (184 items sold) in a 2-hour TikTok Shop live, a ฿109,857 session, and ฿64,851 GMV on Shopee Live',
+        '<strong>LIVE length:</strong> One TikTok LIVE ran longer than 97% of creators with similar follower counts (TikTok LIVE post-session summary)',
+        '<strong>Product click-through:</strong> Peak product click-through rate (CTR) of 51.51%, driven by real-time pitching and on-the-spot answers',
+        '<strong>Brand experience:</strong> Trusted by 20+ leading brands, including Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab and SC Johnson']) +
+    _H.format('KEY STRENGTHS') +
+    _L(['<strong>Premium service background:</strong> Luxury jewelry and Michelin-recognized restaurants shaped my luxury-level service standards and disciplined way of working',
+        '<strong>AI in my workflow:</strong> I use AI tools for script preparation, trend analysis and back-office work'])
+)
+# one wrapper inside the card = no 50px card gap between title, text and button (title-to-text spacing = section 1)
 RESUME_CARD = (
-    '        <!-- RESUME · LIVE COMMERCE HOST (owner\'s file) — col-title / col-desc / hl of about_island.html -->\n'
+    '        <!-- LIVE COMMERCE HOSTING (owner\'s text) — col-title / col-desc / hl of about_island.html -->\n'
     '        <div class="content-card single" style="grid-template-columns:1fr !important">\n'
-    '            <h2 class="col-title"><span data-lang="en">RESUME · LIVE COMMERCE HOST</span><span data-lang="th" style="display:none;">เรซูเม่ · LIVE COMMERCE HOST</span></h2>\n'
+    '            <div>\n'
+    '            <h2 class="col-title">LIVE COMMERCE HOSTING</h2>\n'
     '            <div data-lang="en">\n' + RESUME_EN + '            </div>\n'
     '            <div data-lang="th" style="display:none;">\n' + RESUME_TH + '            </div>\n'
-    '            <div class="big-btn-row" style="grid-template-columns:1fr">\n'
+    '            <div class="big-btn-row" style="grid-template-columns:1fr;margin-top:28px">\n'
     '                <a class="big-btn" href="' + CONTACT_URL + '">Get in touch</a>\n'
+    '            </div>\n'
     '            </div>\n'
     '        </div>\n'
 )
