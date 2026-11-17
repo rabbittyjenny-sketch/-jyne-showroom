@@ -141,44 +141,125 @@ def live_text_html():
             '            </div>\n')
 
 
-# SELECTED LIVE RESULTS — owner's file "Untitled document (13)" (18 Nov 2026), every figure checked against the
-# back-office screenshot it comes from (Drive folder 1YeGUzrt…; screenshots already on the page in RESULT · 2 HRS/LIVE):
+# ── LIVE RESULTS (numbers) ── owner's file "Untitled document (13)" (18 Nov 2026); every figure checked against the
+# back-office photo it comes from. Each number opens its proof photo (public/live-proof/, from the owner's Drive
+# folder "Live Dashboard") in the site's picture viewer (i365-ui.js a[data-i365-view]).
 #   ฿114,762 Hi-Q 2 Aug 2024 · ฿109,857 BabyLove 4 Jul 2024 · ฿91,664 BabyLove 15 Aug 2024 · ฿83,224 18 Jul 2024
-#   (TikTok LIVE Console, "สินค้าที่ขายได้" = items sold) · ฿64,851 Bata 21 Nov 2023 (Shopee Live, best Shopee session)
-#   51.51% CTR BabyLove 22 Aug 2024 (TikTok, proof1.jpg) · 97% = "LIVE longer than 97% of creators with similar
-#   follower counts" (TikTok post-LIVE summary 13 Nov 2024, one 2h12m session — it measures LIVE length, not retention)
-# (number, EN label, TH label) — the label line under each number
+#   (TikTok LIVE Console, "สินค้าที่ขายได้" = items sold) · ฿64,851 Bata 21 Nov 2023 (Shopee Live, best of 9 Bata sessions)
+#   51.51% CTR BabyLove 22 Aug 2024 · 97% = "LIVE longer than 97% of creators with similar follower counts"
+#   (TikTok post-LIVE summary 13 Nov 2024 — LIVE length, not retention) · 200+ hours = owner's figure
+PROOF = 'live-proof/'
+# (number, EN label, TH label, proof image or None)
 STATS = [
-    ('฿114,762', 'GMV · TikTok LIVE<br>184 items sold', 'GMV · TikTok LIVE<br>ขายได้ 184 ชิ้น'),
-    ('฿109,857', 'GMV · TikTok LIVE<br>200 items sold', 'GMV · TikTok LIVE<br>ขายได้ 200 ชิ้น'),
-    ('฿91,664', 'GMV · TikTok LIVE<br>141 items sold', 'GMV · TikTok LIVE<br>ขายได้ 141 ชิ้น'),
-    ('฿83,224', 'GMV · TikTok LIVE<br>149 items sold', 'GMV · TikTok LIVE<br>ขายได้ 149 ชิ้น'),
-    ('฿64,851', 'GMV · Shopee Live<br>223 orders', 'GMV · Shopee Live<br>223 คำสั่งซื้อ'),
-    ('51.51%', 'Product CTR<br>TikTok LIVE', 'อัตราคลิกสินค้า (CTR)<br>TikTok LIVE'),
-    ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok'),
-    ('20+', 'Brands', 'แบรนด์ที่ร่วมงาน'),
+    ('฿114,762', 'GMV · TikTok LIVE<br>184 items sold', 'GMV · TikTok LIVE<br>ขายได้ 184 ชิ้น', PROOF + 'gmv-114762.jpg'),
+    ('฿109,857', 'GMV · TikTok LIVE<br>200 items sold', 'GMV · TikTok LIVE<br>ขายได้ 200 ชิ้น', PROOF + 'gmv-109857.jpg'),
+    ('฿91,664', 'GMV · TikTok LIVE<br>141 items sold', 'GMV · TikTok LIVE<br>ขายได้ 141 ชิ้น', PROOF + 'gmv-91664.jpg'),
+    ('฿83,224', 'GMV · TikTok LIVE<br>149 items sold', 'GMV · TikTok LIVE<br>ขายได้ 149 ชิ้น', PROOF + 'gmv-83224.jpg'),
+    ('฿64,851', 'GMV · Shopee Live<br>223 orders', 'GMV · Shopee Live<br>223 คำสั่งซื้อ', PROOF + 'gmv-64851-shopee.jpg'),
+    ('51.51%', 'Product CTR<br>TikTok LIVE', 'อัตราคลิกสินค้า (CTR)<br>TikTok LIVE', PROOF + 'ctr-5151.jpg'),
+    ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok', PROOF + 'live-97pct.jpg'),
+    ('200+', 'LIVE hours<br>since 2022', 'ชั่วโมงไลฟ์<br>ตั้งแต่ปี 2022', None),   # owner's figure (18 Nov 2026)
+    ('20+', 'Brands', 'แบรนด์ที่ร่วมงาน', BRANDS_IMG),
 ]
 CONTACT_URL = 'contact_port.html'   # CONTACT island page
-RESULTS_CARD = ('''        <!-- SELECTED LIVE RESULTS (owner's file) — stats-row / stat-box / big-btn-row of about_island.html -->
-        <div class="content-card single" style="grid-template-columns:1fr !important">   <!-- one column on phones too (the page's mobile rule turns every card into 2 columns) -->
-            <h2 class="col-title"><span data-lang="en">SELECTED LIVE RESULTS · 2-HOUR SESSIONS</span><span data-lang="th" style="display:none;">ผลลัพธ์บางส่วนจากไลฟ์ · 2 ชั่วโมง</span></h2>
-            <div>
-            <div class="stats-row">
-''' + ''.join(f'                <div class="stat-box"><div class="stat-num">{n}</div><div class="stat-label"><span data-lang="en">{en}</span><span data-lang="th" style="display:none;">{th}</span></div></div>\n'
-              for n, en, th in STATS) + '''            </div>
-            <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ</span></p>
-            </div>
-            <div>
-            <div class="big-btn-row" style="margin-top:0">
-                <a class="big-btn" href="works_photos.html">Gallery งานไลฟ์</a>
-                <a class="big-btn" href="works_clips.html">Video งานไลฟ์</a>
-            </div>
-            <div class="big-btn-row" style="grid-template-columns:1fr">
-                <a class="big-btn" href="''' + CONTACT_URL + '''">Get in touch</a>
-            </div>
-            </div>
-        </div>
-''')
+
+
+def _stat(n, en, th, img):
+    inner = ('<div class="stat-num">' + n + '</div><div class="stat-label"><span data-lang="en">' + en +
+             '</span><span data-lang="th" style="display:none;">' + th + '</span></div>')
+    if not img:
+        return '                <div class="stat-box">' + inner + '</div>\n'
+    return ('                <a class="stat-box" href="' + img + '" data-i365-view="' + img + '" target="_blank" rel="noopener" '
+            'data-i365-peek style="display:block;text-decoration:none;cursor:zoom-in">' + inner + '</a>\n')
+
+
+# goes at the top of the RESULT · 2 HRS/LIVE card (scripts/build-island-pages.py, proof_card)
+RESULTS_STATS = (
+    '            <style>.stats-row.s3 { grid-template-columns: repeat(3, 1fr); } @media (max-width: 640px) { .stats-row.s3 { grid-template-columns: repeat(2, 1fr); } .stats-row.s3 > :last-child { grid-column: 1 / -1; } }</style>   <!-- 9 boxes = 3 x 3 -->\n'
+    '            <div>   <!-- one grid item, so the card gap is not added between the numbers and the note -->\n'
+    '            <div class="stats-row s3">\n' + ''.join(_stat(*x) for x in STATS) + '            </div>\n'
+    '            <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions. Hover over or tap a number to see its screenshot.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ · ชี้หรือกดที่ตัวเลขเพื่อดูภาพหลักฐาน</span></p>\n'
+    '            </div>\n'
+)
+RESULTS_BUTTONS = ('            <div class="big-btn-row">\n'
+                   '                <a class="big-btn" href="works_photos.html#live-photos">Gallery งานไลฟ์</a>\n'
+                   '                <a class="big-btn" href="works_clips.html#live-selling">Video งานไลฟ์</a>\n'
+                   '            </div>\n')
+
+# ── LIVE PHOTOS (section 1, right column) ── owner's 6 live photos on ImageKit (18 Nov 2026), 2 per row x 3 rows,
+# no heading; proof-grid-work of about_island.html (portrait crop, picture viewer); starts level with the left text.
+LIVE_PHOTOS = [
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240713_143938752(1).jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240802_140501775(1).jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240711_232645820.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240718_231540108.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MEITU_20240813_233421772.jpg',
+    'https://ik.imagekit.io/ideas365logo/New%20Folder/MTXX_MR20231223_041538833.jpg',
+]
+LIVE_PHOTOS_HTML = (
+    '            <div class="live-photos">\n'
+    '                <style>.live-photos .proof-grid-work { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; margin-top: 0; }'
+    ' .live-photos .proof-grid-work img { aspect-ratio: 3 / 5; } .live-photos .col-title { visibility: hidden; }'
+    ' @media (max-width: 640px) { .content-card:has(.live-photos) { grid-template-columns: 1fr !important; } .live-photos .col-title { display: none; } }</style>\n'
+    # invisible copy of the left heading = the photos start exactly level with the left text, in EN and TH
+    '                <h2 class="col-title" aria-hidden="true"><span data-lang="en">LIVE COMMERCE</span><span data-lang="th" style="display:none;">งานไลฟ์สตรีม</span></h2>\n'
+    '                <div class="proof-grid-work">\n' + ''.join('                    <img src="' + u + '" alt="" loading="lazy">\n' for u in LIVE_PHOTOS) +
+    '                </div>\n'
+    '                <p class="col-desc" style="margin-top:10px;color:#888;font-size:0.78rem">TikTok LIVE · Facebook · Shopee · BBL · Big C Thailand</p>\n'
+    '            </div>\n'
+)
+
+# ── RESUME (section 2) ── owner's file "Untitled document (13)": the Global Standard Format resume (EN) and the Thai
+# resume. Wording is theirs; changed only where the back-office photos show the file was wrong (owner's rule: no claim
+# without a real source): 97% is LIVE length, not "viewer retention / consistently"; 184/200/141 are items sold, not
+# orders; "top-tier", "$3.2K" and the contact lines dropped (contact = button); "14+ years (8 + 8+)" did not add up, so
+# no year count until the owner gives it; Sensodyne is oral care, so the category reads personal care.
+_H = '                <p class="col-desc" style="margin:22px 0 8px"><strong>{}</strong></p>\n'
+_L = lambda items: '                <ul class="hl">\n' + ''.join('                    <li>' + i + '</li>\n' for i in items) + '                </ul>\n'
+_P = lambda t: '                <p class="col-desc">' + t + '</p>\n'
+RESUME_EN = (
+    _H.format('PROFESSIONAL SUMMARY') +
+    _P('High-performance Live Commerce Host and Presenter with 4+ years of experience and 200+ cumulative live streaming hours across TikTok Shop and Shopee Live. Demonstrated expertise in driving real-time sales for 20+ brands across FMCG, Mom &amp; Baby, Beauty and Fashion. Proven track record of generating ฿114K+ in GMV during a single 2-hour session.') +
+    _H.format('CORE COMPETENCIES &amp; SKILLS') +
+    _L(['<strong>On-Camera &amp; Performance:</strong> Live selling pitching, product storytelling, audience retention, flash sale urgency, real-time interactive Q&amp;A, improvisation',
+        '<strong>Technical &amp; Analytical Tools:</strong> TikTok LIVE Console, Shopee Live Dashboard, real-time analytics monitoring, OBS Studio',
+        '<strong>Product Category Expertise:</strong> Mom &amp; Baby, personal care &amp; cosmetics (Sensodyne, WhiteLab, KATE Thailand), FMCG, Fashion &amp; Lifestyle']) +
+    _H.format('PROFESSIONAL EXPERIENCE · FREELANCE LIVE STREAM HOST &amp; LIVE COMMERCE SPECIALIST (2022 – PRESENT)') +
+    _L(['<strong>Revenue &amp; Conversion Performance:</strong> Achieved a single-session peak GMV of ฿114,762 (184 items sold) on TikTok Shop within a 2-hour window; generated ฿109,857 (200 items sold) and ฿91,664 (141 items sold) in other high-conversion sessions; delivered up to ฿64,851 GMV on Shopee Live with 223 orders and 1,256 add-to-carts in one session.',
+        '<strong>Audience &amp; Engagement:</strong> Reached a peak product click-through rate (CTR) of 51.51% through interactive demonstrations and real-time urgency pitching; one TikTok LIVE ran longer than 97% of creators with similar follower counts.',
+        '<strong>Brand Representation:</strong> Trusted live presenter for 20+ brands including Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab and SC Johnson, managing sessions in line with brand CI, legal guidelines and campaign objectives.',
+        '<strong>Industry Versatility:</strong> Accumulated 200+ streaming hours over 4 years, maintaining high energy and professionalism in 2 to 2.5-hour continuous live broadcasts.']) +
+    _H.format('BACKGROUND &amp; KEY DIFFERENTIATORS') +
+    _L(['<strong>Premium service background:</strong> Luxury jewelry and Michelin-recognized restaurant management, bringing high-end service standards, structural discipline and premium customer care to live commerce.',
+        '<strong>Tech-savvy approach:</strong> Integrating AI productivity tools for script preparation, trend analysis and stream workflow optimization.'])
+)
+RESUME_TH = (
+    _H.format('บทสรุปประวัติ (Professional Summary)') +
+    _P('นักจัดรายการไลฟ์สดขายสินค้ามืออาชีพ (Live Commerce Host) ประสบการณ์ 4 ปี ไลฟ์ให้แบรนด์มากกว่า 20 แบรนด์ ทั้งกลุ่ม FMCG, Beauty, Mother &amp; Baby และแฟชั่น มีชั่วโมงไลฟ์สดสะสมมากกว่า 200 ชั่วโมง พร้อมสถิติยอดขายสูงสุดต่อรอบ ฿114,000+ บน TikTok Shop และ ฿64,000+ บน Shopee Live') +
+    _H.format('ทักษะความเชี่ยวชาญ (Core Competencies &amp; Skills)') +
+    _L(['<strong>ทักษะหน้ากล้องและการนำเสนอ:</strong> Live Selling, Real-Time Interactive Q&amp;A, Product Storytelling, Flash Sale Pitching, การแก้ปัญหาเฉพาะหน้า',
+        '<strong>ระบบและเทคนิคหลังบ้าน:</strong> TikTok Shop Live Console, Shopee Live Analytics, OBS Studio, Real-Time Data Monitoring',
+        '<strong>กลุ่มสินค้าที่เชี่ยวชาญ:</strong> สินค้าแม่และเด็ก (Mom &amp; Baby), ของใช้ส่วนตัวและความงาม (Sensodyne, WhiteLab, KATE Thailand), สินค้าอุปโภคบริโภค (FMCG) และสินค้าแฟชั่น']) +
+    _H.format('ประสบการณ์ทำงานและผลงาน · Freelance Live Stream Host / Live Commerce Consultant (2022 – ปัจจุบัน)') +
+    _L(['<strong>ยอดขายสูงสุดต่อรอบ:</strong> TikTok Shop ทำยอดขายสูงสุด ฿114,762 (ขายได้ 184 ชิ้น) ในไลฟ์ 2 ชั่วโมง และรอบ ฿109,857 (ขายได้ 200 ชิ้น), ฿91,664 (ขายได้ 141 ชิ้น) · Shopee Live ทำยอดขายสูงสุด ฿64,851 (223 คำสั่งซื้อ เพิ่มลงรถเข็น 1,256 ครั้ง)',
+        '<strong>การดึงความสนใจผู้ชม:</strong> อัตราคลิกชมสินค้า (CTR) สูงสุด 51.51% จากการเล่าเรื่องและกระตุ้นการตัดสินใจซื้อแบบ real-time · ไลฟ์ TikTok หนึ่งรอบยาวกว่าครีเอเตอร์ 97% ที่มีผู้ติดตามใกล้เคียงกัน',
+        '<strong>ชั่วโมงไลฟ์สะสม:</strong> มากกว่า 200 ชั่วโมง ไลฟ์ต่อเนื่องรอบละ 2 – 2 ชั่วโมงครึ่ง',
+        '<strong>ประสบการณ์ร่วมงานกับแบรนด์:</strong> 20+ แบรนด์ เช่น Sensodyne, BabyLove, Hi-Q, Converse, Bata, WhiteLab, SC Johnson โดยปฏิบัติตาม Brand CI อย่างเคร่งครัด']) +
+    _H.format('จุดแข็งเสริม (Key Attributes)') +
+    _L(['<strong>พื้นฐานงานบริการระดับพรีเมียม:</strong> ประสบการณ์ด้าน Jewelry และร้านอาหารระดับ Michelin หล่อหลอมมาตรฐานการบริการระดับ Luxury และระบบการทำงานที่เป็นเลิศ',
+        '<strong>การใช้เทคโนโลยี AI:</strong> ประยุกต์ใช้ AI Tools ในการเตรียมสคริปต์ วิเคราะห์เทรนด์ และจัดการงานหลังบ้าน'])
+)
+RESUME_CARD = (
+    '        <!-- RESUME · LIVE COMMERCE HOST (owner\'s file) — col-title / col-desc / hl of about_island.html -->\n'
+    '        <div class="content-card single" style="grid-template-columns:1fr !important">\n'
+    '            <h2 class="col-title"><span data-lang="en">RESUME · LIVE COMMERCE HOST</span><span data-lang="th" style="display:none;">เรซูเม่ · LIVE COMMERCE HOST</span></h2>\n'
+    '            <div data-lang="en">\n' + RESUME_EN + '            </div>\n'
+    '            <div data-lang="th" style="display:none;">\n' + RESUME_TH + '            </div>\n'
+    '            <div class="big-btn-row" style="grid-template-columns:1fr">\n'
+    '                <a class="big-btn" href="' + CONTACT_URL + '">Get in touch</a>\n'
+    '            </div>\n'
+    '        </div>\n'
+)
 
 # setLang of about_island.html, made to switch every [data-lang] block of the page (same buttons, same colours)
 SETLANG_OLD = ("            document.getElementById('bio-en').style.display = lang === 'en' ? 'block' : 'none';\n"
