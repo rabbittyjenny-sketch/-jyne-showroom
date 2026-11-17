@@ -182,8 +182,8 @@ RESULTS_STATS = (
     '            </div>\n'
 )
 RESULTS_BUTTONS = ('            <div class="big-btn-row">\n'
-                   '                <a class="big-btn" href="works_photos.html">Gallery งานไลฟ์</a>\n'
-                   '                <a class="big-btn" href="works_clips.html">Video งานไลฟ์</a>\n'
+                   '                <a class="big-btn" href="works_photos.html#live-photos">Gallery งานไลฟ์</a>\n'
+                   '                <a class="big-btn" href="works_clips.html#live-selling">Video งานไลฟ์</a>\n'
                    '            </div>\n')
 
 # ── RESUME (section 2) ── owner's file "Untitled document (13)": the Global Standard Format resume (EN) and the Thai

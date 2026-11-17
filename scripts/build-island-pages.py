@@ -231,7 +231,8 @@ soon = lambda items: """        <!-- COMING SOON (added headings — content to 
         </div>
 """
 write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS', 'VIDEO<br>CLIPS', '', [
-    hook(cut(M, M_MEDIA, M_VOICE), '<div class="video-grid">', 'live-selling'),   # PORTFOLIO MEDIA — live selling clips
+    hook(cut(M, M_MEDIA, M_VOICE), '<div class="video-grid">', 'live-selling')
+        .replace('<div class="content-card single">', '<div class="content-card single" id="live-selling">', 1),   # PORTFOLIO MEDIA — live selling clips (id = target of about_live's Video งานไลฟ์)
     hook(cut(M, M_VOICE, M_END), '<div class="video-grid">', 'ai-voice'),         # AI VOICE GENERATOR — AI voice & avatar clips
     soon([('ไลฟ์คอนเทนต์', 'live-content'), ('รับทำคอนเทนต์', 'content-work'), ('คลิปสร้างจาก AI', 'ai-clips'),
           ('อีเวนต์ · โปรโมท F&amp;B', 'event-promo')]),
@@ -239,8 +240,9 @@ write('works_clips.html', page('works_clips', 'work_marina.html', 'VIDEO CLIPS',
 
 results = re.findall(r'<img src="(https://ik\.imagekit\.io/ideas365logo/Screenshot%202026[^"]+)"', A)
 write('works_photos.html', page('works_photos', 'work_marina.html', 'PHOTO WORKS', 'PHOTO<br>WORKS', '', [
-    """        <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) -->
-        <div class="content-card single">
+    """        <!-- MAKEUP & HAIR (image from the PREVIOUS WORK grid) · back-office section makeup-hair holds the live photos;
+             id = target of about_live's Gallery งานไลฟ์ -->
+        <div class="content-card single" id="live-photos">
             <h2 class="col-title">MAKEUP &amp; HAIR · แต่งหน้า · ทำผม</h2>
             <div class="proof-grid-work" data-i365="makeup-hair">
                 <img src="https://ik.imagekit.io/ideas365logo/makeup1.jpg">
