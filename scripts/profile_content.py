@@ -11,8 +11,11 @@ Markup = the original about_island.html elements (col-desc, quote box, tl-*, sta
 P = '                    <p class="col-desc">{}</p>\n'
 paras = lambda items: ''.join(P.format(t) for t in items)
 LINK = '<a href="{}" style="color:var(--accent);font-weight:700">{}</a>'
-BRANDS_URL = ''   # ← ลิงก์หน้ารายชื่อแบรนด์ (ใส่ทีหลัง) — used by "See all brands" / "แบรนด์ที่ร่วมงานด้วย"
-brands_link = lambda text: LINK.format(BRANDS_URL or '#', text)
+# Brand logo board (owner's image on ImageKit, 18 Nov 2026) — "See all brands" / "แบรนด์ที่ร่วมงานด้วย" open it in the
+# site's picture viewer (public/i365-ui.js, a[data-i365-view]). New board = upload over the same ImageKit file, or change this one line.
+BRANDS_IMG = 'https://ik.imagekit.io/ideas365logo/Brand%20logo/Red%20Minimalist%20Modern%20Freelancer%20Resume%20(1).png'
+brands_link = lambda text: ('<a href="{0}" data-i365-view="{0}" target="_blank" rel="noopener" '
+                            'style="color:var(--accent);font-weight:700">{1}</a>').format(BRANDS_IMG, text)
 
 # ── PROFILE ──────────────────────────────────────────────────────────────
 BIO_EN = '''<div id="bio-en" data-lang="en">
@@ -138,19 +141,41 @@ def live_text_html():
             '            </div>\n')
 
 
-GMV = ['฿114,762', '฿109,857', '฿83,224', '฿59,936']
+# SELECTED LIVE RESULTS — owner's file "Untitled document (13)" (18 Nov 2026), every figure checked against the
+# back-office screenshot it comes from (Drive folder 1YeGUzrt…; screenshots already on the page in RESULT · 2 HRS/LIVE):
+#   ฿114,762 Hi-Q 2 Aug 2024 · ฿109,857 BabyLove 4 Jul 2024 · ฿91,664 BabyLove 15 Aug 2024 · ฿83,224 18 Jul 2024
+#   (TikTok LIVE Console, "สินค้าที่ขายได้" = items sold) · ฿64,851 Bata 21 Nov 2023 (Shopee Live, best Shopee session)
+#   51.51% CTR BabyLove 22 Aug 2024 (TikTok, proof1.jpg) · 97% = "LIVE longer than 97% of creators with similar
+#   follower counts" (TikTok post-LIVE summary 13 Nov 2024, one 2h12m session — it measures LIVE length, not retention)
+# (number, EN label, TH label) — the label line under each number
+STATS = [
+    ('฿114,762', 'GMV · TikTok LIVE<br>184 items sold', 'GMV · TikTok LIVE<br>ขายได้ 184 ชิ้น'),
+    ('฿109,857', 'GMV · TikTok LIVE<br>200 items sold', 'GMV · TikTok LIVE<br>ขายได้ 200 ชิ้น'),
+    ('฿91,664', 'GMV · TikTok LIVE<br>141 items sold', 'GMV · TikTok LIVE<br>ขายได้ 141 ชิ้น'),
+    ('฿83,224', 'GMV · TikTok LIVE<br>149 items sold', 'GMV · TikTok LIVE<br>ขายได้ 149 ชิ้น'),
+    ('฿64,851', 'GMV · Shopee Live<br>223 orders', 'GMV · Shopee Live<br>223 คำสั่งซื้อ'),
+    ('51.51%', 'Product CTR<br>TikTok LIVE', 'อัตราคลิกสินค้า (CTR)<br>TikTok LIVE'),
+    ('97%', 'LIVE longer than 97% of<br>similar-size creators · TikTok', 'ไลฟ์ยาวกว่าครีเอเตอร์ 97%<br>ที่ผู้ติดตามใกล้เคียงกัน · TikTok'),
+    ('20+', 'Brands', 'แบรนด์ที่ร่วมงาน'),
+]
+CONTACT_URL = 'contact_port.html'   # CONTACT island page
 RESULTS_CARD = ('''        <!-- SELECTED LIVE RESULTS (owner's file) — stats-row / stat-box / big-btn-row of about_island.html -->
-        <div class="content-card single">
+        <div class="content-card single" style="grid-template-columns:1fr !important">   <!-- one column on phones too (the page's mobile rule turns every card into 2 columns) -->
             <h2 class="col-title"><span data-lang="en">SELECTED LIVE RESULTS · 2-HOUR SESSIONS</span><span data-lang="th" style="display:none;">ผลลัพธ์บางส่วนจากไลฟ์ · 2 ชั่วโมง</span></h2>
+            <div>
             <div class="stats-row">
-''' + ''.join(f'                <div class="stat-box"><div class="stat-num">{g}</div><div class="stat-label">GMV</div></div>\n' for g in GMV) + '''            </div>
-            <div class="big-btn-row">
+''' + ''.join(f'                <div class="stat-box"><div class="stat-num">{n}</div><div class="stat-label"><span data-lang="en">{en}</span><span data-lang="th" style="display:none;">{th}</span></div></div>\n'
+              for n, en, th in STATS) + '''            </div>
+            <p class="col-desc" style="margin:14px 0 0;color:#888;font-size:0.78rem"><span data-lang="en">Individual session figures from the TikTok LIVE Console and Shopee Live back office (2023–2024), not an average across all sessions.</span><span data-lang="th" style="display:none;">ตัวเลขรายรอบจากหน้าจอหลังบ้าน TikTok LIVE Console และ Shopee Live (2023–2024) ไม่ใช่ค่าเฉลี่ยของทุกรอบ</span></p>
+            </div>
+            <div>
+            <div class="big-btn-row" style="margin-top:0">
                 <a class="big-btn" href="works_photos.html">Gallery งานไลฟ์</a>
                 <a class="big-btn" href="works_clips.html">Video งานไลฟ์</a>
             </div>
-            <div style="margin-top:24px;padding-top:16px;border-top:1px solid #eee;">
-                <p class="col-desc" style="margin:0 0 6px"><strong>Contact</strong></p>
-                <p class="col-desc" style="margin:0">Line ID: i_am_jenny · Email: jyne@ideas365.online / hellojyne@gmail.com · Phone: 083-436-6937 · Website: ideas365.space</p>
+            <div class="big-btn-row" style="grid-template-columns:1fr">
+                <a class="big-btn" href="''' + CONTACT_URL + '''">Get in touch</a>
+            </div>
             </div>
         </div>
 ''')
