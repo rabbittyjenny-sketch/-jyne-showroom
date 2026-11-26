@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { ChevronDown, ChevronUp, GripVertical } from 'lucide-react';
 import { AdminLayout, Notice } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,6 +34,9 @@ export default function SectionItems() {
   const [editing, setEditing] = useState<Partial<Item> | null>(null);
   const [bulk, setBulk] = useState(false);
   const [filterCat, setFilterCat] = useState<string>('all');
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+  const canDrag = filterCat === 'all';   // dragging re-numbers the WHOLE list 1..N, so it needs the unfiltered view
 
   const load = async () => {
     try {
@@ -61,6 +65,40 @@ export default function SectionItems() {
     return p ? `${p.name_th} › ${c.name_th}` : c.name_th;
   };
   const shown = useMemo(() => items.filter((i) => filterCat === 'all' || (filterCat === 'none' ? !i.category_id : i.category_id === filterCat)), [items, filterCat]);
+
+  /** Re-numbers sort_order to match `arr`'s order (1, 2, 3 …) and saves only the rows that actually moved. */
+  const persistOrder = async (arr: Item[]) => {
+    const changed = arr.map((it, i) => ({ it, sort_order: i + 1 })).filter(({ it, sort_order }) => it.sort_order !== sort_order);
+    if (!changed.length) return;
+    setItems(arr.map((it, i) => ({ ...it, sort_order: i + 1 })));   // show the new order right away
+    try {
+      await Promise.all(changed.map(({ it, sort_order }) => update('i365_items', { id: it.id }, { sort_order })));
+      setMsg({ text: 'เรียงลำดับใหม่แล้ว — หน้าเว็บจะแสดงตามนี้', ok: true });
+    } catch (e) { setMsg({ text: errText(e), ok: false }); await load(); }
+  };
+
+  /** Drag-and-drop: drop `draggedId`'s card right where `targetId`'s card is. */
+  const dropOn = async (targetId: string) => {
+    const draggedId = dragId; setDragId(null); setOverId(null);
+    if (!draggedId || draggedId === targetId) return;
+    const arr = [...items];
+    const from = arr.findIndex((x) => x.id === draggedId);
+    const to = arr.findIndex((x) => x.id === targetId);
+    if (from === -1 || to === -1) return;
+    const [moved] = arr.splice(from, 1);
+    arr.splice(to, 0, moved);
+    await persistOrder(arr);
+  };
+
+  /** Up/down buttons: swap with the item right before/after it (works even while a category filter is on). */
+  const moveBy = async (it: Item, delta: 1 | -1) => {
+    const arr = [...items];
+    const i = arr.findIndex((x) => x.id === it.id);
+    const j = i + delta;
+    if (i === -1 || j < 0 || j >= arr.length) return;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    await persistOrder(arr);
+  };
 
   if (!section || !type) return <AdminLayout title="ผลงาน"><Notice msg={msg ?? { text: 'กำลังโหลด…', ok: true }} /></AdminLayout>;
   const canBulk = !!type.features?.bulk_field;
@@ -91,11 +129,34 @@ export default function SectionItems() {
             </select>
           </div>
           {shown.length === 0 && <p className="text-sm text-muted-foreground">ยังไม่มีผลงาน</p>}
+          <p className="text-xs text-muted-foreground mb-3">
+            {canDrag
+              ? 'ลากรูปโดยจับที่ไอคอน ⠿ เพื่อสลับตำแหน่ง หรือกดลูกศรขึ้น-ลงทีละขั้น — บันทึกลำดับให้อัตโนมัติ หน้าเว็บจะเรียงตามนี้ทันที'
+              : 'ปิดการลากชั่วคราวเพราะกำลังกรองหมวดอยู่ — เลือก "ทุกหมวด" ก่อนจึงจะลากสลับตำแหน่งได้ (ปุ่มลูกศรขึ้น-ลงยังใช้ได้ตอนนี้)'}
+          </p>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {shown.map((it) => {
               const pic = itemPicture(it, type);
+              const fullIdx = items.findIndex((x) => x.id === it.id);
               return (
-                <div key={it.id} className={`rounded-md border p-2 flex gap-3 ${it.is_published ? '' : 'opacity-60'}`}>
+                <div key={it.id}
+                  onDragOver={(e) => { if (canDrag && dragId) { e.preventDefault(); setOverId(it.id); } }}
+                  onDragLeave={() => setOverId((cur) => (cur === it.id ? null : cur))}
+                  onDrop={(e) => { e.preventDefault(); void dropOn(it.id); }}
+                  className={`rounded-md border p-2 flex gap-3 transition-colors ${it.is_published ? '' : 'opacity-60'} ${overId === it.id ? 'border-primary ring-2 ring-primary' : ''} ${dragId === it.id ? 'opacity-30' : ''}`}>
+                  <div className="flex flex-col items-center gap-0.5 shrink-0 pt-0.5">
+                    <button type="button" draggable={canDrag}
+                      onDragStart={(e) => { setDragId(it.id); e.dataTransfer.effectAllowed = 'move'; }}
+                      onDragEnd={() => { setDragId(null); setOverId(null); }}
+                      disabled={!canDrag} title={canDrag ? 'ลากเพื่อสลับตำแหน่ง' : 'เลือก "ทุกหมวด" ก่อนจึงจะลากได้'}
+                      className={canDrag ? 'cursor-grab text-muted-foreground active:cursor-grabbing' : 'cursor-not-allowed text-muted-foreground/30'}>
+                      <GripVertical className="w-4 h-4" />
+                    </button>
+                    <button type="button" onClick={() => moveBy(it, -1)} disabled={fullIdx <= 0} title="ขึ้นก่อนหน้า"
+                      className="text-muted-foreground disabled:opacity-20 disabled:cursor-not-allowed"><ChevronUp className="w-3.5 h-3.5" /></button>
+                    <button type="button" onClick={() => moveBy(it, 1)} disabled={fullIdx < 0 || fullIdx >= items.length - 1} title="ลงถัดไป"
+                      className="text-muted-foreground disabled:opacity-20 disabled:cursor-not-allowed"><ChevronDown className="w-3.5 h-3.5" /></button>
+                  </div>
                   <button onClick={() => setEditing(it)} className="w-16 h-16 rounded bg-muted shrink-0 overflow-hidden" title="แก้ไข"><SafeImg src={pic} className="w-full h-full object-cover" /></button>
                   <div className="min-w-0 flex-1">
                     <button onClick={() => setEditing(it)} className="font-medium truncate block max-w-full text-left hover:underline">{it.title_th}</button>
