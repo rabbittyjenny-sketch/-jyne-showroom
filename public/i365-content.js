@@ -9,6 +9,9 @@
  *                               its card stays and says "COMING SOON · เร็วๆ นี้" (deleted items never come back)
  *                               otherwise nothing changes: the page keeps its own content (or its Google Sheet)
  * A section with no block on the page gets a new card in the page's own card style (data-card="content|section").
+ * Its heading (and its left-hand page-nav entry, which just reads the heading) stays exactly as written in
+ * the page's own code UNLESS i365_sections.title_synced is on, in which case name_en/name_th/description_th
+ * replace it too — same text either way: "English · ไทย" (set from the "แก้ไขเมนูย่อย" dialog in the back office).
  * Lines marked [data-i365-soon="<slug>"] (COMING SOON lists) are removed when that section gets items.
  * window.I365.ready resolves when this is done (or after 4 s / on error) — the sheet loaders wait for it.
  */
@@ -25,7 +28,7 @@
     if (!page) { done(); return; }
     var timer = setTimeout(done, 4000);           // DB slow / blocked -> the page carries on with its own content
 
-    var q = 'i365_sections?select=slug,name_th,name_en,description_th,display_style,sort_order,from_backoffice,' +
+    var q = 'i365_sections?select=slug,name_th,name_en,description_th,display_style,sort_order,from_backoffice,title_synced,' +
         'type:i365_item_types!i365_sections_item_type_id_fkey(slug),' +
         'items:i365_items!i365_items_section_id_fkey(id,title_th,title_en,summary_th,summary_en,cover_image,data,sort_order)' +
         '&page_slug=eq.' + encodeURIComponent(page) + '&is_published=eq.true&deleted_at=is.null' +
@@ -55,6 +58,8 @@
         });
     }
     function d(it, k) { return (it.data && it.data[k]) || ''; }
+    /* every hand-written heading on the site reads "English · Thai" — new/synced headings match that */
+    function sectionTitle(s) { return s.name_en ? esc(s.name_en) + ' · ' + esc(s.name_th) : esc(s.name_th); }
     function ytId(u) {
         var m = String(u || '').match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/);
         return m ? m[1] : '';
@@ -195,6 +200,7 @@
             return box;
         }
         if (t === 'point') gridCls = s.display_style === 'cards' ? 'svc-grid' : '';
+        title = sectionTitle(s);
         var card = document.createElement('div');
         if (cardStyle === 'section') {
             card.className = 'section-card';
@@ -247,9 +253,25 @@
         return true;
     }
 
+    /* title_synced: bring an EXISTING static card's own heading/description in line with the back office,
+       the same way newCard() already writes them for a card that has no HTML of its own yet. The section
+       nav in i365-ui.js reads its label off this same heading, so it follows along without extra work. */
+    function syncTitle(el, s) {
+        var card = el.closest && el.closest('.content-card, .section-card');
+        if (!card) return;
+        var h = card.querySelector('.col-title, .section-title');
+        if (h) h.innerHTML = sectionTitle(s);
+        if (s.description_th) {
+            var desc = card.querySelector('.col-desc, .section-sub');
+            if (desc) desc.textContent = s.description_th;
+            else if (h) h.insertAdjacentHTML('afterend', '<p class="col-desc">' + esc(s.description_th) + '</p>');
+        }
+    }
+
     function render(s) {
         var el = document.querySelector('[data-i365="' + s.slug + '"]') || newCard(s);
         if (!el || !fill(el, s)) return false;
+        if (s.title_synced) syncTitle(el, s);
         el.hidden = false; if (el.style.display === 'none') el.style.display = '';
         el.setAttribute('data-i365-filled', '1');
         document.querySelectorAll('[data-i365-soon="' + s.slug + '"]').forEach(function (n) { n.parentNode.removeChild(n); });

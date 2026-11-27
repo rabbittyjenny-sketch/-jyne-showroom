@@ -89,6 +89,9 @@ export interface Section {
   page_slug: string | null;
   /** true once an item was published: the page then shows only back-office items (COMING SOON when none) */
   from_backoffice?: boolean;
+  /** true -> the heading/description already written in the page's HTML is replaced by name_en/name_th/
+   *  description_th; false (default) -> the page keeps its own written heading, as it always has */
+  title_synced?: boolean;
 }
 
 export interface ItemType {

@@ -164,6 +164,7 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
       display_style: s.display_style, filter_mode: s.filter_mode, button_image: s.button_image ?? `/islands/${islandSlug}/btn-${slug}.png`,
       pos_left: s.pos_left ?? null, pos_top: s.pos_top ?? null, pos_width: s.pos_width ?? null,
       is_published: !!s.is_published, sort_order: s.sort_order ?? 0, page_slug: s.page_slug || null,
+      title_synced: !!s.title_synced,
     };
     try {
       if (isNew) await insert('i365_sections', row);
@@ -193,6 +194,17 @@ function SectionDialog({ section, islandSlug, types, onClose, onSaved }: {
             {!isNew && <p className="text-xs text-muted-foreground">เปลี่ยนไม่ได้หลังสร้าง เพื่อไม่ให้ลิงก์ที่ส่งไปแล้วเสีย</p>}
           </div>
           <div className="space-y-1"><Label>คำอธิบายสั้น</Label><Input value={s.description_th ?? ''} onChange={(e) => set({ description_th: e.target.value })} /></div>
+          <div className="flex items-center justify-between gap-3 rounded-md border p-3">
+            <div>
+              <Label>ใช้ชื่อนี้แสดงบนหน้าเว็บ</Label>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                ปกติแล้วหัวข้อที่เห็นบนหน้าเว็บเป็นข้อความที่เขียนตายตัวไว้ในโค้ดของหน้านั้น ไม่ได้ดึงจาก "ชื่อ" ด้านบนนี้ —
+                เปิดสวิตช์นี้เพื่อให้หัวข้อ (และคำอธิบายสั้น) บนหน้าเว็บเปลี่ยนตามชื่อ (ไทย)/(อังกฤษ) ที่กรอกไว้ด้านบน ทันทีที่บันทึก
+                รวมถึงเมนูด้านซ้ายของหน้านั้นด้วย
+              </p>
+            </div>
+            <Switch checked={!!s.title_synced} onCheckedChange={(c) => set({ title_synced: c })} />
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
               <Label>เนื้อหามาจาก</Label>
